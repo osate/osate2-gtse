@@ -11,7 +11,7 @@ public class Startup implements IStartup {
 	@Override
 	public void earlyStartup() {
 
-		IPreferenceStore store = WorkspacePlugin.getDefault().getPreferenceStore();
+		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 
 		if (!store.getBoolean(Activator.ATSV_INTEGRATION_ENABLED)) {
 			return;

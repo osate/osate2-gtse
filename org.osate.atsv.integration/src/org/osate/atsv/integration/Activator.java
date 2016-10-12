@@ -14,14 +14,16 @@ public class Activator extends AbstractUIPlugin {
 	// The shared instance
 	private static Activator plugin;
 
-	public static String ATSV_INTEGRATION_ENABLED = "atsvIntegrationEnabled";
-	public static String ATSV_INTEGRATION_PORT = "atsvIntegrationPort";
+	public static String ATSV_INTEGRATION_ENABLED = "ATSV_INTEGRATION_ENABLED";
+	public static String ATSV_INTEGRATION_PORT = "ATSV_INTEGRATION_PORT";
 	
 	/**
 	 * The constructor
 	 */
 	public Activator() {
 		super();
+		this.getPreferenceStore().setDefault(ATSV_INTEGRATION_ENABLED, true);
+		this.getPreferenceStore().setDefault(ATSV_INTEGRATION_PORT, 4444);
 	}
 
 	/*

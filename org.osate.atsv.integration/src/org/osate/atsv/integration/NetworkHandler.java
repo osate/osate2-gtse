@@ -17,7 +17,6 @@ import java.net.Socket;
 public class NetworkHandler implements Runnable {
 
 	private int portNum;
-	int i = 0;
 
 	public NetworkHandler(int portNum) {
 		this.portNum = portNum;
@@ -30,15 +29,11 @@ public class NetworkHandler implements Runnable {
 				PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));) {
 			while ((inp = reader.readLine()) != null) {
-				i++;
 				System.out.println("Got '" + inp + "' from the socket!");
 				writer.println("Hello from OSATE!");
-				if (i == 5) {
-					break;
-				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace(System.err);
+			e.printStackTrace();
 		}
 	}
 

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ATSV Integration Tests
+Bundle-SymbolicName: org.osate.atsv.integration.tests;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.osate.atsv.integration;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit,
+ org.osate.core.tests,
+ org.eclipselabs.xtext.utils.unittesting,
+ org.eclipse.xtext

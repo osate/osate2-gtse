@@ -24,11 +24,13 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	protected void createFieldEditors() {
 		final BooleanFieldEditor enableATSVIntegration = new BooleanFieldEditor(Activator.ATSV_INTEGRATION_ENABLED,
 				"Enable integration with ATSV", getFieldEditorParent());
+		enableATSVIntegration.loadDefault();
 		addField(enableATSVIntegration);
 
 		final IntegerFieldEditor atsvConnectionPortNumber = new IntegerFieldEditor(
 				Activator.ATSV_INTEGRATION_PORT, "ATSV Connection Port", getFieldEditorParent());
 		atsvConnectionPortNumber.setTextLimit(5);
+		atsvConnectionPortNumber.loadDefault();
 		atsvConnectionPortNumber.setValidRange(0, 65535);
 		atsvConnectionPortNumber.fillIntoGrid(getFieldEditorParent(), 2);
 		addField(atsvConnectionPortNumber);
