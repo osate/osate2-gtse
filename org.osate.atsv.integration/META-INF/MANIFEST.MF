@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ATSV Integration
+Bundle-SymbolicName: org.osate.atsv.integration;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.osate.atsv.integration.Activator
+Bundle-Vendor: Software Engineering Institute
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.osate.workspace,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
