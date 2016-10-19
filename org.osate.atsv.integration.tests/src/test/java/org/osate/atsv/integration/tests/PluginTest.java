@@ -6,6 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ ConnectivityTests.class })
-public class FullTest {
+public class PluginTest {
 
 }

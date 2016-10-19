@@ -2,7 +2,6 @@ package org.osate.atsv.integration;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IStartup;
-import org.osate.workspace.WorkspacePlugin;
 
 public class Startup implements IStartup {
 

@@ -1,32 +1,36 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.osate</groupId>
 	<artifactId>org.osate.atsv.integration.tests</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
-	<properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <code-coverage.ratio>0.00</code-coverage.ratio>
-        <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
-        <maven.compiler.testSource>1.8</maven.compiler.testSource>
-        <tycho.version>0.23.0</tycho.version>
-        <jacoco.version>0.7.1.201405082137</jacoco.version>
-	</properties>
-	<repositories>
-		<repository>
-			<id>mars</id>
-			<url>http://download.eclipse.org/releases/mars/201510021000</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>xtext-utils</id>
-			<url>http://aadl.sei.cmu.edu/aadl/osate/build/xtext-utils/</url>
-			<layout>p2</layout>
-		</repository>
-	</repositories>
+	<parent>
+		<relativePath>../org.osate.atsv.integration.releng</relativePath>
+		<groupId>org.osate</groupId>
+		<artifactId>org.osate.atsv.integration.releng</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<testClass>org.osate.atsv.integration.tests.PluginTest</testClass>
+					<useUIHarness>true</useUIHarness>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+				<configuration>
+					<includes>
+						<include>org.osate.atsv.integration.tests.UnitTest</include>
+					</includes>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -35,7 +39,7 @@
 					<!-- additional requirements for running the tests -->
 					<!-- adding them here works, adding them in surefire configuration as -->
 					<!-- dependency works only if the tests are started in the test plugin
-						directory -->
+					directory -->
 					<dependency-resolution>
 						<extraRequirements>
 							<requirement>
@@ -53,57 +57,23 @@
 					</dependency-resolution>
 				</configuration>
 			</plugin>
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>target-platform-configuration</artifactId>
-                <version>${tycho.version}</version>
-                <configuration>
-                    <environments>
-                        <environment>
-                            <os>linux</os>
-                            <ws>gtk</ws>
-                            <arch>x86</arch>
-                        </environment>
-                        <environment>
-                            <os>linux</os>
-                            <ws>gtk</ws>
-                            <arch>x86_64</arch>
-                        </environment>
-                        <environment>
-                            <os>win32</os>
-                            <ws>win32</ws>
-                            <arch>x86</arch>
-                        </environment>
-                        <environment>
-                            <os>win32</os>
-                            <ws>win32</ws>
-                            <arch>x86_64</arch>
-                        </environment>
-                        <environment>
-                            <os>macosx</os>
-                            <ws>cocoa</ws>
-                            <arch>x86_64</arch>
-                        </environment>
-                    </environments>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <id>integration-agent-prep</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${basedir}/../jacoco-integration.exec</destFile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>integration-agent-prep</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>prepare-agent-integration</goal>
+						</goals>
+						<configuration>
+							<destFile>${basedir}/../org.osate.atsv.integration.releng/jacoco-integration.exec</destFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
