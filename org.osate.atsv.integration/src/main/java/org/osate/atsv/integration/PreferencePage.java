@@ -1,6 +1,7 @@
 package org.osate.atsv.integration;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
+import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
@@ -23,17 +24,22 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 	@Override
 	protected void createFieldEditors() {
 		final BooleanFieldEditor enableATSVIntegration = new BooleanFieldEditor(Activator.ATSV_INTEGRATION_ENABLED,
-				"Enable integration with ATSV", getFieldEditorParent());
+				"&Enable integration with ATSV", getFieldEditorParent());
 		enableATSVIntegration.loadDefault();
 		addField(enableATSVIntegration);
-
+		
 		final IntegerFieldEditor atsvConnectionPortNumber = new IntegerFieldEditor(
-				Activator.ATSV_INTEGRATION_PORT, "ATSV Connection Port", getFieldEditorParent());
+				Activator.ATSV_INTEGRATION_PORT, "ATSV &Connection Port", getFieldEditorParent());
 		atsvConnectionPortNumber.setTextLimit(5);
 		atsvConnectionPortNumber.loadDefault();
 		atsvConnectionPortNumber.setValidRange(0, 65535);
 		atsvConnectionPortNumber.fillIntoGrid(getFieldEditorParent(), 2);
 		addField(atsvConnectionPortNumber);
+		
+		DirectoryFieldEditor atsvFilesDir = new DirectoryFieldEditor(
+				Activator.ATSV_FILES_DIRECTORY, "&Directory for ATSV Files:",
+getFieldEditorParent());
+		addField(atsvFilesDir);
 	}
 
 }
