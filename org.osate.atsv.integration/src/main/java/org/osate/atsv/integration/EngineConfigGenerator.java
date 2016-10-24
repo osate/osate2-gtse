@@ -11,6 +11,8 @@ import javax.xml.namespace.QName;
 import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenModel;
+import org.osate.atsv.integration.EngineConfigModel.VariableModel;
+import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
 
 public class EngineConfigGenerator {
 
@@ -20,12 +22,19 @@ public class EngineConfigGenerator {
 
 	public EngineConfigGenerator() {
 		try {
-			JAXBContext context = JAXBContext.newInstance(ExplorationEngineModel.class, InputTokenModel.class);
+			JAXBContext context = JAXBContext.newInstance(
+					ExplorationEngineModel.class,
+					InputTokenModel.class,
+					VariableModel.class);
 			InputTokenAdapter inputAdapter = new InputTokenAdapter();
+			VariableModelAdapter variableAdapter = new VariableModelAdapter();
+			
 			marshal = context.createMarshaller();
 			// ATSV actually cannot parse formatted output :(
 			marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
 			marshal.setAdapter(inputAdapter);
+			marshal.setAdapter(variableAdapter);
+			
 			ecf = new ExplorationEngineModel();
 			cfg = new JAXBElement<ExplorationEngineModel>(new QName("ExplorationEngineModel"), ExplorationEngineModel.class, ecf);
 		} catch (JAXBException e) {

@@ -62,10 +62,16 @@ public class ExplorationEngineModel {
 	private final InputTokensModel inputTokens = new InputTokensModel();
 	
 	/**
-	 * This isn't used.
+	 * Output tokens are only used for excel analyses, so this is unused for our purposes.
 	 */
 	@XmlElement
 	private final String outputTokens = "";
+	
+	/**
+	 * 
+	 */
+	@XmlElement
+	private final VariablesModel variables = new VariablesModel();
 	
 	public ExplorationEngineModel() {
 		baseDir = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
