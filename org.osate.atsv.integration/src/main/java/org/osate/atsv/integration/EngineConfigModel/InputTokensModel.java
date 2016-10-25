@@ -14,8 +14,7 @@ public class InputTokensModel {
 	@XmlAnyElement
 	private List<InputTokenModel> inputTokens = new ArrayList<>(); 
 	
-	public InputTokensModel() {
-		inputTokens.add(new InputTokenModel("intTest"));		
-		inputTokens.add(new InputTokenModel("phideg"));
+	public void addTokenModel(InputTokenModel itm){
+		inputTokens.add(itm);
 	}
 }

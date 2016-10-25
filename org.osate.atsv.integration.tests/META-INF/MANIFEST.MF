@@ -9,3 +9,4 @@ Require-Bundle: org.junit,
  org.osate.core.tests,
  org.eclipselabs.xtext.utils.unittesting,
  org.eclipse.xtext
+Bundle-ClassPath: .

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class VariableModel {
 
 	public enum ATSVVariableType {
-		REAL(0), DISCRETE_FLOAT(1), STRING(2), INTEGER(4);
+		FLOAT(0), DISCRETE_FLOAT(1), STRING(2), INTEGER(4);
 
 		private int typeVal;
 
@@ -61,13 +61,13 @@ public class VariableModel {
 	 */
 	@XmlAttribute
 	private final int preference = 0;
-	
+
 	/**
 	 * The possible values this variable can take.
 	 */
 	@XmlElement
 	private ValuesModel values;
-	
+
 	/**
 	 * The distribution of this variable's values
 	 */
@@ -75,7 +75,7 @@ public class VariableModel {
 	private DistributionModel distribution;
 
 	/**
-	 * Create a new variable model
+	 * Create a new variable model without a list of possible values or a distribution
 	 * 
 	 * @param title The name of this variable, this should be correspond to an input token if it's an input variable
 	 * @param capture Whether or not this variable is captured
@@ -86,25 +86,71 @@ public class VariableModel {
 	 * will be ignored if its an output variable. 
 	 */
 	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value) {
+			String value) throws NumberFormatException {
 		this.title = title;
 		this.capture = capture;
 		this.sampled = sampled;
 		this.ioValue = isInput ? 0 : 1;
 		this.type = type.typeVal;
-		if(isInput)
+		if (isInput) {
 			this.value = value;
+			if (type == ATSVVariableType.INTEGER) {
+				Integer.parseInt(value);
+			} else if (type == ATSVVariableType.FLOAT || type == ATSVVariableType.DISCRETE_FLOAT) {
+				Float.parseFloat(value);
+			}
+		}
 	}
 
-	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type, String value,
-			ValuesModel valuesModel) {
+	/**
+	 * Create a new variable model with a list of possible values
+	 * 
+	 * @param title The name of this variable, this should be correspond to an input token if it's an input variable
+	 * @param capture Whether or not this variable is captured
+	 * @param sampled Whether or not this variable is sampled
+	 * @param isInput True if this is an input variable, false if it's output
+	 * @param type The type of this variable
+	 * @param value The default value of this variable. It should be of the class's type parameter, though the value
+	 * will be ignored if its an output variable. 
+	 * @param valuesModel The values this variable can take
+	 */
+	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+			String value, ValuesModel valuesModel) {
 		this(title, capture, sampled, isInput, type, value);
 		this.values = valuesModel;
 	}
 
-	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type, String value,
-			DistributionModel distributionModel) {
+	/**
+	 * Create a new variable model with a distribution
+	 * 
+	 * @param title The name of this variable, this should be correspond to an input token if it's an input variable
+	 * @param capture Whether or not this variable is captured
+	 * @param sampled Whether or not this variable is sampled
+	 * @param isInput True if this is an input variable, false if it's output
+	 * @param type The type of this variable
+	 * @param value The default value of this variable. It should be of the class's type parameter, though the value
+	 * will be ignored if its an output variable.
+	 * @param distributionModel The distribution of the data this variable tracks
+	 */
+	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+			String value, DistributionModel distributionModel) {
 		this(title, capture, sampled, isInput, type, value);
 		this.distribution = distributionModel;
+	}
+
+	/**
+	 * Getter for the name of the variable
+	 * @return The name of the variable
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * Getter for if this is an input variable
+	 * @return True if the variable is input, false if its output
+	 */
+	public boolean isInput() {
+		return ioValue == 0;
 	}
 }

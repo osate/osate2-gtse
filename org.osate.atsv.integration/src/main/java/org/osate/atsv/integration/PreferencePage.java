@@ -39,7 +39,15 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 		DirectoryFieldEditor atsvFilesDir = new DirectoryFieldEditor(
 				Activator.ATSV_FILES_DIRECTORY, "&Directory for ATSV Files:",
 getFieldEditorParent());
+		atsvFilesDir.loadDefault();
 		addField(atsvFilesDir);
+		
+		final IntegerFieldEditor atsvSampleCount = new IntegerFieldEditor(
+				Activator.ATSV_SAMPLE_COUNT, "ATSV &Sample Count", getFieldEditorParent());
+		atsvSampleCount.setTextLimit(5);
+		atsvSampleCount.loadDefault();
+		atsvSampleCount.fillIntoGrid(getFieldEditorParent(), 2);
+		addField(atsvSampleCount);
 	}
 
 }

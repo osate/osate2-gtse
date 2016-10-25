@@ -3,7 +3,8 @@ package org.osate.atsv.integration.EngineConfigModel;
 import javax.xml.bind.annotation.XmlAttribute;
 
 /**
- * The distribution model used by a variable in ATSV. 
+ * The base class for distribution models used by variables in ATSV. Do not instantiate this class directly, rather,
+ * use one of the subtypes. 
  * 
  * Note that ATSV uses floats for value representations (based on rounding errors, eg one of their
  * files has the value 2.299999952316284, and:
@@ -13,22 +14,17 @@ import javax.xml.bind.annotation.XmlAttribute;
  * 
  */
 public class DistributionModel {
-	
-	// ATSV will crash if these aren't lowercase.
-	public enum distributionType {
-		UNIFORM, TRIANGULAR, NORMAL;
 
-		@Override
-		public String toString() {
-			return name().toLowerCase();
-		}
-		
-		@Override
-		public String name() {
-			
-		}
+	/**
+	 * 
+	 * The possible distributions for variables in ATSV.
+	 * 
+	 * ATSV will crash if these aren't lowercase, and JAXB uses name() instead of toString(), so I'm breaking convention.
+	 */
+	public enum distributionType {
+		uniform, triangular, normal;
 	};
-	
+
 	/**
 	 * The type of this distribution
 	 */
@@ -48,7 +44,7 @@ public class DistributionModel {
 	private float max;
 
 	/**
-	 * This constructor shouldn't be called directly, call one of the subclasses instead
+	 * This constructor shouldn't be called directly, use one of the subclasses instead
 	 */
 	protected DistributionModel(float min, float max) {
 		this.min = min;

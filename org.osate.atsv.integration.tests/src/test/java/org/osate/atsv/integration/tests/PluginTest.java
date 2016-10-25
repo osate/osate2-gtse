@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ConnectivityTests.class })
+@SuiteClasses({ ConnectivityTests.class, EngineConfigTests.class })
 public class PluginTest {
 
 }

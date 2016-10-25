@@ -17,6 +17,7 @@ public class Activator extends AbstractUIPlugin {
 	public static final String ATSV_INTEGRATION_ENABLED = "ATSV_INTEGRATION_ENABLED";
 	public static final String ATSV_INTEGRATION_PORT = "ATSV_INTEGRATION_PORT";
 	public static final String ATSV_FILES_DIRECTORY = "ATSV_FILES_DIRECTORY";
+	public static final String ATSV_SAMPLE_COUNT = "ATSV_SAMPLE_COUNT";
 	
 	/**
 	 * The constructor
@@ -26,6 +27,7 @@ public class Activator extends AbstractUIPlugin {
 		this.getPreferenceStore().setDefault(ATSV_INTEGRATION_ENABLED, true);
 		this.getPreferenceStore().setDefault(ATSV_INTEGRATION_PORT, 4444);
 		this.getPreferenceStore().setDefault(ATSV_FILES_DIRECTORY, System.getProperty("user.dir"));
+		this.getPreferenceStore().setDefault(ATSV_SAMPLE_COUNT, 25);
 	}
 
 	/*

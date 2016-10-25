@@ -2,6 +2,9 @@ package org.osate.atsv.integration.EngineConfigModel;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+/**
+ * A normal distribution for ATSV variables.
+ */
 public final class NormalDistributionModel extends DistributionModel {
 
 	/**
@@ -10,9 +13,15 @@ public final class NormalDistributionModel extends DistributionModel {
 	@XmlAttribute
 	private float mean;
 	
-	protected NormalDistributionModel(float min, float max, float mean) {
+	/**
+	 * Create a new normal distribution with the specified parameters
+	 * @param min Minimum value
+	 * @param max Maximum value
+	 * @param mean The mean of the distribution
+	 */
+	public NormalDistributionModel(float min, float max, float mean) {
 		super(min, max);
 		this.mean = mean;
-		this.distType = distributionType.NORMAL;
+		this.distType = distributionType.normal;
 	}
 }
