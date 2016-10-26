@@ -1,5 +1,6 @@
 package org.osate.atsv.integration.tests;
 
+import static org.apache.commons.lang3.StringUtils.countMatches;
 import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
@@ -78,29 +79,15 @@ public class ConnectivityTests extends OsateTest {
 		mockOSATEThread.start();
 		Socket clientSocket = new Socket("localhost", portNum);
 		NetworkHandler.initializeProtocol(clientSocket);
-		String expected = "Got 'Hello from I-can't-believe-it's-not-OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from I-can't-believe-it's-not-OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from I-can't-believe-it's-not-OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from I-can't-believe-it's-not-OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from I-can't-believe-it's-not-OSATE!' from the socket!" + System.lineSeparator();
-		assertEquals(expected, outContent.toString());
+		assertEquals(5, countMatches(outContent.toString(),
+				"Got 'Hello from I-can't-believe-it's-not-OSATE!' from the socket!"));
 	}
 
 	@Test
 	public void interConnectivityTest() throws IOException {
 		NetworkHandler.initializeProtocol(socket);
-		String expected = "Got 'Hello from ATSV!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from ATSV!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from ATSV!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from ATSV!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from ATSV!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from OSATE!' from the socket!" + System.lineSeparator()
-				+ "Got 'Hello from ATSV!' from the socket!" + System.lineSeparator();
-		assertEquals(expected, outContent.toString());
+		assertEquals(5, countMatches(outContent.toString(), "Got 'Hello from OSATE!' from the socket!"));
+		assertEquals(6, countMatches(outContent.toString(), "Got 'Hello from ATSV!' from the socket!"));
 	}
 
 	@Override
