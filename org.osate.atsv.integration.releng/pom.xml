@@ -13,7 +13,7 @@
         <osate.version>[0.0.0,3.0.0)</osate.version>
         <aadl-translator.version>[0.0.0,2.0.0)</aadl-translator.version>
         <code-coverage.ratio>0.00</code-coverage.ratio>
-        <jacoco.version>0.7.1.201405082137</jacoco.version>
+        <jacoco.version>0.7.7.201606060606</jacoco.version>
         <maven.surefire.version>2.19.1</maven.surefire.version>
         <java.version>1.8</java.version>
         <maven.compiler.target>1.8</maven.compiler.target>
