@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -73,10 +74,12 @@ public class ConnectivityTests extends OsateTest {
 	}
 
 	@Test
-	public void atsvConnectivityTest() throws IOException {
+	public void atsvConnectivityTest() throws IOException, InterruptedException {
 		int portNum = 4445;
-		Thread mockOSATEThread = new Thread(new mockOSATE(portNum));
+		CountDownLatch cdl = new CountDownLatch(1);
+		Thread mockOSATEThread = new Thread(new mockOSATE(portNum, cdl));
 		mockOSATEThread.start();
+		cdl.await();
 		Socket clientSocket = new Socket("localhost", portNum);
 		NetworkHandler.initializeProtocol(clientSocket);
 		assertEquals(5, countMatches(outContent.toString(),
@@ -98,22 +101,33 @@ public class ConnectivityTests extends OsateTest {
 	private class mockOSATE implements Runnable {
 
 		private int portNum;
+		private CountDownLatch cdl;
 
-		public mockOSATE(int portNum) {
+		public mockOSATE(int portNum, CountDownLatch cdl) {
 			this.portNum = portNum;
+			this.cdl = cdl;
 		}
 
 		@Override
 		public void run() {
-			try (ServerSocket serverSocket = new ServerSocket(portNum);
-					Socket clientSocket = serverSocket.accept(); // wait for ATSV
-					PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-					BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));) {
+			ServerSocket serverSocket = null;
+			try {
+				serverSocket = new ServerSocket(portNum);
+				cdl.countDown();
+				Socket clientSocket = serverSocket.accept(); // wait for ATSV
+				PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+				BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				while (reader.readLine() != null) {
 					writer.println("Hello from I-can't-believe-it's-not-OSATE!");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+			} finally {
+				try {
+					serverSocket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
