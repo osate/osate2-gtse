@@ -30,7 +30,7 @@ public class NetworkHandler {
 		int i = 0;
 		PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		writer.println("Hello from ATSV!");
+		writer.println("org.osate.atsv.integration.flow-latency:CarSystem:MyCar_CruiseControlTasks_Instance");
 		while ((inp = reader.readLine()) != null) {
 			i++;
 			System.out.println("Got '" + inp + "' from the socket!");

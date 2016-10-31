@@ -23,14 +23,24 @@ public class NetworkHandler implements Runnable {
 	}
 
 	public void run() {
-		String inp = "nothing :(";
+		String inp;
 		try (ServerSocket serverSocket = new ServerSocket(portNum); // bind to port
 				Socket clientSocket = serverSocket.accept(); // wait for ATSV
 				PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));) {
+			AnalysisDelegator delegator = new AnalysisDelegator();
 			while ((inp = reader.readLine()) != null) {
-				System.out.println("Got '" + inp + "' from the socket!");
-				writer.println("Hello from OSATE!");
+				String s[] = inp.split(":"); // 0: id of analyzer plugin
+											 // 1: Package name
+											 // 2: Component instance name
+											 // 3: System operation mode name
+				if(s.length == 3){
+					delegator.invoke(s[0], s[1], s[2], null);
+				} else if (s.length == 4){
+					delegator.invoke(s[0], s[1], s[2], s[3]);
+				} else {
+					// TODO: Handle this
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
