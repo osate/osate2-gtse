@@ -5,5 +5,4 @@ Bundle-SymbolicName: org.osate.atsv.integration.flow-latency;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.osate.atsv.integration;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.osate.analysis.flows,
- org.osate.aadl2.modelsupport
+Require-Bundle: org.osate.analysis.flows

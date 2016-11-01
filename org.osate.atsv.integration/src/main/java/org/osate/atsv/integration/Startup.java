@@ -2,6 +2,7 @@ package org.osate.atsv.integration;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IStartup;
+import org.osate.atsv.integration.network.NetworkHandler;
 
 public class Startup implements IStartup {
 

@@ -1,11 +1,8 @@
 package org.osate.atsv.integration;
 
-import java.util.Map;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.core.runtime.SafeRunner;
@@ -14,42 +11,43 @@ import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.instantiation.InstantiateModel;
+import org.osate.atsv.integration.network.Request;
+import org.osate.atsv.integration.network.Response;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class AnalysisDelegator {
 
 	private final String EXTENSION_POINT_ID = "org.osate.atsv.integration";
-	private IExtensionRegistry registry = RegistryFactory.getRegistry();
-
-	/*
-	 * Code adapted from http://www.vogella.com/tutorials/EclipseExtensionPoint/article.html
-	 */
-
-	public Map<String, String> invoke(String extensionId, String packageName, String implName, String modeName) {
-		IExtension ext = registry.getExtension(extensionId);
-		if (!ext.isValid()) {
-			// TODO: Handle this
-		}
-		if (ext.getExtensionPointUniqueIdentifier() != EXTENSION_POINT_ID) {
-			// TODO: Handle this
-		}
-		AnalysisRunner runnable = new AnalysisRunner(ext, packageName, implName, modeName);
+	
+	public Response invoke(Request req) {
+		AnalysisRunner runnable = new AnalysisRunner(req);
 		SafeRunner.run(runnable);
-		return runnable.m;
+		return runnable.getResponse();
 	}
 
 	private class AnalysisRunner implements ISafeRunnable {
-		public Map<String, String> m;
+		private Response response;
 		private IExtension ext;
 		private String packageName;
 		private String implName;
 		private String modeName;
-
-		public AnalysisRunner(IExtension ext, String packageName, String implName, String modeName) {
-			this.ext = ext;
-			this.packageName = packageName;
-			this.implName = implName;
-			this.modeName = modeName;
+		
+		public AnalysisRunner(Request req) {
+			this.ext = resolveExtension(req.getPluginId());
+			this.packageName = req.getPackageName();
+			this.implName = req.getComponentImplementationName();
+			this.modeName = req.getOperationModeName();
+		}
+		
+		private IExtension resolveExtension(String pluginId){
+			IExtension ext = RegistryFactory.getRegistry().getExtension(pluginId);
+			if (!ext.isValid()) {
+				// TODO: Handle this
+			}
+			if (ext.getExtensionPointUniqueIdentifier() != EXTENSION_POINT_ID) {
+				// TODO: Handle this
+			}
+			return ext;
 		}
 
 		@Override
@@ -72,7 +70,11 @@ public class AnalysisDelegator {
 					}
 				}
 			}
-			m = analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName));
+			response = analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName));
+		}
+
+		public Response getResponse() {
+			return response;
 		}
 	}
 
