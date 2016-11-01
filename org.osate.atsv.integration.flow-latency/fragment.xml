@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         id="org.osate.atsv.integration.flow-latency"
+         name="Flow Latency"
+         point="org.osate.atsv.integration">
+      <Analysis
+            AnalyzerClass="org.osate.atsv.integration.flowlatency.FlowLatency">
+      </Analysis>
+   </extension>
+
+</fragment>

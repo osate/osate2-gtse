@@ -27,17 +27,12 @@ public class NetworkHandler {
 
 	public static void initializeProtocol(Socket socket) throws IOException {
 		String inp;
-		int i = 0;
 		PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		writer.println("org.osate.atsv.integration.flow-latency:CarSystem:MyCar_CruiseControlTasks_Instance");
+		writer.println("org.osate.atsv.integration.flow-latency:CarSystem:MyCar.CruiseControlTasks");
 		while ((inp = reader.readLine()) != null) {
-			i++;
 			System.out.println("Got '" + inp + "' from the socket!");
-			writer.println("Hello from ATSV!");
-			if (i == 5) {
-				break;
-			}
+			break;
 		}
 	}
 }

@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Map;
 
 /**
  * 
@@ -29,18 +30,20 @@ public class NetworkHandler implements Runnable {
 				PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));) {
 			AnalysisDelegator delegator = new AnalysisDelegator();
+			Map<String, String> m = null;
 			while ((inp = reader.readLine()) != null) {
 				String s[] = inp.split(":"); // 0: id of analyzer plugin
 											 // 1: Package name
-											 // 2: Component instance name
-											 // 3: System operation mode name
+											 // 2: Component implementation name
+											 // 3: [Optional] System operation mode name
 				if(s.length == 3){
-					delegator.invoke(s[0], s[1], s[2], null);
+					m = delegator.invoke(s[0], s[1], s[2], null);
 				} else if (s.length == 4){
-					delegator.invoke(s[0], s[1], s[2], s[3]);
+					m = delegator.invoke(s[0], s[1], s[2], s[3]);
 				} else {
 					// TODO: Handle this
 				}
+				writer.println("Name: " + m.get("Name"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
