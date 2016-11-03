@@ -16,9 +16,26 @@ public class Response implements Serializable {
 	 */
 	private Map<String, String> variables = new HashMap<>();
 	
+	/**
+	 * The root exception, if something went wrong
+	 */
+	private Exception exception = null;
+	
 	public Response() {
 	}
 
+	public void setException(Exception e){
+		exception = e;
+	}
+	
+	public boolean hasException() {
+		return exception != null;
+	}
+	
+	public Exception getException() {
+		return exception;
+	}
+	
 	public Response(Map<String, String> vars) {
 		variables.putAll(vars);
 	}

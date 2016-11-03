@@ -34,6 +34,7 @@ public class NetworkHandler implements Runnable {
 			while ((req = (Request) input.readObject()) != null) {
 				res = delegator.invoke(req);
 				output.writeObject(res);
+				output.flush();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

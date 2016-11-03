@@ -46,6 +46,7 @@
     </dependencies>
     <modules>
         <module>../org.osate.atsv.integration</module>
+        <module>../org.osate.atsv.integration.flow-latency</module>
         <module>../org.osate.atsv.integration.tests</module>
     </modules>
     <repositories>

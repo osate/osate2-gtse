@@ -11,8 +11,7 @@ import org.osate.atsv.integration.network.Response;
 
 /**
  * 
- * A simple standalone client designed to be connected to an ATSV-Integration enabled version of OSATE. Much of the
- * socket code is adapted from http://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html 
+ * A simple standalone client designed to be connected to an ATSV-Integration enabled version of OSATE.
  * 
  * @author Sam Procter
  *
@@ -30,6 +29,12 @@ public class NetworkHandler {
 			sendRequest(getMockRequest());
 			Response r;
 			while((r = (Response) inStream.readObject()) != null){
+				if(r.hasException()){
+					System.err.println("An exception occurred.");
+					System.err.println(r.getException().getMessage());
+					r.getException().printStackTrace(System.err);
+					continue;
+				}
 				for(Entry<String, String> e : r.getVariables().entrySet()){
 					System.out.println(e.getKey() + " -- " + e.getValue());
 				}
