@@ -54,7 +54,7 @@ public class AnalysisDelegator {
 			if (!ext.isValid()) {
 				throw new AnalysisPluginException("The extension with id '" + pluginId + "' isn't valid!");
 			}
-			if (ext.getExtensionPointUniqueIdentifier() != EXTENSION_POINT_ID) {
+			if (!ext.getExtensionPointUniqueIdentifier().equals(EXTENSION_POINT_ID)) {
 				throw new AnalysisPluginException(
 						"The extension with id '" + pluginId + "' extends " + ext.getExtensionPointUniqueIdentifier()
 								+ " when it should extend " + EXTENSION_POINT_ID + "!");

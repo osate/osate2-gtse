@@ -37,10 +37,11 @@ public class ConnectivityTests extends OsateTest {
 		socket.close();
 	}
 	
-	@SuppressWarnings("unchecked") // I'm not sure this can be written without warnings
+	@SuppressWarnings("unchecked") 
 	@Before
 	public void customSetup() {
 		this.setUp();
+		// I'm not sure this line can be written without warnings
 		createFiles(Pair.<String, String>of("pullprotocols.aadl", pkgText));
 	}
 	
@@ -68,8 +69,8 @@ public class ConnectivityTests extends OsateTest {
 		outStream.writeObject(r);
 		outStream.flush();
 		Response res = (Response) inStream.readObject();
-		assertTrue(res.getVariables().containsKey("Report Name"));
-		assertEquals("latencyreport", res.getVariables().get("Report Name"));
+		assertTrue(res.getVariables().containsKey("XferOnly"));
+		assertEquals("304.0", res.getVariables().get("XferOnly"));
 	}
 
 	@Override
