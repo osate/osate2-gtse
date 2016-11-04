@@ -15,4 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.osate.aadl2.instantiation
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.osate.atsv.integration
+Export-Package: org.osate.atsv.integration,
+ org.osate.atsv.integration.EngineConfigModel,
+ org.osate.atsv.integration.exception,
+ org.osate.atsv.integration.network
