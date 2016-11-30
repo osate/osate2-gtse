@@ -17,4 +17,8 @@ public class InputTokensModel {
 	public void addTokenModel(InputTokenModel itm){
 		inputTokens.add(itm);
 	}
+
+	public void clear() {
+		inputTokens.clear();
+	}
 }

@@ -78,17 +78,21 @@ public class VariableModel {
 	 * Create a new variable model without a list of possible values or a distribution
 	 * 
 	 * @param title The name of this variable, this should be correspond to an input token if it's an input variable
-	 * @param capture Whether or not this variable is captured
 	 * @param sampled Whether or not this variable is sampled
 	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
 	 * @param value The default value of this variable. It should be of the class's type parameter, though the value
 	 * will be ignored if its an output variable. 
 	 */
-	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type,
 			String value) throws NumberFormatException {
 		this.title = title;
-		this.capture = capture;
+		/*
+		 *  See Nov 22 2016 email from Gary Stump:
+		 *  [capture] means that they are recorded for the dataset (probably for your case, 
+		 *  just assume true or capture all)
+		 */
+		this.capture = true;
 		this.sampled = sampled;
 		this.ioValue = isInput ? 0 : 1;
 		this.type = type.typeVal;
@@ -106,7 +110,6 @@ public class VariableModel {
 	 * Create a new variable model with a list of possible values
 	 * 
 	 * @param title The name of this variable, this should be correspond to an input token if it's an input variable
-	 * @param capture Whether or not this variable is captured
 	 * @param sampled Whether or not this variable is sampled
 	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
@@ -114,9 +117,9 @@ public class VariableModel {
 	 * will be ignored if its an output variable. 
 	 * @param valuesModel The values this variable can take
 	 */
-	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type,
 			String value, ValuesModel valuesModel) {
-		this(title, capture, sampled, isInput, type, value);
+		this(title, sampled, isInput, type, value);
 		this.values = valuesModel;
 	}
 
@@ -132,9 +135,9 @@ public class VariableModel {
 	 * will be ignored if its an output variable.
 	 * @param distributionModel The distribution of the data this variable tracks
 	 */
-	public VariableModel(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type,
 			String value, DistributionModel distributionModel) {
-		this(title, capture, sampled, isInput, type, value);
+		this(title, sampled, isInput, type, value);
 		this.distribution = distributionModel;
 	}
 

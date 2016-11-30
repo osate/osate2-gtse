@@ -17,13 +17,18 @@ import org.osate.atsv.integration.EngineConfigModel.VariableModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
 
-public class EngineConfigGenerator {
+public final class EngineConfigGenerator {
 
 	private Marshaller marshal;
 	private JAXBElement<ExplorationEngineModel> cfg;
 	private ExplorationEngineModel ecf;
-
-	public EngineConfigGenerator() {
+	private static final EngineConfigGenerator INSTANCE = new EngineConfigGenerator();
+	
+	public static EngineConfigGenerator getInstance(){
+		return INSTANCE;
+	}
+	
+	private EngineConfigGenerator() {
 		try {
 			JAXBContext context = JAXBContext.newInstance(ExplorationEngineModel.class, InputTokenModel.class,
 					VariableModel.class);
@@ -49,15 +54,16 @@ public class EngineConfigGenerator {
 	 * Add a variable to the engine configuration. The value parameter is ignored if isInput is false.
 	 * 
 	 * @param title The name of this variable
-	 * @param capture Whether or not this variable is captured
 	 * @param sampled Whether or not this variable is sampled
 	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
 	 * @param value The initial value of this variable
 	 */
-	public void addVariable(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type,
 			String value) {
-		VariableModel vm = new VariableModel(title, capture, sampled, isInput, type, value);
+		VariableModel vm = new VariableModel(title, sampled, isInput, type, value);
+		// TODO: Add null-check for value, if it's null each variable type should have
+		// default value -- min or max for int / float, first element for enumerated types
 		ecf.addVariable(vm);
 	}
 
@@ -65,16 +71,15 @@ public class EngineConfigGenerator {
 	 * Add a variable with an enumerated list of values to the engine configuration. The value parameter is ignored if isInput is false.
 	 * 
 	 * @param title The name of this variable
-	 * @param capture Whether or not this variable is captured
 	 * @param sampled Whether or not this variable is sampled
 	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
 	 * @param value The initial value of this variable
 	 * @param values The values this variable can take 
 	 */
-	public void addVariable(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type,
 			String value, ValuesModel values) {
-		VariableModel vm = new VariableModel(title, capture, sampled, isInput, type, value, values);
+		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, values);
 		ecf.addVariable(vm);
 	}
 
@@ -82,16 +87,15 @@ public class EngineConfigGenerator {
 	 * Add a variable with a distribution to the engine configuration. The value parameter is ignored if isInput is false.
 	 * 
 	 * @param title The name of this variable
-	 * @param capture Whether or not this variable is captured
 	 * @param sampled Whether or not this variable is sampled
 	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
 	 * @param value The initial value of this variable
 	 * @param distribution The distribution that the data this variable tracks fit 
 	 */
-	public void addVariable(String title, boolean capture, boolean sampled, boolean isInput, ATSVVariableType type,
+	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type,
 			String value, DistributionModel distribution) {
-		VariableModel vm = new VariableModel(title, capture, sampled, isInput, type, value, distribution);
+		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, distribution);
 		ecf.addVariable(vm);
 	}
 
@@ -99,5 +103,9 @@ public class EngineConfigGenerator {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		marshal.marshal(cfg, stream);
 		return stream.toString();
+	}
+
+	public void clearVariables() {
+		ecf.clearTokensAndVariables();
 	}
 }

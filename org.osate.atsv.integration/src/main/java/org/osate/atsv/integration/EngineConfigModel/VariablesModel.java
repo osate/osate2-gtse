@@ -20,5 +20,12 @@ public class VariablesModel {
 	 */
 	public void addVariable(VariableModel vm){
 		variables.add(vm);
+	}
+
+	/**
+	 * Empty the list of variables
+	 */
+	public void clear() {
+		variables.clear();
 	}	
 }

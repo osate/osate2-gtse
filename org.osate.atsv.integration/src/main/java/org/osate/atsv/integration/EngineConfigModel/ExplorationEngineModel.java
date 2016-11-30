@@ -115,4 +115,12 @@ public class ExplorationEngineModel {
 			inputTokens.addTokenModel(new InputTokenModel(vm.getTitle()));
 		variables.addVariable(vm);
 	}
+	
+	/**
+	 * Empty the list of variables
+	 */
+	public void clearTokensAndVariables() {
+		inputTokens.clear();
+		variables.clear();
+	}
 }
