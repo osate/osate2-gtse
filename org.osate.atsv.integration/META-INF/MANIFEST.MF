@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  org.osate.aadl2,
  org.osate.xtext.aadl2.properties,
  org.osate.aadl2.modelsupport,
- org.osate.aadl2.instantiation
+ org.osate.aadl2.instantiation,
+ org.apache.commons.lang3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.osate.atsv.integration,

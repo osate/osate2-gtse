@@ -22,13 +22,8 @@ public final class EngineConfigGenerator {
 	private Marshaller marshal;
 	private JAXBElement<ExplorationEngineModel> cfg;
 	private ExplorationEngineModel ecf;
-	private static final EngineConfigGenerator INSTANCE = new EngineConfigGenerator();
-	
-	public static EngineConfigGenerator getInstance(){
-		return INSTANCE;
-	}
-	
-	private EngineConfigGenerator() {
+
+	public EngineConfigGenerator() {
 		try {
 			JAXBContext context = JAXBContext.newInstance(ExplorationEngineModel.class, InputTokenModel.class,
 					VariableModel.class);
@@ -59,8 +54,7 @@ public final class EngineConfigGenerator {
 	 * @param type The type of this variable
 	 * @param value The initial value of this variable
 	 */
-	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value) {
+	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value) {
 		VariableModel vm = new VariableModel(title, sampled, isInput, type, value);
 		// TODO: Add null-check for value, if it's null each variable type should have
 		// default value -- min or max for int / float, first element for enumerated types
@@ -77,8 +71,8 @@ public final class EngineConfigGenerator {
 	 * @param value The initial value of this variable
 	 * @param values The values this variable can take 
 	 */
-	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value, ValuesModel values) {
+	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
+			ValuesModel values) {
 		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, values);
 		ecf.addVariable(vm);
 	}
@@ -93,8 +87,8 @@ public final class EngineConfigGenerator {
 	 * @param value The initial value of this variable
 	 * @param distribution The distribution that the data this variable tracks fit 
 	 */
-	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value, DistributionModel distribution) {
+	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
+			DistributionModel distribution) {
 		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, distribution);
 		ecf.addVariable(vm);
 	}
@@ -103,9 +97,5 @@ public final class EngineConfigGenerator {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		marshal.marshal(cfg, stream);
 		return stream.toString();
-	}
-
-	public void clearVariables() {
-		ecf.clearTokensAndVariables();
 	}
 }

@@ -6,13 +6,12 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.osate.workspace.WorkspacePlugin;
 
 public class PreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	public PreferencePage() {
 		super(GRID);
-		setPreferenceStore(WorkspacePlugin.getDefault().getPreferenceStore());
+		setPreferenceStore(Activator.getDefault().getPreferenceStore());
 		setDescription("ATSV Integration Preferences");
 	}
 
@@ -27,23 +26,22 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
 				"&Enable integration with ATSV", getFieldEditorParent());
 		enableATSVIntegration.loadDefault();
 		addField(enableATSVIntegration);
-		
-		final IntegerFieldEditor atsvConnectionPortNumber = new IntegerFieldEditor(
-				Activator.ATSV_INTEGRATION_PORT, "ATSV &Connection Port", getFieldEditorParent());
+
+		final IntegerFieldEditor atsvConnectionPortNumber = new IntegerFieldEditor(Activator.ATSV_INTEGRATION_PORT,
+				"ATSV &Connection Port", getFieldEditorParent());
 		atsvConnectionPortNumber.setTextLimit(5);
 		atsvConnectionPortNumber.loadDefault();
 		atsvConnectionPortNumber.setValidRange(0, 65535);
 		atsvConnectionPortNumber.fillIntoGrid(getFieldEditorParent(), 2);
 		addField(atsvConnectionPortNumber);
-		
-		DirectoryFieldEditor atsvFilesDir = new DirectoryFieldEditor(
-				Activator.ATSV_FILES_DIRECTORY, "&Directory for ATSV Files:",
-getFieldEditorParent());
+
+		DirectoryFieldEditor atsvFilesDir = new DirectoryFieldEditor(Activator.ATSV_FILES_DIRECTORY,
+				"&Directory for ATSV Files:", getFieldEditorParent());
 		atsvFilesDir.loadDefault();
 		addField(atsvFilesDir);
-		
-		final IntegerFieldEditor atsvSampleCount = new IntegerFieldEditor(
-				Activator.ATSV_SAMPLE_COUNT, "ATSV &Sample Count", getFieldEditorParent());
+
+		final IntegerFieldEditor atsvSampleCount = new IntegerFieldEditor(Activator.ATSV_SAMPLE_COUNT,
+				"ATSV &Sample Count", getFieldEditorParent());
 		atsvSampleCount.setTextLimit(5);
 		atsvSampleCount.loadDefault();
 		atsvSampleCount.fillIntoGrid(getFieldEditorParent(), 2);
