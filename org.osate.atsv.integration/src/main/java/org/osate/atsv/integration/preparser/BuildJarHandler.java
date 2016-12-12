@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.FileSystems;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -16,8 +18,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -25,6 +30,7 @@ import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.EngineConfigGenerator;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
+import org.osgi.framework.Bundle;
 
 public class BuildJarHandler extends AbstractHandler {
 
@@ -32,6 +38,8 @@ public class BuildJarHandler extends AbstractHandler {
 	private Map<String, String> startingOutputs = new HashMap<>();
 	private Properties prop = null;
 	private EngineConfigGenerator ecf = new EngineConfigGenerator();
+	private String targetDirStr = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
+			+ File.separator;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -41,9 +49,23 @@ public class BuildJarHandler extends AbstractHandler {
 		generateInputFile();
 		generateOutputFile();
 		generateRunScript();
-		// generateParserJar();
+		generateParserJar();
 		// generateIntegrationJar();
 		return null;
+	}
+
+	private void generateParserJar() {
+		// Generate is a little bit of a misnomer here, since we really just copy the file
+		Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
+		Path srcPath = new Path("src/main/resources/parser.jar");
+		java.nio.file.Path dstPath = FileSystems.getDefault().getPath(targetDirStr + "parser.jar");
+		InputStream is;
+		try {
+			is = FileLocator.openStream(bundle, srcPath, false);
+			java.nio.file.Files.copy(is, dstPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void addGeneratedChoicePoint(String title, ATSVVariableType type, String defaultVal, ValuesModel values) {
@@ -85,9 +107,7 @@ public class BuildJarHandler extends AbstractHandler {
 	}
 
 	private void generateOutputFile() {
-		try (PrintWriter out = new PrintWriter(
-				Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY) + File.separator
-						+ "output.txt")) {
+		try (PrintWriter out = new PrintWriter(targetDirStr + "output.txt")) {
 			for (Map.Entry<String, String> output : startingOutputs.entrySet()) {
 				out.println(output.getKey() + "," + output.getValue());
 			}
@@ -97,9 +117,7 @@ public class BuildJarHandler extends AbstractHandler {
 	}
 
 	private void generateInputFile() {
-		try (PrintWriter out = new PrintWriter(
-				Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY) + File.separator
-						+ "input.txt")) {
+		try (PrintWriter out = new PrintWriter(targetDirStr + "input.txt")) {
 			for (Map.Entry<String, String> input : startingInputs.entrySet()) {
 				out.println(input.getKey() + "," + input.getValue());
 			}
@@ -109,9 +127,7 @@ public class BuildJarHandler extends AbstractHandler {
 	}
 
 	private void generateEngineConfig() {
-		try (PrintWriter out = new PrintWriter(
-				Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY) + File.separator
-						+ "ATSVConfig.ecf")) {
+		try (PrintWriter out = new PrintWriter(targetDirStr + "ATSVConfig.ecf")) {
 			out.println(ecf.getXML());
 		} catch (JAXBException | FileNotFoundException e) {
 			e.printStackTrace();
@@ -119,9 +135,7 @@ public class BuildJarHandler extends AbstractHandler {
 	}
 
 	private void generateRunScript() {
-		try (PrintWriter out = new PrintWriter(
-				Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY) + File.separator
-						+ (SystemUtils.IS_OS_WINDOWS ? "run.bat" : "run.sh"))) {
+		try (PrintWriter out = new PrintWriter(targetDirStr + (SystemUtils.IS_OS_WINDOWS ? "run.bat" : "run.sh"))) {
 			if (!SystemUtils.IS_OS_WINDOWS) {
 				out.println("#!/bin/sh");
 			}
