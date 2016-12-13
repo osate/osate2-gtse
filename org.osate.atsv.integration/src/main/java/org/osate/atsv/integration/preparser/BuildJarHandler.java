@@ -3,13 +3,17 @@ package org.osate.atsv.integration.preparser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.FileSystems;
+import java.nio.file.attribute.PosixFilePermission;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
@@ -36,7 +40,8 @@ public class BuildJarHandler extends AbstractHandler {
 
 	private Map<String, String> startingInputs = new HashMap<>();
 	private Map<String, String> startingOutputs = new HashMap<>();
-	private Properties prop = null;
+	private Properties userProps = null;
+	private Properties atsvProps = new Properties();
 	private EngineConfigGenerator ecf = new EngineConfigGenerator();
 	private String targetDirStr = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
 			+ File.separator;
@@ -49,20 +54,41 @@ public class BuildJarHandler extends AbstractHandler {
 		generateInputFile();
 		generateOutputFile();
 		generateRunScript();
-		generateParserJar();
-		// generateIntegrationJar();
+		generateRequestProperties();
+		copyJars();
 		return null;
 	}
 
-	private void generateParserJar() {
-		// Generate is a little bit of a misnomer here, since we really just copy the file
+	private void generateRequestProperties() {
+		try (FileOutputStream out = new FileOutputStream(targetDirStr + "request.properties")) {
+			atsvProps.store(out,
+					"NO USER MODIFIABLE CONTENTS\n#Auto-generated properties for the ATSV-OSATE connection (connector.jar)");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void copyJars() {
+		Set<PosixFilePermission> perms = new HashSet<>();
+		perms.add(PosixFilePermission.OWNER_READ);
+		perms.add(PosixFilePermission.OWNER_EXECUTE);
+
 		Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
-		Path srcPath = new Path("src/main/resources/parser.jar");
-		java.nio.file.Path dstPath = FileSystems.getDefault().getPath(targetDirStr + "parser.jar");
-		InputStream is;
-		try {
-			is = FileLocator.openStream(bundle, srcPath, false);
-			java.nio.file.Files.copy(is, dstPath);
+		Path srcParsePath = new Path("src/main/resources/parser.jar");
+		java.nio.file.Path dstParsePath = FileSystems.getDefault().getPath(targetDirStr + "parser.jar");
+		Path srcConnectPath = new Path("src/main/resources/connector.jar");
+		java.nio.file.Path dstConnectPath = FileSystems.getDefault().getPath(targetDirStr + "connector.jar");
+		try (InputStream parseIS = FileLocator.openStream(bundle, srcParsePath, false);
+				InputStream connectIS = FileLocator.openStream(bundle, srcConnectPath, false)) {
+			if (java.nio.file.Files.exists(dstParsePath)) {
+				java.nio.file.Files.delete(dstParsePath);
+			}
+			if (java.nio.file.Files.exists(dstConnectPath)) {
+				java.nio.file.Files.delete(dstConnectPath);
+			}
+			java.nio.file.Files.copy(parseIS, dstParsePath);
+			java.nio.file.Files.copy(connectIS, dstConnectPath);
+			java.nio.file.Files.setPosixFilePermissions(dstConnectPath, perms);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -94,16 +120,19 @@ public class BuildJarHandler extends AbstractHandler {
 			return null;
 		}
 
+		atsvProps.setProperty("packageName", propFile.getName().substring(0,
+				propFile.getName().length() - propFile.getFileExtension().length() - 1));
+
 		// Assume choicepoint definitions are named the same as the package they specify
-		prop = new Properties();
+		userProps = new Properties();
 		IPath propFilePath = propFile.getRawLocation();
 		try {
-			prop.load(new FileInputStream(propFilePath.toFile()));
+			userProps.load(new FileInputStream(propFilePath.toFile()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return prop;
+		return userProps;
 	}
 
 	private void generateOutputFile() {
@@ -139,24 +168,27 @@ public class BuildJarHandler extends AbstractHandler {
 			if (!SystemUtils.IS_OS_WINDOWS) {
 				out.println("#!/bin/sh");
 			}
-			out.println("java -classpath . ATSVIntegrationJar");
+			out.println("java -classpath . -jar connector.jar localhost " + Activator.ATSV_INTEGRATION_PORT);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void parseProperties() {
-		for (String propName : prop.stringPropertyNames()) {
+		for (String propName : userProps.stringPropertyNames()) {
 			String[] propNames = propName.split("-");
 			if (propNames[0].equalsIgnoreCase("Analyses")) {
-				// TODO: Handle analysis specification
+				atsvProps.setProperty("pluginId", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
-				String[] options = prop.getProperty(propName).split(",");
+				String[] options = userProps.getProperty(propName).split(",");
 				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, options[0],
 						new ValuesModel(options));
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
-				ATSVVariableType type = getTypeFromString(prop.getProperty(propName));
-				addOutputVariable(propNames[1], type, getDefaultFromType(type));
+				ATSVVariableType type = getTypeFromString(propNames[1]);
+				addOutputVariable(userProps.getProperty(propName), type, getDefaultFromType(type));
+			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
+				// Just pass this straight through as-is
+				atsvProps.setProperty(propName, userProps.getProperty(propName));
 			}
 		}
 	}

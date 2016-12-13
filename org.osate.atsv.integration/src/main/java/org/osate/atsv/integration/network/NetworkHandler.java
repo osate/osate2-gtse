@@ -23,21 +23,26 @@ public class NetworkHandler implements Runnable {
 		this.portNum = portNum;
 	}
 
+	@Override
 	public void run() {
 		Request req;
 		Response res;
-		try (ServerSocket serverSocket = new ServerSocket(portNum); // bind to port
-				Socket clientSocket = serverSocket.accept(); // wait for ATSV
-				ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
-				ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());) {
-			AnalysisDelegator delegator = new AnalysisDelegator();
-			while ((req = (Request) input.readObject()) != null) {
+		while (true) {
+			try (ServerSocket serverSocket = new ServerSocket(portNum); // bind to port
+					Socket clientSocket = serverSocket.accept(); // wait for ATSV
+					ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
+					ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());) {
+				AnalysisDelegator delegator = new AnalysisDelegator();
+//			while ((req = (Request) input.readObject()) != null) {
+				req = (Request) input.readObject();
 				res = delegator.invoke(req);
 				output.writeObject(res);
 				output.flush();
+//			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }

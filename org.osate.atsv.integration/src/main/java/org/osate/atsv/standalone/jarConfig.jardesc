@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
-    <jar path="/home/sam/Desktop/atsv-standalone.jar"/>
+    <jar path="/home/sam/Desktop/connector.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/org.osate.atsv.integration/src/main/java/org/osate/atsv/standalone/jarConfig.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -13,6 +13,7 @@
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Request.java"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Response.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.exception"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{NetworkHandler.java"/>
     </selectedElements>
 </jardesc>
