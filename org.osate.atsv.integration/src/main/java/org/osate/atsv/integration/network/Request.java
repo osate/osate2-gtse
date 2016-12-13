@@ -1,6 +1,8 @@
 package org.osate.atsv.integration.network;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Request implements Serializable {
 
@@ -10,12 +12,14 @@ public class Request implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String pluginId = null;
-	
+
 	private String packageName = null;
-	
+
 	private String componentImplementationName = null;
-	
+
 	private String operationModeName = null;
+
+	private Set<ChoicePointSpecification> choices = new HashSet<>();
 
 	public String getPluginId() {
 		return pluginId;
@@ -48,8 +52,12 @@ public class Request implements Serializable {
 	public void setOperationModeName(String operationModeName) {
 		this.operationModeName = operationModeName;
 	}
-	
-	public boolean hasMode(){
+
+	public boolean hasMode() {
 		return operationModeName != null;
+	}
+
+	public void addChoicePoint(ChoicePointSpecification cps) {
+		choices.add(cps);
 	}
 }

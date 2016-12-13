@@ -183,6 +183,8 @@ public class BuildJarHandler extends AbstractHandler {
 				String[] options = userProps.getProperty(propName).split(",");
 				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, options[0],
 						new ValuesModel(options));
+				// Pass the choicepoint definition through to the properties used to build the request...
+				atsvProps.setProperty(propName, "(Key value is unused)");
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
 				ATSVVariableType type = getTypeFromString(propNames[1]);
 				addOutputVariable(userProps.getProperty(propName), type, getDefaultFromType(type));
