@@ -56,7 +56,28 @@ public class BuildJarHandler extends AbstractHandler {
 		generateRunScript();
 		generateRequestProperties();
 		copyJars();
+		setPermissions();
 		return null;
+	}
+
+	private void setPermissions() {
+		Set<PosixFilePermission> perms = new HashSet<>();
+		perms.add(PosixFilePermission.OWNER_READ);
+		perms.add(PosixFilePermission.OWNER_EXECUTE);
+
+		java.nio.file.Path parseJarPath = FileSystems.getDefault().getPath(targetDirStr + "parser.jar");
+		java.nio.file.Path connectJarPath = FileSystems.getDefault().getPath(targetDirStr + "connector.jar");
+		java.nio.file.Path runScriptPath = FileSystems.getDefault()
+				.getPath(targetDirStr + (SystemUtils.IS_OS_WINDOWS ? "run.bat" : "run.sh"));
+
+		try {
+			java.nio.file.Files.setPosixFilePermissions(parseJarPath, perms);
+			java.nio.file.Files.setPosixFilePermissions(connectJarPath, perms);
+			java.nio.file.Files.setPosixFilePermissions(runScriptPath, perms);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void generateRequestProperties() {
@@ -69,10 +90,6 @@ public class BuildJarHandler extends AbstractHandler {
 	}
 
 	private void copyJars() {
-		Set<PosixFilePermission> perms = new HashSet<>();
-		perms.add(PosixFilePermission.OWNER_READ);
-		perms.add(PosixFilePermission.OWNER_EXECUTE);
-
 		Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
 		Path srcParsePath = new Path("src/main/resources/parser.jar");
 		java.nio.file.Path dstParsePath = FileSystems.getDefault().getPath(targetDirStr + "parser.jar");
@@ -88,7 +105,6 @@ public class BuildJarHandler extends AbstractHandler {
 			}
 			java.nio.file.Files.copy(parseIS, dstParsePath);
 			java.nio.file.Files.copy(connectIS, dstConnectPath);
-			java.nio.file.Files.setPosixFilePermissions(dstConnectPath, perms);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -168,7 +184,8 @@ public class BuildJarHandler extends AbstractHandler {
 			if (!SystemUtils.IS_OS_WINDOWS) {
 				out.println("#!/bin/sh");
 			}
-			out.println("java -classpath . -jar connector.jar localhost " + Activator.ATSV_INTEGRATION_PORT);
+			out.println("java -classpath . -jar connector.jar localhost "
+					+ Activator.getDefault().getPreferenceStore().getInt(Activator.ATSV_INTEGRATION_PORT));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

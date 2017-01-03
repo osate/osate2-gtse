@@ -1,5 +1,7 @@
 package org.osate.atsv.integration;
 
+import java.util.Set;
+
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.ISafeRunnable;
@@ -9,8 +11,8 @@ import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
-import org.osate.aadl2.instantiation.InstantiateModel;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
+import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
@@ -38,12 +40,14 @@ public class AnalysisDelegator {
 		private String packageName;
 		private String implName;
 		private String modeName;
+		private Set<ChoicePointSpecification> choices;
 
 		public AnalysisRunner(Request req) throws AnalysisPluginException {
 			this.ext = resolveExtension(req.getPluginId());
 			this.packageName = req.getPackageName();
 			this.implName = req.getComponentImplementationName();
 			this.modeName = req.getOperationModeName();
+			this.choices = req.getChoicepoints();
 		}
 
 		private IExtension resolveExtension(String pluginId) throws AnalysisPluginException {
@@ -74,7 +78,7 @@ public class AnalysisDelegator {
 
 		@Override
 		public void run() throws Exception {
-			SystemInstance instance = instantiateClassifier(packageName, implName);
+			SystemInstance instance = instantiateClassifier(packageName, implName, choices);
 			AbstractAnalysis analyzer = null; // TODO: Provide default implementation that gives a useful error if the analyzer can't be found
 			for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
 				if (cfgElem.getName().equals("Analysis")) {
@@ -89,13 +93,14 @@ public class AnalysisDelegator {
 		}
 	}
 
-	private SystemInstance instantiateClassifier(String packageName, String implName) throws Exception {
+	private SystemInstance instantiateClassifier(String packageName, String implName,
+			Set<ChoicePointSpecification> choices) throws Exception {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName);
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 
-		return InstantiateModel.buildInstanceModelFile(impl);
+		return CustomInstantiator.myBuildInstanceModelFile(impl, choices);
 	}
 
 	private SystemOperationMode getSystemModeFromName(SystemInstance instance, String modeName) {

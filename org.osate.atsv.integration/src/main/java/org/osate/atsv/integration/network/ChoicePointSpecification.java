@@ -1,8 +1,15 @@
 package org.osate.atsv.integration.network;
 
+import java.io.Serializable;
+
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 
-public class ChoicePointSpecification {
+public class ChoicePointSpecification implements Serializable {
+
+	/**
+	 * Default serial version 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String componentName;
 	protected String choicepointName;
 	protected String value;
@@ -36,11 +43,11 @@ public class ChoicePointSpecification {
 		return value;
 	}
 
-	public String getchoicepointName() {
+	public String getChoicepointName() {
 		return choicepointName;
 	}
 
-	public String getcomponentName() {
+	public String getComponentName() {
 		return componentName;
 	}
 

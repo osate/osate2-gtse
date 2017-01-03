@@ -60,4 +60,8 @@ public class Request implements Serializable {
 	public void addChoicePoint(ChoicePointSpecification cps) {
 		choices.add(cps);
 	}
+
+	public Set<ChoicePointSpecification> getChoicepoints() {
+		return choices;
+	}
 }
