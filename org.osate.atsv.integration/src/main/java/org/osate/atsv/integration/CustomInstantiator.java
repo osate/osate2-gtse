@@ -60,12 +60,13 @@ public class CustomInstantiator extends InstantiateModel {
 	protected ComponentType getComponentType(ComponentInstance ci) {
 		if (ci.getContainingComponentInstance() != null) {
 			// trim off the last 9 characters, which are "_Instance"
+			// Top-level is system instance, everything else is a component instance
 			ChoicePointSpecification cps = choicepoints.get(ci.getContainingComponentInstance().getName()
 					.substring(0, ci.getContainingComponentInstance().getName().length() - 9).replace('_', '.') + "-"
 					+ ci.getName());
-
 			if (cps != null) {
-				Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(cps.getValueAsString());
+				Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(ci.eResource().getResourceSet(),
+						cps.getValueAsString());
 				if (cl instanceof ComponentType) {
 					return (ComponentType) cl;
 				}

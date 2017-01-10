@@ -64,18 +64,21 @@ public class ConnectivityTests extends OsateTest {
 	 * 
 	 * Disabled 10.11.16 -- I can't get maven tycho to run this test successfully, even though it
 	 * runs just fine in eclipse.
-		@Test
-		public void osateConnectivityTest() throws IOException, ClassNotFoundException {
-			Request r = new Request();
-			r.setPluginId("org.osate.atsv.integration.flow-latency");
-			r.setPackageName("PullProtocols");
-			r.setComponentImplementationName("stub.i");
-			outStream.writeObject(r);
-			outStream.flush();
-			Response res = (Response) inStream.readObject();
-			assertTrue(res.getVariables().containsKey("XferOnly"));
-			assertEquals("304.0", res.getVariables().get("XferOnly"));
-		}*/
+	 
+	@Test
+	public void osateConnectivityTest() throws IOException, ClassNotFoundException {
+		Request r = new Request();
+		r.setPluginId("org.osate.atsv.integration.flow-latency");
+		r.setPackageName("PullProtocols");
+		r.setComponentImplementationName("stub.i");
+		outStream.writeObject(r);
+		outStream.flush();
+		Response res = (Response) inStream.readObject();
+		assertFalse(res.hasException());
+		assertTrue(res.getVariables().containsKey("XferOnly"));
+		assertEquals("304.0", res.getVariables().get("XferOnly"));
+	}
+	 */
 
 	@Override
 	public String getProjectName() {
