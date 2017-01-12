@@ -1,14 +1,17 @@
 package org.osate.atsv.integration.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import org.eclipse.xtext.xbase.lib.Pair;
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -26,10 +29,6 @@ public class ConnectivityTests extends OsateTest {
 
 	@BeforeClass
 	public static void preSetUp() throws IOException {
-		socket = new Socket("localhost",
-				Activator.getDefault().getPreferenceStore().getDefaultInt(Activator.ATSV_INTEGRATION_PORT));
-		outStream = new ObjectOutputStream(socket.getOutputStream());
-		inStream = new ObjectInputStream(socket.getInputStream());
 	}
 
 	@AfterClass
@@ -39,10 +38,20 @@ public class ConnectivityTests extends OsateTest {
 
 	@SuppressWarnings("unchecked")
 	@Before
-	public void customSetup() {
+	public void customSetup() throws UnknownHostException, IOException {
 		this.setUp();
 		// I'm not sure this line can be written without warnings
 		createFiles(Pair.<String, String> of("pullprotocols.aadl", pkgText));
+		socket = new Socket("localhost",
+				Activator.getDefault().getPreferenceStore().getDefaultInt(Activator.ATSV_INTEGRATION_PORT));
+		outStream = new ObjectOutputStream(socket.getOutputStream());
+		inStream = new ObjectInputStream(socket.getInputStream());
+	}
+
+	@After
+	public void customCleanUp() throws IOException {
+		this.cleanUp();
+		socket.close();
 	}
 
 	@Test
@@ -64,7 +73,7 @@ public class ConnectivityTests extends OsateTest {
 	 * 
 	 * Disabled 10.11.16 -- I can't get maven tycho to run this test successfully, even though it
 	 * runs just fine in eclipse.
-	 
+	*/
 	@Test
 	public void osateConnectivityTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
@@ -76,9 +85,8 @@ public class ConnectivityTests extends OsateTest {
 		Response res = (Response) inStream.readObject();
 		assertFalse(res.hasException());
 		assertTrue(res.getVariables().containsKey("XferOnly"));
-		assertEquals("304.0", res.getVariables().get("XferOnly"));
+		assertEquals("504.0", res.getVariables().get("XferOnly"));
 	}
-	 */
 
 	@Override
 	public String getProjectName() {
