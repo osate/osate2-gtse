@@ -3,7 +3,7 @@
 <fragment>
    <extension
          id="org.osate.atsv.integration.flow-latency"
-         name="Flow Latency"
+         name="ATSV-Compatible Flow Latency"
          point="org.osate.atsv.integration">
       <Analysis
             AnalyzerClass="org.osate.atsv.integration.flowlatency.FlowLatency">
