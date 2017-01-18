@@ -38,16 +38,17 @@ import org.osgi.framework.Bundle;
 
 public class BuildJarHandler extends AbstractHandler {
 
-	private Map<String, String> startingInputs = new HashMap<>();
-	private Map<String, String> startingOutputs = new HashMap<>();
+	private Map<String, String> startingInputs = null;
+	private Map<String, String> startingOutputs = null;
 	private Properties userProps = null;
-	private Properties atsvProps = new Properties();
-	private EngineConfigGenerator ecf = new EngineConfigGenerator();
+	private Properties atsvProps = null;
+	private EngineConfigGenerator ecf;
 	private String targetDirStr = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
 			+ File.separator;
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
+		initializeFields();
 		initializeProperties();
 		parseProperties();
 		generateEngineConfig();
@@ -60,9 +61,18 @@ public class BuildJarHandler extends AbstractHandler {
 		return null;
 	}
 
+	private void initializeFields() {
+		startingInputs = new HashMap<>();
+		startingOutputs = new HashMap<>();
+		userProps = null;
+		atsvProps = new Properties();
+		ecf = new EngineConfigGenerator();
+	}
+
 	private void setPermissions() {
 		Set<PosixFilePermission> perms = new HashSet<>();
 		perms.add(PosixFilePermission.OWNER_READ);
+		perms.add(PosixFilePermission.OWNER_WRITE); // Required to allow overwriting on subsequent runs
 		perms.add(PosixFilePermission.OWNER_EXECUTE);
 
 		java.nio.file.Path parseJarPath = FileSystems.getDefault().getPath(targetDirStr + "parser.jar");

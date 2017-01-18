@@ -7,14 +7,19 @@ import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.osate.aadl2.Classifier;
+import org.osate.aadl2.ComponentClassifier;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.ComponentType;
+import org.osate.aadl2.PrototypeBinding;
+import org.osate.aadl2.Subcomponent;
 import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.SystemInstance;
+import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
 import org.osate.aadl2.instantiation.InstantiateModel;
 import org.osate.aadl2.modelsupport.AadlConstants;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
@@ -56,6 +61,23 @@ public class CustomInstantiator extends InstantiateModel {
 		return root;
 	}
 
+	/*-
+	 * 
+	 * There is a getClassifier or getComponentClassifier (or something) as part of the 
+	 * ComponentInstance class. That is implemented as getSubcomponent().getClassifier(ish).
+	 * 
+	 * That should be overriden -- it'll pull the classifier from the declarative model.
+	 * 
+	 * The fix:
+	 * The instance model metamodel should be modified s/t each component instance has a reference
+	 * to the instantiated classifier. That is not just the subcomponent, which it has now,
+	 * but the classifier as well.
+	 * 
+	 * There is a classifier cache that is used during instantiation that tracks this information.
+	 * 
+	 * The other option is to modify this cache with my replacement information.
+	 */
+
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
 		if (ci.getContainingComponentInstance() != null) {
@@ -73,6 +95,15 @@ public class CustomInstantiator extends InstantiateModel {
 				Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(// ci.eResource().getResourceSet(),
 						cps.getValueAsString());
 				if (cl instanceof ComponentType) {
+					// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
+					// in InstanceUtil.java
+
+					Subcomponent sub = ci.getSubcomponent();
+					ComponentClassifier classifier = (ComponentClassifier) cl;
+					EList<PrototypeBinding> prototypeBindings = sub.getOwnedPrototypeBindings();
+					InstantiatedClassifier ic = new InstantiatedClassifier(classifier, prototypeBindings);
+
+					classifierCache.put(ci, ic);
 					return (ComponentType) cl;
 				}
 			}

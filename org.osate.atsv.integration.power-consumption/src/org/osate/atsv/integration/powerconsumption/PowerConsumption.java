@@ -25,10 +25,18 @@ public class PowerConsumption extends AbstractAnalysis {
 	}
 
 	private void populateVariables(Report report, Response ret) {
+		String varName;
 		for (Section section : report.getSections()) {
+			varName = "";
 			for (Line line : section.getLines()) {
 				for (ReportedCell cell : line.getContent()) {
-					cell.getMessage();// do things
+					if (cell.getMessage().startsWith("Computing Electrical Power for ")) {
+						// Grab everything after the prefix
+						varName = cell.getMessage().substring(31);
+					}
+					if (cell.getMessage().startsWith("Budget: ")) {
+						ret.addVariable(varName, cell.getMessage().substring(8, cell.getMessage().lastIndexOf(" W")));
+					}
 				}
 			}
 		}
