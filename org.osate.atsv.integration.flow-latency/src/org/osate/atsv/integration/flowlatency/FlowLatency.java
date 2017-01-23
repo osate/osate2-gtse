@@ -13,13 +13,11 @@ import org.osate.atsv.integration.network.Response;
 public class FlowLatency extends AbstractAnalysis {
 
 	@Override
-	public Response runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
-			IProgressMonitor progressMonitor) {
+	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
+			IProgressMonitor progressMonitor, Response resp) {
 		CheckFlowLatency checker = new CheckFlowLatency();
-		Response ret = new Response();
 		LatencyReport report = checker.invokeAndGetReport(progressMonitor, errMgr, instance, som);
-		populateVariables(report, ret);
-		return ret;
+		populateVariables(report, resp);
 	}
 
 	private void populateVariables(LatencyReport report, Response ret) {

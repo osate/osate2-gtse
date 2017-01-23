@@ -79,13 +79,14 @@ public class AnalysisDelegator {
 		@Override
 		public void run() throws Exception {
 			SystemInstance instance = instantiateClassifier(packageName, implName, choices);
+			response = new Response();
 			AbstractAnalysis analyzer = null; // TODO: Provide default implementation that gives a useful error if the analyzer can't be found
 			for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
 				if (cfgElem.getName().equals("Analysis")) {
 					analyzer = (AbstractAnalysis) cfgElem.createExecutableExtension("AnalyzerClass");
+					analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName), response);
 				}
 			}
-			response = analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName));
 		}
 
 		public Response getResponse() {

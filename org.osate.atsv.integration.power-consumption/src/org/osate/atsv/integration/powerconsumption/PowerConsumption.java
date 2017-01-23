@@ -15,13 +15,11 @@ import org.osate.atsv.integration.network.Response;
 public class PowerConsumption extends AbstractAnalysis {
 
 	@Override
-	public Response runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
-			IProgressMonitor progressMonitor) {
+	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
+			IProgressMonitor progressMonitor, Response resp) {
 		DoPowerAnalysis checker = new DoPowerAnalysis();
-		Response ret = new Response();
 		Report report = checker.invokeAndGetReport(progressMonitor, instance);
-		populateVariables(report, ret);
-		return ret;
+		populateVariables(report, resp);
 	}
 
 	private void populateVariables(Report report, Response ret) {
