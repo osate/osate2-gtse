@@ -58,7 +58,7 @@ public class ConnectivityTests extends OsateTest {
 	public void badPluginIdTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		final String fakePluginID = "this.isnt.a.real.plugin.id";
-		r.setPluginId(fakePluginID);
+		r.addPluginId(fakePluginID);
 		r.setPackageName("none");
 		r.setComponentImplementationName("none");
 		outStream.writeObject(r);
@@ -77,7 +77,7 @@ public class ConnectivityTests extends OsateTest {
 	@Test
 	public void osateConnectivityTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
-		r.setPluginId("org.osate.atsv.integration.flow-latency");
+		r.addPluginId("org.osate.atsv.integration.flow-latency");
 		r.setPackageName("PullProtocols");
 		r.setComponentImplementationName("stub.i");
 		outStream.writeObject(r);

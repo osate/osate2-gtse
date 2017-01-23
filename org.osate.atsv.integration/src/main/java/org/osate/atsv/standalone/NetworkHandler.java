@@ -79,7 +79,7 @@ public class NetworkHandler {
 			e.printStackTrace();
 		}
 		Request r = new Request();
-		r.setPluginId(prop.getProperty("pluginId"));
+		r.setPluginIds(prop.getProperty("pluginIds").split(","));
 		r.setPackageName(prop.getProperty("packageName"));
 		r.setComponentImplementationName(prop.getProperty("componentImplementationName"));
 		for (String propName : prop.stringPropertyNames()) {

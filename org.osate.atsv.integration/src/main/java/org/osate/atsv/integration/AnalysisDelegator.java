@@ -1,5 +1,7 @@
 package org.osate.atsv.integration;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -36,34 +38,40 @@ public class AnalysisDelegator {
 
 	private class AnalysisRunner implements ISafeRunnable {
 		private Response response;
-		private IExtension ext;
 		private String packageName;
 		private String implName;
 		private String modeName;
 		private Set<ChoicePointSpecification> choices;
+		private SystemInstance instance;
+		private Set<IExtension> exts;
 
 		public AnalysisRunner(Request req) throws AnalysisPluginException {
-			this.ext = resolveExtension(req.getPluginId());
+			this.exts = resolveExtensions(req.getPluginIds());
 			this.packageName = req.getPackageName();
 			this.implName = req.getComponentImplementationName();
 			this.modeName = req.getOperationModeName();
 			this.choices = req.getChoicepoints();
 		}
 
-		private IExtension resolveExtension(String pluginId) throws AnalysisPluginException {
-			IExtension ext = RegistryFactory.getRegistry().getExtension(pluginId);
-			if (ext == null) {
-				throw new AnalysisPluginException("No extension with id '" + pluginId + "' found!");
+		private Set<IExtension> resolveExtensions(Collection<String> pluginIds) throws AnalysisPluginException {
+			exts = new HashSet<>();
+			for (String pluginId : pluginIds) {
+				pluginId = pluginId.trim();
+				IExtension ext = RegistryFactory.getRegistry().getExtension(pluginId);
+				if (ext == null) {
+					throw new AnalysisPluginException("No extension with id '" + pluginId + "' found!");
+				}
+				if (!ext.isValid()) {
+					throw new AnalysisPluginException("The extension with id '" + pluginId + "' isn't valid!");
+				}
+				if (!ext.getExtensionPointUniqueIdentifier().equals(EXTENSION_POINT_ID)) {
+					throw new AnalysisPluginException("The extension with id '" + pluginId + "' extends "
+							+ ext.getExtensionPointUniqueIdentifier() + " when it should extend " + EXTENSION_POINT_ID
+							+ "!");
+				}
+				exts.add(ext);
 			}
-			if (!ext.isValid()) {
-				throw new AnalysisPluginException("The extension with id '" + pluginId + "' isn't valid!");
-			}
-			if (!ext.getExtensionPointUniqueIdentifier().equals(EXTENSION_POINT_ID)) {
-				throw new AnalysisPluginException(
-						"The extension with id '" + pluginId + "' extends " + ext.getExtensionPointUniqueIdentifier()
-								+ " when it should extend " + EXTENSION_POINT_ID + "!");
-			}
-			return ext;
+			return exts;
 		}
 
 		@Override
@@ -78,13 +86,15 @@ public class AnalysisDelegator {
 
 		@Override
 		public void run() throws Exception {
-			SystemInstance instance = instantiateClassifier(packageName, implName, choices);
+			instance = instantiateClassifier(packageName, implName, choices);
 			response = new Response();
 			AbstractAnalysis analyzer = null; // TODO: Provide default implementation that gives a useful error if the analyzer can't be found
-			for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
-				if (cfgElem.getName().equals("Analysis")) {
-					analyzer = (AbstractAnalysis) cfgElem.createExecutableExtension("AnalyzerClass");
-					analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName), response);
+			for (IExtension ext : exts) {
+				for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
+					if (cfgElem.getName().equals("Analysis")) {
+						analyzer = (AbstractAnalysis) cfgElem.createExecutableExtension("AnalyzerClass");
+						analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName), response);
+					}
 				}
 			}
 		}

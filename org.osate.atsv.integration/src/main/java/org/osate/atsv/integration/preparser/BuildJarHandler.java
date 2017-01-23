@@ -125,9 +125,11 @@ public class BuildJarHandler extends AbstractHandler {
 		startingInputs.put(title, defaultVal);
 	}
 
-	private void addOutputVariable(String title, ATSVVariableType type, String defaultVal) {
-		ecf.addVariable(title, false, false, type, defaultVal);
-		startingOutputs.put(title, defaultVal);
+	private void addOutputVariables(String titles, ATSVVariableType type, String defaultVal) {
+		for (String title : titles.split(",")) {
+			ecf.addVariable(title, false, false, type, defaultVal);
+			startingOutputs.put(title, defaultVal);
+		}
 	}
 
 	private Properties initializeProperties() {
@@ -205,7 +207,7 @@ public class BuildJarHandler extends AbstractHandler {
 		for (String propName : userProps.stringPropertyNames()) {
 			String[] propNames = propName.split("-");
 			if (propNames[0].equalsIgnoreCase("Analyses")) {
-				atsvProps.setProperty("pluginId", userProps.getProperty(propName));
+				atsvProps.setProperty("pluginIds", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				String[] options = userProps.getProperty(propName).split(",");
 				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, options[0],
@@ -214,7 +216,7 @@ public class BuildJarHandler extends AbstractHandler {
 				atsvProps.setProperty(propName, "(Key value is unused)");
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
 				ATSVVariableType type = getTypeFromString(propNames[1]);
-				addOutputVariable(userProps.getProperty(propName), type, getDefaultFromType(type));
+				addOutputVariables(userProps.getProperty(propName), type, getDefaultFromType(type));
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
 				atsvProps.setProperty(propName, userProps.getProperty(propName));
