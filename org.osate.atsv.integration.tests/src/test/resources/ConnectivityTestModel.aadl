@@ -1,0 +1,128 @@
+package SimpleComponentChoice
+public
+
+	with SEI;
+
+	system SimpleComponentChoiceSystem
+		features
+			power: in feature Electricity;
+	end SimpleComponentChoiceSystem;
+
+	abstract Electricity
+	end Electricity;
+
+	system ElectrialPowerSupply
+		features
+			Supplier: out feature Electricity;
+		properties
+			SEI::GrossWeight => 1.2 kg;
+			SEI::PowerSupply => 40.0 W applies to Supplier;
+	end ElectrialPowerSupply;
+
+	system ElectricGrid
+		features
+			Supplier: in feature Electricity;
+			Consumer: out feature Electricity;
+		properties
+			SEI::GrossWeight => 0.9 kg;
+			SEI::PowerCapacity => 40.0 W;
+	end ElectricGrid;
+
+	system MySystem
+
+	end MySystem;
+
+	-- use this as system root for electrical power consumption and weight
+	system implementation MySystem.Tier0
+		subcomponents
+			EPSU: system ElectrialPowerSupply;
+			Grid: system ElectricGrid;
+			scs: system SimpleComponentChoiceSystem.imp;
+		connections
+			psupply: feature EPSU.Supplier -> Grid.Supplier;
+			pconsume: feature Grid.Consumer -> scs.power;
+		properties
+			SEI::WeightLimit => 3.0 kg;
+	end MySystem.Tier0;
+
+	system implementation SimpleComponentChoiceSystem.imp
+		subcomponents
+			sdev: process StartProcess;
+			mdev: process MidProcess2;
+			edev: process EndProcess;
+		connections
+			s2m: port sdev.output -> mdev.input;
+			m2e: port mdev.output -> edev.input;
+			powerc : feature power -> mdev.power;
+		flows
+			exampleFlow: end to end flow sdev.flowStart ->
+					s2m ->
+					mdev.variableTimeFlow ->
+					m2e ->
+					edev.flowEnd;
+	end SimpleComponentChoiceSystem.imp;
+
+	process StartProcess
+		features
+			output: out event port;
+		flows
+			flowStart: flow source output {
+						Latency => 5 Ms .. 5 Ms;
+					};
+	end StartProcess;
+
+	process implementation StartProcess.imp
+	end StartProcess.imp;
+
+	process EndProcess
+		features
+			input: in event port;
+		flows
+			flowEnd: flow sink input {
+						Latency => 5 Ms .. 5 Ms;
+					};
+	end EndProcess;
+
+	process implementation EndProcess.imp
+	end EndProcess.imp;
+
+	process MidProcess1
+		features
+			power: in feature Electricity;
+			input: in event port;
+			output: out event port;
+		flows
+			variableTimeFlow: flow path input -> output {
+						Latency => 5 ms .. 5 ms;
+					};
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
+	end MidProcess1;
+
+	process MidProcess2
+		features
+			power: in feature Electricity;
+			input: in event port;
+			output: out event port;
+		flows
+			variableTimeFlow: flow path input -> output {
+						Latency => 15 ms .. 15 ms;
+					};
+		properties
+			SEI::PowerBudget => 10.0 w applies to power;
+	end MidProcess2;
+
+	process MidProcess3
+		features
+			power: in feature Electricity;
+			input: in event port;
+			output: out event port;
+		flows
+			variableTimeFlow: flow path input -> output {
+						Latency => 25 ms .. 25 ms;
+					};
+		properties
+			SEI::PowerBudget => 15.0 w applies to power;
+	end MidProcess3;
+
+end SimpleComponentChoice;
