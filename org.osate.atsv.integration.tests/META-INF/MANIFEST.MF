@@ -12,5 +12,7 @@ Require-Bundle: org.junit,
  org.eclipse.xtext.xbase.lib,
  org.osate.atsv.integration,
  org.eclipse.ui.workbench,
- org.eclipse.jface
+ org.eclipse.jface,
+ org.osate.aadl2,
+ org.osate.xtext.aadl2.properties
 Bundle-ClassPath: .

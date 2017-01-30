@@ -23,7 +23,15 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ConnectivityTests.class, EngineConfigTests.class })
+@SuiteClasses({ ConnectivityTests.class, EngineConfigTests.class, InstantiatorTests.class })
 public class PluginTest {
+	/**
+	 * The name of the omnibus test package
+	 */
+	public static final String PACKAGE_NAME = "SimpleComponentChoice";
 
+	/**
+	 * The name of the top-level component in the omnibus test package
+	 */
+	public static final String COMPONENT_NAME = "MySystem.Tier0";
 }

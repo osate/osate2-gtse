@@ -81,7 +81,7 @@ public class ConnectivityTests extends OsateTest {
 		Request r = new Request();
 		final String fakePluginID = "this.isnt.a.real.plugin.id";
 		r.addPluginId(fakePluginID);
-		r.setPackageName("none");
+		r.setPackageName(PluginTest.PACKAGE_NAME);
 		r.setComponentImplementationName("none");
 		outStream.writeObject(r);
 		outStream.flush();
@@ -100,8 +100,8 @@ public class ConnectivityTests extends OsateTest {
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId("org.osate.atsv.integration.flow-latency");
-		r.setPackageName("SimpleComponentChoice");
-		r.setComponentImplementationName("MySystem.Tier0");
+		r.setPackageName(PluginTest.PACKAGE_NAME);
+		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
 		outStream.writeObject(r);
 		outStream.flush();
 		Response res = (Response) inStream.readObject();
@@ -114,8 +114,8 @@ public class ConnectivityTests extends OsateTest {
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId("org.osate.atsv.integration.power-consumption");
-		r.setPackageName("SimpleComponentChoice");
-		r.setComponentImplementationName("MySystem.Tier0");
+		r.setPackageName(PluginTest.PACKAGE_NAME);
+		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
 		outStream.writeObject(r);
 		outStream.flush();
 		Response res = (Response) inStream.readObject();

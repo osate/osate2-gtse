@@ -79,23 +79,6 @@ public class CustomInstantiator extends InstantiateModel {
 		return root;
 	}
 
-	/*-
-	 * 
-	 * There is a getClassifier or getComponentClassifier (or something) as part of the 
-	 * ComponentInstance class. That is implemented as getSubcomponent().getClassifier(ish).
-	 * 
-	 * That should be overriden -- it'll pull the classifier from the declarative model.
-	 * 
-	 * The fix:
-	 * The instance model metamodel should be modified s/t each component instance has a reference
-	 * to the instantiated classifier. That is not just the subcomponent, which it has now,
-	 * but the classifier as well.
-	 * 
-	 * There is a classifier cache that is used during instantiation that tracks this information.
-	 * 
-	 * The other option is to modify this cache with my replacement information.
-	 */
-
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
 		if (ci.getContainingComponentInstance() != null) {
