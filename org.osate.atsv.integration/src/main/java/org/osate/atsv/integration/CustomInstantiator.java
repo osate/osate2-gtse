@@ -18,21 +18,31 @@
  *******************************************************************************/
 package org.osate.atsv.integration;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentClassifier;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.ComponentType;
+import org.osate.aadl2.Element;
+import org.osate.aadl2.NamedElement;
+import org.osate.aadl2.Property;
+import org.osate.aadl2.PropertyAssociation;
 import org.osate.aadl2.PrototypeBinding;
 import org.osate.aadl2.Subcomponent;
 import org.osate.aadl2.instance.ComponentInstance;
@@ -48,13 +58,16 @@ import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class CustomInstantiator extends InstantiateModel {
 
-	private Map<String, ChoicePointSpecification> choicepoints;
+	/**
+	 * Container -> Element that is to be replaced -> Spec
+	 */
+	private Map<String, Map<String, ChoicePointSpecification>> choicepoints;
 
 	public CustomInstantiator(IProgressMonitor pm, AnalysisErrorReporterManager errMgr,
 			Set<ChoicePointSpecification> choicepoints) {
 		super(pm, errMgr);
-		this.choicepoints = choicepoints.stream().collect(
-				Collectors.toMap((e -> e.getComponentName() + "-" + e.getChoicepointName()), Function.identity()));
+		this.choicepoints = choicepoints.stream().collect(groupingBy(ChoicePointSpecification::getComponentName,
+				toMap(ChoicePointSpecification::getItemName, identity())));
 	}
 
 	/**
@@ -80,6 +93,34 @@ public class CustomInstantiator extends InstantiateModel {
 	}
 
 	@Override
+	protected void addUsedPropertyDefinitions(Element root, List<Property> result) {
+		if (!(root instanceof NamedElement) || root == null) {
+			super.addUsedPropertyDefinitions(root, result);
+			return;
+		}
+		System.out.println(((NamedElement) root).getQualifiedName());
+		if (choicepoints.get(((NamedElement) root).getQualifiedName()) != null) {
+			TreeIterator<Element> it = EcoreUtil.getAllContents(Collections.singleton(root));
+			while (it.hasNext()) {
+				EObject ao = it.next();
+				if (ao instanceof PropertyAssociation) {
+					Property pd = ((PropertyAssociation) ao).getProperty();
+					if (choicepoints.get(((NamedElement) root).getQualifiedName()).get(pd.getQualifiedName()) != null) {
+						result.add(pd); // TODO: Start here, swap tha value
+					} else {
+						if (pd != null) {
+							result.add(pd);
+						}
+					}
+				}
+			}
+		}
+
+//		ChoicePointSpecification cps = choicepoints.get(parentName + "-" + ((NamedElement)root).getName());
+		super.addUsedPropertyDefinitions(root, result);
+	}
+
+	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
 		if (ci.getContainingComponentInstance() != null) {
 			// trim off the last 9 characters, which are "_Instance"
@@ -91,8 +132,9 @@ public class CustomInstantiator extends InstantiateModel {
 			} else {
 				parentName = ci.getContainingComponentInstance().getName().replace('_', '.');
 			}
-			ChoicePointSpecification cps = choicepoints.get(parentName + "-" + ci.getName());
-			if (cps != null) {
+
+			if (choicepoints.get(parentName) != null && choicepoints.get(parentName).get(ci.getName()) != null) {
+				ChoicePointSpecification cps = choicepoints.get(parentName).get(ci.getName());
 				Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(// ci.eResource().getResourceSet(),
 						cps.getValueAsString());
 				if (cl instanceof ComponentType) {

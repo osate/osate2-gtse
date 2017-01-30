@@ -231,9 +231,9 @@ public class BuildJarHandler extends AbstractHandler {
 				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, options[0],
 						new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
-				atsvProps.setProperty(propName, "(Key value is unused)");
+				atsvProps.setProperty(propName, "(Key value is unused for Subcomponent Values)");
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
-				ATSVVariableType type = getTypeFromString(propNames[1]);
+				ATSVVariableType type = ATSVVariableType.getATSVVariableTypeFromString(propNames[1]);
 				addOutputVariables(userProps.getProperty(propName), type, getDefaultFromType(type));
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
@@ -252,16 +252,4 @@ public class BuildJarHandler extends AbstractHandler {
 		}
 		return null;
 	}
-
-	private ATSVVariableType getTypeFromString(String property) {
-		if (property.equalsIgnoreCase("float")) {
-			return ATSVVariableType.FLOAT;
-		} else if (property.equalsIgnoreCase("int")) {
-			return ATSVVariableType.INTEGER;
-		} else if (property.equalsIgnoreCase("string")) {
-			return ATSVVariableType.STRING;
-		}
-		return null;
-	}
-
 }

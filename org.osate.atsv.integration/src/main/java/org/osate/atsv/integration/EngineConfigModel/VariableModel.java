@@ -35,6 +35,17 @@ public class VariableModel {
 		public int getTypeVal() {
 			return typeVal;
 		}
+
+		public static ATSVVariableType getATSVVariableTypeFromString(String typename) {
+			if (typename.equalsIgnoreCase("float")) {
+				return ATSVVariableType.FLOAT;
+			} else if (typename.equalsIgnoreCase("int")) {
+				return ATSVVariableType.INTEGER;
+			} else if (typename.equalsIgnoreCase("string")) {
+				return ATSVVariableType.STRING;
+			}
+			return null;
+		}
 	}
 
 	/**
@@ -102,13 +113,13 @@ public class VariableModel {
 	 * @param value The default value of this variable. It should be of the class's type parameter, though the value
 	 * will be ignored if its an output variable. 
 	 */
-	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value) throws NumberFormatException {
+	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value)
+			throws NumberFormatException {
 		this.title = title;
 		/*
-		 *  See Nov 22 2016 email from Gary Stump:
-		 *  [capture] means that they are recorded for the dataset (probably for your case, 
-		 *  just assume true or capture all)
+		 * See Nov 22 2016 email from Gary Stump:
+		 * [capture] means that they are recorded for the dataset (probably for your case,
+		 * just assume true or capture all)
 		 */
 		this.capture = true;
 		this.sampled = sampled;
@@ -135,8 +146,8 @@ public class VariableModel {
 	 * will be ignored if its an output variable. 
 	 * @param valuesModel The values this variable can take
 	 */
-	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value, ValuesModel valuesModel) {
+	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
+			ValuesModel valuesModel) {
 		this(title, sampled, isInput, type, value);
 		this.values = valuesModel;
 	}
@@ -153,8 +164,8 @@ public class VariableModel {
 	 * will be ignored if its an output variable.
 	 * @param distributionModel The distribution of the data this variable tracks
 	 */
-	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type,
-			String value, DistributionModel distributionModel) {
+	public VariableModel(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
+			DistributionModel distributionModel) {
 		this(title, sampled, isInput, type, value);
 		this.distribution = distributionModel;
 	}

@@ -29,13 +29,13 @@ public class ChoicePointSpecification implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	protected String componentName;
-	protected String choicepointName;
+	protected String itemName;
 	protected String value;
 	protected ATSVVariableType type;
 
-	public ChoicePointSpecification(String componentName, String choicepointName, String value, ATSVVariableType type) {
+	public ChoicePointSpecification(String componentName, String itemName, String value, ATSVVariableType type) {
 		this.componentName = componentName;
-		this.choicepointName = choicepointName;
+		this.itemName = itemName;
 		this.value = value;
 		this.type = type;
 	}
@@ -61,12 +61,12 @@ public class ChoicePointSpecification implements Serializable {
 		return value;
 	}
 
-	public String getChoicepointName() {
-		return choicepointName;
-	}
-
 	public String getComponentName() {
 		return componentName;
+	}
+
+	public String getItemName() {
+		return itemName;
 	}
 
 	public ATSVVariableType getType() {

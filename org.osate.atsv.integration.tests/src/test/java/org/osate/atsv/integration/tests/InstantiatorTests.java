@@ -37,6 +37,8 @@ import org.osate.aadl2.instance.SystemInstance;
 import org.osate.atsv.integration.CustomInstantiator;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
+import org.osate.atsv.integration.network.PropertyValue;
+import org.osate.atsv.integration.network.SubcomponentChoice;
 import org.osate.core.test.OsateTest;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
@@ -68,8 +70,19 @@ public class InstantiatorTests extends OsateTest {
 	@Test
 	public void testSubcomponentSwapInstance() throws Exception {
 		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(new ChoicePointSpecification("scs-mdev", "SubcompChoice",
-						"SimpleComponentChoice::MidProcess1", ATSVVariableType.STRING)));
+				Collections.singleton(new SubcomponentChoice("scs", "mdev", "SimpleComponentChoice::MidProcess1",
+						ATSVVariableType.STRING)));
+		assertNotNull(si);
+		// TODO: Once it's possible to identify the classifier that was instantiated for a particular
+		// subcomponent, do that here to make sure the swapped instantiation worked correctly
+		// si.getComponentInstances().get(2).getComponentInstances().get(1)
+	}
+
+	@Test
+	public void testPropertyValueSwapInstance() throws Exception {
+		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
+				Collections.singleton(new PropertyValue("SimpleComponentChoice::StartProcess", "SEI::PowerBudget",
+						String.valueOf(4.2), ATSVVariableType.FLOAT)));
 		assertNotNull(si);
 		// TODO: Once it's possible to identify the classifier that was instantiated for a particular
 		// subcomponent, do that here to make sure the swapped instantiation worked correctly

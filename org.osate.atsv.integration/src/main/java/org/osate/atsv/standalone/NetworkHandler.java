@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
+import org.osate.atsv.integration.network.PropertyValue;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 import org.osate.atsv.integration.network.SubcomponentChoice;
@@ -105,6 +106,10 @@ public class NetworkHandler {
 			if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				r.addChoicePoint(new SubcomponentChoice(propNames[1], propNames[2],
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.STRING));
+			} else if (propNames[0].equalsIgnoreCase("Propval")) {
+				r.addChoicePoint(
+						new PropertyValue(propNames[1], propNames[2], inputMap.get(propNames[1] + "-" + propNames[2]),
+								ATSVVariableType.getATSVVariableTypeFromString(propNames[3])));
 			}
 		}
 		return r;

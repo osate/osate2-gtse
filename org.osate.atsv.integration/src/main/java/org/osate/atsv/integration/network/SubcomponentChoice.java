@@ -27,8 +27,8 @@ public class SubcomponentChoice extends ChoicePointSpecification {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public SubcomponentChoice(String componentName, String choicepointName, String value, ATSVVariableType type) {
-		super(componentName, choicepointName, value, type);
+	public SubcomponentChoice(String componentName, String itemName, String value, ATSVVariableType type) {
+		super(componentName, itemName, value, type);
 	}
 
 }

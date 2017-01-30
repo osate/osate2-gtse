@@ -121,7 +121,7 @@ public class ConnectivityTests extends OsateTest {
 		Response res = (Response) inStream.readObject();
 		assertFalse(res.hasException());
 		assertTrue(res.getVariables().containsKey("Grid"));
-		assertEquals("10.0", res.getVariables().get("Grid"));
+		assertEquals("20.0", res.getVariables().get("Grid"));
 	}
 
 	@Override

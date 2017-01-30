@@ -71,7 +71,9 @@ public
 		connections
 			s2m: port sdev.output -> mdev.input;
 			m2e: port mdev.output -> edev.input;
-			powerc : feature power -> mdev.power;
+			powers : feature power -> sdev.power;
+			powerm : feature power -> mdev.power;
+			powere : feature power -> edev.power;
 		flows
 			exampleFlow: end to end flow sdev.flowStart ->
 					s2m ->
@@ -83,10 +85,13 @@ public
 	process StartProcess
 		features
 			output: out event port;
+			power: in feature Electricity;
 		flows
 			flowStart: flow source output {
 						Latency => 5 Ms .. 5 Ms;
 					};
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
 	end StartProcess;
 
 	process implementation StartProcess.imp
@@ -95,10 +100,13 @@ public
 	process EndProcess
 		features
 			input: in event port;
+			power: in feature Electricity;
 		flows
 			flowEnd: flow sink input {
 						Latency => 5 Ms .. 5 Ms;
 					};
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
 	end EndProcess;
 
 	process implementation EndProcess.imp
