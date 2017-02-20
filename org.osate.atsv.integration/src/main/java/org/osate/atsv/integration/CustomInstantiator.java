@@ -45,6 +45,8 @@ import org.osate.aadl2.Property;
 import org.osate.aadl2.PropertyAssociation;
 import org.osate.aadl2.PrototypeBinding;
 import org.osate.aadl2.Subcomponent;
+import org.osate.aadl2.impl.IntegerLiteralImpl;
+import org.osate.aadl2.impl.RealLiteralImpl;
 import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
@@ -53,6 +55,7 @@ import org.osate.aadl2.modelsupport.AadlConstants;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
+import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
@@ -92,21 +95,36 @@ public class CustomInstantiator extends InstantiateModel {
 		return root;
 	}
 
+	/**
+	 * TODO: Lutz says this is "suspicious" and may break in the future.
+	 */
 	@Override
 	protected void addUsedPropertyDefinitions(Element root, List<Property> result) {
 		if (!(root instanceof NamedElement) || root == null) {
 			super.addUsedPropertyDefinitions(root, result);
 			return;
 		}
-		System.out.println(((NamedElement) root).getQualifiedName());
 		if (choicepoints.get(((NamedElement) root).getQualifiedName()) != null) {
 			TreeIterator<Element> it = EcoreUtil.getAllContents(Collections.singleton(root));
 			while (it.hasNext()) {
 				EObject ao = it.next();
 				if (ao instanceof PropertyAssociation) {
 					Property pd = ((PropertyAssociation) ao).getProperty();
-					if (choicepoints.get(((NamedElement) root).getQualifiedName()).get(pd.getQualifiedName()) != null) {
-						result.add(pd); // TODO: Start here, swap tha value
+					ChoicePointSpecification cps = choicepoints.get(((NamedElement) root).getQualifiedName())
+							.get(pd.getQualifiedName());
+					if (cps != null) {
+						if (cps.getType() == ATSVVariableType.FLOAT
+								|| cps.getType() == ATSVVariableType.DISCRETE_FLOAT) {
+							// TODO: Can ownedvalues be > 1?
+							((RealLiteralImpl) ((PropertyAssociation) ao).getOwnedValues().get(0).getOwnedValue())
+									.setValue(cps.getValueAsFloat());
+						} else if (cps.getType() == ATSVVariableType.INTEGER) {
+							((IntegerLiteralImpl) ((PropertyAssociation) ao).getOwnedValues().get(0).getOwnedValue())
+									.setValue(cps.getValueAsInt());
+						} else {
+							// TODO: Throw an error? we don't support string property swaps...
+						}
+						result.add(pd);
 					} else {
 						if (pd != null) {
 							result.add(pd);
@@ -115,8 +133,6 @@ public class CustomInstantiator extends InstantiateModel {
 				}
 			}
 		}
-
-//		ChoicePointSpecification cps = choicepoints.get(parentName + "-" + ((NamedElement)root).getName());
 		super.addUsedPropertyDefinitions(root, result);
 	}
 

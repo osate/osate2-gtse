@@ -50,6 +50,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.EngineConfigGenerator;
+import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
+import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osgi.framework.Bundle;
@@ -143,6 +145,12 @@ public class BuildJarHandler extends AbstractHandler {
 		startingInputs.put(title, defaultVal);
 	}
 
+	private void addGeneratedChoicePoint(String title, ATSVVariableType type, String defaultVal,
+			DistributionModel dist) {
+		ecf.addVariable(title, false, true, type, defaultVal, dist);
+		startingInputs.put(title, defaultVal);
+	}
+
 	private void addOutputVariables(String titles, ATSVVariableType type, String defaultVal) {
 		for (String title : titles.split(",")) {
 			ecf.addVariable(title, false, false, type, defaultVal);
@@ -231,25 +239,22 @@ public class BuildJarHandler extends AbstractHandler {
 				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, options[0],
 						new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
-				atsvProps.setProperty(propName, "(Key value is unused for Subcomponent Values)");
+				atsvProps.setProperty(propName, "(Key value is unused for subcomponent values)");
+			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
+				String[] range = userProps.getProperty(propName).split(",");
+				ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[3]);
+				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
+						ATSVVariableType.getDefaultFromType(type),
+						new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
+				// Pass the choicepoint definition through to the properties used to build the request...
+				atsvProps.setProperty(propName, "(Key value is unused for property values)");
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
-				ATSVVariableType type = ATSVVariableType.getATSVVariableTypeFromString(propNames[1]);
-				addOutputVariables(userProps.getProperty(propName), type, getDefaultFromType(type));
+				ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[1]);
+				addOutputVariables(userProps.getProperty(propName), type, ATSVVariableType.getDefaultFromType(type));
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
 				atsvProps.setProperty(propName, userProps.getProperty(propName));
 			}
 		}
-	}
-
-	private String getDefaultFromType(ATSVVariableType type) {
-		if (type == ATSVVariableType.STRING) {
-			return "UNSET_STRING";
-		} else if (type == ATSVVariableType.FLOAT) {
-			return String.valueOf((float) 0);
-		} else if (type == ATSVVariableType.INTEGER) {
-			return String.valueOf(0);
-		}
-		return null;
 	}
 }

@@ -106,10 +106,9 @@ public class NetworkHandler {
 			if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				r.addChoicePoint(new SubcomponentChoice(propNames[1], propNames[2],
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.STRING));
-			} else if (propNames[0].equalsIgnoreCase("Propval")) {
-				r.addChoicePoint(
-						new PropertyValue(propNames[1], propNames[2], inputMap.get(propNames[1] + "-" + propNames[2]),
-								ATSVVariableType.getATSVVariableTypeFromString(propNames[3])));
+			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
+				r.addChoicePoint(new PropertyValue(propNames[1], propNames[2],
+						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.getTypeByName(propNames[3])));
 			}
 		}
 		return r;

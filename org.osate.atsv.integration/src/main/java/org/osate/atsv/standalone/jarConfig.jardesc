@@ -18,5 +18,6 @@
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{NetworkHandler.java"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Request.java"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.EngineConfigModel{VariableModel.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{PropertyValue.java"/>
     </selectedElements>
 </jardesc>

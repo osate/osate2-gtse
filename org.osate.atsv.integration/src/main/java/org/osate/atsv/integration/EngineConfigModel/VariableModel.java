@@ -36,13 +36,26 @@ public class VariableModel {
 			return typeVal;
 		}
 
-		public static ATSVVariableType getATSVVariableTypeFromString(String typename) {
+		public static ATSVVariableType getTypeByName(String typename) {
 			if (typename.equalsIgnoreCase("float")) {
 				return ATSVVariableType.FLOAT;
-			} else if (typename.equalsIgnoreCase("int")) {
+			} else if (typename.equalsIgnoreCase("int") || typename.equalsIgnoreCase("integer")) {
 				return ATSVVariableType.INTEGER;
 			} else if (typename.equalsIgnoreCase("string")) {
 				return ATSVVariableType.STRING;
+			} else if (typename.equalsIgnoreCase("discretefloat")) {
+				return ATSVVariableType.DISCRETE_FLOAT;
+			}
+			return null;
+		}
+
+		public static String getDefaultFromType(ATSVVariableType type) {
+			if (type == ATSVVariableType.STRING) {
+				return "UNSET_STRING";
+			} else if (type == ATSVVariableType.FLOAT) {
+				return String.valueOf((float) 0);
+			} else if (type == ATSVVariableType.INTEGER) {
+				return String.valueOf(0);
 			}
 			return null;
 		}
