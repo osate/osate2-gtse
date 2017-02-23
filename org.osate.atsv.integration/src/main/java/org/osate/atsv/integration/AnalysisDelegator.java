@@ -18,8 +18,14 @@
  *******************************************************************************/
 package org.osate.atsv.integration;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -32,6 +38,7 @@ import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
+import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
@@ -104,7 +111,8 @@ public class AnalysisDelegator {
 
 		@Override
 		public void run() throws Exception {
-			instance = instantiateClassifier(packageName, implName, choices);
+			Map<String, Map<String, ChoicePointSpecification>> choicepoints = mappifyChoicePoints();
+			instance = instantiateClassifier(packageName, implName, choicepoints);
 			response = new Response();
 			AbstractAnalysis analyzer = null; // TODO: Provide default implementation that gives a useful error if the analyzer can't be found
 			for (IExtension ext : exts) {
@@ -117,19 +125,25 @@ public class AnalysisDelegator {
 			}
 		}
 
+		private Map<String, Map<String, ChoicePointSpecification>> mappifyChoicePoints() {
+			return Collections
+					.unmodifiableMap(choices.stream().collect(groupingBy(ChoicePointSpecification::getComponentName,
+							toMap(ChoicePointSpecification::getItemName, identity()))));
+		}
+
 		public Response getResponse() {
 			return response;
 		}
 	}
 
 	private SystemInstance instantiateClassifier(String packageName, String implName,
-			Set<ChoicePointSpecification> choices) throws Exception {
+			Map<String, Map<String, ChoicePointSpecification>> choicepoints) throws Exception {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName);
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 
-		return CustomInstantiator.myBuildInstanceModelFile(impl, choices);
+		return CustomInstantiator.myBuildInstanceModelFile(impl, choicepoints);
 	}
 
 	private SystemOperationMode getSystemModeFromName(SystemInstance instance, String modeName) {

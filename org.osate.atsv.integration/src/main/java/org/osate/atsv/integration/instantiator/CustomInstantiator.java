@@ -16,37 +16,23 @@
  *
  * DM17-0002
  *******************************************************************************/
-package org.osate.atsv.integration;
+package org.osate.atsv.integration.instantiator;
 
-import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
-
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentClassifier;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.ComponentType;
-import org.osate.aadl2.Element;
-import org.osate.aadl2.NamedElement;
 import org.osate.aadl2.Property;
-import org.osate.aadl2.PropertyAssociation;
 import org.osate.aadl2.PrototypeBinding;
 import org.osate.aadl2.Subcomponent;
-import org.osate.aadl2.impl.IntegerLiteralImpl;
-import org.osate.aadl2.impl.RealLiteralImpl;
 import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
@@ -55,7 +41,6 @@ import org.osate.aadl2.modelsupport.AadlConstants;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
@@ -67,10 +52,9 @@ public class CustomInstantiator extends InstantiateModel {
 	private Map<String, Map<String, ChoicePointSpecification>> choicepoints;
 
 	public CustomInstantiator(IProgressMonitor pm, AnalysisErrorReporterManager errMgr,
-			Set<ChoicePointSpecification> choicepoints) {
+			Map<String, Map<String, ChoicePointSpecification>> choicepoints) {
 		super(pm, errMgr);
-		this.choicepoints = choicepoints.stream().collect(groupingBy(ChoicePointSpecification::getComponentName,
-				toMap(ChoicePointSpecification::getItemName, identity())));
+		this.choicepoints = choicepoints;
 	}
 
 	/**
@@ -78,7 +62,7 @@ public class CustomInstantiator extends InstantiateModel {
 	 * override static methods in java.
 	 */
 	public static SystemInstance myBuildInstanceModelFile(final ComponentImplementation ci,
-			Set<ChoicePointSpecification> choicepoints) throws Exception {
+			Map<String, Map<String, ChoicePointSpecification>> choicepoints) throws Exception {
 		ComponentImplementation ici = ci;
 		EObject eobj = OsateResourceUtil.loadElementIntoResourceSet(ci);
 		if (eobj instanceof ComponentImplementation) {
@@ -95,9 +79,29 @@ public class CustomInstantiator extends InstantiateModel {
 		return root;
 	}
 
+	@Override
+	protected void getUsedPropertyDefinitions(SystemInstance root) throws InterruptedException {
+		// Copied from org.osate.aadl2.instantiation.InstantiateModel, see explanation in there...
+		EList<Property> propertyDefinitionList = getAllUsedPropertyDefinitions(root);
+		CustomCacheContainedPropertyAssociationsSwitch ccpas = new CustomCacheContainedPropertyAssociationsSwitch(
+				classifierCache, scProps, monitor, errManager);
+		ccpas.processPostOrderAll(root);
+		if (monitor.isCanceled()) {
+			throw new InterruptedException();
+		}
+
+		final CustomCachePropertyAssociationsSwitch cpas = new CustomCachePropertyAssociationsSwitch(monitor,
+				errManager, propertyDefinitionList, classifierCache, scProps, mode2som);
+		cpas.processPreOrderAll(root);
+		if (monitor.isCanceled()) {
+			throw new InterruptedException();
+		}
+	}
+
+	/*- 
 	/**
 	 * TODO: Lutz says this is "suspicious" and may break in the future.
-	 */
+	
 	@Override
 	protected void addUsedPropertyDefinitions(Element root, List<Property> result) {
 		if (!(root instanceof NamedElement) || root == null) {
@@ -134,7 +138,7 @@ public class CustomInstantiator extends InstantiateModel {
 			}
 		}
 		super.addUsedPropertyDefinitions(root, result);
-	}
+	}*/
 
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
@@ -146,6 +150,8 @@ public class CustomInstantiator extends InstantiateModel {
 				parentName = ci.getContainingComponentInstance().getName()
 						.substring(0, ci.getContainingComponentInstance().getName().length() - 9).replace('_', '.');
 			} else {
+				// Make this use full qualified name (but it's called something else)
+				// Something like qualified path? it's on the instance object, you may have to build the path itself
 				parentName = ci.getContainingComponentInstance().getName().replace('_', '.');
 			}
 

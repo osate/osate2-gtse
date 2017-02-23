@@ -18,13 +18,18 @@
  *******************************************************************************/
 package org.osate.atsv.integration.tests;
 
-import static org.junit.Assert.assertNotNull;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.xtext.xbase.lib.Pair;
@@ -33,9 +38,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
+import org.osate.aadl2.PropertyExpression;
+import org.osate.aadl2.RealLiteral;
+import org.osate.aadl2.instance.ComponentInstance;
+import org.osate.aadl2.instance.FeatureInstance;
 import org.osate.aadl2.instance.SystemInstance;
-import org.osate.atsv.integration.CustomInstantiator;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
+import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.atsv.integration.network.PropertyValue;
 import org.osate.atsv.integration.network.SubcomponentChoice;
@@ -64,7 +73,14 @@ public class InstantiatorTests extends OsateTest {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName);
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
-		return CustomInstantiator.myBuildInstanceModelFile(impl, choicepoints);
+		return CustomInstantiator.myBuildInstanceModelFile(impl, getChoicePointMap(choicepoints));
+	}
+
+	private Map<String, Map<String, ChoicePointSpecification>> getChoicePointMap(
+			Set<ChoicePointSpecification> choicepoints) {
+		return Collections
+				.unmodifiableMap(choicepoints.stream().collect(groupingBy(ChoicePointSpecification::getComponentName,
+						toMap(ChoicePointSpecification::getItemName, identity()))));
 	}
 
 	@Test
@@ -72,10 +88,20 @@ public class InstantiatorTests extends OsateTest {
 		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
 				Collections.singleton(new SubcomponentChoice("scs", "mdev", "SimpleComponentChoice::MidProcess1",
 						ATSVVariableType.STRING)));
-		assertNotNull(si);
-		// TODO: Once it's possible to identify the classifier that was instantiated for a particular
-		// subcomponent, do that here to make sure the swapped instantiation worked correctly
-		// si.getComponentInstances().get(2).getComponentInstances().get(1)
+
+		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
+			if (!outerCI.getName().equalsIgnoreCase("scs")) {
+				continue;
+			}
+			for (ComponentInstance innerCI : outerCI.getAllComponentInstances()) {
+				if (!innerCI.getName().equalsIgnoreCase("mdev")) {
+					continue;
+				}
+				assertEquals("MidProcess2", innerCI.getClassifier().getName());
+				return;
+			}
+		}
+		fail("Couldn't find scs-mdev component");
 	}
 
 	@Test
@@ -83,10 +109,28 @@ public class InstantiatorTests extends OsateTest {
 		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
 				Collections.singleton(new PropertyValue("SimpleComponentChoice::StartProcess", "SEI::PowerBudget",
 						String.valueOf(4.2), ATSVVariableType.FLOAT)));
-		assertNotNull(si);
-		// TODO: Once it's possible to identify the classifier that was instantiated for a particular
-		// subcomponent, do that here to make sure the swapped instantiation worked correctly
-		// si.getComponentInstances().get(2).getComponentInstances().get(1)
+		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
+			if (!outerCI.getName().equalsIgnoreCase("scs")) {
+				continue;
+			}
+			for (ComponentInstance innerCI : outerCI.getAllComponentInstances()) {
+				if (!innerCI.getName().equalsIgnoreCase("sdev")) {
+					continue;
+				}
+				for (FeatureInstance fi : innerCI.getAllFeatureInstances()) {
+					if (!fi.getName().equalsIgnoreCase("power")) {
+						continue;
+					}
+					for (PropertyExpression pe : fi.getPropertyValues("SEI", "PowerBudget")) {
+						if (pe instanceof RealLiteral) {
+							assertEquals(4.2, ((RealLiteral) pe).getValue(), .0001);
+							return;
+						}
+					}
+				}
+			}
+		}
+		fail("Couldn't find the SEI::PowerBudget Property");
 	}
 
 	@Override

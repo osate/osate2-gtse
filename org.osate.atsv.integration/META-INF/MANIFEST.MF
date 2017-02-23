@@ -19,4 +19,5 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.osate.atsv.integration,
  org.osate.atsv.integration.EngineConfigModel,
  org.osate.atsv.integration.exception,
+ org.osate.atsv.integration.instantiator,
  org.osate.atsv.integration.network
