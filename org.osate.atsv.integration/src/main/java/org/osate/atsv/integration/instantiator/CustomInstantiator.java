@@ -86,6 +86,7 @@ public class CustomInstantiator extends InstantiateModel {
 		EList<Property> propertyDefinitionList = getAllUsedPropertyDefinitions(root);
 		CustomCacheContainedPropertyAssociationsSwitch ccpas = new CustomCacheContainedPropertyAssociationsSwitch(
 				classifierCache, scProps, monitor, errManager);
+
 		// Rather than work as the instantiator is running, custom properties are added from the top level once the other
 		// properties have been set. So, we create a set of the relevant choicepoint specifications and use only those
 		ccpas.addChoicePointSpecifications(choicepoints.values().stream().filter(ChoicePointSpecification::isProperty)
@@ -103,54 +104,11 @@ public class CustomInstantiator extends InstantiateModel {
 		}
 	}
 
-	/*- 
-	/**
-	 * TODO: Lutz says this is "suspicious" and may break in the future.
-	
-	@Override
-	protected void addUsedPropertyDefinitions(Element root, List<Property> result) {
-		if (!(root instanceof NamedElement) || root == null) {
-			super.addUsedPropertyDefinitions(root, result);
-			return;
-		}
-		if (choicepoints.get(((NamedElement) root).getQualifiedName()) != null) {
-			TreeIterator<Element> it = EcoreUtil.getAllContents(Collections.singleton(root));
-			while (it.hasNext()) {
-				EObject ao = it.next();
-				if (ao instanceof PropertyAssociation) {
-					Property pd = ((PropertyAssociation) ao).getProperty();
-					ChoicePointSpecification cps = choicepoints.get(((NamedElement) root).getQualifiedName())
-							.get(pd.getQualifiedName());
-					if (cps != null) {
-						if (cps.getType() == ATSVVariableType.FLOAT
-								|| cps.getType() == ATSVVariableType.DISCRETE_FLOAT) {
-							// TODO: Can ownedvalues be > 1?
-							((RealLiteralImpl) ((PropertyAssociation) ao).getOwnedValues().get(0).getOwnedValue())
-									.setValue(cps.getValueAsFloat());
-						} else if (cps.getType() == ATSVVariableType.INTEGER) {
-							((IntegerLiteralImpl) ((PropertyAssociation) ao).getOwnedValues().get(0).getOwnedValue())
-									.setValue(cps.getValueAsInt());
-						} else {
-							// TODO: Throw an error? we don't support string property swaps...
-						}
-						result.add(pd);
-					} else {
-						if (pd != null) {
-							result.add(pd);
-						}
-					}
-				}
-			}
-		}
-		super.addUsedPropertyDefinitions(root, result);
-	}*/
-
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
 		if (choicepoints.containsKey(ci.getComponentInstancePath())) {
 			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
-			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(// ci.eResource().getResourceSet(),
-					cps.getValueAsString());
+			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(cps.getValueAsString());
 			if (cl instanceof ComponentType) {
 				// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
 				// in InstanceUtil.java

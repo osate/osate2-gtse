@@ -104,8 +104,8 @@ public class NetworkHandler {
 		for (String propName : prop.stringPropertyNames()) {
 			String[] propNames = propName.split("-");
 			if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
-				r.addChoicePoint(new SubcomponentChoice(propNames[1], propNames[2],
-						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.STRING));
+				r.addChoicePoint(
+						new SubcomponentChoice(propNames[1], inputMap.get(propNames[1]), ATSVVariableType.STRING));
 			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
 				r.addChoicePoint(new PropertyValue(propNames[1], propNames[2],
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.getTypeByName(propNames[3])));

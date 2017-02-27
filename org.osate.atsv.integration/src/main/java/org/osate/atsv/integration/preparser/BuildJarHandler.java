@@ -236,7 +236,7 @@ public class BuildJarHandler extends AbstractHandler {
 				atsvProps.setProperty("pluginIds", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				String[] options = userProps.getProperty(propName).split(",");
-				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, options[0],
+				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, options[0],
 						new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
 				atsvProps.setProperty(propName, "(Key value is unused for subcomponent values)");

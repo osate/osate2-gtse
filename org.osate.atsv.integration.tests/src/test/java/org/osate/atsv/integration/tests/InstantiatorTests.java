@@ -98,7 +98,7 @@ public class InstantiatorTests extends OsateTest {
 				return;
 			}
 		}
-		fail("Couldn't find scs-mdev component");
+		fail("Couldn't find scs.mdev component");
 	}
 
 	@Test
