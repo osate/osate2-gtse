@@ -19,8 +19,6 @@
 package org.osate.atsv.integration.tests;
 
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -31,6 +29,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Before;
@@ -76,17 +75,15 @@ public class InstantiatorTests extends OsateTest {
 		return CustomInstantiator.myBuildInstanceModelFile(impl, getChoicePointMap(choicepoints));
 	}
 
-	private Map<String, Map<String, ChoicePointSpecification>> getChoicePointMap(
-			Set<ChoicePointSpecification> choicepoints) {
-		return Collections
-				.unmodifiableMap(choicepoints.stream().collect(groupingBy(ChoicePointSpecification::getComponentName,
-						toMap(ChoicePointSpecification::getItemName, identity()))));
+	private Map<String, ChoicePointSpecification> getChoicePointMap(Set<ChoicePointSpecification> choicepoints) {
+		return Collections.unmodifiableMap(choicepoints.stream()
+				.collect(Collectors.toMap(ChoicePointSpecification::getComponentPath, identity())));
 	}
 
 	@Test
 	public void testSubcomponentSwapInstance() throws Exception {
 		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(new SubcomponentChoice("scs", "mdev", "SimpleComponentChoice::MidProcess1",
+				Collections.singleton(new SubcomponentChoice("scs.mdev", "SimpleComponentChoice::MidProcess1",
 						ATSVVariableType.STRING)));
 
 		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
@@ -107,8 +104,8 @@ public class InstantiatorTests extends OsateTest {
 	@Test
 	public void testPropertyValueSwapInstance() throws Exception {
 		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(new PropertyValue("SimpleComponentChoice::StartProcess", "SEI::PowerBudget",
-						String.valueOf(4.2), ATSVVariableType.FLOAT)));
+				Collections.singleton(new PropertyValue("scs.sdev.power", "SEI::PowerBudget", String.valueOf(4.2),
+						ATSVVariableType.FLOAT)));
 		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
 			if (!outerCI.getName().equalsIgnoreCase("scs")) {
 				continue;
@@ -131,6 +128,13 @@ public class InstantiatorTests extends OsateTest {
 			}
 		}
 		fail("Couldn't find the SEI::PowerBudget Property");
+	}
+
+	@Test
+	public void testNestedSystemPropertyValueSwap() throws Exception {
+		// TODO: Since we key off of system instances, it seems important to make sure we can
+		// handle nested ones.
+		fail("Not yet implemented");
 	}
 
 	@Override

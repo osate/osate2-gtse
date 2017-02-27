@@ -9,7 +9,19 @@ public class PropertyValue extends ChoicePointSpecification {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public PropertyValue(String componentName, String itemName, String value, ATSVVariableType type) {
-		super(componentName, itemName, value, type);
+	private String propertyName;
+
+	public PropertyValue(String componentPath, String propertyName, String value, ATSVVariableType type) {
+		super(componentPath, value, type);
+		this.propertyName = propertyName;
+		this.property = true;
+	}
+
+	public String getRawValue() {
+		return value;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
 	}
 }

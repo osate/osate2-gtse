@@ -28,14 +28,16 @@ public class ChoicePointSpecification implements Serializable {
 	 * Default serial version 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected String componentName;
-	protected String itemName;
+	protected String componentPath;
 	protected String value;
 	protected ATSVVariableType type;
+	/**
+	 * True if this is a property-modifying CPS type
+	 */
+	protected boolean property = false;
 
-	public ChoicePointSpecification(String componentName, String itemName, String value, ATSVVariableType type) {
-		this.componentName = componentName;
-		this.itemName = itemName;
+	public ChoicePointSpecification(String componentPath, String value, ATSVVariableType type) {
+		this.componentPath = componentPath;
 		this.value = value;
 		this.type = type;
 	}
@@ -61,15 +63,15 @@ public class ChoicePointSpecification implements Serializable {
 		return value;
 	}
 
-	public String getComponentName() {
-		return componentName;
-	}
-
-	public String getItemName() {
-		return itemName;
+	public String getComponentPath() {
+		return componentPath;
 	}
 
 	public ATSVVariableType getType() {
 		return type;
+	}
+
+	public boolean isProperty() {
+		return property;
 	}
 }

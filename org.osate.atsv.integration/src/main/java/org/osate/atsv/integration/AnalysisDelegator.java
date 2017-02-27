@@ -19,14 +19,13 @@
 package org.osate.atsv.integration;
 
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -66,7 +65,7 @@ public class AnalysisDelegator {
 		private String packageName;
 		private String implName;
 		private String modeName;
-		private Set<ChoicePointSpecification> choices;
+		private Set<ChoicePointSpecification> choicepoints;
 		private SystemInstance instance;
 		private Set<IExtension> exts;
 
@@ -75,7 +74,7 @@ public class AnalysisDelegator {
 			this.packageName = req.getPackageName();
 			this.implName = req.getComponentImplementationName();
 			this.modeName = req.getOperationModeName();
-			this.choices = req.getChoicepoints();
+			this.choicepoints = req.getChoicepoints();
 		}
 
 		private Set<IExtension> resolveExtensions(Collection<String> pluginIds) throws AnalysisPluginException {
@@ -111,8 +110,8 @@ public class AnalysisDelegator {
 
 		@Override
 		public void run() throws Exception {
-			Map<String, Map<String, ChoicePointSpecification>> choicepoints = mappifyChoicePoints();
-			instance = instantiateClassifier(packageName, implName, choicepoints);
+			Map<String, ChoicePointSpecification> choicepointMap = mappifyChoicePoints();
+			instance = instantiateClassifier(packageName, implName, choicepointMap);
 			response = new Response();
 			AbstractAnalysis analyzer = null; // TODO: Provide default implementation that gives a useful error if the analyzer can't be found
 			for (IExtension ext : exts) {
@@ -125,10 +124,9 @@ public class AnalysisDelegator {
 			}
 		}
 
-		private Map<String, Map<String, ChoicePointSpecification>> mappifyChoicePoints() {
-			return Collections
-					.unmodifiableMap(choices.stream().collect(groupingBy(ChoicePointSpecification::getComponentName,
-							toMap(ChoicePointSpecification::getItemName, identity()))));
+		private Map<String, ChoicePointSpecification> mappifyChoicePoints() {
+			return Collections.unmodifiableMap(choicepoints.stream()
+					.collect(Collectors.toMap(ChoicePointSpecification::getComponentPath, identity())));
 		}
 
 		public Response getResponse() {
@@ -137,7 +135,7 @@ public class AnalysisDelegator {
 	}
 
 	private SystemInstance instantiateClassifier(String packageName, String implName,
-			Map<String, Map<String, ChoicePointSpecification>> choicepoints) throws Exception {
+			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName);
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()

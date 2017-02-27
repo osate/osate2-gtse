@@ -19,6 +19,7 @@
 package org.osate.atsv.integration.instantiator;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -47,12 +48,12 @@ import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 public class CustomInstantiator extends InstantiateModel {
 
 	/**
-	 * Container -> Element that is to be replaced -> Spec
+	 * InstancePath -> Spec
 	 */
-	private Map<String, Map<String, ChoicePointSpecification>> choicepoints;
+	private Map<String, ChoicePointSpecification> choicepoints;
 
 	public CustomInstantiator(IProgressMonitor pm, AnalysisErrorReporterManager errMgr,
-			Map<String, Map<String, ChoicePointSpecification>> choicepoints) {
+			Map<String, ChoicePointSpecification> choicepoints) {
 		super(pm, errMgr);
 		this.choicepoints = choicepoints;
 	}
@@ -62,7 +63,7 @@ public class CustomInstantiator extends InstantiateModel {
 	 * override static methods in java.
 	 */
 	public static SystemInstance myBuildInstanceModelFile(final ComponentImplementation ci,
-			Map<String, Map<String, ChoicePointSpecification>> choicepoints) throws Exception {
+			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
 		ComponentImplementation ici = ci;
 		EObject eobj = OsateResourceUtil.loadElementIntoResourceSet(ci);
 		if (eobj instanceof ComponentImplementation) {
@@ -85,6 +86,10 @@ public class CustomInstantiator extends InstantiateModel {
 		EList<Property> propertyDefinitionList = getAllUsedPropertyDefinitions(root);
 		CustomCacheContainedPropertyAssociationsSwitch ccpas = new CustomCacheContainedPropertyAssociationsSwitch(
 				classifierCache, scProps, monitor, errManager);
+		// Rather than work as the instantiator is running, custom properties are added from the top level once the other
+		// properties have been set. So, we create a set of the relevant choicepoint specifications and use only those
+		ccpas.addChoicePointSpecifications(choicepoints.values().stream().filter(ChoicePointSpecification::isProperty)
+				.collect(Collectors.toSet()));
 		ccpas.processPostOrderAll(root);
 		if (monitor.isCanceled()) {
 			throw new InterruptedException();
@@ -142,35 +147,21 @@ public class CustomInstantiator extends InstantiateModel {
 
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
-		if (ci.getContainingComponentInstance() != null) {
-			// trim off the last 9 characters, which are "_Instance"
-			// Top-level is system instance, everything else is a component instance
-			String parentName = null;
-			if (ci.getContainingComponentInstance() instanceof SystemInstance) {
-				parentName = ci.getContainingComponentInstance().getName()
-						.substring(0, ci.getContainingComponentInstance().getName().length() - 9).replace('_', '.');
-			} else {
-				// Make this use full qualified name (but it's called something else)
-				// Something like qualified path? it's on the instance object, you may have to build the path itself
-				parentName = ci.getContainingComponentInstance().getName().replace('_', '.');
-			}
+		if (choicepoints.containsKey(ci.getComponentInstancePath())) {
+			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
+			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(// ci.eResource().getResourceSet(),
+					cps.getValueAsString());
+			if (cl instanceof ComponentType) {
+				// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
+				// in InstanceUtil.java
 
-			if (choicepoints.get(parentName) != null && choicepoints.get(parentName).get(ci.getName()) != null) {
-				ChoicePointSpecification cps = choicepoints.get(parentName).get(ci.getName());
-				Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(// ci.eResource().getResourceSet(),
-						cps.getValueAsString());
-				if (cl instanceof ComponentType) {
-					// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
-					// in InstanceUtil.java
+				Subcomponent sub = ci.getSubcomponent();
+				ComponentClassifier classifier = (ComponentClassifier) cl;
+				EList<PrototypeBinding> prototypeBindings = sub.getOwnedPrototypeBindings();
+				InstantiatedClassifier ic = new InstantiatedClassifier(classifier, prototypeBindings);
 
-					Subcomponent sub = ci.getSubcomponent();
-					ComponentClassifier classifier = (ComponentClassifier) cl;
-					EList<PrototypeBinding> prototypeBindings = sub.getOwnedPrototypeBindings();
-					InstantiatedClassifier ic = new InstantiatedClassifier(classifier, prototypeBindings);
-
-					classifierCache.put(ci, ic);
-					return (ComponentType) cl;
-				}
+				classifierCache.put(ci, ic);
+				return (ComponentType) cl;
 			}
 		}
 		return super.getComponentType(ci);
