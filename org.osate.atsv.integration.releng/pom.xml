@@ -8,7 +8,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <tycho.version>0.26.0</tycho.version>
-        <eclipse-repo.url>http://download.eclipse.org/releases/mars/</eclipse-repo.url>
+        <eclipse-repo.url>http://download.eclipse.org/releases/mars/201602261000</eclipse-repo.url>
         <osate-repo.url>http://www.aadl.info/aadl/osate/testing/update-site/</osate-repo.url>
         <osate.version>[0.0.0,3.0.0)</osate.version>
         <aadl-translator.version>[0.0.0,2.0.0)</aadl-translator.version>
@@ -47,6 +47,8 @@
     <modules>
         <module>../org.osate.atsv.integration</module>
         <module>../org.osate.atsv.integration.flow-latency</module>
+        <module>../org.osate.atsv.integration.power-consumption</module>
+        <module>../org.osate.atsv.integration.testfeature</module>
         <module>../org.osate.atsv.integration.tests</module>
     </modules>
     <repositories>
@@ -63,6 +65,16 @@
         <repository>
             <id>xtext-utils</id>
             <url>http://aadl.sei.cmu.edu/aadl/osate/build/xtext-utils/</url>
+            <layout>p2</layout>
+        </repository>
+        <repository>
+            <id>xtext-tmf</id>
+            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.11.0/</url>
+            <layout>p2</layout>
+        </repository>
+        <repository>
+            <id>xtext-emft</id>
+            <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0/</url>
             <layout>p2</layout>
         </repository>
     </repositories>
