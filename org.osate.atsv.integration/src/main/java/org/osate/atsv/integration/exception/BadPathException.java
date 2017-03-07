@@ -9,7 +9,6 @@ public class BadPathException extends Exception {
 
 	public BadPathException(String description) {
 		super(description);
-		// TODO Auto-generated constructor stub
 	}
 
 }

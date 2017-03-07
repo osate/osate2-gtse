@@ -62,4 +62,14 @@ public class ValuesModel {
 	public void add(String s) {
 		values.put(new QName("val" + counter++), s);
 	}
+
+	/**
+	 * Get the first value, if it exists. Used if we can't find a reasonable default
+	 * @return 
+	 */
+	public String getDefault() {
+		if (values.isEmpty())
+			return "";
+		return values.values().iterator().next();
+	}
 }

@@ -73,9 +73,10 @@ public final class EngineConfigGenerator {
 	 * @param value The initial value of this variable
 	 */
 	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value) {
+		if (value == null) {
+			value = ATSVVariableType.getDefaultFromType(type);
+		}
 		VariableModel vm = new VariableModel(title, sampled, isInput, type, value);
-		// TODO: Add null-check for value, if it's null each variable type should have
-		// default value -- min or max for int / float, first element for enumerated types
 		ecf.addVariable(vm);
 	}
 
@@ -91,6 +92,9 @@ public final class EngineConfigGenerator {
 	 */
 	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
 			ValuesModel values) {
+		if (value == null || value.equals("")) {
+			value = values.getDefault();
+		}
 		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, values);
 		ecf.addVariable(vm);
 	}
@@ -107,6 +111,9 @@ public final class EngineConfigGenerator {
 	 */
 	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
 			DistributionModel distribution) {
+		if (value == null || value.equals("")) {
+			value = distribution.getDefault();
+		}
 		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, distribution);
 		ecf.addVariable(vm);
 	}

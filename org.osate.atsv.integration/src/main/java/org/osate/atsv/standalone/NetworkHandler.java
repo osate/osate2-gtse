@@ -94,7 +94,6 @@ public class NetworkHandler {
 		try {
 			prop.load(new FileInputStream(System.getProperty("user.dir") + File.separator + "request.properties"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Request r = new Request();

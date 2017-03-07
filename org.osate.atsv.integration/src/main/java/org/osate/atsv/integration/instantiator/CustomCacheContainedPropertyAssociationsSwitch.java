@@ -78,7 +78,6 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 				pas.addAll(
 						buildPAList(processChoicepoints(si), new ArrayList<>(choicepoints.size()), new LinkedList<>()));
 			} catch (BadPathException | UnhandledVariableTypeException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

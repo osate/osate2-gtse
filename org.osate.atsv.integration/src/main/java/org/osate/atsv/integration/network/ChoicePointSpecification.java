@@ -51,7 +51,7 @@ public class ChoicePointSpecification implements Serializable {
 
 	public int getValueAsInt() {
 		if (type != ATSVVariableType.INTEGER) {
-			return Integer.MIN_VALUE; // TODO: Is there a better default value we can use?
+			return Integer.MIN_VALUE;
 		}
 		return Integer.valueOf(value);
 	}

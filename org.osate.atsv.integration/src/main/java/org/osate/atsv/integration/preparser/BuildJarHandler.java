@@ -105,7 +105,6 @@ public class BuildJarHandler extends AbstractHandler {
 			java.nio.file.Files.setPosixFilePermissions(connectJarPath, perms);
 			java.nio.file.Files.setPosixFilePermissions(runScriptPath, perms);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -236,8 +235,7 @@ public class BuildJarHandler extends AbstractHandler {
 				atsvProps.setProperty("pluginIds", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				String[] options = userProps.getProperty(propName).split(",");
-				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, options[0],
-						new ValuesModel(options));
+				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, options[0], new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
 				atsvProps.setProperty(propName, "(Key value is unused for subcomponent values)");
 			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {

@@ -68,4 +68,12 @@ public class DistributionModel {
 		this.min = min;
 		this.max = max;
 	}
+
+	/**
+	 * Get a reasonable default value
+	 * @return
+	 */
+	public String getDefault() {
+		return String.valueOf(min);
+	}
 }
