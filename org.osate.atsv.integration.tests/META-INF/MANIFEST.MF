@@ -5,15 +5,23 @@ Bundle-SymbolicName: org.osate.atsv.integration.tests;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit,
- org.osate.core.tests,
  org.eclipselabs.xtext.utils.unittesting,
  org.eclipse.xtext,
  org.apache.commons.lang3,
  org.eclipse.xtext.xbase.lib,
- org.osate.atsv.integration,
  org.eclipse.ui.workbench,
  org.eclipse.jface,
  org.osate.aadl2,
  org.osate.xtext.aadl2.properties,
- org.eclipse.xtext.junit4
+ org.eclipse.xtext.junit4,
+ org.eclipse.core.jobs,
+ org.eclipse.core.resources,
+ org.apache.log4j,
+ org.eclipse.equinox.registry,
+ org.osate.core,
+ org.osate.aadl2.modelsupport,
+ org.eclipse.ui.ide,
+ org.osate.xtext.aadl2,
+ org.osate.xtext.aadl2.ui,
+ org.osate.atsv.integration
 Bundle-ClassPath: .

@@ -47,7 +47,7 @@ import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.atsv.integration.network.PropertyValue;
 import org.osate.atsv.integration.network.SubcomponentChoice;
-import org.osate.core.test.OsateTest;
+import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class InstantiatorTests extends OsateTest {

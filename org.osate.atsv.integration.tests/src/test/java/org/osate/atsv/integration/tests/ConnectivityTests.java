@@ -39,7 +39,7 @@ import org.junit.Test;
 import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
-import org.osate.core.test.OsateTest;
+import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
 
 public class ConnectivityTests extends OsateTest {
 
