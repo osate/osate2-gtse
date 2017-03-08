@@ -35,6 +35,18 @@
       Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact permission@sei.cmu.edu for full terms.
    </license>
 
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.osate.workspace"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.osate.aadl2"/>
+      <import plugin="org.osate.xtext.aadl2.properties"/>
+      <import plugin="org.osate.aadl2.modelsupport"/>
+      <import plugin="org.osate.aadl2.instantiation"/>
+      <import plugin="org.apache.commons.lang3"/>
+   </requires>
+
    <plugin
          id="org.osate.atsv.integration"
          download-size="0"
