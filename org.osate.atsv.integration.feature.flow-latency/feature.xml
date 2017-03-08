@@ -35,6 +35,11 @@
       Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact permission@sei.cmu.edu for full terms.
    </license>
 
+   <includes
+         id="org.osate.atsv.integration.feature.powerconsumption"
+         version="0.0.0"
+         name="Guided Tradsepace Explorer: ATSV Integration (Core)"/>
+
    <requires>
       <import plugin="org.osate.analysis.flows"/>
       <import plugin="org.osate.atsv.integration" version="1.0.0" match="greaterOrEqual"/>
