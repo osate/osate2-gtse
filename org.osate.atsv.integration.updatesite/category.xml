@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.osate.atsv.integration.feature.base_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.base" version="1.0.0.qualifier">
+      <category name="org.osate.atsv.integration.updatesite.base"/>
+   </feature>
+   <feature url="features/org.osate.atsv.integration.feature.flowlatency_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.flowlatency" version="1.0.0.qualifier">
+      <category name="org.osate.atsv.integration.updatesite.analyzers"/>
+   </feature>
+   <feature url="features/org.osate.atsv.integration.feature.powerconsumption_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.powerconsumption" version="1.0.0.qualifier">
+      <category name="org.osate.atsv.integration.updatesite.analyzers"/>
+   </feature>
+   <category-def name="org.osate.atsv.integration.updatesite.base" label="Base Plugin">
+      <description>
+         The main ATSV Integration plugin
+      </description>
+   </category-def>
+   <category-def name="org.osate.atsv.integration.updatesite.analyzers" label="Available analyzers for AADL models">
+      <description>
+         Each analyzer will enable a different type of analysis of a given model.
+      </description>
+   </category-def>
+</site>
