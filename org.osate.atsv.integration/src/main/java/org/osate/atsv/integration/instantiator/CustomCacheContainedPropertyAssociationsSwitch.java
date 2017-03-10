@@ -34,21 +34,17 @@ import org.osate.aadl2.Property;
 import org.osate.aadl2.PropertyAssociation;
 import org.osate.aadl2.PropertyExpression;
 import org.osate.aadl2.instance.ComponentInstance;
-import org.osate.aadl2.instance.InstanceFactory;
 import org.osate.aadl2.instance.InstanceObject;
-import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
 import org.osate.aadl2.instantiation.CacheContainedPropertyAssociationsSwitch;
 import org.osate.aadl2.instantiation.SCProperties;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.exception.BadPathException;
 import org.osate.atsv.integration.exception.UnhandledVariableTypeException;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.atsv.integration.network.PropertyValue;
 import org.osate.xtext.aadl2.properties.util.GetProperties;
-import org.osate.xtext.aadl2.properties.util.PropertyUtils;
 
 public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContainedPropertyAssociationsSwitch {
 
@@ -131,23 +127,6 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 		return pas;
 	}
 
-	private PropertyExpression getValue(PropertyValue pv) throws UnhandledVariableTypeException {
-		if (pv.getType() == ATSVVariableType.FLOAT || pv.getType() == ATSVVariableType.DISCRETE_FLOAT) {
-			return PropertyUtils.createRealValue(pv.getValueAsFloat());
-		} else if (pv.getType() == ATSVVariableType.INTEGER) {
-			return PropertyUtils.createIntegerValue(pv.getValueAsInt());
-		} else if (pv.getType() == ATSVVariableType.STRING) {
-			// TODO: How do I create an instance reference value?
-			// createInstanceReferenceValue
-
-			InstanceReferenceValue irf = InstanceFactory.eINSTANCE.createInstanceReferenceValue();
-			irf.setReferencedInstanceObject(null);
-
-			return PropertyUtils.createStringValue(pv.getValueAsString());
-		}
-		throw new UnhandledVariableTypeException("Can't handle " + pv.getType());
-	}
-
 	public void addChoicePointSpecifications(Set<ChoicePointSpecification> choicepoints) {
 		this.choicepoints = choicepoints;
 	}
@@ -174,7 +153,7 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 				// Found it~
 				current.propSet.add(pv.getPropertyName().split("::")[0]);
 				current.propName.add(pv.getPropertyName().split("::")[1]);
-				current.vals.add(getValue(pv));
+				current.vals.add(pv.getValue());
 				return;
 			}
 			String nextName = pathArr[depth++];

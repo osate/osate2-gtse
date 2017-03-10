@@ -90,8 +90,6 @@ public
 					mdev.variableTimeFlow ->
 					m2e ->
 					edev.flowEnd;
-		properties
-			Deployment_Properties::Actual_Processor_Binding => (reference (processor1)) applies to mdev;
 	end SimpleComponentChoiceSystem.imp;
 
 	process StartProcess

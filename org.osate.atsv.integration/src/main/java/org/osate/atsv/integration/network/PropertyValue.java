@@ -1,8 +1,10 @@
 package org.osate.atsv.integration.network;
 
+import org.osate.aadl2.PropertyExpression;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
+import org.osate.atsv.integration.exception.UnhandledVariableTypeException;
 
-public class PropertyValue extends ChoicePointSpecification {
+public abstract class PropertyValue extends ChoicePointSpecification {
 
 	/**
 	 * Default serial version
@@ -19,8 +21,9 @@ public class PropertyValue extends ChoicePointSpecification {
 		return value;
 	}
 
+	public abstract PropertyExpression getValue() throws UnhandledVariableTypeException;
+
 	public String getPropertyName() {
 		return propertyName;
 	}
-
 }

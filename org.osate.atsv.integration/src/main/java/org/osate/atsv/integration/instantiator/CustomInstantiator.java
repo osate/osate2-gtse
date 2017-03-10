@@ -18,7 +18,10 @@
  *******************************************************************************/
 package org.osate.atsv.integration.instantiator;
 
+import static java.util.stream.Collectors.toMap;
+
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -43,6 +46,7 @@ import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
+import org.osate.atsv.integration.network.ReferencePropertyValue;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class CustomInstantiator extends InstantiateModel {
@@ -52,10 +56,18 @@ public class CustomInstantiator extends InstantiateModel {
 	 */
 	private Map<String, ChoicePointSpecification> choicepoints;
 
+	/**
+	 * InstancePath -> Spec
+	 */
+	private Map<String, ReferencePropertyValue> referencePaths;
+
 	public CustomInstantiator(IProgressMonitor pm, AnalysisErrorReporterManager errMgr,
 			Map<String, ChoicePointSpecification> choicepoints) {
 		super(pm, errMgr);
 		this.choicepoints = choicepoints;
+		this.referencePaths = choicepoints.values().stream().filter(ReferencePropertyValue.class::isInstance)
+				.map(ReferencePropertyValue.class::cast)
+				.collect(toMap(ReferencePropertyValue::getValueAsString, Function.identity()));
 	}
 
 	/**
@@ -106,7 +118,14 @@ public class CustomInstantiator extends InstantiateModel {
 
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
-		if (choicepoints.containsKey(ci.getComponentInstancePath())) {
+		String path = ci.getComponentInstancePath();
+		// If there's a reference to this node, store a reference
+		if (referencePaths.containsKey(path)) {
+			referencePaths.get(path).setReferencedElement(ci);
+		}
+
+		// If we need to swap out this node, we do that here
+		if (choicepoints.containsKey(path)) {
 			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
 			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(cps.getValueAsString());
 			if (cl instanceof ComponentType) {
