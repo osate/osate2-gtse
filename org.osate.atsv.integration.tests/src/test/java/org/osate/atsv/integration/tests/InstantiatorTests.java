@@ -41,11 +41,13 @@ import org.osate.aadl2.PropertyExpression;
 import org.osate.aadl2.RealLiteral;
 import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.FeatureInstance;
+import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
-import org.osate.atsv.integration.network.PropertyValue;
+import org.osate.atsv.integration.network.LiteralPropertyValue;
+import org.osate.atsv.integration.network.ReferencePropertyValue;
 import org.osate.atsv.integration.network.SubcomponentChoice;
 import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
@@ -102,10 +104,10 @@ public class InstantiatorTests extends OsateTest {
 	}
 
 	@Test
-	public void testPropertyValueSwapInstance() throws Exception {
+	public void testRangedPropertyValueSwapInstance() throws Exception {
 		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(new PropertyValue("scs.sdev.power", "SEI::PowerBudget", String.valueOf(4.2),
-						ATSVVariableType.FLOAT)));
+				Collections.singleton(new LiteralPropertyValue("scs.sdev.power", "SEI::PowerBudget",
+						String.valueOf(4.2), ATSVVariableType.FLOAT)));
 		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
 			if (!outerCI.getName().equalsIgnoreCase("scs")) {
 				continue;
@@ -128,6 +130,32 @@ public class InstantiatorTests extends OsateTest {
 			}
 		}
 		fail("Couldn't find the SEI::PowerBudget Property");
+	}
+
+	@Test
+	public void testReferencePropertyValueSwapInstance() throws Exception {
+		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
+				Collections.singleton(new ReferencePropertyValue("scs.mdev",
+						"Deployment_Properties::Actual_Processor_Binding", "scs.processor2", ATSVVariableType.STRING)));
+		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
+			if (!outerCI.getName().equalsIgnoreCase("scs")) {
+				continue;
+			}
+			for (ComponentInstance innerCI : outerCI.getAllComponentInstances()) {
+				if (!innerCI.getName().equalsIgnoreCase("mdev")) {
+					continue;
+				}
+				for (PropertyExpression pe : innerCI.getPropertyValues("Deployment_Properties",
+						"Actual_Processor_Binding")) {
+					if (pe instanceof InstanceReferenceValue) {
+						assertEquals("scs.processor2",
+								((InstanceReferenceValue) pe).getReferencedInstanceObject().getComponentInstancePath());
+						return;
+					}
+				}
+			}
+		}
+		fail("Couldn't find the Deployment_Properties::Actual_Processor_Binding Property");
 	}
 
 //	@Test

@@ -8,13 +8,11 @@ public class PropertyValue extends ChoicePointSpecification {
 	 * Default serial version
 	 */
 	private static final long serialVersionUID = 1L;
-
-	private String propertyName;
+	protected String propertyName;
 
 	public PropertyValue(String componentPath, String propertyName, String value, ATSVVariableType type) {
 		super(componentPath, value, type);
 		this.propertyName = propertyName;
-		this.property = true;
 	}
 
 	public String getRawValue() {
@@ -24,4 +22,5 @@ public class PropertyValue extends ChoicePointSpecification {
 	public String getPropertyName() {
 		return propertyName;
 	}
+
 }

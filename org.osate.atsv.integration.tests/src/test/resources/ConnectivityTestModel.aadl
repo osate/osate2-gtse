@@ -46,6 +46,14 @@ public
 			SEI::PowerCapacity => 40.0 W;
 	end ElectricGrid;
 
+	processor cheapCPU
+			 
+	end cheapCPU;
+
+	processor expensiveCPU
+			
+	end expensiveCPU;
+
 	system MySystem
 
 	end MySystem;
@@ -68,6 +76,8 @@ public
 			sdev: process StartProcess;
 			mdev: process MidProcess2;
 			edev: process EndProcess;
+			processor1 : processor cheapCPU;
+			processor2 : processor expensiveCPU;
 		connections
 			s2m: port sdev.output -> mdev.input;
 			m2e: port mdev.output -> edev.input;
@@ -80,6 +90,8 @@ public
 					mdev.variableTimeFlow ->
 					m2e ->
 					edev.flowEnd;
+		properties
+			Deployment_Properties::Actual_Processor_Binding => (reference (processor1)) applies to mdev;
 	end SimpleComponentChoiceSystem.imp;
 
 	process StartProcess

@@ -31,10 +31,6 @@ public class ChoicePointSpecification implements Serializable {
 	protected String componentPath;
 	protected String value;
 	protected ATSVVariableType type;
-	/**
-	 * True if this is a property-modifying CPS type
-	 */
-	protected boolean property = false;
 
 	public ChoicePointSpecification(String componentPath, String value, ATSVVariableType type) {
 		this.componentPath = componentPath;
@@ -72,6 +68,6 @@ public class ChoicePointSpecification implements Serializable {
 	}
 
 	public boolean isProperty() {
-		return property;
+		return this instanceof PropertyValue;
 	}
 }
