@@ -26,7 +26,9 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,16 +39,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
+import org.osate.aadl2.IntegerLiteral;
 import org.osate.aadl2.PropertyExpression;
 import org.osate.aadl2.RealLiteral;
+import org.osate.aadl2.StringLiteral;
 import org.osate.aadl2.instance.ComponentInstance;
-import org.osate.aadl2.instance.FeatureInstance;
 import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
 import org.osate.atsv.integration.network.LiteralPropertyValue;
+import org.osate.atsv.integration.network.PropertyValue;
 import org.osate.atsv.integration.network.ReferencePropertyValue;
 import org.osate.atsv.integration.network.SubcomponentChoice;
 import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
@@ -104,69 +108,94 @@ public class InstantiatorTests extends OsateTest {
 	}
 
 	@Test
-	public void testRangedPropertyValueSwapInstance() throws Exception {
-		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(new LiteralPropertyValue("scs.sdev.power", "SEI::PowerBudget",
-						String.valueOf(4.2), ATSVVariableType.FLOAT)));
-		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
-			if (!outerCI.getName().equalsIgnoreCase("scs")) {
-				continue;
+	public void testRangedFloatPropertyValueSwapInstance() throws Exception {
+		propSwapHelper("scs.mdev", "SEI::RAMActual", 37.8, 500.0, LiteralPropertyValue.class);
+	}
+
+	@Test
+	public void testRangedIntPropertyValueSwapInstance() throws Exception {
+		propSwapHelper("scs.edev", "SEI::SecurityLevel", 42L, 5L, LiteralPropertyValue.class);
+	}
+
+	@Test
+	public void testStringPropertyValueSwapInstance() throws Exception {
+		propSwapHelper("scs.processor2", "SEI::Platform", "Maingear", "Falcon Northwest", LiteralPropertyValue.class);
+	}
+
+	@Test
+	public void testReferencePropertyValueSwapInstance() throws Exception {
+		propSwapHelper("scs.mdev", "Deployment_Properties::Actual_Processor_Binding", "scs.processor2",
+				"scs.processor1", ReferencePropertyValue.class);
+	}
+
+	@Override
+	public String getProjectName() {
+		return "ATSVCustomInstantiatorTestProject";
+	}
+
+	private void propSwapHelper(String path, String prop, Object newValue, Object oldValue,
+			Class<? extends PropertyValue> cpsClazz) throws Exception {
+		ATSVVariableType type;
+		Class<? extends PropertyExpression> propValClazz;
+		if (newValue instanceof Double) {
+			type = ATSVVariableType.FLOAT;
+			propValClazz = RealLiteral.class;
+		} else if (newValue instanceof Long) {
+			type = ATSVVariableType.INTEGER;
+			propValClazz = IntegerLiteral.class;
+		} else if (newValue instanceof String) {
+			type = ATSVVariableType.STRING;
+			if (cpsClazz.equals(ReferencePropertyValue.class)) {
+				propValClazz = InstanceReferenceValue.class;
+			} else {
+				propValClazz = StringLiteral.class;
 			}
-			for (ComponentInstance innerCI : outerCI.getAllComponentInstances()) {
-				if (!innerCI.getName().equalsIgnoreCase("sdev")) {
-					continue;
-				}
-				for (FeatureInstance fi : innerCI.getAllFeatureInstances()) {
-					if (!fi.getName().equalsIgnoreCase("power")) {
-						continue;
-					}
-					for (PropertyExpression pe : fi.getPropertyValues("SEI", "PowerBudget")) {
-						if (pe instanceof RealLiteral) {
-							assertEquals(4.2, ((RealLiteral) pe).getValue(), .0001);
+		} else {
+			throw new Exception("Can't figure out the type of " + newValue);
+		}
+
+		SystemInstance swappedSI = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
+				Collections.singleton(cpsClazz
+						.getDeclaredConstructor(String.class, String.class, String.class, ATSVVariableType.class)
+						.newInstance(path, prop, String.valueOf(newValue), type)));
+		propCheckHelper(path, prop, newValue, propValClazz, swappedSI);
+
+		SystemInstance emptySI = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
+				Collections.emptySet());
+		propCheckHelper(path, prop, oldValue, propValClazz, emptySI);
+	}
+
+	private void propCheckHelper(String path, String prop, Object value,
+			Class<? extends PropertyExpression> propValClazz, SystemInstance swappedSI) throws Exception {
+		Iterator<ComponentInstance> cisIter = swappedSI.getAllComponentInstances().iterator();
+		Iterator<String> pathIter = Arrays.asList(path.split("\\.")).iterator();
+		ComponentInstance ci = null;
+		String pathSegment = pathIter.next();
+		while (cisIter.hasNext()) {
+			ci = cisIter.next();
+			if (ci.getName().equalsIgnoreCase(pathSegment)) {
+				if (pathIter.hasNext()) {
+					pathSegment = pathIter.next();
+					cisIter = ci.getAllComponentInstances().iterator();
+				} else {
+					for (PropertyExpression pe : ci.getPropertyValues(prop.split("\\:\\:")[0],
+							prop.split("\\:\\:")[1])) {
+						if (propValClazz.isInstance(pe)) {
+							if (value instanceof Double) {
+								assertEquals((Double) value, (Double) propValClazz.getMethod("getValue").invoke(pe),
+										.0001);
+							} else if (pe instanceof InstanceReferenceValue) {
+								assertEquals(value, ((InstanceReferenceValue) pe).getReferencedInstanceObject()
+										.getComponentInstancePath());
+							} else {
+								assertEquals(value, propValClazz.getMethod("getValue").invoke(pe));
+							}
 							return;
 						}
 					}
 				}
 			}
 		}
-		fail("Couldn't find the SEI::PowerBudget Property");
-	}
-
-	@Test
-	public void testReferencePropertyValueSwapInstance() throws Exception {
-		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(new ReferencePropertyValue("scs.mdev",
-						"Deployment_Properties::Actual_Processor_Binding", "scs.processor2", ATSVVariableType.STRING)));
-		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
-			if (!outerCI.getName().equalsIgnoreCase("scs")) {
-				continue;
-			}
-			for (ComponentInstance innerCI : outerCI.getAllComponentInstances()) {
-				if (!innerCI.getName().equalsIgnoreCase("mdev")) {
-					continue;
-				}
-				for (PropertyExpression pe : innerCI.getPropertyValues("Deployment_Properties",
-						"Actual_Processor_Binding")) {
-					if (pe instanceof InstanceReferenceValue) {
-						assertEquals("scs.processor2",
-								((InstanceReferenceValue) pe).getReferencedInstanceObject().getComponentInstancePath());
-						return;
-					}
-				}
-			}
-		}
-		fail("Couldn't find the Deployment_Properties::Actual_Processor_Binding Property");
-	}
-
-//	@Test
-//	public void testNestedSystemPropertyValueSwap() throws Exception {
-//		// TODO: Since we key off of system instances, it seems important to make sure we can
-//		// handle nested ones.
-//		fail("Not yet implemented");
-//	}
-
-	@Override
-	public String getProjectName() {
-		return "ATSVCustomInstantiatorTestProject";
+		fail("Couldn't find the " + prop + " property");
 	}
 }

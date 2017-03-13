@@ -244,7 +244,6 @@ public class BuildJarHandler extends AbstractHandler {
 				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
 						ATSVVariableType.getDefaultFromType(type),
 						new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
-				// Pass the choicepoint definition through to the properties used to build the request...
 				atsvProps.setProperty(propName, "(Key value is unused for property values)");
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
 				ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[1]);

@@ -29,11 +29,13 @@ public
 	end ElectricGrid;
 
 	processor cheapCPU
-			 
+		properties
+			SEI::Platform => "CyberPower";
 	end cheapCPU;
 
 	processor expensiveCPU
-			
+		properties
+			SEI::Platform => "Falcon Northwest";
 	end expensiveCPU;
 
 	system MySystem
@@ -101,6 +103,7 @@ public
 					};
 		properties
 			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::SecurityLevel => 5;
 	end EndProcess;
 
 	process implementation EndProcess.imp
@@ -117,6 +120,7 @@ public
 					};
 		properties
 			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::RAMActual => 25.0 bytes;
 	end MidProcess1;
 
 	process MidProcess2
@@ -130,6 +134,7 @@ public
 					};
 		properties
 			SEI::PowerBudget => 10.0 w applies to power;
+			SEI::RAMActual => 500.0 bytes;
 	end MidProcess2;
 
 	process MidProcess3
@@ -143,6 +148,7 @@ public
 					};
 		properties
 			SEI::PowerBudget => 15.0 w applies to power;
+			SEI::RAMActual => 1000.0 bytes;
 	end MidProcess3;
 
 end SimpleComponentChoice;

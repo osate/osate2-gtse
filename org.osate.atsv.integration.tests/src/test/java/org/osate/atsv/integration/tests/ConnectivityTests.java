@@ -91,11 +91,6 @@ public class ConnectivityTests extends OsateTest {
 		assertTrue(res.getVariables().isEmpty());
 	}
 
-	/*-
-	 * 
-	 * Disabled 10.11.16 -- I can't get maven tycho to run this test successfully, even though it
-	 * runs just fine in eclipse.
-	*/
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
