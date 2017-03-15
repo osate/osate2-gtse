@@ -56,13 +56,43 @@ import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osgi.framework.Bundle;
 
-public class BuildJarHandler extends AbstractHandler {
+public class GenerateInputFilesHandler extends AbstractHandler {
 
+	/**
+	 * Initial values for input.txt, which will be overwritten by ATSV
+	 */
 	private Map<String, String> startingInputs = null;
+
+	/**
+	 * Initial values for input.txt, which will be overwritten by ATSV
+	 */
 	private Map<String, String> startingOutputs = null;
+
+	/**
+	 * These are specified by the user, currently as a properties file but eventually as a custom
+	 * choicepoint DSL
+	 */
 	private Properties userProps = null;
-	private Properties atsvProps = null;
+
+	/**
+	 * These are values needed by OSATE that shouldn't be encoded as ATSV properties, eg:
+	 * <ul>
+	 *  <li>The package name</li>
+	 *  <li>The component implementation to instantiate</li>
+	 *  <li>Which analysis plugins to use</li>
+	 *  <li>The type of each choicepoint (but not their values -- that comes from ATSV via input.txt)</li>
+	 * </ul>  
+	 */
+	private Properties osateProps = null;
+
+	/**
+	 * The engine config spec that will get seralized to XML and then read in by ATSV
+	 */
 	private EngineConfigGenerator ecf;
+
+	/**
+	 * The directory all the generated files will go
+	 */
 	private String targetDirStr = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
 			+ File.separator;
 
@@ -85,7 +115,7 @@ public class BuildJarHandler extends AbstractHandler {
 		startingInputs = new HashMap<>();
 		startingOutputs = new HashMap<>();
 		userProps = null;
-		atsvProps = new Properties();
+		osateProps = new Properties();
 		ecf = new EngineConfigGenerator();
 	}
 
@@ -111,8 +141,10 @@ public class BuildJarHandler extends AbstractHandler {
 
 	private void generateRequestProperties() {
 		try (FileOutputStream out = new FileOutputStream(targetDirStr + "request.properties")) {
-			atsvProps.store(out,
-					"NO USER MODIFIABLE CONTENTS\n#Auto-generated properties for the ATSV-OSATE connection (connector.jar)");
+			osateProps.store(out,
+					"NO USER MODIFIABLE CONTENTS\n"
+							+ "#Auto-generated properties for the ATSV-OSATE connection (connector.jar)\n"
+							+ "#These properties encode information needed by OSATE that ATSV can't use");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -173,7 +205,7 @@ public class BuildJarHandler extends AbstractHandler {
 			return null;
 		}
 
-		atsvProps.setProperty("packageName", propFile.getName().substring(0,
+		osateProps.setProperty("packageName", propFile.getName().substring(0,
 				propFile.getName().length() - propFile.getFileExtension().length() - 1));
 
 		// Assume choicepoint definitions are named the same as the package they specify
@@ -232,26 +264,41 @@ public class BuildJarHandler extends AbstractHandler {
 		for (String propName : userProps.stringPropertyNames()) {
 			String[] propNames = propName.split("-");
 			if (propNames[0].equalsIgnoreCase("Analyses")) {
-				atsvProps.setProperty("pluginIds", userProps.getProperty(propName));
+				osateProps.setProperty("pluginIds", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				String[] options = userProps.getProperty(propName).split(",");
 				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, options[0], new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
-				atsvProps.setProperty(propName, "(Key value is unused for subcomponent values)");
+				osateProps.setProperty(propName, "(Key value is unused for subcomponent values)");
 			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
-				String[] range = userProps.getProperty(propName).split(",");
-				ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[3]);
-				addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
-						ATSVVariableType.getDefaultFromType(type),
-						new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
-				atsvProps.setProperty(propName, "(Key value is unused for property values)");
+				handlePropValSpec(propName);
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
 				ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[1]);
 				addOutputVariables(userProps.getProperty(propName), type, ATSVVariableType.getDefaultFromType(type));
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
-				atsvProps.setProperty(propName, userProps.getProperty(propName));
+				osateProps.setProperty(propName, userProps.getProperty(propName));
 			}
 		}
+	}
+
+	private void handlePropValSpec(String propName) {
+		String[] propNames = propName.split("-");
+		String[] range = userProps.getProperty(propName).split(",");
+		ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[3]);
+		if (type == ATSVVariableType.FLOAT) {
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, ATSVVariableType.getDefaultFromType(type),
+					new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
+		} else if (type == ATSVVariableType.INTEGER) {
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, ATSVVariableType.getDefaultFromType(type),
+					new UniformDistributionModel(Integer.valueOf(range[0]), Integer.valueOf(range[1])));
+		} else if (type == ATSVVariableType.STRING) {
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, ATSVVariableType.getDefaultFromType(type),
+					new ValuesModel(range));
+		} else if (type == null && propNames[3].equals("reference")) {
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING,
+					ATSVVariableType.getDefaultFromType(ATSVVariableType.STRING), new ValuesModel(range));
+		}
+		osateProps.setProperty(propName, "(Key value is unused for property values)");
 	}
 }

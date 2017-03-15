@@ -39,7 +39,7 @@ This plugin enables users to automatically explore the tradespace of a system by
     * Example projects are available in the GTSE-Examples directory of this repository.
 3. Select the *PackageName*.property file, where *PackageName* is the name of a package in this project.
     * In the GTSE-Examples project, you can select `SimpleComponentChoice.properties`, which contains choicepoint information for the `SimpleComponentChoice` package in `SimpleComponentChoice.aadl`.
-4. Select `Sample Menu`, then select `Build ATSV-Jar`.
+4. Select `Sample Menu`, then select `Generate Input Files`.
 5. [Optional] Verify that the following files have been created in the directory you specified as part of step 1.4:
     * `ATSVConfig.ecf`
     * `connector.jar`
