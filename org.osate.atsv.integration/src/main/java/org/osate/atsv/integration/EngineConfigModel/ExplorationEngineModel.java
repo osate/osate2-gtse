@@ -18,9 +18,15 @@
  *******************************************************************************/
 package org.osate.atsv.integration.EngineConfigModel;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.osate.atsv.integration.Activator;
@@ -114,9 +120,14 @@ public class ExplorationEngineModel {
 
 	/**
 	 * This is an XML string that can define "must be equal" or "must be unique" relationships between variables
+	 * 
+	 * That is, it is an XML string (which will be re-xml encoded when the full model is serialized)
+	 * Its value is set by the {@link #renderConfigurator() renderConfigurator} method, which has to be called
+	 * after all the configurators have been added (typically right before the model is generated.
 	 */
 	@XmlElement
-	private final String configurator = "";
+	private String configurator = null;
+	private ConfiguratorsModel cm = new ConfiguratorsModel();
 
 	/**
 	 * Any additional entries for the PATH environment variable can be 
@@ -142,5 +153,27 @@ public class ExplorationEngineModel {
 	public void clearTokensAndVariables() {
 		inputTokens.clear();
 		variables.clear();
+	}
+
+	public void addConfigurator(ConfiguratorModel configuratorModel) {
+		cm.addConfigurator(configuratorModel);
+	}
+
+	public void renderConfigurator() throws JAXBException {
+		if (cm.isEmpty()) {
+			configurator = "";
+			return;
+		}
+		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, ConfiguratorModel.class);
+		ConfiguratorModelAdapter configuratorAdapter = new ConfiguratorModelAdapter();
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		Marshaller marshal = context.createMarshaller();
+		marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
+		marshal.setProperty(Marshaller.JAXB_FRAGMENT, true);
+		marshal.setAdapter(configuratorAdapter);
+		JAXBElement<ConfiguratorsModel> configuratorXML = new JAXBElement<ConfiguratorsModel>(new QName("Configurator"),
+				ConfiguratorsModel.class, cm);
+		marshal.marshal(configuratorXML, stream);
+		configurator = stream.toString();
 	}
 }

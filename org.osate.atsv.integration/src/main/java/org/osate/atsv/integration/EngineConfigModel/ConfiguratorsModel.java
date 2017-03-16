@@ -24,26 +24,35 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-public class VariablesModel {
+/**
+ * Holds the list of configurators (basically constraints) in a particular choicepoint set
+ *
+ */
+public class ConfiguratorsModel {
 
-	@XmlJavaTypeAdapter(VariableModelAdapter.class)
+	@XmlJavaTypeAdapter(ConfiguratorModelAdapter.class)
 	@XmlAnyElement
-	private List<VariableModel> variables = new ArrayList<>();
+	private List<ConfiguratorModel> configurators = new ArrayList<>();
 
 	/**
-	 * Add a variable to the internal list of variables.
+	 * Add a configurator to the internal list of variables.
 	 * 
-	 * This is not designed to be called by clients, @see org.osate.atsv.integration.EngineConfigGenerator#addVariable()
-	 * @param vm The variable model to add
+	 * This is not designed to be called by clients, @see {@link org.osate.atsv.integration.EngineConfigGenerator#addEqualityConstraint(String, String)}
+	 * and @see {@link org.osate.atsv.integration.EngineConfigGenerator#addUniquenessConstraint(String, String)}
+	 * @param cm The configurator model to add
 	 */
-	public void addVariable(VariableModel vm) {
-		variables.add(vm);
+	public void addConfigurator(ConfiguratorModel cm) {
+		configurators.add(cm);
 	}
 
 	/**
-	 * Empty the list of variables
+	 * Empty the list of configurators
 	 */
 	public void clear() {
-		variables.clear();
+		configurators.clear();
+	}
+
+	public boolean isEmpty() {
+		return configurators.isEmpty();
 	}
 }

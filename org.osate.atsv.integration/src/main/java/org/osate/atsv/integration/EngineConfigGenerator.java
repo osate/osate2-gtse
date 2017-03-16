@@ -26,6 +26,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
+import org.osate.atsv.integration.EngineConfigModel.ConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
@@ -120,7 +121,30 @@ public final class EngineConfigGenerator {
 
 	public String getXML() throws JAXBException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		// The configurators have to be double-encoded, so we call that rendering here
+		ecf.renderConfigurator();
+		// And here we render the entire specification
 		marshal.marshal(cfg, stream);
 		return stream.toString();
+	}
+
+	/**
+	 * Add a requirement that two variables must always have equal values
+	 * 
+	 * @param varName1
+	 * @param varName2
+	 */
+	public void addEqualityConstraint(String varName1, String varName2) {
+		ecf.addConfigurator(new ConfiguratorModel(varName1, varName2, true));
+	}
+
+	/**
+	 * Add a requirement that two variables must never have equal values
+	 * 
+	 * @param varName1
+	 * @param varName2
+	 */
+	public void addUniquenessConstraint(String varName1, String varName2) {
+		ecf.addConfigurator(new ConfiguratorModel(varName1, varName2, false));
 	}
 }

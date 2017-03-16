@@ -18,32 +18,27 @@
  *******************************************************************************/
 package org.osate.atsv.integration.EngineConfigModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.xml.bind.annotation.XmlElement;
 
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+/**
+ * This models an individual "configurator" essentially a constraint on the inputs ATSV will generate
+ */
+public class ConfiguratorModel {
+	@XmlElement(name = "var")
+	private String varName1;
 
-public class VariablesModel {
+	@XmlElement(name = "var")
+	private String varName2;
 
-	@XmlJavaTypeAdapter(VariableModelAdapter.class)
-	@XmlAnyElement
-	private List<VariableModel> variables = new ArrayList<>();
+	private boolean isEquality;
 
-	/**
-	 * Add a variable to the internal list of variables.
-	 * 
-	 * This is not designed to be called by clients, @see org.osate.atsv.integration.EngineConfigGenerator#addVariable()
-	 * @param vm The variable model to add
-	 */
-	public void addVariable(VariableModel vm) {
-		variables.add(vm);
+	public ConfiguratorModel(String varName1, String varName2, boolean isEquality) {
+		this.varName1 = varName1;
+		this.varName2 = varName2;
+		this.isEquality = isEquality;
 	}
 
-	/**
-	 * Empty the list of variables
-	 */
-	public void clear() {
-		variables.clear();
+	public boolean isEquality() {
+		return isEquality;
 	}
 }
