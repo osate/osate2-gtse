@@ -19,6 +19,7 @@
 package org.osate.atsv.integration.EngineConfigModel;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * This models an individual "configurator" essentially a constraint on the inputs ATSV will generate
@@ -30,6 +31,8 @@ public class ConfiguratorModel {
 	@XmlElement(name = "var")
 	private String varName2;
 
+	private int id1, id2;
+
 	private boolean isEquality;
 
 	public ConfiguratorModel(String varName1, String varName2, boolean isEquality) {
@@ -40,5 +43,35 @@ public class ConfiguratorModel {
 
 	public boolean isEquality() {
 		return isEquality;
+	}
+
+	public boolean isUnique() {
+		return !isEquality;
+	}
+
+	public String getVarName1() {
+		return varName1;
+	}
+
+	public String getVarName2() {
+		return varName2;
+	}
+
+	public void setId1(int id1) {
+		this.id1 = id1;
+	}
+
+	public void setId2(int id2) {
+		this.id2 = id2;
+	}
+
+	@XmlTransient
+	public int getId1() {
+		return id1;
+	}
+
+	@XmlTransient
+	public int getId2() {
+		return id2;
 	}
 }

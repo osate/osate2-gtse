@@ -54,6 +54,8 @@ import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
+import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
+import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osgi.framework.Bundle;
 
 public class GenerateInputFilesHandler extends AbstractHandler {
@@ -243,7 +245,8 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	private void generateEngineConfig() {
 		try (PrintWriter out = new PrintWriter(targetDirStr + "ATSVConfig.ecf")) {
 			out.println(ecf.getXML());
-		} catch (JAXBException | FileNotFoundException e) {
+		} catch (JAXBException | FileNotFoundException | UnsatisfiableConstraint
+				| ConfiguratorRepresentationException e) {
 			e.printStackTrace();
 		}
 	}

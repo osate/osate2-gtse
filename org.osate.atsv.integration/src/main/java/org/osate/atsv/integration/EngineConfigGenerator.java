@@ -35,6 +35,8 @@ import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
+import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
+import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 
 public final class EngineConfigGenerator {
 
@@ -119,7 +121,7 @@ public final class EngineConfigGenerator {
 		ecf.addVariable(vm);
 	}
 
-	public String getXML() throws JAXBException {
+	public String getXML() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		// The configurators have to be double-encoded, so we call that rendering here
 		ecf.renderConfigurator();

@@ -24,21 +24,35 @@ import java.io.File;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.EngineConfigGenerator;
 import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
+import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
+import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 
 public class EngineConfigTests {
 
 	private String baseDir = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
 			+ File.separator;
+	private EngineConfigGenerator ecf;
+
+	@Before
+	public void startUp() {
+		ecf = new EngineConfigGenerator();
+	}
+
+	@After
+	public void tearDown() {
+		ecf = null;
+	}
 
 	@Test
-	public void noVariables() throws JAXBException {
-		EngineConfigGenerator ecf = new EngineConfigGenerator();
+	public void noVariables() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
@@ -47,8 +61,8 @@ public class EngineConfigTests {
 	}
 
 	@Test
-	public void configuratorEquality() throws JAXBException {
-		EngineConfigGenerator ecf = new EngineConfigGenerator();
+	public void configuratorEquality()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
@@ -60,8 +74,8 @@ public class EngineConfigTests {
 	}
 
 	@Test
-	public void configuratorUniqueness() throws JAXBException {
-		EngineConfigGenerator ecf = new EngineConfigGenerator();
+	public void configuratorUniqueness()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
@@ -73,8 +87,7 @@ public class EngineConfigTests {
 	}
 
 	@Test
-	public void configuratorBoth() throws JAXBException {
-		EngineConfigGenerator ecf = new EngineConfigGenerator();
+	public void configuratorBoth() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
@@ -87,9 +100,39 @@ public class EngineConfigTests {
 		assertEquals(expectedXML, ecf.getXML());
 	}
 
+	@Test(expected = UnsatisfiableConstraint.class)
+	public void impossibleConfigurator()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addVariable("str3", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addEqualityConstraint("str1", "str2");
+		ecf.addEqualityConstraint("str2", "str3");
+		ecf.addUniquenessConstraint("str1", "str3");
+
+		// This should throw the exception
+		ecf.getXML();
+	}
+
 	@Test
-	public void exampleVariables() throws JAXBException {
-		EngineConfigGenerator ecf = new EngineConfigGenerator();
+	public void possibleConfigurator()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
+				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
+				+ "input.txt</inputFile><outputFile>" + baseDir
+				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/><var3 name=\"str4\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2><varName3 title=\"str4\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;var&gt;str3&lt;/var&gt;&lt;var&gt;str4&lt;/var&gt;&lt;/Equal&gt;&lt;Unique&gt;&lt;var&gt;str2&lt;/var&gt;&lt;var&gt;str3&lt;/var&gt;&lt;/Unique&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
+		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addVariable("str3", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addVariable("str4", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addEqualityConstraint("str1", "str2");
+		ecf.addEqualityConstraint("str3", "str4");
+		ecf.addUniquenessConstraint("str2", "str3");
+		assertEquals(expectedXML, ecf.getXML());
+	}
+
+	@Test
+	public void exampleVariables() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir

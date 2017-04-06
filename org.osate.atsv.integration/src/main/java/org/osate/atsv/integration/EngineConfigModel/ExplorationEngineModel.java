@@ -30,6 +30,8 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.osate.atsv.integration.Activator;
+import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
+import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 
 public class ExplorationEngineModel {
 
@@ -159,11 +161,13 @@ public class ExplorationEngineModel {
 		cm.addConfigurator(configuratorModel);
 	}
 
-	public void renderConfigurator() throws JAXBException {
+	public void renderConfigurator()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		if (cm.isEmpty()) {
 			configurator = "";
 			return;
 		}
+		validateConfigurator();
 		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, ConfiguratorModel.class);
 		ConfiguratorModelAdapter configuratorAdapter = new ConfiguratorModelAdapter();
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -175,5 +179,9 @@ public class ExplorationEngineModel {
 				ConfiguratorsModel.class, cm);
 		marshal.marshal(configuratorXML, stream);
 		configurator = stream.toString();
+	}
+
+	private void validateConfigurator() throws UnsatisfiableConstraint, ConfiguratorRepresentationException {
+		cm.validateConfigurator();
 	}
 }

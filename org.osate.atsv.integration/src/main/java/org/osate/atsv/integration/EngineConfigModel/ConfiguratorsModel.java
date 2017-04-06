@@ -24,6 +24,10 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.osate.atsv.integration.ConfiguratorVerifier;
+import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
+import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+
 /**
  * Holds the list of configurators (basically constraints) in a particular choicepoint set
  *
@@ -55,4 +59,11 @@ public class ConfiguratorsModel {
 	public boolean isEmpty() {
 		return configurators.isEmpty();
 	}
+
+	public void validateConfigurator() throws ConfiguratorRepresentationException, UnsatisfiableConstraint {
+		if (!configurators.isEmpty()) {
+			ConfiguratorVerifier.validate(configurators);
+		}
+	}
+
 }
