@@ -16,6 +16,7 @@
 --
 -- DM17-0002
 ---------------------------------------------------------------------------------
+
 package SimpleComponentChoice
 public
 
@@ -113,7 +114,13 @@ public
 
 	process EndProcess
 		features
-			input: in event port;
+			input: in event port {
+				Communication_Properties::Input_Rate => [
+					Value_Range => 1.0 .. 5.0;
+					Rate_Unit => PerSecond;
+					Rate_Distribution => Fixed;
+				];
+			};
 			power: in feature Electricity;
 		flows
 			flowEnd: flow sink input {
@@ -145,7 +152,13 @@ public
 		features
 			power: in feature Electricity;
 			input: in event port;
-			output: out event port;
+			output: out event port{
+				Communication_Properties::Output_Rate => [
+					Value_Range => 10.0 .. 50.0;
+					Rate_Unit => PerSecond;
+					Rate_Distribution => Fixed;
+				];
+			};
 		flows
 			variableTimeFlow: flow path input -> output {
 						Latency => 15 ms .. 15 ms;

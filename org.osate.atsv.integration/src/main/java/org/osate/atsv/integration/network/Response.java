@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Response implements Serializable {
-	
+
 	/**
 	 * Default serial version 
 	 */
@@ -33,36 +33,51 @@ public class Response implements Serializable {
 	 * A mapping from output variable name to value
 	 */
 	private Map<String, String> variables = new HashMap<>();
-	
+
 	/**
 	 * The root exception, if something went wrong
 	 */
 	private Exception exception = null;
-	
+
+	/**
+	 * This is marked as false if a "all or nothing" analysis finds a 
+	 * problem with instance model created by the request (ie, it's
+	 * unschedulable, or has inconsistent connections)
+	 */
+	private boolean valid = true;
+
 	public Response() {
 	}
 
-	public void setException(Exception e){
+	public void setException(Exception e) {
 		exception = e;
 	}
-	
+
 	public boolean hasException() {
 		return exception != null;
 	}
-	
+
 	public Exception getException() {
 		return exception;
 	}
-	
+
 	public Response(Map<String, String> vars) {
 		variables.putAll(vars);
 	}
-	
+
 	public void addVariable(String varName, String value) {
 		variables.put(varName, value);
 	}
-	
-	public Map<String, String> getVariables(){
+
+	public Map<String, String> getVariables() {
 		return variables;
+	}
+
+	public void markInvalid() {
+		valid = false;
+	}
+
+	public boolean isValidModel() {
+		return valid;
 	}
 }

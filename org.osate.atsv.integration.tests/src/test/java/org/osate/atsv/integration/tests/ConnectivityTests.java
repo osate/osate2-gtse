@@ -106,6 +106,19 @@ public class ConnectivityTests extends OsateTest {
 	}
 
 	@Test
+	public void portConsistencyTest() throws IOException, ClassNotFoundException {
+		Request r = new Request();
+		r.addPluginId("org.osate.atsv.integration.port-consistency");
+		r.setPackageName(PluginTest.PACKAGE_NAME);
+		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
+		outStream.writeObject(r);
+		outStream.flush();
+		Response res = (Response) inStream.readObject();
+		assertFalse(res.isValidModel());
+		assertFalse(res.hasException());
+	}
+
+	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId("org.osate.atsv.integration.power-consumption");

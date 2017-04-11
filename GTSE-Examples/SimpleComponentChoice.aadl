@@ -1,3 +1,22 @@
+--------------------------------------------------------------------------------
+-- OSATE2-GTSE
+--
+-- Copyright 2017 Carnegie Mellon University. All Rights Reserved.
+--
+-- NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE
+-- MATERIAL IS FURNISHED ON AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO
+-- WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY MATTER INCLUDING,
+-- BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+-- EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON
+-- UNIVERSITY DOES NOT MAKE ANY WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM
+-- PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+--
+-- Released under an Eclipse Public License - v1.0-style license, please see
+-- license.txt or contact permission@sei.cmu.edu for full terms. 
+--
+-- DM17-0002
+---------------------------------------------------------------------------------
+
 package SimpleComponentChoice
 public
 
@@ -95,7 +114,13 @@ public
 
 	process EndProcess
 		features
-			input: in event port;
+			input: in event port {
+				Communication_Properties::Input_Rate => [
+					Value_Range => 1.0 .. 5.0;
+					Rate_Unit => PerSecond;
+					Rate_Distribution => Fixed;
+				];
+			};
 			power: in feature Electricity;
 		flows
 			flowEnd: flow sink input {
@@ -127,7 +152,13 @@ public
 		features
 			power: in feature Electricity;
 			input: in event port;
-			output: out event port;
+			output: out event port{
+				Communication_Properties::Output_Rate => [
+					Value_Range => 10.0 .. 50.0;
+					Rate_Unit => PerSecond;
+					Rate_Distribution => Fixed;
+				];
+			};
 		flows
 			variableTimeFlow: flow path input -> output {
 						Latency => 15 ms .. 15 ms;
