@@ -18,10 +18,9 @@
  *******************************************************************************/
 package org.osate.atsv.integration.instantiator;
 
-import static java.util.stream.Collectors.toMap;
-
+import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -57,17 +56,22 @@ public class CustomInstantiator extends InstantiateModel {
 	private Map<String, ChoicePointSpecification> choicepoints;
 
 	/**
-	 * InstancePath -> Spec
+	 * InstancePath -> referenced element
 	 */
-	private Map<String, ReferencePropertyValue> referencePaths;
+	private Map<String, ComponentInstance> referencedInstances;
+
+	/**
+	 * InstancePath to elements used in reference properties
+	 */
+	private Set<String> referencePaths;
 
 	public CustomInstantiator(IProgressMonitor pm, AnalysisErrorReporterManager errMgr,
 			Map<String, ChoicePointSpecification> choicepoints) {
 		super(pm, errMgr);
 		this.choicepoints = choicepoints;
 		this.referencePaths = choicepoints.values().stream().filter(ReferencePropertyValue.class::isInstance)
-				.map(ReferencePropertyValue.class::cast)
-				.collect(toMap(ReferencePropertyValue::getValueAsString, Function.identity()));
+				.map(ChoicePointSpecification::getValueAsString).collect(Collectors.toSet());
+		this.referencedInstances = new HashMap<>();
 	}
 
 	/**
@@ -103,6 +107,7 @@ public class CustomInstantiator extends InstantiateModel {
 		// properties have been set. So, we create a set of the relevant choicepoint specifications and use only those
 		ccpas.addChoicePointSpecifications(choicepoints.values().stream().filter(ChoicePointSpecification::isProperty)
 				.collect(Collectors.toSet()));
+		ccpas.setReferencedInstances(referencedInstances);
 		ccpas.processPostOrderAll(root);
 		if (monitor.isCanceled()) {
 			throw new InterruptedException();
@@ -120,8 +125,8 @@ public class CustomInstantiator extends InstantiateModel {
 	protected ComponentType getComponentType(ComponentInstance ci) {
 		String path = ci.getComponentInstancePath();
 		// If there's a reference to this node, store a reference
-		if (referencePaths.containsKey(path)) {
-			referencePaths.get(path).setReferencedElement(ci);
+		if (referencePaths.contains(path)) {
+			referencedInstances.put(path, ci);
 		}
 
 		// If we need to swap out this node, we do that here

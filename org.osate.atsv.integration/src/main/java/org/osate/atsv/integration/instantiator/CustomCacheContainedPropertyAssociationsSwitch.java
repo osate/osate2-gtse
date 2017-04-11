@@ -34,21 +34,28 @@ import org.osate.aadl2.Property;
 import org.osate.aadl2.PropertyAssociation;
 import org.osate.aadl2.PropertyExpression;
 import org.osate.aadl2.instance.ComponentInstance;
+import org.osate.aadl2.instance.InstanceFactory;
 import org.osate.aadl2.instance.InstanceObject;
+import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
 import org.osate.aadl2.instantiation.CacheContainedPropertyAssociationsSwitch;
 import org.osate.aadl2.instantiation.SCProperties;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
+import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.exception.BadPathException;
 import org.osate.atsv.integration.exception.UnhandledVariableTypeException;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
+import org.osate.atsv.integration.network.LiteralPropertyValue;
 import org.osate.atsv.integration.network.PropertyValue;
+import org.osate.atsv.integration.network.ReferencePropertyValue;
 import org.osate.xtext.aadl2.properties.util.GetProperties;
+import org.osate.xtext.aadl2.properties.util.PropertyUtils;
 
 public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContainedPropertyAssociationsSwitch {
 
 	private Set<ChoicePointSpecification> choicepoints;
+	private Map<String, ComponentInstance> referencedInstances;
 
 	protected CustomCacheContainedPropertyAssociationsSwitch(
 			HashMap<InstanceObject, InstantiatedClassifier> classifierCache, SCProperties scProps, IProgressMonitor pm,
@@ -153,7 +160,7 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 				// Found it~
 				current.propSet.add(pv.getPropertyName().split("::")[0]);
 				current.propName.add(pv.getPropertyName().split("::")[1]);
-				current.vals.add(pv.getValue());
+				current.vals.add(getPropValue(pv));
 				return;
 			}
 			String nextName = pathArr[depth++];
@@ -172,6 +179,23 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 				throw new BadPathException("Can't resolve " + pv.getComponentPath());
 			}
 		}
+	}
+
+	private PropertyExpression getPropValue(PropertyValue pv) throws UnhandledVariableTypeException {
+		ATSVVariableType type = pv.getType();
+		if (type == ATSVVariableType.FLOAT || type == ATSVVariableType.DISCRETE_FLOAT) {
+			return PropertyUtils.createRealValue(pv.getValueAsFloat());
+		} else if (type == ATSVVariableType.INTEGER) {
+			return PropertyUtils.createIntegerValue(pv.getValueAsInt());
+		} else if (type == ATSVVariableType.STRING && pv instanceof LiteralPropertyValue) {
+			return PropertyUtils.createStringValue(pv.getValueAsString());
+		} else if (type == ATSVVariableType.STRING && pv instanceof ReferencePropertyValue) {
+			InstanceReferenceValue irf = InstanceFactory.eINSTANCE.createInstanceReferenceValue();
+			irf.setReferencedInstanceObject(referencedInstances.get(pv.getValueAsString()));
+			return irf;
+		}
+		throw new UnhandledVariableTypeException(
+				"Can't get the property value for " + pv.getPropertyName() + " in " + pv.getComponentPath());
 	}
 
 	private Node getNext(Node cur, ComponentInstance ele, String name) throws BadPathException {
@@ -245,5 +269,9 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 		public void addChild(Node child) {
 			children.put(child.ele.getName(), child);
 		}
+	}
+
+	public void setReferencedInstances(Map<String, ComponentInstance> referencedInstances) {
+		this.referencedInstances = referencedInstances;
 	}
 }
