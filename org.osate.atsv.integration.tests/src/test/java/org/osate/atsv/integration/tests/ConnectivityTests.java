@@ -88,7 +88,7 @@ public class ConnectivityTests extends OsateTest {
 		Response res = (Response) inStream.readObject();
 		assertTrue(res.hasException());
 		assertEquals("No extension with id '" + fakePluginID + "' found!", res.getException().getMessage());
-		assertTrue(res.getVariables().isEmpty());
+		assertEquals("0.0", res.getVariables().get("ValidModel"));
 	}
 
 	@Test
@@ -103,10 +103,11 @@ public class ConnectivityTests extends OsateTest {
 		assertFalse(res.hasException());
 		assertTrue(res.getVariables().containsKey("exampleFlow"));
 		assertEquals("25.0", res.getVariables().get("exampleFlow"));
+		assertEquals("1.0", res.getVariables().get("ValidModel"));
 	}
 
 	@Test
-	public void portConsistencyTest() throws IOException, ClassNotFoundException {
+	public void portConsistencyTest() throws Exception {
 		Request r = new Request();
 		r.addPluginId("org.osate.atsv.integration.port-consistency");
 		r.setPackageName(PluginTest.PACKAGE_NAME);
@@ -114,8 +115,12 @@ public class ConnectivityTests extends OsateTest {
 		outStream.writeObject(r);
 		outStream.flush();
 		Response res = (Response) inStream.readObject();
-		assertFalse(res.isValidModel());
-		assertFalse(res.hasException());
+		assertFalse("Model incorrectly marked valid!", res.isValidModel());
+		if (res.hasException()) {
+			throw res.getException();
+		}
+		assertFalse("Model incorrectly threw an exception!", res.hasException());
+		assertEquals("0.0", res.getVariables().get("ValidModel"));
 	}
 
 	@Test
@@ -130,6 +135,7 @@ public class ConnectivityTests extends OsateTest {
 		assertFalse(res.hasException());
 		assertTrue(res.getVariables().containsKey("Grid"));
 		assertEquals("20.0", res.getVariables().get("Grid"));
+		assertEquals("1.0", res.getVariables().get("ValidModel"));
 	}
 
 	@Override

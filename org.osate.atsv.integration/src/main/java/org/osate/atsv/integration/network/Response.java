@@ -40,16 +40,20 @@ public class Response implements Serializable {
 	private Exception exception = null;
 
 	/**
-	 * This is marked as false if a "all or nothing" analysis finds a 
-	 * problem with instance model created by the request (ie, it's
-	 * unschedulable, or has inconsistent connections)
+	 * This is marked as false if either 
+	 * 1. An "all or nothing" analysis finds a problem with instance
+	 * model created by the request (ie, it's unschedulable, or has 
+	 * inconsistent connections), or
+	 * 2. Instantiating / analyzing it generates an exception
 	 */
 	private boolean valid = true;
 
 	public Response() {
+		addVariable("ValidModel", "1.0");
 	}
 
 	public void setException(Exception e) {
+		markInvalid();
 		exception = e;
 	}
 
@@ -74,6 +78,7 @@ public class Response implements Serializable {
 	}
 
 	public void markInvalid() {
+		addVariable("ValidModel", "0.0");
 		valid = false;
 	}
 

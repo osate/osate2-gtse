@@ -17,15 +17,15 @@
    
     DM17-0002
  -->
+
 <feature
-      id="org.osate.atsv.integration.feature.powerconsumption"
-      label="Power-Consumption"
+      id="org.osate.atsv.integration.feature.portconsistency"
+      label="Port-Consistency"
       version="1.0.0.qualifier"
       provider-name="Software Engineering Institute">
 
    <description>
-      This is the power consumption plugin, enabling ATSV analysis
-of a model&apos;s power consumption.
+      This is the port consistency plugin, enabling ATSV-awareness of a model&apos;s port consistency.
    </description>
 
    <copyright>
@@ -42,13 +42,13 @@ of a model&apos;s power consumption.
          name="Guided Tradsepace Explorer: ATSV Integration (Core)"/>
 
    <requires>
-      <import plugin="org.osate.analysis.resource.budgets"/>
-      <import plugin="org.osate.analysis.flows"/>
+      <import plugin="org.osate.ui"/>
+      <import plugin="org.osate.analysis.architecture"/>
       <import plugin="org.osate.atsv.integration" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
-         id="org.osate.atsv.integration.power-consumption"
+         id="org.osate.atsv.integration.port-consistency"
          download-size="0"
          install-size="0"
          version="0.0.0"
