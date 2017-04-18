@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Flow-latency
+Bundle-Name: Flow-Latency
 Bundle-SymbolicName: org.osate.atsv.integration.flow-latency;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.osate.atsv.integration;bundle-version="1.0.0"

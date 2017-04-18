@@ -29,6 +29,16 @@ public abstract class AbstractAnalysis {
 
 	private final IProgressMonitor NULL_PROGRESS_MONITOR = new NullProgressMonitor();
 
+	/**
+	 * Run this analysis on the specified instance in the specified mode. Clients must use this to initialize
+	 * their plugin and invoke the analysis. 
+	 *  
+	 * @param instance A system instance corresponding to the request's configuration
+	 * @param som The mode the system is in
+	 * @param errMgr The error manager to use org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager.NULL_ERROR_MANAGER by default
+	 * @param progressMonitor The progress monitor to use to keep the user informed of progress, org.eclipse.core.runtime.NullProgressMonitor.NullProgressMonitor by default
+	 * @param resp The response object to update with the results of the analysis.
+	 */
 	abstract public void runAnalysis(SystemInstance instance, SystemOperationMode som,
 			AnalysisErrorReporterManager errMgr, IProgressMonitor progressMonitor, Response resp);
 

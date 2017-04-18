@@ -62,7 +62,7 @@ public class InstantiatorTests extends OsateTest {
 
 	@BeforeClass
 	public static void preSetUp() throws IOException {
-		pkgText = new String(Files.readAllBytes(Paths.get("src/test/resources/ConnectivityTestModel.aadl")));
+		pkgText = new String(Files.readAllBytes(Paths.get("src/test/resources/IntegrationTestsModel.aadl")));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,7 +70,7 @@ public class InstantiatorTests extends OsateTest {
 	public void customSetup() throws UnknownHostException, IOException {
 		this.setUp();
 		// I'm not sure this line can be written without warnings
-		createFiles(Pair.<String, String> of("ConnectivityTestModel.aadl", pkgText));
+		createFiles(Pair.<String, String> of("IntegrationTestsModel.aadl", pkgText));
 	}
 
 	private SystemInstance getComponentInstance(String packageName, String implName,

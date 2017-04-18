@@ -41,7 +41,7 @@ import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
 
-public class ConnectivityTests extends OsateTest {
+public class IntegrationTests extends OsateTest {
 
 	private static Socket socket;
 	private static ObjectOutputStream outStream;
@@ -50,7 +50,7 @@ public class ConnectivityTests extends OsateTest {
 
 	@BeforeClass
 	public static void preSetUp() throws IOException {
-		pkgText = new String(Files.readAllBytes(Paths.get("src/test/resources/ConnectivityTestModel.aadl")));
+		pkgText = new String(Files.readAllBytes(Paths.get("src/test/resources/IntegrationTestsModel.aadl")));
 	}
 
 	@AfterClass
@@ -63,7 +63,7 @@ public class ConnectivityTests extends OsateTest {
 	public void customSetup() throws UnknownHostException, IOException {
 		this.setUp();
 		// I'm not sure this line can be written without warnings
-		createFiles(Pair.<String, String> of("ConnectivityTestModel.aadl", pkgText));
+		createFiles(Pair.<String, String> of("IntegrationTestsModel.aadl", pkgText));
 		socket = new Socket("localhost",
 				Activator.getDefault().getPreferenceStore().getDefaultInt(Activator.ATSV_INTEGRATION_PORT));
 		outStream = new ObjectOutputStream(socket.getOutputStream());
@@ -107,7 +107,7 @@ public class ConnectivityTests extends OsateTest {
 	}
 
 	@Test
-	public void portConsistencyTest() throws Exception {
+	public void portConsistencyTest() throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId("org.osate.atsv.integration.port-consistency");
 		r.setPackageName(PluginTest.PACKAGE_NAME);
@@ -116,9 +116,6 @@ public class ConnectivityTests extends OsateTest {
 		outStream.flush();
 		Response res = (Response) inStream.readObject();
 		assertFalse("Model incorrectly marked valid!", res.isValidModel());
-		if (res.hasException()) {
-			throw res.getException();
-		}
 		assertFalse("Model incorrectly threw an exception!", res.hasException());
 		assertEquals("0.0", res.getVariables().get("ValidModel"));
 	}
