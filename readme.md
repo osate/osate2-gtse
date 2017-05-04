@@ -2,6 +2,8 @@
 
 This plugin enables users to automatically explore the tradespace of a system by connecting [OSATE](http://osate.org/) to Penn State's [Trade Space Visualizer](http://www.atsv.psu.edu/) tool.
 
+If you're interested in a more diagrammatic, foundational understanding of how GTSE and ATSV work together, see the [Workflow documentation](docs/Workflow.md).
+
 ## Installing the GTSE Plugin
 
 1. [Download OSATE](http://aadl.info/aadl/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
