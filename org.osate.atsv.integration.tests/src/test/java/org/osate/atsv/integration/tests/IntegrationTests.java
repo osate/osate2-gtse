@@ -135,6 +135,21 @@ public class IntegrationTests extends OsateTest {
 		assertEquals("1.0", res.getVariables().get("ValidModel"));
 	}
 
+	@Test
+	public void unhandledFaultsTest() throws IOException, ClassNotFoundException {
+		Request r = new Request();
+		r.addPluginId("org.osate.atsv.integration.unhandled-faults");
+		r.setPackageName(PluginTest.PACKAGE_NAME);
+		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
+		outStream.writeObject(r);
+		outStream.flush();
+		Response res = (Response) inStream.readObject();
+		assertFalse(res.hasException());
+		assertFalse(res.isValidModel());
+		assertTrue(res.getVariables().containsKey("ValidModel"));
+		assertEquals("0.0", res.getVariables().get("ValidModel"));
+	}
+
 	@Override
 	public String getProjectName() {
 		return "ATSVConnectivityTestProject";

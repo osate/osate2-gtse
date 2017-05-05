@@ -36,6 +36,12 @@ public
 		properties
 			SEI::GrossWeight => 1.2 kg;
 			SEI::PowerSupply => 40.0 W applies to Supplier;
+		annex EMv2 {**
+			use types ErrorLibrary;
+			error propagations
+				Supplier : out propagation {ValueError};
+			end propagations;
+		**};
 	end ElectrialPowerSupply;
 
 	system ElectricGrid
@@ -45,6 +51,12 @@ public
 		properties
 			SEI::GrossWeight => 0.9 kg;
 			SEI::PowerCapacity => 40.0 W;
+		annex EMv2 {**
+			use types ErrorLibrary;
+			error propagations
+				Supplier : in propagation {SequenceValueError};
+			end propagations;
+		**};
 	end ElectricGrid;
 
 	processor cheapCPU
