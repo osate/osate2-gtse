@@ -49,6 +49,7 @@
         <module>../org.osate.atsv.integration.flow-latency</module>
         <module>../org.osate.atsv.integration.power-consumption</module>
         <module>../org.osate.atsv.integration.port-consistency</module>
+        <module>../org.osate.atsv.integration.unhandled-faults</module>
         <module>../org.osate.atsv.integration.testfeature</module>
         <module>../org.osate.atsv.integration.feature.base</module>
         <module>../org.osate.atsv.integration.feature.flow-latency</module>
