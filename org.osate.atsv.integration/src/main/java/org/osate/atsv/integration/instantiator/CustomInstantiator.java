@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentClassifier;
@@ -80,19 +79,14 @@ public class CustomInstantiator extends InstantiateModel {
 	 */
 	public static SystemInstance myBuildInstanceModelFile(final ComponentImplementation ci,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
-		ComponentImplementation ici = ci;
-		EObject eobj = OsateResourceUtil.loadElementIntoResourceSet(ci);
-		if (eobj instanceof ComponentImplementation) {
-			ici = (ComponentImplementation) eobj;
-		}
-		URI instanceURI = OsateResourceUtil.getInstanceModelURI(ici);
+		URI instanceURI = OsateResourceUtil.getInstanceModelURI(ci);
 		Resource aadlResource = OsateResourceUtil.getEmptyAaxl2Resource(instanceURI);
 
 		final InstantiateModel instantiateModel = new CustomInstantiator(new NullProgressMonitor(),
 				new AnalysisErrorReporterManager(
 						new MarkerAnalysisErrorReporter.Factory(AadlConstants.INSTANTIATION_OBJECT_MARKER)),
 				choicepoints);
-		SystemInstance root = instantiateModel.createSystemInstance(ici, aadlResource);
+		SystemInstance root = instantiateModel.createSystemInstance(ci, aadlResource);
 		return root;
 	}
 
@@ -132,7 +126,7 @@ public class CustomInstantiator extends InstantiateModel {
 		// If we need to swap out this node, we do that here
 		if (choicepoints.containsKey(path)) {
 			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
-			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(cps.getValueAsString());
+			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(ci, cps.getValueAsString());
 			if (cl instanceof ComponentType) {
 				// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
 				// in InstanceUtil.java

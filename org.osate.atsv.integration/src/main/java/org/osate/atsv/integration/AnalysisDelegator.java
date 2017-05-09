@@ -36,6 +36,7 @@ import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
+import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
@@ -136,7 +137,7 @@ public class AnalysisDelegator {
 
 	private SystemInstance instantiateClassifier(String packageName, String implName,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
-		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName);
+		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();

@@ -46,6 +46,7 @@ import org.osate.aadl2.StringLiteral;
 import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
+import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.ChoicePointSpecification;
@@ -75,7 +76,7 @@ public class InstantiatorTests extends OsateTest {
 
 	private SystemInstance getComponentInstance(String packageName, String implName,
 			Set<ChoicePointSpecification> choicepoints) throws Exception {
-		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName);
+		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 		return CustomInstantiator.myBuildInstanceModelFile(impl, getChoicePointMap(choicepoints));
