@@ -18,14 +18,12 @@
     DM17-0002
  -->
 <feature
-      id="org.osate.atsv.integration.feature.powerconsumption"
-      label="Power-Consumption"
-      version="1.0.0.qualifier"
-      provider-name="Software Engineering Institute">
+      id="org.osate.atsv.integration.feature.analyses"
+      label="AnalysesFeature"
+      version="1.0.0.qualifier">
 
    <description>
-      This is the power consumption plugin, enabling ATSV analysis
-of a model&apos;s power consumption.
+      This is a feature that includes all publically-available analyses.
    </description>
 
    <copyright>
@@ -36,19 +34,32 @@ of a model&apos;s power consumption.
       Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact permission@sei.cmu.edu for full terms.
    </license>
 
-   <includes
-         id="org.osate.atsv.integration.feature.base"
+   <plugin
+         id="org.osate.atsv.integration.flow-latency"
+         download-size="0"
+         install-size="0"
          version="0.0.0"
-         name="Guided Tradsepace Explorer: ATSV Integration (Core)"/>
-
-   <requires>
-      <import plugin="org.osate.analysis.resource.budgets"/>
-      <import plugin="org.osate.analysis.flows"/>
-      <import plugin="org.osate.atsv.integration" version="1.0.0" match="greaterOrEqual"/>
-   </requires>
+         fragment="true"
+         unpack="false"/>
 
    <plugin
          id="org.osate.atsv.integration.power-consumption"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.osate.atsv.integration.port-consistency"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.osate.atsv.integration.unhandled-faults"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -22,13 +22,7 @@
    <feature url="features/org.osate.atsv.integration.feature.base_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.base" version="1.0.0.qualifier">
       <category name="org.osate.atsv.integration.updatesite"/>
    </feature>
-   <feature url="features/org.osate.atsv.integration.feature.flowlatency_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.flowlatency" version="1.0.0.qualifier">
-      <category name="org.osate.atsv.integration.updatesite"/>
-   </feature>
-   <feature url="features/org.osate.atsv.integration.feature.powerconsumption_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.powerconsumption" version="1.0.0.qualifier">
-      <category name="org.osate.atsv.integration.updatesite"/>
-   </feature>
-   <feature url="features/org.osate.atsv.integration.feature.portconsistency_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.portconsistency" version="1.0.0.qualifier">
+   <feature url="features/org.osate.atsv.integration.feature.flowlatency_1.0.0.qualifier.jar" id="org.osate.atsv.integration.feature.analyses" version="1.0.0.qualifier">
       <category name="org.osate.atsv.integration.updatesite"/>
    </feature>
    <category-def name="org.osate.atsv.integration.updatesite" label="Guided Tradespace Exploration">
