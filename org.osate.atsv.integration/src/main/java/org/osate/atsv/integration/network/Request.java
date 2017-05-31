@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+
 public class Request implements Serializable {
 
 	/**

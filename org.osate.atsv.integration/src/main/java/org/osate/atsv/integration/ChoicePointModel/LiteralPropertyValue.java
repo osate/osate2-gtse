@@ -16,7 +16,7 @@
  *
  * DM17-0002
  *******************************************************************************/
-package org.osate.atsv.integration.network;
+package org.osate.atsv.integration.ChoicePointModel;
 
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 

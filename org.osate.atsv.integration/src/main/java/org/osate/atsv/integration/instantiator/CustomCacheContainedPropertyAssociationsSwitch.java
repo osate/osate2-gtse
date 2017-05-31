@@ -42,13 +42,13 @@ import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
 import org.osate.aadl2.instantiation.CacheContainedPropertyAssociationsSwitch;
 import org.osate.aadl2.instantiation.SCProperties;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
+import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.exception.BadPathException;
 import org.osate.atsv.integration.exception.UnhandledVariableTypeException;
-import org.osate.atsv.integration.network.ChoicePointSpecification;
-import org.osate.atsv.integration.network.LiteralPropertyValue;
-import org.osate.atsv.integration.network.PropertyValue;
-import org.osate.atsv.integration.network.ReferencePropertyValue;
 import org.osate.xtext.aadl2.properties.util.GetProperties;
 import org.osate.xtext.aadl2.properties.util.PropertyUtils;
 

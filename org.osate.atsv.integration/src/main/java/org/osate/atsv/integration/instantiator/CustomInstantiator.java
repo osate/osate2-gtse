@@ -43,8 +43,8 @@ import org.osate.aadl2.modelsupport.AadlConstants;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
-import org.osate.atsv.integration.network.ChoicePointSpecification;
-import org.osate.atsv.integration.network.ReferencePropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class CustomInstantiator extends InstantiateModel {
