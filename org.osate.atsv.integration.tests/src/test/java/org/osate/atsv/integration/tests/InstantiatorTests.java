@@ -47,13 +47,13 @@ import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
+import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
-import org.osate.atsv.integration.network.ChoicePointSpecification;
-import org.osate.atsv.integration.network.LiteralPropertyValue;
-import org.osate.atsv.integration.network.PropertyValue;
-import org.osate.atsv.integration.network.ReferencePropertyValue;
-import org.osate.atsv.integration.network.SubcomponentChoice;
 import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
