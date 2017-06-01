@@ -68,7 +68,7 @@
         </repository>
         <repository>
             <id>xtext-utils</id>
-            <url>https://dl.bintray.com/itemis/generic/xtext-testing/updates/</url>
+            <url>http://dl.bintray.com/itemis/generic/xtext-testing/updates/</url>
             <layout>p2</layout>
         </repository>
         <repository>
