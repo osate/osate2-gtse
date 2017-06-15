@@ -29,6 +29,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.After;
@@ -78,76 +82,79 @@ public class IntegrationTests extends OsateTest {
 
 	@Test
 	public void badPluginIdTest() throws IOException, ClassNotFoundException {
-		Request r = new Request();
 		final String fakePluginID = "this.isnt.a.real.plugin.id";
-		r.addPluginId(fakePluginID);
-		r.setPackageName(PluginTest.PACKAGE_NAME);
-		r.setComponentImplementationName("none");
-		outStream.writeObject(r);
-		outStream.flush();
-		Response res = (Response) inStream.readObject();
-		assertTrue(res.hasException());
-		assertEquals("No extension with id '" + fakePluginID + "' found!", res.getException().getMessage());
-		assertEquals("0.0", res.getVariables().get("ValidModel"));
+		testHelper(fakePluginID, "No extension with id '" + fakePluginID + "' found!", false, Collections.emptyMap());
 	}
 
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
-		Request r = new Request();
-		r.addPluginId("org.osate.atsv.integration.flow-latency");
-		r.setPackageName(PluginTest.PACKAGE_NAME);
-		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
-		outStream.writeObject(r);
-		outStream.flush();
-		Response res = (Response) inStream.readObject();
-		assertFalse(res.hasException());
-		assertTrue(res.getVariables().containsKey("exampleFlow"));
-		assertEquals("25.0", res.getVariables().get("exampleFlow"));
-		assertEquals("1.0", res.getVariables().get("ValidModel"));
+		testHelper("org.osate.atsv.integration.flow-latency", null, true,
+				Collections.singletonMap("exampleFlow", "25.0"));
 	}
 
 	@Test
 	public void portConsistencyTest() throws IOException, ClassNotFoundException {
-		Request r = new Request();
-		r.addPluginId("org.osate.atsv.integration.port-consistency");
-		r.setPackageName(PluginTest.PACKAGE_NAME);
-		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
-		outStream.writeObject(r);
-		outStream.flush();
-		Response res = (Response) inStream.readObject();
-		assertFalse("Model incorrectly marked valid!", res.isValidModel());
-		assertFalse("Model incorrectly threw an exception!", res.hasException());
-		assertEquals("0.0", res.getVariables().get("ValidModel"));
+		testHelper("org.osate.atsv.integration.port-consistency", null, false, Collections.emptyMap());
 	}
 
 	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
-		Request r = new Request();
-		r.addPluginId("org.osate.atsv.integration.power-consumption");
-		r.setPackageName(PluginTest.PACKAGE_NAME);
-		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
-		outStream.writeObject(r);
-		outStream.flush();
-		Response res = (Response) inStream.readObject();
-		assertFalse(res.hasException());
-		assertTrue(res.getVariables().containsKey("Grid"));
-		assertEquals("20.0", res.getVariables().get("Grid"));
-		assertEquals("1.0", res.getVariables().get("ValidModel"));
+		testHelper("org.osate.atsv.integration.power-consumption", null, true,
+				Collections.singletonMap("Grid", "20.0"));
 	}
 
 	@Test
 	public void unhandledFaultsTest() throws IOException, ClassNotFoundException {
+		testHelper("org.osate.atsv.integration.unhandled-faults", null, false, Collections.emptyMap());
+	}
+
+	@Test
+	public void priceTest() throws IOException, ClassNotFoundException {
+		testHelper("org.osate.atsv.integration.property-totals", null, true,
+				Stream.of(new String[] { "Price", "1750.63" }, new String[] { "Weight", "8.41" })
+						.collect(Collectors.toMap(s -> s[0], s -> s[1])));
+	}
+
+	/**
+	 * Helps run the tests by thoroughly inspecting the response returned by OSATE
+	 * 
+	 * @param pluginId The id of the plugin to run, eg, 'org.osate.atsv.integration.property-totals'
+	 * @param expectedException Either null, if no exception is expected, or the message that should be returned
+	 * @param expectValid True if a valid model is expected, false otherwise
+	 * @param expectedVars A map of variable name to variable value. Each pair will be checked.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private void testHelper(String pluginId, String expectedException, boolean expectValid,
+			Map<String, String> expectedVars) throws IOException, ClassNotFoundException {
 		Request r = new Request();
-		r.addPluginId("org.osate.atsv.integration.unhandled-faults");
+		r.addPluginId(pluginId);
 		r.setPackageName(PluginTest.PACKAGE_NAME);
 		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
 		outStream.writeObject(r);
 		outStream.flush();
 		Response res = (Response) inStream.readObject();
-		assertFalse(res.hasException());
-		assertFalse(res.isValidModel());
-		assertTrue(res.getVariables().containsKey("ValidModel"));
-		assertEquals("0.0", res.getVariables().get("ValidModel"));
+		if (expectedException == null) {
+			if (res.hasException()) {
+				res.getException().printStackTrace();
+			}
+			assertFalse("The model shouldn't have an exception, but it does", res.hasException());
+		} else {
+			assertTrue("The model should have an exception, but it doesn't have one", res.hasException());
+			assertEquals(expectedException, res.getException().getMessage());
+		}
+		assertTrue("The ValidModel value isn't set", res.getVariables().containsKey("ValidModel"));
+		if (expectValid) {
+			assertTrue("The model is marked invalid, but it shouldn't be", res.isValidModel());
+			assertEquals("Wrong ValidModel score", "1.0", res.getVariables().get("ValidModel"));
+		} else {
+			assertFalse("The model is marked valid, but it shouldn't be", res.isValidModel());
+			assertEquals("Wrong ValidModel score", "0.0", res.getVariables().get("ValidModel"));
+		}
+		expectedVars.forEach((name, value) -> {
+			assertTrue(name + " is not set", res.getVariables().containsKey(name));
+			assertEquals("Incorrect value for " + name, value, res.getVariables().get(name));
+		});
 	}
 
 	@Override

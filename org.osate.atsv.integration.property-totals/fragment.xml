@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         id="org.osate.atsv.integration.property-totals"
+         point="org.osate.atsv.integration">
+      <Analysis
+            AnalyzerClass="org.osate.atsv.integration.propertytotals.PropertyTotaler">
+      </Analysis>
+   </extension>
+
+</fragment>

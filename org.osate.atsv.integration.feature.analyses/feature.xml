@@ -66,4 +66,12 @@
          fragment="true"
          unpack="false"/>
 
+   <plugin
+         id="org.osate.atsv.integration.property-totals"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
 </feature>

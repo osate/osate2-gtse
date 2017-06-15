@@ -34,7 +34,6 @@ public
 		features
 			Supplier: out feature Electricity;
 		properties
-			SEI::GrossWeight => 1.2 kg;
 			SEI::PowerSupply => 40.0 W applies to Supplier;
 		annex EMv2 {**
 			use types ErrorLibrary;
@@ -49,7 +48,6 @@ public
 			Supplier: in feature Electricity;
 			Consumer: out feature Electricity;
 		properties
-			SEI::GrossWeight => 0.9 kg;
 			SEI::PowerCapacity => 40.0 W;
 		annex EMv2 {**
 			use types ErrorLibrary;
@@ -62,11 +60,13 @@ public
 	processor cheapCPU
 		properties
 			SEI::Platform => "CyberPower";
+			SEI::NetWeight => 6.04 kg;
 	end cheapCPU;
 
 	processor expensiveCPU
 		properties
 			SEI::Platform => "Falcon Northwest";
+			SEI::NetWeight => 2.37 kg;
 	end expensiveCPU;
 
 	system MySystem
@@ -119,6 +119,7 @@ public
 					};
 		properties
 			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::Price => 500.00;
 	end StartProcess;
 
 	process implementation StartProcess.imp
@@ -141,6 +142,7 @@ public
 		properties
 			SEI::PowerBudget => 5.0 w applies to power;
 			SEI::SecurityLevel => 5;
+			SEI::Price => 500.00;
 	end EndProcess;
 
 	process implementation EndProcess.imp
@@ -158,6 +160,7 @@ public
 		properties
 			SEI::PowerBudget => 5.0 w applies to power;
 			SEI::RAMActual => 25.0 bytes;
+			SEI::Price => 500.00;
 	end MidProcess1;
 
 	process MidProcess2
@@ -178,6 +181,7 @@ public
 		properties
 			SEI::PowerBudget => 10.0 w applies to power;
 			SEI::RAMActual => 500.0 bytes;
+			SEI::Price => 750.63;
 	end MidProcess2;
 
 	process MidProcess3
@@ -192,6 +196,7 @@ public
 		properties
 			SEI::PowerBudget => 15.0 w applies to power;
 			SEI::RAMActual => 1000.0 bytes;
+			SEI::Price => 1337.42;
 	end MidProcess3;
 
 end SimpleComponentChoice;
