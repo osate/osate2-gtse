@@ -29,7 +29,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.osate.aadl2.Classifier;
-import org.osate.aadl2.ComponentClassifier;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.ComponentType;
 import org.osate.aadl2.Property;
@@ -127,17 +126,20 @@ public class CustomInstantiator extends InstantiateModel {
 		if (choicepoints.containsKey(path)) {
 			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
 			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(ci, cps.getValueAsString());
-			if (cl instanceof ComponentType) {
+			if (cl instanceof Classifier) {
 				// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
 				// in InstanceUtil.java
 
 				Subcomponent sub = ci.getSubcomponent();
-				ComponentClassifier classifier = (ComponentClassifier) cl;
 				EList<PrototypeBinding> prototypeBindings = sub.getOwnedPrototypeBindings();
-				InstantiatedClassifier ic = new InstantiatedClassifier(classifier, prototypeBindings);
+				InstantiatedClassifier ic = new InstantiatedClassifier(cl, prototypeBindings);
 
 				classifierCache.put(ci, ic);
-				return (ComponentType) cl;
+				// It's unclear if changing the type of an instantiated object should
+				// be allowed -- if it should be, you can use the following line (and
+				// modify the accompanying if statement above) though this will break
+				// swapping of system subcomponents.
+				// return (ComponentType) cl;
 			}
 		}
 		return super.getComponentType(ci);
