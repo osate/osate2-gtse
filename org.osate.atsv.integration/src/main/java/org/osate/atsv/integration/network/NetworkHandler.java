@@ -51,12 +51,10 @@ public class NetworkHandler implements Runnable {
 					ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
 					ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());) {
 				AnalysisDelegator delegator = new AnalysisDelegator();
-//			while ((req = (Request) input.readObject()) != null) {
 				req = (Request) input.readObject();
 				res = delegator.invoke(req);
 				output.writeObject(res);
 				output.flush();
-//			}
 			} catch (Exception e) {
 				e.printStackTrace();
 				break;

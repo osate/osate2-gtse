@@ -135,11 +135,12 @@ public class CustomInstantiator extends InstantiateModel {
 				InstantiatedClassifier ic = new InstantiatedClassifier(cl, prototypeBindings);
 
 				classifierCache.put(ci, ic);
+
 				// It's unclear if changing the type of an instantiated object should
 				// be allowed -- if it should be, you can use the following line (and
 				// modify the accompanying if statement above) though this will break
 				// swapping of system subcomponents.
-				// return (ComponentType) cl;
+//				return (ComponentType) cl;
 			}
 		}
 		return super.getComponentType(ci);

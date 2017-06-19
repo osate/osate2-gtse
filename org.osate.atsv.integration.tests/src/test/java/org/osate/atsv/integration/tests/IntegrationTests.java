@@ -109,7 +109,7 @@ public class IntegrationTests extends OsateTest {
 	}
 
 	@Test
-	public void priceTest() throws IOException, ClassNotFoundException {
+	public void priceAndWeightTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.property-totals", null, true,
 				Stream.of(new String[] { "Price", "1750.63" }, new String[] { "Weight", "8.41" })
 						.collect(Collectors.toMap(s -> s[0], s -> s[1])));

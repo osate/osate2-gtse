@@ -21,7 +21,6 @@ package SimpleComponentChoice
 public
 
 	with SEI;
-
 	system SimpleComponentChoiceSystem
 		features
 			power: in feature Electricity;
@@ -198,5 +197,7 @@ public
 			SEI::RAMActual => 1000.0 bytes;
 			SEI::Price => 1337.42;
 	end MidProcess3;
+
+
 
 end SimpleComponentChoice;
