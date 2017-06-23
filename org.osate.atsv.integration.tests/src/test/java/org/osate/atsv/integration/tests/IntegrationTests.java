@@ -89,7 +89,7 @@ public class IntegrationTests extends OsateTest {
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.flow-latency", null, true,
-				Collections.singletonMap("exampleFlow", "25.0"));
+				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")));
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class IntegrationTests extends OsateTest {
 	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.power-consumption", null, true,
-				Collections.singletonMap("Grid", "20.0"));
+				Collections.singletonMap("Grid", new VarDescriptor("20.0")));
 	}
 
 	@Test
@@ -111,8 +111,15 @@ public class IntegrationTests extends OsateTest {
 	@Test
 	public void priceAndWeightTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.property-totals", null, true,
-				Stream.of(new String[] { "Price", "1750.63" }, new String[] { "Weight", "8.41" })
-						.collect(Collectors.toMap(s -> s[0], s -> s[1])));
+				Stream.of(new Object[] { "Price", new VarDescriptor("1750.63") },
+						new Object[] { "Weight", new VarDescriptor("8.41") })
+						.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])));
+	}
+
+	@Test
+	public void limitTest() throws IOException, ClassNotFoundException {
+		testHelper("org.osate.atsv.integration.property-totals", null, false,
+				Collections.singletonMap("Price", new VarDescriptor("1750.63", "lt", "1500.0")));
 	}
 
 	/**
@@ -126,10 +133,16 @@ public class IntegrationTests extends OsateTest {
 	 * @throws ClassNotFoundException
 	 */
 	private void testHelper(String pluginId, String expectedException, boolean expectValid,
-			Map<String, String> expectedVars) throws IOException, ClassNotFoundException {
+			Map<String, VarDescriptor> expectedVars) throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId(pluginId);
 		r.setPackageName(PluginTest.PACKAGE_NAME);
+		for (String varName : expectedVars.keySet()) {
+			VarDescriptor desc = expectedVars.get(varName);
+			if (!(desc.op == null || desc.limit == null)) {
+				r.addLimit(varName, expectedVars.get(varName).op, expectedVars.get(varName).limit);
+			}
+		}
 		r.setComponentImplementationName(PluginTest.COMPONENT_NAME);
 		outStream.writeObject(r);
 		outStream.flush();
@@ -153,12 +166,28 @@ public class IntegrationTests extends OsateTest {
 		}
 		expectedVars.forEach((name, value) -> {
 			assertTrue(name + " is not set", res.getVariables().containsKey(name));
-			assertEquals("Incorrect value for " + name, value, res.getVariables().get(name));
+			assertEquals("Incorrect value for " + name, value.expectedValue, res.getVariables().get(name));
 		});
 	}
 
 	@Override
 	public String getProjectName() {
 		return "ATSVConnectivityTestProject";
+	}
+
+	private class VarDescriptor {
+		String expectedValue = null;
+		String op = null;
+		String limit = null;
+
+		public VarDescriptor(String expectedValue, String op, String limit) {
+			this.expectedValue = expectedValue;
+			this.op = op;
+			this.limit = limit;
+		}
+
+		public VarDescriptor(String expectedValue) {
+			this.expectedValue = expectedValue;
+		}
 	}
 }

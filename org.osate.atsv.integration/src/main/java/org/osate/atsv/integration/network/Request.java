@@ -21,7 +21,9 @@ package org.osate.atsv.integration.network;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
@@ -57,6 +59,11 @@ public class Request implements Serializable {
 	 * The choicepoint information that can be used to instantiate the model.
 	 */
 	private Set<ChoicePointSpecification> choices = new HashSet<>();
+
+	/**
+	 * This maps variable names to their user-specified limit/threshold
+	 */
+	private Map<String, Limit> limits = new HashMap<>();
 
 	public Collection<String> getPluginIds() {
 		return pluginIds;
@@ -104,5 +111,13 @@ public class Request implements Serializable {
 
 	public Set<ChoicePointSpecification> getChoicepoints() {
 		return choices;
+	}
+
+	public void addLimit(String name, String op, String limit) {
+		limits.put(name, new Limit(op, limit));
+	}
+
+	public Map<String, Limit> getLimits() {
+		return limits;
 	}
 }

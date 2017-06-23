@@ -112,6 +112,8 @@ public class NetworkHandler {
 			} else if (propNames[0].equalsIgnoreCase("RefPropertyValue")) {
 				r.addChoicePoint(new ReferencePropertyValue(propNames[1], propNames[2],
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.STRING));
+			} else if (propNames[0].equalsIgnoreCase("limit")) {
+				r.addLimit(propNames[1], propNames[2], prop.getProperty(propName));
 			}
 		}
 		return r;

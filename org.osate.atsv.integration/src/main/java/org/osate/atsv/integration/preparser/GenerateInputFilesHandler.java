@@ -83,6 +83,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	 *  <li>The component implementation to instantiate</li>
 	 *  <li>Which analysis plugins to use</li>
 	 *  <li>The type of each choicepoint (but not their values -- that comes from ATSV via input.txt)</li>
+	 *  <li>The names of expected variables if they have specified threshold past which </li>
 	 * </ul>  
 	 */
 	private Properties osateProps = null;
@@ -186,6 +187,13 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void addOutputVariables(String titles, ATSVVariableType type, String defaultVal) {
 		for (String title : titles.split(",")) {
+			if (title.contains("-")) {
+				String compoundVarName[] = title.split("-");
+				title = compoundVarName[0];
+				String op = compoundVarName[1];
+				String varThreshhold = compoundVarName[2];
+				osateProps.setProperty("limit-" + op + "-" + title, varThreshhold);
+			}
 			ecf.addVariable(title, false, false, type, defaultVal);
 			startingOutputs.put(title, defaultVal);
 		}
@@ -276,8 +284,9 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
 				handlePropValSpec(propName);
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
-				ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[1]);
-				addOutputVariables(userProps.getProperty(propName), type, ATSVVariableType.getDefaultFromType(type));
+				ATSVVariableType varType = ATSVVariableType.getTypeByName(propNames[1]);
+				String varStr = userProps.getProperty(propName);
+				addOutputVariables(varStr, varType, ATSVVariableType.getDefaultFromType(varType));
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
 				osateProps.setProperty(propName, userProps.getProperty(propName));

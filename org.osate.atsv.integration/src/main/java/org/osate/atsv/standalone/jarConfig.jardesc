@@ -11,11 +11,12 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Request.java"/>
-        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.EngineConfigModel{VariableModel.java"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Response.java"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.exception"/>
-        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.ChoicePointModel"/>
         <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{NetworkHandler.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Request.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.EngineConfigModel{VariableModel.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.network{Limit.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.ChoicePointModel"/>
     </selectedElements>
 </jardesc>

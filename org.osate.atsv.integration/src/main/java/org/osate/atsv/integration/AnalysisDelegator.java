@@ -40,6 +40,7 @@ import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
+import org.osate.atsv.integration.network.Limit;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
@@ -67,6 +68,7 @@ public class AnalysisDelegator {
 		private String implName;
 		private String modeName;
 		private Set<ChoicePointSpecification> choicepoints;
+		private Map<String, Limit> limits;
 		private SystemInstance instance;
 		private Set<IExtension> exts;
 
@@ -76,6 +78,7 @@ public class AnalysisDelegator {
 			this.implName = req.getComponentImplementationName();
 			this.modeName = req.getOperationModeName();
 			this.choicepoints = req.getChoicepoints();
+			this.limits = req.getLimits();
 		}
 
 		private Set<IExtension> resolveExtensions(Collection<String> pluginIds) throws AnalysisPluginException {
@@ -120,6 +123,14 @@ public class AnalysisDelegator {
 					if (cfgElem.getName().equals("Analysis")) {
 						analyzer = (AbstractAnalysis) cfgElem.createExecutableExtension("AnalyzerClass");
 						analyzer.runAnalysis(instance, getSystemModeFromName(instance, modeName), response);
+					}
+				}
+			}
+			for (String limitVar : limits.keySet()) {
+				if (response.getVariables().containsKey(limitVar)) {
+					if (!limits.get(limitVar).checkLimit(response.getVariables().get(limitVar))) {
+						response.markInvalid();
+						break;
 					}
 				}
 			}
