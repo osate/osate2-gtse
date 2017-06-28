@@ -20,6 +20,7 @@ package org.osate.atsv.integration.network;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -50,6 +51,9 @@ public class NetworkHandler implements Runnable {
 					Socket clientSocket = serverSocket.accept(); // wait for ATSV
 					ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
 					ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());) {
+				if (!((InetSocketAddress) clientSocket.getRemoteSocketAddress()).getAddress().isLoopbackAddress()) {
+					throw new Exception("Remote connections are not allowed.");
+				}
 				AnalysisDelegator delegator = new AnalysisDelegator();
 				req = (Request) input.readObject();
 				res = delegator.invoke(req);
