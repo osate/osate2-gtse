@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
@@ -68,7 +69,7 @@ public class IntegrationTests extends OsateTest {
 		this.setUp();
 		// I'm not sure this line can be written without warnings
 		createFiles(Pair.<String, String> of("IntegrationTestsModel.aadl", pkgText));
-		socket = new Socket("localhost",
+		socket = new Socket(InetAddress.getLoopbackAddress(),
 				Activator.getDefault().getPreferenceStore().getDefaultInt(Activator.ATSV_INTEGRATION_PORT));
 		outStream = new ObjectOutputStream(socket.getOutputStream());
 		inStream = new ObjectInputStream(socket.getInputStream());

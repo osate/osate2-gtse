@@ -20,6 +20,7 @@ package org.osate.atsv.integration.network;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -47,7 +48,7 @@ public class NetworkHandler implements Runnable {
 		Request req;
 		Response res;
 		while (true) {
-			try (ServerSocket serverSocket = new ServerSocket(portNum); // bind to port
+			try (ServerSocket serverSocket = new ServerSocket(portNum, 50, InetAddress.getLoopbackAddress()); // bind to port
 					Socket clientSocket = serverSocket.accept(); // wait for ATSV
 					ObjectOutputStream output = new ObjectOutputStream(clientSocket.getOutputStream());
 					ObjectInputStream input = new ObjectInputStream(clientSocket.getInputStream());) {

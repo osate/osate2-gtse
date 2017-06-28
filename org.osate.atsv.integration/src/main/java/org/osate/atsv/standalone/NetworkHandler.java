@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -55,9 +56,9 @@ public class NetworkHandler {
 	private static ObjectInputStream inStream;
 
 	public static void main(String[] args) {
-		String host = args[0];
-		int port = Integer.parseInt(args[1]);
-		try (Socket socket = new Socket(host, port); PrintWriter out = new PrintWriter("output.txt")) {
+		int port = Integer.parseInt(args[0]);
+		try (Socket socket = new Socket(InetAddress.getLoopbackAddress(), port);
+				PrintWriter out = new PrintWriter("output.txt")) {
 			if (!((InetSocketAddress) socket.getRemoteSocketAddress()).getAddress().isLoopbackAddress()) {
 				throw new Exception("Remote connections are not allowed.");
 			}
