@@ -53,4 +53,12 @@ public class Limit implements Serializable {
 		return RelationalOperator.valueOf(op.toUpperCase());
 	}
 
+	public String getOpStr() {
+		return op.toString();
+	}
+
+	public String getLimitStr() {
+		return String.valueOf(limit);
+	}
+
 }

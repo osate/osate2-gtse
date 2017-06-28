@@ -112,8 +112,9 @@ public class NetworkHandler {
 			} else if (propNames[0].equalsIgnoreCase("RefPropertyValue")) {
 				r.addChoicePoint(new ReferencePropertyValue(propNames[1], propNames[2],
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.STRING));
-			} else if (propNames[0].equalsIgnoreCase("limit")) {
-				r.addLimit(propNames[1], propNames[2], prop.getProperty(propName));
+			} else if (propNames[0].equalsIgnoreCase("Limit")) {
+				String[] limitArr = prop.getProperty(propName).split("-");
+				r.addLimit(propNames[1], limitArr[0], limitArr[1]);
 			}
 		}
 		return r;

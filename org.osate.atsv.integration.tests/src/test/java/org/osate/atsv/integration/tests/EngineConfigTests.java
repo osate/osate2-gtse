@@ -66,9 +66,9 @@ public class EngineConfigTests {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
-				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
-		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
+		ecf.addInputVariable("str1", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str2", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addEqualityConstraint("str1", "str2");
 		assertEquals(expectedXML, ecf.getXML());
 	}
@@ -79,9 +79,9 @@ public class EngineConfigTests {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
-				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Unique&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Unique&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
-		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Unique&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Unique&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
+		ecf.addInputVariable("str1", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str2", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addUniquenessConstraint("str1", "str2");
 		assertEquals(expectedXML, ecf.getXML());
 	}
@@ -91,10 +91,10 @@ public class EngineConfigTests {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
-				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;var&gt;str2&lt;/var&gt;&lt;var&gt;str3&lt;/var&gt;&lt;/Equal&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
-		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str3", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;var&gt;str2&lt;/var&gt;&lt;var&gt;str3&lt;/var&gt;&lt;/Equal&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
+		ecf.addInputVariable("str1", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str2", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str3", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addEqualityConstraint("str1", "str2");
 		ecf.addEqualityConstraint("str2", "str3");
 		assertEquals(expectedXML, ecf.getXML());
@@ -103,9 +103,9 @@ public class EngineConfigTests {
 	@Test(expected = UnsatisfiableConstraint.class)
 	public void impossibleConfigurator()
 			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
-		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str3", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+		ecf.addInputVariable("str1", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str2", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str3", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addEqualityConstraint("str1", "str2");
 		ecf.addEqualityConstraint("str2", "str3");
 		ecf.addUniquenessConstraint("str1", "str3");
@@ -120,11 +120,11 @@ public class EngineConfigTests {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
-				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/><var3 name=\"str4\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2><varName3 title=\"str4\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;var&gt;str3&lt;/var&gt;&lt;var&gt;str4&lt;/var&gt;&lt;/Equal&gt;&lt;Unique&gt;&lt;var&gt;str2&lt;/var&gt;&lt;var&gt;str3&lt;/var&gt;&lt;/Unique&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
-		ecf.addVariable("str1", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str2", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str3", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("str4", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
+				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/><var3 name=\"str4\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2><varName3 title=\"str4\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;var&gt;str1&lt;/var&gt;&lt;var&gt;str2&lt;/var&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;var&gt;str3&lt;/var&gt;&lt;var&gt;str4&lt;/var&gt;&lt;/Equal&gt;&lt;Unique&gt;&lt;var&gt;str2&lt;/var&gt;&lt;var&gt;str3&lt;/var&gt;&lt;/Unique&gt;&lt;/Configurator&gt;</configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
+		ecf.addInputVariable("str1", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str2", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str3", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addInputVariable("str4", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addEqualityConstraint("str1", "str2");
 		ecf.addEqualityConstraint("str3", "str4");
 		ecf.addUniquenessConstraint("str2", "str3");
@@ -136,17 +136,17 @@ public class EngineConfigTests {
 		String expectedXML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><ExplorationEngineModel><analysisCode>CommandLineProblem</analysisCode><configurationFile>"
 				+ baseDir + "run.sh</configurationFile><parser>" + baseDir + "parser.jar</parser><inputFile>" + baseDir
 				+ "input.txt</inputFile><outputFile>" + baseDir
-				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"dv1\" token=\"\"/><var1 name=\"phideg\" token=\"\"/><var2 name=\"intTest\" token=\"\"/><var3 name=\"strTest\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"dv1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"0\" value=\"0.95151705\" preference=\"0\"><distribution distType=\"uniform\" min=\"0.0\" max=\"2.0\"/></varName0><varName1 title=\"phideg\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"0\" value=\"3.5089884\" preference=\"0\"><distribution distType=\"uniform\" min=\"-5.0\" max=\"5.0\"/></varName1><varName2 title=\"intTest\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"4\" value=\"13\" preference=\"0\"><values val8=\"20\" val7=\"19\" val6=\"18\" val5=\"17\" val4=\"16\" val3=\"15\" val2=\"14\" val1=\"13\" val0=\"12\"/></varName2><varName3 title=\"strTest\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"A\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3><varName4 title=\"dv2\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/><varName5 title=\"dvTotal\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/><varName6 title=\"deltaT\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator></configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
-		ecf.addVariable("dv1", false, true, ATSVVariableType.FLOAT, "0.95151705",
+				+ "output.txt</outputFile><runCodeParameter></runCodeParameter><analysisFile></analysisFile><inputTokens><var0 name=\"dv1\" token=\"\"/><var1 name=\"phideg\" token=\"\"/><var2 name=\"intTest\" token=\"\"/><var3 name=\"strTest\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"dv1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"0\" value=\"0.0\" preference=\"0\"><distribution distType=\"uniform\" min=\"0.0\" max=\"2.0\"/></varName0><varName1 title=\"phideg\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"0\" value=\"-5.0\" preference=\"0\"><distribution distType=\"uniform\" min=\"-5.0\" max=\"5.0\"/></varName1><varName2 title=\"intTest\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"4\" value=\"20\" preference=\"0\"><values val8=\"20\" val7=\"19\" val6=\"18\" val5=\"17\" val4=\"16\" val3=\"15\" val2=\"14\" val1=\"13\" val0=\"12\"/></varName2><varName3 title=\"strTest\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3><varName4 title=\"dv2\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/><varName5 title=\"dvTotal\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/><varName6 title=\"deltaT\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><configurator></configurator><userDefinedPath></userDefinedPath></ExplorationEngineModel>";
+		ecf.addInputVariable("dv1", false, ATSVVariableType.FLOAT,
 				new UniformDistributionModel((float) 0.0, (float) 2.0));
-		ecf.addVariable("phideg", false, true, ATSVVariableType.FLOAT, "3.5089884",
+		ecf.addInputVariable("phideg", false, ATSVVariableType.FLOAT,
 				new UniformDistributionModel((float) -5.0, (float) 5.0));
-		ecf.addVariable("intTest", false, true, ATSVVariableType.INTEGER, "13",
+		ecf.addInputVariable("intTest", false, ATSVVariableType.INTEGER,
 				new ValuesModel("12", "13", "14", "15", "16", "17", "18", "19", "20"));
-		ecf.addVariable("strTest", false, true, ATSVVariableType.STRING, "A", new ValuesModel("A", "B"));
-		ecf.addVariable("dv2", false, false, ATSVVariableType.FLOAT, null);
-		ecf.addVariable("dvTotal", false, false, ATSVVariableType.FLOAT, null);
-		ecf.addVariable("deltaT", false, false, ATSVVariableType.FLOAT, null);
+		ecf.addInputVariable("strTest", false, ATSVVariableType.STRING, new ValuesModel("A", "B"));
+		ecf.addOutputVariable("dv2", ATSVVariableType.FLOAT, null);
+		ecf.addOutputVariable("dvTotal", ATSVVariableType.FLOAT, null);
+		ecf.addOutputVariable("deltaT", ATSVVariableType.FLOAT, null);
 		assertEquals(expectedXML, ecf.getXML());
 	}
 }

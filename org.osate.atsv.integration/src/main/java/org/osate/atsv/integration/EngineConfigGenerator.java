@@ -19,6 +19,8 @@
 package org.osate.atsv.integration;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -37,12 +39,19 @@ import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableTy
 import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.network.Limit;
 
+/**
+ * This is the main API for specifying ATSV engine configurations by adding variables and constraints.
+ * @author sam
+ *
+ */
 public final class EngineConfigGenerator {
 
 	private Marshaller marshal;
 	private JAXBElement<ExplorationEngineModel> cfg;
 	private ExplorationEngineModel ecf;
+	private Map<String, Limit> limits = new HashMap<>();
 
 	public EngineConfigGenerator() {
 		try {
@@ -67,60 +76,69 @@ public final class EngineConfigGenerator {
 	}
 
 	/**
-	 * Add a variable to the engine configuration. The value parameter is ignored if isInput is false.
+	 * Add an input variable to the engine configuration.
 	 * 
 	 * @param title The name of this variable
 	 * @param sampled Whether or not this variable is sampled
-	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
-	 * @param value The initial value of this variable
 	 */
-	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value) {
-		if (value == null) {
-			value = ATSVVariableType.getDefaultFromType(type);
-		}
-		VariableModel vm = new VariableModel(title, sampled, isInput, type, value);
+	public void addInputVariable(String title, boolean sampled, ATSVVariableType type) {
+		String value = ATSVVariableType.getDefaultFromType(type);
+		VariableModel vm = new VariableModel(title, sampled, true, type, value);
 		ecf.addVariable(vm);
 	}
 
 	/**
-	 * Add a variable with an enumerated list of values to the engine configuration. The value parameter is ignored if isInput is false.
+	 * Add an expected output variable to the engine configuration.
+	 *  
+	 * @param title The name of this variable
+	 * @param type The type of this variable
+	 * @param limit A limit for this variable, or null if none
+	 */
+	public void addOutputVariable(String title, ATSVVariableType type, Limit limit) {
+		String value = ATSVVariableType.getDefaultFromType(type);
+		VariableModel vm = new VariableModel(title, false, false, type, value);
+		ecf.addVariable(vm);
+		if (limit != null) {
+			limits.put(title, limit);
+		}
+	}
+
+	/**
+	 * Add an input variable to the engine configuration.
 	 * 
 	 * @param title The name of this variable
 	 * @param sampled Whether or not this variable is sampled
-	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
-	 * @param value The initial value of this variable
 	 * @param values The values this variable can take 
 	 */
-	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
-			ValuesModel values) {
-		if (value == null || value.equals("")) {
-			value = values.getDefault();
-		}
-		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, values);
+	public void addInputVariable(String title, boolean sampled, ATSVVariableType type, ValuesModel values) {
+		String value = values.getDefault();
+		VariableModel vm = new VariableModel(title, sampled, true, type, value, values);
 		ecf.addVariable(vm);
 	}
 
 	/**
-	 * Add a variable with a distribution to the engine configuration. The value parameter is ignored if isInput is false.
+	 * Add an input variable to the engine configuration.
 	 * 
 	 * @param title The name of this variable
 	 * @param sampled Whether or not this variable is sampled
-	 * @param isInput True if this is an input variable, false if it's output
 	 * @param type The type of this variable
-	 * @param value The initial value of this variable
 	 * @param distribution The distribution that the data this variable tracks fit 
 	 */
-	public void addVariable(String title, boolean sampled, boolean isInput, ATSVVariableType type, String value,
-			DistributionModel distribution) {
-		if (value == null || value.equals("")) {
-			value = distribution.getDefault();
-		}
-		VariableModel vm = new VariableModel(title, sampled, isInput, type, value, distribution);
+	public void addInputVariable(String title, boolean sampled, ATSVVariableType type, DistributionModel distribution) {
+		String value = distribution.getDefault();
+		VariableModel vm = new VariableModel(title, sampled, true, type, value, distribution);
 		ecf.addVariable(vm);
 	}
 
+	/**
+	 * Renders the engine configuration to an ATSV-compatible .ecf file
+	 * @return XML suitable for feeding into ATSV as an engine configuration
+	 * @throws JAXBException
+	 * @throws UnsatisfiableConstraint
+	 * @throws ConfiguratorRepresentationException
+	 */
 	public String getXML() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		// The configurators have to be double-encoded, so we call that rendering here
@@ -128,6 +146,14 @@ public final class EngineConfigGenerator {
 		// And here we render the entire specification
 		marshal.marshal(cfg, stream);
 		return stream.toString();
+	}
+
+	/**
+	 * Gets a mapping of variable names to their limits
+	 * @return
+	 */
+	public Map<String, Limit> getLimits() {
+		return limits;
 	}
 
 	/**

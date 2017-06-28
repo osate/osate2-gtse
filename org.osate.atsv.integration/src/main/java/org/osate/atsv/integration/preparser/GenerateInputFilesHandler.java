@@ -56,6 +56,7 @@ import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.network.Limit;
 import org.osgi.framework.Bundle;
 
 public class GenerateInputFilesHandler extends AbstractHandler {
@@ -83,7 +84,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	 *  <li>The component implementation to instantiate</li>
 	 *  <li>Which analysis plugins to use</li>
 	 *  <li>The type of each choicepoint (but not their values -- that comes from ATSV via input.txt)</li>
-	 *  <li>The names of expected variables if they have specified threshold past which </li>
+	 *  <li>The names of expected variables if they have limits specified </li>
 	 * </ul>  
 	 */
 	private Properties osateProps = null;
@@ -107,6 +108,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		generateEngineConfig();
 		generateInputFile();
 		generateOutputFile();
+		generateLimits();
 		generateRunScript();
 		generateRequestProperties();
 		copyJars();
@@ -174,29 +176,28 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		}
 	}
 
-	private void addGeneratedChoicePoint(String title, ATSVVariableType type, String defaultVal, ValuesModel values) {
-		ecf.addVariable(title, false, true, type, defaultVal, values);
-		startingInputs.put(title, defaultVal);
+	private void addGeneratedChoicePoint(String title, ATSVVariableType type, ValuesModel values) {
+		ecf.addInputVariable(title, false, type, values);
+		startingInputs.put(title, values.getDefault());
 	}
 
-	private void addGeneratedChoicePoint(String title, ATSVVariableType type, String defaultVal,
-			DistributionModel dist) {
-		ecf.addVariable(title, false, true, type, defaultVal, dist);
-		startingInputs.put(title, defaultVal);
+	private void addGeneratedChoicePoint(String title, ATSVVariableType type, DistributionModel dist) {
+		ecf.addInputVariable(title, false, type, dist);
+		startingInputs.put(title, dist.getDefault());
 	}
 
-	private void addOutputVariables(String titles, ATSVVariableType type, String defaultVal) {
-		for (String title : titles.split(",")) {
-			if (title.contains("-")) {
-				String compoundVarName[] = title.split("-");
-				title = compoundVarName[0];
-				String op = compoundVarName[1];
-				String varThreshhold = compoundVarName[2];
-				osateProps.setProperty("limit-" + op + "-" + title, varThreshhold);
-			}
-			ecf.addVariable(title, false, false, type, defaultVal);
-			startingOutputs.put(title, defaultVal);
+	private void addOutputVariables(String varStr, String limitStr) {
+		String[] varArr = varStr.split("-");
+		String varName = varArr[1];
+		ATSVVariableType type = ATSVVariableType.getTypeByName(varArr[2]);
+		String defaultVal = ATSVVariableType.getDefaultFromType(type);
+		Limit limit = null;
+		if (limitStr.length() > 0) {
+			String[] limitArr = limitStr.split("-");
+			limit = new Limit(limitArr[0], limitArr[1]);
 		}
+		ecf.addOutputVariable(varName, type, limit);
+		startingOutputs.put(varName, defaultVal);
 	}
 
 	private Properties initializeProperties() {
@@ -228,6 +229,14 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			return null;
 		}
 		return userProps;
+	}
+
+	private void generateLimits() {
+		Map<String, Limit> limits = ecf.getLimits();
+		for (String varName : limits.keySet()) {
+			Limit limit = limits.get(varName);
+			osateProps.setProperty("Limit-" + varName, limit.getOpStr() + "-" + limit.getLimitStr());
+		}
 	}
 
 	private void generateOutputFile() {
@@ -278,15 +287,13 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 				osateProps.setProperty("pluginIds", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				String[] options = userProps.getProperty(propName).split(",");
-				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, options[0], new ValuesModel(options));
+				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
 				osateProps.setProperty(propName, "(Key value is unused for subcomponent values)");
 			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
 				handlePropValSpec(propName);
 			} else if (propNames[0].equalsIgnoreCase("Output")) {
-				ATSVVariableType varType = ATSVVariableType.getTypeByName(propNames[1]);
-				String varStr = userProps.getProperty(propName);
-				addOutputVariables(varStr, varType, ATSVVariableType.getDefaultFromType(varType));
+				addOutputVariables(propName, userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
 				osateProps.setProperty(propName, userProps.getProperty(propName));
@@ -299,17 +306,15 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		String[] range = userProps.getProperty(propName).split(",");
 		ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[3]);
 		if (type == ATSVVariableType.FLOAT) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, ATSVVariableType.getDefaultFromType(type),
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
 					new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
 		} else if (type == ATSVVariableType.INTEGER) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, ATSVVariableType.getDefaultFromType(type),
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
 					new UniformDistributionModel(Integer.valueOf(range[0]), Integer.valueOf(range[1])));
 		} else if (type == ATSVVariableType.STRING) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, ATSVVariableType.getDefaultFromType(type),
-					new ValuesModel(range));
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, new ValuesModel(range));
 		} else if (type == null && propNames[3].equals("reference")) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING,
-					ATSVVariableType.getDefaultFromType(ATSVVariableType.STRING), new ValuesModel(range));
+			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, new ValuesModel(range));
 		}
 		osateProps.setProperty(propName, "(Key value is unused for property values)");
 	}
