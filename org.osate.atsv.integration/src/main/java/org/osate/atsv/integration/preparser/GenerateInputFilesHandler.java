@@ -104,6 +104,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		initializeFields();
 		initializeProperties();
+		initializeDirectory();
 		parseProperties();
 		generateEngineConfig();
 		generateInputFile();
@@ -114,6 +115,10 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		copyJars();
 		setPermissions();
 		return null;
+	}
+
+	private void initializeDirectory() {
+		new File(targetDirStr).mkdirs();
 	}
 
 	private void initializeFields() {
@@ -273,7 +278,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			if (!SystemUtils.IS_OS_WINDOWS) {
 				out.println("#!/bin/sh");
 			}
-			out.println("java -classpath . -jar connector.jar localhost "
+			out.println("java -classpath . -jar connector.jar "
 					+ Activator.getDefault().getPreferenceStore().getInt(Activator.ATSV_INTEGRATION_PORT));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
