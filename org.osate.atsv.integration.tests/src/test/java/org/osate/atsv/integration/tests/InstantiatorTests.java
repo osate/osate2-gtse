@@ -56,6 +56,7 @@ import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableTy
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
+import org.osate.xtext.aadl2.properties.util.GetProperties;
 
 public class InstantiatorTests extends OsateTest {
 
@@ -101,7 +102,10 @@ public class InstantiatorTests extends OsateTest {
 				if (!innerCI.getName().equalsIgnoreCase("mdev")) {
 					continue;
 				}
-				assertEquals("MidProcess2", innerCI.getClassifier().getName());
+				// The classifier doesn't get updated, even though the instantiated
+				// element does, so we can't rely on it for testing:
+				// assertEquals("MidProcess1", innerCI.getClassifier().getName());
+				assertEquals(5000, GetProperties.getLatencyinMicroSec(innerCI.getFlowSpecifications().get(0)), .0001);
 				return;
 			}
 		}
