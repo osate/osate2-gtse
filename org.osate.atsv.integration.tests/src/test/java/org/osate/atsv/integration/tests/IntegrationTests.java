@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,6 +43,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osate.atsv.integration.Activator;
+import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
@@ -84,29 +86,32 @@ public class IntegrationTests extends OsateTest {
 	@Test
 	public void badPluginIdTest() throws IOException, ClassNotFoundException {
 		final String fakePluginID = "this.isnt.a.real.plugin.id";
-		testHelper(fakePluginID, "No extension with id '" + fakePluginID + "' found!", false, Collections.emptyMap());
+		testHelper(fakePluginID, "No extension with id '" + fakePluginID + "' found!", false, Collections.emptyMap(),
+				Collections.emptySet());
 	}
 
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.flow-latency", null, true,
-				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")));
+				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")), Collections.emptySet());
 	}
 
 	@Test
 	public void portConsistencyTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.port-consistency", null, false, Collections.emptyMap());
+		testHelper("org.osate.atsv.integration.port-consistency", null, false, Collections.emptyMap(),
+				Collections.emptySet());
 	}
 
 	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.power-consumption", null, true,
-				Collections.singletonMap("Grid", new VarDescriptor("20.0")));
+				Collections.singletonMap("Grid", new VarDescriptor("20.0")), Collections.emptySet());
 	}
 
 	@Test
 	public void unhandledFaultsTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.unhandled-faults", null, false, Collections.emptyMap());
+		testHelper("org.osate.atsv.integration.unhandled-faults", null, false, Collections.emptyMap(),
+				Collections.emptySet());
 	}
 
 	@Test
@@ -114,13 +119,15 @@ public class IntegrationTests extends OsateTest {
 		testHelper("org.osate.atsv.integration.property-totals", null, true,
 				Stream.of(new Object[] { "Price", new VarDescriptor("1750.63") },
 						new Object[] { "Weight", new VarDescriptor("8.41") })
-						.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])));
+						.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
+				Collections.emptySet());
 	}
 
 	@Test
 	public void limitTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.property-totals", null, false,
-				Collections.singletonMap("Price", new VarDescriptor("1750.63", "lt", "1500.0")));
+				Collections.singletonMap("Price", new VarDescriptor("1750.63", "lt", "1500.0")),
+				Collections.emptySet());
 	}
 
 	/**
@@ -133,10 +140,14 @@ public class IntegrationTests extends OsateTest {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void testHelper(String pluginId, String expectedException, boolean expectValid,
-			Map<String, VarDescriptor> expectedVars) throws IOException, ClassNotFoundException {
+	protected void testHelper(String pluginId, String expectedException, boolean expectValid,
+			Map<String, VarDescriptor> expectedVars, Set<ChoicePointSpecification> CPSpecs)
+			throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId(pluginId);
+		for (ChoicePointSpecification cps : CPSpecs) {
+			r.addChoicePoint(cps);
+		}
 		r.setPackageName(PluginTest.PACKAGE_NAME);
 		for (String varName : expectedVars.keySet()) {
 			VarDescriptor desc = expectedVars.get(varName);
@@ -176,7 +187,7 @@ public class IntegrationTests extends OsateTest {
 		return "ATSVConnectivityTestProject";
 	}
 
-	private class VarDescriptor {
+	protected class VarDescriptor {
 		String expectedValue = null;
 		String op = null;
 		String limit = null;
