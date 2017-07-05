@@ -12,6 +12,14 @@ import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableTy
 public class IssueTests extends IntegrationTests {
 
 	@Test
+	public void Issue0001Test() throws IOException, ClassNotFoundException {
+		testHelper("org.osate.atsv.integration.flow-latency", null, true,
+				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")),
+				Collections.singleton(new SubcomponentChoice("scs.mdev", "SimpleComponentChoice::MidProcess1",
+						ATSVVariableType.STRING)));
+	}
+
+	@Test
 	public void Issue0002Test() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.property-totals", null, true,
 				Stream.of(new Object[] { "Price", new VarDescriptor("1500.0") },
