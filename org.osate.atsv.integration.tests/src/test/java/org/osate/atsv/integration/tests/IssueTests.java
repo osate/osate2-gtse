@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 
-public class IssueTests extends IntegrationTests {
+public class IssueTests extends IntegrationTestBase {
 
 	@Test
 	public void Issue0001Test() throws IOException, ClassNotFoundException {
@@ -17,6 +17,7 @@ public class IssueTests extends IntegrationTests {
 				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")),
 				Collections.singleton(new SubcomponentChoice("scs.mdev", "SimpleComponentChoice::MidProcess1",
 						ATSVVariableType.STRING)));
+
 	}
 
 	@Test
