@@ -35,6 +35,8 @@ import org.osate.aadl2.Property;
 import org.osate.aadl2.PrototypeBinding;
 import org.osate.aadl2.Subcomponent;
 import org.osate.aadl2.instance.ComponentInstance;
+import org.osate.aadl2.instance.FeatureInstance;
+import org.osate.aadl2.instance.InstanceObject;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
 import org.osate.aadl2.instantiation.InstantiateModel;
@@ -44,6 +46,7 @@ import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class CustomInstantiator extends InstantiateModel {
@@ -115,7 +118,75 @@ public class CustomInstantiator extends InstantiateModel {
 	}
 
 	@Override
+	protected InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
+			HashMap<InstanceObject, InstantiatedClassifier> classifierCache) {
+		if (choicepoints.containsKey(iobj.getComponentInstancePath())) {
+			try {
+				return myGetInstantiatedClassifier(iobj, classifierCache);
+			} catch (UnsupportedFeatureException e) {
+				// TODO Handle this in some way that interacts with the user
+				e.printStackTrace();
+			}
+		}
+
+		return super.getInstantiatedClassifier(iobj, index, classifierCache);
+	}
+
+	/**
+	 * Copied from {@link org.osate.aadl2.instance.util.InstanceUtil.getInstantiatedClassifier(InstanceObject, int, HashMap<InstanceObject, InstantiatedClassifier>)}
+	 * 
+	 * @param iobj The instance object we're trying to resolve
+	 * @param classifierCache The current cache of objects
+	 * @return The instantiated classifier
+	 * @throws UnsupportedFeatureException If swapping an unsupported AADL construct is attempted
+	 */
+	private InstantiatedClassifier myGetInstantiatedClassifier(InstanceObject iobj,
+			HashMap<InstanceObject, InstantiatedClassifier> classifierCache) throws UnsupportedFeatureException {
+		InstantiatedClassifier ic = null;
+		if (classifierCache != null) {
+			ic = classifierCache.get(iobj);
+		}
+		if (ic != null) {
+			return ic;
+		}
+		if (iobj instanceof SystemInstance) {
+			ic = new InstantiatedClassifier(((SystemInstance) iobj).getComponentImplementation(), null);
+		}
+		if (ic == null) {
+			Classifier classifier = null;
+			EList<PrototypeBinding> prototypeBindings = null;
+			if (iobj instanceof ComponentInstance) {
+				Subcomponent sub = ((ComponentInstance) iobj).getSubcomponent();
+
+				ChoicePointSpecification cps = choicepoints.get(iobj.getComponentInstancePath());
+				classifier = EMFIndexRetrieval.getClassifierInWorkspace(iobj, cps.getValueAsString());
+				prototypeBindings = sub.getOwnedPrototypeBindings();
+			} else if (iobj instanceof FeatureInstance) {
+				throw new UnsupportedFeatureException("Swapping features is not implemented");
+			} else {
+				return null;
+			}
+			if (classifier != null) {
+				ic = new InstantiatedClassifier(classifier, prototypeBindings);
+			}
+
+			// no classifier => try prototype
+			if (ic == null) {
+				throw new UnsupportedFeatureException(
+						"Swapping components requires classifiers, swaps using prototypes aren't supported");
+			}
+		}
+
+		if (classifierCache != null && ic != null) {
+			classifierCache.put(iobj, ic);
+		}
+
+		return ic;
+	}
+
+	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
+
 		String path = ci.getComponentInstancePath();
 		// If there's a reference to this node, store a reference
 		if (referencePaths.contains(path)) {
@@ -126,7 +197,7 @@ public class CustomInstantiator extends InstantiateModel {
 		if (choicepoints.containsKey(path)) {
 			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
 			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(ci, cps.getValueAsString());
-			if (cl instanceof Classifier) {
+			if (cl instanceof Classifier && !classifierCache.containsKey(ci)) {
 				// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
 				// in InstanceUtil.java
 
