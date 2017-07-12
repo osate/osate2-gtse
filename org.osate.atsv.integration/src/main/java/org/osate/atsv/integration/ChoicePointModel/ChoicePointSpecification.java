@@ -20,8 +20,6 @@ package org.osate.atsv.integration.ChoicePointModel;
 
 import java.io.Serializable;
 
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
-
 public class ChoicePointSpecification implements Serializable {
 
 	/**

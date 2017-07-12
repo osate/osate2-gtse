@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.Test;
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 
 public class IssueTests extends IntegrationTestBase {
 

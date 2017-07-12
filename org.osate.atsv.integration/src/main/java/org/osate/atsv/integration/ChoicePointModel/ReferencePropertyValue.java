@@ -18,8 +18,6 @@
  *******************************************************************************/
 package org.osate.atsv.integration.ChoicePointModel;
 
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
-
 public class ReferencePropertyValue extends PropertyValue {
 
 	/**

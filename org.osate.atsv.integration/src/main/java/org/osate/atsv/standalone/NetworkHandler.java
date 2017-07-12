@@ -37,10 +37,10 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 

@@ -28,6 +28,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.EngineConfigModel.ConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
@@ -35,7 +36,6 @@ import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel;
-import org.osate.atsv.integration.EngineConfigModel.VariableModel.ATSVVariableType;
 import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
