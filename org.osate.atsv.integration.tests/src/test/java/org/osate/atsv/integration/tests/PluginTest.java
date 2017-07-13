@@ -23,7 +23,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ IntegrationTests.class, EngineConfigTests.class, InstantiatorTests.class, IssueTests.class })
+@SuiteClasses({ IntegrationTests.class, EngineConfigTests.class, InstantiatorTests.class, IssueTests.class,
+		ParserTests.class })
 public class PluginTest {
 	/**
 	 * The name of the omnibus test package
