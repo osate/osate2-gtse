@@ -25,6 +25,7 @@ import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.analysis.architecture.PropertyTotals;
 import org.osate.atsv.integration.AbstractAnalysis;
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
 import org.osate.ui.actions.AaxlReadOnlyActionAsJob;
 import org.osate.ui.actions.AbstractAaxlAction;
@@ -37,8 +38,8 @@ public class PropertyTotaler extends AbstractAnalysis {
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
 		PropertyTotals pt = new PropertyTotals(progressMonitor, aaa);
-		resp.addVariable("Weight", String.valueOf(pt.getWeight(instance)));
-		resp.addVariable("Price", String.valueOf(pt.getPrice(instance)));
+		resp.addVariable("Weight", ATSVVariableType.FLOAT, String.valueOf(pt.getWeight(instance)));
+		resp.addVariable("Price", ATSVVariableType.FLOAT, String.valueOf(pt.getPrice(instance)));
 	}
 
 	private class MyDoPropertyTotals extends AaxlReadOnlyActionAsJob {

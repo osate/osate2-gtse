@@ -127,8 +127,8 @@ public class AnalysisDelegator {
 				}
 			}
 			for (String limitVar : limits.keySet()) {
-				if (response.getVariables().containsKey(limitVar)) {
-					if (!limits.get(limitVar).checkLimit(response.getVariables().get(limitVar))) {
+				if (response.getVariables().getVars().containsKey(limitVar)) {
+					if (!limits.get(limitVar).checkLimit(response.getVariables().getVars().get(limitVar).getVal())) {
 						response.markInvalid();
 						break;
 					}

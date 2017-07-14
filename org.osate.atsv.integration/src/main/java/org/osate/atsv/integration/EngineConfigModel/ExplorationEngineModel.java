@@ -63,13 +63,13 @@ public class ExplorationEngineModel {
 	 * File path to the file that ATSV writes inputs to 
 	 */
 	@XmlElement
-	private final String inputFile = baseDir + "input.txt";
+	private final String inputFile = baseDir + "input.xml";
 
 	/**
 	 * File path to the file that ATSV writes outputs to
 	 */
 	@XmlElement
-	private final String outputFile = baseDir + "output.txt";
+	private final String outputFile = baseDir + "output.xml";
 
 	/**
 	 * This isn't used, but if the element isn't in the file, ATSV can't parse it

@@ -117,17 +117,17 @@ public class IntegrationTestBase extends OsateTest {
 			assertTrue("The model should have an exception, but it doesn't have one", res.hasException());
 			assertEquals(expectedException, res.getException().getMessage());
 		}
-		assertTrue("The ValidModel value isn't set", res.getVariables().containsKey("ValidModel"));
+		assertTrue("The ValidModel value isn't set", res.getVariables().getVars().containsKey("ValidModel"));
 		if (expectValid) {
 			assertTrue("The model is marked invalid, but it shouldn't be", res.isValidModel());
-			assertEquals("Wrong ValidModel score", "1.0", res.getVariables().get("ValidModel"));
+			assertEquals("Wrong ValidModel score", "1.0", res.getVariables().getVars().get("ValidModel"));
 		} else {
 			assertFalse("The model is marked valid, but it shouldn't be", res.isValidModel());
-			assertEquals("Wrong ValidModel score", "0.0", res.getVariables().get("ValidModel"));
+			assertEquals("Wrong ValidModel score", "0.0", res.getVariables().getVars().get("ValidModel"));
 		}
 		expectedVars.forEach((name, value) -> {
-			assertTrue(name + " is not set", res.getVariables().containsKey(name));
-			assertEquals("Incorrect value for " + name, value.expectedValue, res.getVariables().get(name));
+			assertTrue(name + " is not set", res.getVariables().getVars().containsKey(name));
+			assertEquals("Incorrect value for " + name, value.expectedValue, res.getVariables().getVars().get(name));
 		});
 	}
 

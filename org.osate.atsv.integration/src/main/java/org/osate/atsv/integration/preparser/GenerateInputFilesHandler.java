@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.attribute.PosixFilePermission;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
@@ -57,19 +56,20 @@ import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.network.Limit;
+import org.osate.atsv.standalone.ATSVVarCollection;
 import org.osgi.framework.Bundle;
 
 public class GenerateInputFilesHandler extends AbstractHandler {
 
 	/**
-	 * Initial values for input.txt, which will be overwritten by ATSV
+	 * Initial values for input.xml, which will be overwritten by ATSV
 	 */
-	private Map<String, String> startingInputs = null;
+	private ATSVVarCollection startingInputs = null;
 
 	/**
-	 * Initial values for input.txt, which will be overwritten by ATSV
+	 * Initial values for output.xml, which will be overwritten by ATSV
 	 */
-	private Map<String, String> startingOutputs = null;
+	private ATSVVarCollection startingOutputs = null;
 
 	/**
 	 * These are specified by the user, currently as a properties file but eventually as a custom
@@ -122,8 +122,8 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	}
 
 	private void initializeFields() {
-		startingInputs = new HashMap<>();
-		startingOutputs = new HashMap<>();
+		startingInputs = new ATSVVarCollection();
+		startingOutputs = new ATSVVarCollection();
 		userProps = null;
 		osateProps = new Properties();
 		ecf = new EngineConfigGenerator();
@@ -183,12 +183,12 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void addGeneratedChoicePoint(String title, ATSVVariableType type, ValuesModel values) {
 		ecf.addInputVariable(title, false, type, values);
-		startingInputs.put(title, values.getDefault());
+		startingInputs.addVar(title, type, values.getDefault());
 	}
 
 	private void addGeneratedChoicePoint(String title, ATSVVariableType type, DistributionModel dist) {
 		ecf.addInputVariable(title, false, type, dist);
-		startingInputs.put(title, dist.getDefault());
+		startingInputs.addVar(title, type, dist.getDefault());
 	}
 
 	private void addOutputVariables(String varStr, String limitStr) {
@@ -202,7 +202,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			limit = new Limit(limitArr[0], limitArr[1]);
 		}
 		ecf.addOutputVariable(varName, type, limit);
-		startingOutputs.put(varName, defaultVal);
+		startingOutputs.addVar(varName, type, defaultVal);
 	}
 
 	private Properties initializeProperties() {
@@ -245,21 +245,17 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	}
 
 	private void generateOutputFile() {
-		try (PrintWriter out = new PrintWriter(targetDirStr + "output.txt")) {
-			for (Map.Entry<String, String> output : startingOutputs.entrySet()) {
-				out.println(output.getKey() + "," + output.getValue());
-			}
-		} catch (FileNotFoundException e) {
+		try {
+			startingOutputs.writeToFile(targetDirStr + "output.xml");
+		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void generateInputFile() {
-		try (PrintWriter out = new PrintWriter(targetDirStr + "input.txt")) {
-			for (Map.Entry<String, String> input : startingInputs.entrySet()) {
-				out.println(input.getKey() + "," + input.getValue());
-			}
-		} catch (FileNotFoundException e) {
+		try {
+			startingInputs.writeToFile(targetDirStr + "input.xml");
+		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}

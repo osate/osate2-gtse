@@ -28,6 +28,7 @@ import org.osate.analysis.flows.reporting.model.ReportedCell;
 import org.osate.analysis.flows.reporting.model.Section;
 import org.osate.analysis.resource.budgets.actions.DoPowerAnalysis;
 import org.osate.atsv.integration.AbstractAnalysis;
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
 
 public class PowerConsumption extends AbstractAnalysis {
@@ -51,7 +52,8 @@ public class PowerConsumption extends AbstractAnalysis {
 						varName = cell.getMessage().substring(31);
 					}
 					if (cell.getMessage().startsWith("Budget: ")) {
-						ret.addVariable(varName, cell.getMessage().substring(8, cell.getMessage().lastIndexOf(" W")));
+						ret.addVariable(varName, ATSVVariableType.FLOAT,
+								cell.getMessage().substring(8, cell.getMessage().lastIndexOf(" W")));
 					}
 				}
 			}

@@ -19,8 +19,9 @@
 package org.osate.atsv.integration.network;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
+import org.osate.atsv.standalone.ATSVVarCollection;
 
 public class Response implements Serializable {
 
@@ -30,9 +31,9 @@ public class Response implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * A mapping from output variable name to value
+	 * The variables produced by running the analyses
 	 */
-	private Map<String, String> variables = new HashMap<>();
+	private ATSVVarCollection variables = new ATSVVarCollection();
 
 	/**
 	 * The root exception, if something went wrong
@@ -49,7 +50,7 @@ public class Response implements Serializable {
 	private boolean valid = true;
 
 	public Response() {
-		addVariable("ValidModel", "1.0");
+		addVariable("ValidModel", ATSVVariableType.FLOAT, "1.0");
 	}
 
 	public void setException(Exception e) {
@@ -65,20 +66,20 @@ public class Response implements Serializable {
 		return exception;
 	}
 
-	public Response(Map<String, String> vars) {
-		variables.putAll(vars);
+//	public Response(Map<String, String> vars) {
+//		variables.putAll(vars);
+//	}
+
+	public void addVariable(String varName, ATSVVariableType type, String value) {
+		variables.addVar(varName, type, value);
 	}
 
-	public void addVariable(String varName, String value) {
-		variables.put(varName, value);
-	}
-
-	public Map<String, String> getVariables() {
+	public ATSVVarCollection getVariables() {
 		return variables;
 	}
 
 	public void markInvalid() {
-		addVariable("ValidModel", "0.0");
+		addVariable("ValidModel", ATSVVariableType.FLOAT, "0.0");
 		valid = false;
 	}
 

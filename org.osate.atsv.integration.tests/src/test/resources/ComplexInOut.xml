@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<vars>
-    <var name="1Float" type="FLOAT">42.0</var>
-    <var name="2Int" type="INTEGER">365</var>
-    <var name="3String" type="STRING">Hello!</var>
-</vars>
+<atsv-io>
+    <vars>
+        <var name="1Float" type="FLOAT">42.0</var>
+        <var name="2Int" type="INTEGER">365</var>
+        <var name="3String" type="STRING">Hello!</var>
+    </vars>
+</atsv-io>

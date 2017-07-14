@@ -1,3 +1,21 @@
+/*******************************************************************************
+ * OSATE2-GTSE
+ *
+ * Copyright 2017 Carnegie Mellon University. All Rights Reserved.
+ *
+ * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE
+ * MATERIAL IS FURNISHED ON AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO
+ * WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY MATTER INCLUDING,
+ * BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+ * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON
+ * UNIVERSITY DOES NOT MAKE ANY WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM
+ * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+ *
+ * Released under an Eclipse Public License - v1.0-style license, please see
+ * license.txt or contact permission@sei.cmu.edu for full terms. 
+ *
+ * DM17-0002
+ *******************************************************************************/
 package org.osate.atsv.integration.tests;
 
 import static org.junit.Assert.assertEquals;
@@ -28,19 +46,19 @@ public class ParserTests {
 	 * One variable of float type
 	 */
 	private final static String EXPECTED_BASIC_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-			+ System.lineSeparator() + "<vars>" + System.lineSeparator()
-			+ "    <var name=\"Test\" type=\"FLOAT\">42.0</var>" + System.lineSeparator() + "</vars>"
-			+ System.lineSeparator();
+			+ System.lineSeparator() + "<atsv-io>" + System.lineSeparator() + "    <vars>" + System.lineSeparator()
+			+ "        <var name=\"Test\" type=\"FLOAT\">42.0</var>" + System.lineSeparator() + "    </vars>"
+			+ System.lineSeparator() + "</atsv-io>" + System.lineSeparator();
 
 	/**
 	 * Multiple variables, multiple types
 	 */
 	private final static String EXPECTED_COMPLEX_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
-			+ System.lineSeparator() + "<vars>" + System.lineSeparator()
-			+ "    <var name=\"1Float\" type=\"FLOAT\">42.0</var>" + System.lineSeparator()
-			+ "    <var name=\"2Int\" type=\"INTEGER\">365</var>" + System.lineSeparator()
-			+ "    <var name=\"3String\" type=\"STRING\">Hello!</var>" + System.lineSeparator() + "</vars>"
-			+ System.lineSeparator();
+			+ System.lineSeparator() + "<atsv-io>" + System.lineSeparator() + "    <vars>" + System.lineSeparator()
+			+ "        <var name=\"1Float\" type=\"FLOAT\">42.0</var>" + System.lineSeparator()
+			+ "        <var name=\"2Int\" type=\"INTEGER\">365</var>" + System.lineSeparator()
+			+ "        <var name=\"3String\" type=\"STRING\">Hello!</var>" + System.lineSeparator() + "    </vars>"
+			+ System.lineSeparator() + "</atsv-io>" + System.lineSeparator();
 
 	private final static String XML_FILE_PATH_FIRST = "src";
 	private final static String[] BASIC_XML_FILE_PATH_REST = { "test", "resources", "BasicInOut.xml" };
@@ -77,7 +95,7 @@ public class ParserTests {
 	}
 
 	@Test
-	public void ComplexInputTest() throws JAXBException {
+	public void complexInputTest() throws JAXBException {
 		StringWriter writer = new StringWriter();
 		marshaller.marshal(complexAVC, writer);
 		assertEquals(EXPECTED_COMPLEX_XML, writer.toString());
@@ -135,8 +153,10 @@ public class ParserTests {
 
 	private void varCollectionTestHelper(ATSVVarCollection expectedAVC, ATSVVarCollection actualAVC) {
 		assertEquals(expectedAVC.getVars().size(), actualAVC.getVars().size());
-		ATSVVar actualVar = actualAVC.getVars().iterator().next();
-		ATSVVar expectedVar = expectedAVC.getVars().iterator().next();
+		ATSVVar actualVar = actualAVC.getVars().containsKey("Test") ? actualAVC.getVars().get("Test")
+				: actualAVC.getVars().get("1Float");
+		ATSVVar expectedVar = expectedAVC.getVars().containsKey("Test") ? expectedAVC.getVars().get("Test")
+				: expectedAVC.getVars().get("1Float");
 		assertEquals(expectedVar.getName(), actualVar.getName());
 		assertEquals(expectedVar.getType(), actualVar.getType());
 		assertEquals(expectedVar.getVal(), actualVar.getVal());

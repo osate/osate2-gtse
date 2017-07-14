@@ -26,6 +26,7 @@ import org.osate.analysis.flows.actions.CheckFlowLatency;
 import org.osate.analysis.flows.model.LatencyReport;
 import org.osate.analysis.flows.model.LatencyReportEntry;
 import org.osate.atsv.integration.AbstractAnalysis;
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
 
 public class FlowLatency extends AbstractAnalysis {
@@ -40,7 +41,8 @@ public class FlowLatency extends AbstractAnalysis {
 
 	private void populateVariables(LatencyReport report, Response ret) {
 		for (LatencyReportEntry entry : report.getEntries()) {
-			ret.addVariable(entry.getRelatedEndToEndFlowName(), String.valueOf(entry.getActualLatency(true)));
+			ret.addVariable(entry.getRelatedEndToEndFlowName(), ATSVVariableType.FLOAT,
+					String.valueOf(entry.getActualLatency(true)));
 		}
 	}
 }

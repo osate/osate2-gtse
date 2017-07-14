@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/home/sam/Desktop/parser.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/org.osate.atsv.integration/src/main/java/org/osate/atsv/standalone/parserJarConfig.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.integration.ChoicePointModel{ATSVVariableType.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{GTSEParser.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{ATSVVarCollectionAdapter.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{ATSVVar.java"/>
+        <javaElement handleIdentifier="=org.osate.atsv.integration/src\/main\/java&lt;org.osate.atsv.standalone{ATSVVarCollection.java"/>
+    </selectedElements>
+</jardesc>
