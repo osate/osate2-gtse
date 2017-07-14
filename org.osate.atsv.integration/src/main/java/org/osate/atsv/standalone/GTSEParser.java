@@ -38,6 +38,7 @@ import engine.variables.DiscreteIntegerVariable;
  * @author sam
  *
  */
+// Note -- This class requires atsv.jar (from Penn State) to build.
 public class GTSEParser extends AbstractParser {
 
 	public GTSEParser() {
