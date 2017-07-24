@@ -27,12 +27,12 @@ import org.osate.analysis.architecture.PropertyTotals;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
-import org.osate.ui.actions.AaxlReadOnlyActionAsJob;
-import org.osate.ui.actions.AbstractAaxlAction;
+import org.osate.ui.handlers.AaxlReadOnlyHandlerAsJob;
+import org.osate.ui.handlers.AbstractAaxlHandler;
 
 public class PropertyTotaler extends AbstractAnalysis {
 
-	private AbstractAaxlAction aaa = new MyDoPropertyTotals();
+	private AbstractAaxlHandler aaa = new MyDoPropertyTotals();
 
 	@Override
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
@@ -42,7 +42,7 @@ public class PropertyTotaler extends AbstractAnalysis {
 		resp.addVariable("Price", ATSVVariableType.FLOAT, String.valueOf(pt.getPrice(instance)));
 	}
 
-	private class MyDoPropertyTotals extends AaxlReadOnlyActionAsJob {
+	private class MyDoPropertyTotals extends AaxlReadOnlyHandlerAsJob {
 
 		@Override
 		protected String getActionName() {

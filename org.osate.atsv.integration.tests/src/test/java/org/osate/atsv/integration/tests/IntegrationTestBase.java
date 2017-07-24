@@ -120,14 +120,15 @@ public class IntegrationTestBase extends OsateTest {
 		assertTrue("The ValidModel value isn't set", res.getVariables().getVars().containsKey("ValidModel"));
 		if (expectValid) {
 			assertTrue("The model is marked invalid, but it shouldn't be", res.isValidModel());
-			assertEquals("Wrong ValidModel score", "1.0", res.getVariables().getVars().get("ValidModel"));
+			assertEquals("Wrong ValidModel score", "1.0", res.getVariables().getVars().get("ValidModel").getVal());
 		} else {
 			assertFalse("The model is marked valid, but it shouldn't be", res.isValidModel());
-			assertEquals("Wrong ValidModel score", "0.0", res.getVariables().getVars().get("ValidModel"));
+			assertEquals("Wrong ValidModel score", "0.0", res.getVariables().getVars().get("ValidModel").getVal());
 		}
 		expectedVars.forEach((name, value) -> {
 			assertTrue(name + " is not set", res.getVariables().getVars().containsKey(name));
-			assertEquals("Incorrect value for " + name, value.expectedValue, res.getVariables().getVars().get(name));
+			assertEquals("Incorrect value for " + name, value.expectedValue,
+					res.getVariables().getVars().get(name).getVal());
 		});
 	}
 

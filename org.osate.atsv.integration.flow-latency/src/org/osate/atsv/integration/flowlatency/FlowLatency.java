@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
-import org.osate.analysis.flows.actions.CheckFlowLatency;
+import org.osate.analysis.flows.handlers.CheckFlowLatency;
 import org.osate.analysis.flows.model.LatencyReport;
 import org.osate.analysis.flows.model.LatencyReportEntry;
 import org.osate.atsv.integration.AbstractAnalysis;

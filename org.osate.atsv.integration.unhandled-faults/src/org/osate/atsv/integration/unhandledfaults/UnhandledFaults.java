@@ -20,7 +20,7 @@ package org.osate.atsv.integration.unhandledfaults;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.osate.aadl2.Element;
-import org.osate.aadl2.errormodel.analysis.actions.UnhandledFaultsAction;
+import org.osate.aadl2.errormodel.analysis.handlers.UnhandledFaultsHandler;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
@@ -43,7 +43,7 @@ public class UnhandledFaults extends AbstractAnalysis {
 		ufa.doAaxlAction(progressMonitor, instance);
 	}
 
-	private class MyUnhandledFaultsAction extends UnhandledFaultsAction {
+	private class MyUnhandledFaultsAction extends UnhandledFaultsHandler {
 		@Override
 		public void error(Element obj, String msg) {
 			resp.markInvalid();

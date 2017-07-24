@@ -26,7 +26,7 @@ import org.osate.analysis.flows.reporting.model.Line;
 import org.osate.analysis.flows.reporting.model.Report;
 import org.osate.analysis.flows.reporting.model.ReportedCell;
 import org.osate.analysis.flows.reporting.model.Section;
-import org.osate.analysis.resource.budgets.actions.DoPowerAnalysis;
+import org.osate.analysis.resource.budgets.handlers.DoPowerAnalysis;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;

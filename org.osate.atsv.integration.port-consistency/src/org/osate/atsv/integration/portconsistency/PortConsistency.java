@@ -26,7 +26,7 @@ import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.analysis.architecture.PortConnectionConsistency;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.network.Response;
-import org.osate.ui.actions.AbstractAaxlAction;
+import org.osate.ui.handlers.AbstractAaxlHandler;
 
 public class PortConsistency extends AbstractAnalysis {
 
@@ -43,7 +43,7 @@ public class PortConsistency extends AbstractAnalysis {
 
 	private class MyPortConnectionConsistency extends PortConnectionConsistency {
 
-		public MyPortConnectionConsistency(IProgressMonitor pm, AbstractAaxlAction action) {
+		public MyPortConnectionConsistency(IProgressMonitor pm, AbstractAaxlHandler action) {
 			super(pm, action);
 		}
 
