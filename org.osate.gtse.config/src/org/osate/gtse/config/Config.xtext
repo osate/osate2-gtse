@@ -1,0 +1,107 @@
+grammar org.osate.gtse.config.Config with org.osate.xtext.aadl2.Aadl2
+
+generate config "http://www.osate.org/gtse/config/Config"
+
+import "http://aadl.info/AADL/2.0" as aadl2
+
+ConfigPkg:
+//	'package' name=PNAME
+		'root' root=[aadl2::ComponentImplementation|CNAME]
+		configurations+=Configuration*
+//	'end'
+;
+	
+Configuration:
+	'configuration' name=ID Parameters? 'extends' extensions+=Extension (',' extensions+=Extension)*
+	Arguments?
+	Assignments?
+;
+
+Extension:
+	unsafe?='unsafe'?
+	extended=[aadl2::NamedElement|CNAME]
+;
+
+fragment Parameters*:
+	'(' (parameters+=ConfigParameter (',' parameters+=ConfigParameter)*)? ')'
+;
+
+ConfigParameter:
+	name=ID ':' (FClassifierType | FPropertyType) Candidates?
+;
+
+fragment FClassifierType*:
+	category=ComponentCategory classifier=[aadl2::ComponentClassifier|CNAME]
+;
+
+fragment FPropertyType*:
+	propertyType=[aadl2::Property|PNAME]
+;
+
+fragment Candidates*:
+	'(' (candidates+=ConfigExpression (',' candidates+=ConfigExpression)*)? ')'
+;
+
+fragment Assignments*:
+	'{'	(assignments+=Assignment (',' assignments+=Assignment)*)? '}'
+;
+
+Assignment:
+	// LVal
+	// using fragment LVal leads to an exception in LazyLinker for x.y#p => v
+	(
+		element=ElementRef ('#' property=[aadl2::Property|PNAME])? 
+		| '#' property=[aadl2::Property|PNAME]
+	)
+	'=>' 
+	value=ConfigExpression
+;
+
+//fragment LVal*:
+//	element=ElementRef ('#' property=[aadl2::Property|PNAME])? 
+//	| '#' property=[aadl2::Property|PNAME]
+//;
+
+ConfigExpression returns ConfigValue:
+	// classifier, parameter, configuration
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
+	| {PropertyValue} exp=CPropertyExpression
+;
+
+fragment Arguments*:
+	'(' (arguments+=Argument (',' arguments+=Argument)*)? ')'	
+;
+
+Argument:
+	parameter=[ConfigParameter|ID] '=>' value=ConfigExpression
+;
+
+ElementRef:
+	element=[aadl2::NamedElement|ID] =>({ElementRef.prev=current} '.' element=[aadl2::NamedElement|ID])*
+;
+
+CPropertyExpression returns aadl2::PropertyExpression:
+	BooleanLiteral
+	| IntegerTerm 
+	| RealTerm
+	| StringTerm
+	| NumericRangeTerm
+	| RecordTerm
+	| ReferenceTerm
+	| ComponentClassifierTerm
+	| ListTerm 
+//	| ComputedTerm
+;
+
+NamedElement returns aadl2::NamedElement:
+	ConfigPkg | Configuration | ConfigParameter
+;
+
+// classifier name
+CNAME: ID ('::' ID)* ('.' ID)?;
+
+// property name
+// see Aadl2 PNAME: ID ('::' ID)?;
+
+// qualified name
+QNAME: ID ('.' ID)*;

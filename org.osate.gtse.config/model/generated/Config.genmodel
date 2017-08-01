@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="OSATE2-GTSE&#xA;&#xA;Copyright 2017 Carnegie Mellon University. All Rights Reserved.&#xA;&#xA;NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE&#xA;MATERIAL IS FURNISHED ON AN &quot;AS-IS&quot; BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO&#xA;WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY MATTER INCLUDING,&#xA;BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,&#xA;EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON&#xA;UNIVERSITY DOES NOT MAKE ANY WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM&#xA;PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.&#xA;&#xA;Released under an Eclipse Public License - v1.0-style license, please see&#xA;license.txt or contact permission@sei.cmu.edu for full terms. &#xA;&#xA;DM17-0002"
+    modelDirectory="/org.osate.gtse.config/src-gen" modelPluginID="org.osate.gtse.config"
+    forceOverwrite="true" modelName="Config" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.11" usedGenPackages="platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/resource/org.osate.aadl2/model/aadl2.genmodel#//aadl2">
+  <genPackages prefix="Config" basePackage="org.osate.gtse.config" disposableProviderFactory="true"
+      fileExtensions="config" ecorePackage="Config.ecore#/">
+    <genClasses ecoreClass="Config.ecore#//ConfigPkg">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/root"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/configurations"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//Configuration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/extensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/assignments"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//Extension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//Extension/unsafe"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Extension/extended"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//ConfigParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//ConfigParameter/category"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/classifier"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/propertyType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/candidates"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//Assignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/element"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/property"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//ConfigValue"/>
+    <genClasses ecoreClass="Config.ecore#//Argument">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Argument/parameter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Argument/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//ElementRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ElementRef/element"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ElementRef/prev"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//NamedElementRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/ref"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/assignments"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//PropertyValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/exp"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
