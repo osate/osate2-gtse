@@ -221,13 +221,22 @@ public interface ConfigPackage extends EPackage
   int CONFIGURATION__PARAMETERS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Extensions</b></em>' containment reference list.
+   * The feature id for the '<em><b>Extended</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIGURATION__EXTENSIONS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 1;
+  int CONFIGURATION__EXTENDED = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Combined</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIGURATION__COMBINED = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
@@ -236,7 +245,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION__ARGUMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 2;
+  int CONFIGURATION__ARGUMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
@@ -245,7 +254,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION__ASSIGNMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 3;
+  int CONFIGURATION__ASSIGNMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Configuration</em>' class.
@@ -254,17 +263,17 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 4;
+  int CONFIGURATION_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 5;
 
   /**
-   * The meta object id for the '{@link org.osate.gtse.config.config.impl.ExtensionImpl <em>Extension</em>}' class.
+   * The meta object id for the '{@link org.osate.gtse.config.config.impl.CombinationImpl <em>Combination</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.osate.gtse.config.config.impl.ExtensionImpl
-   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getExtension()
+   * @see org.osate.gtse.config.config.impl.CombinationImpl
+   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getCombination()
    * @generated
    */
-  int EXTENSION = 2;
+  int COMBINATION = 2;
 
   /**
    * The feature id for the '<em><b>Unsafe</b></em>' attribute.
@@ -273,25 +282,25 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXTENSION__UNSAFE = 0;
+  int COMBINATION__UNSAFE = 0;
 
   /**
-   * The feature id for the '<em><b>Extended</b></em>' reference.
+   * The feature id for the '<em><b>Configuration</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXTENSION__EXTENDED = 1;
+  int COMBINATION__CONFIGURATION = 1;
 
   /**
-   * The number of structural features of the '<em>Extension</em>' class.
+   * The number of structural features of the '<em>Combination</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXTENSION_FEATURE_COUNT = 2;
+  int COMBINATION_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.ConfigParameterImpl <em>Parameter</em>}' class.
@@ -661,15 +670,26 @@ public interface ConfigPackage extends EPackage
   EReference getConfiguration_Parameters();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.Configuration#getExtensions <em>Extensions</em>}'.
+   * Returns the meta object for the reference '{@link org.osate.gtse.config.config.Configuration#getExtended <em>Extended</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Extensions</em>'.
-   * @see org.osate.gtse.config.config.Configuration#getExtensions()
+   * @return the meta object for the reference '<em>Extended</em>'.
+   * @see org.osate.gtse.config.config.Configuration#getExtended()
    * @see #getConfiguration()
    * @generated
    */
-  EReference getConfiguration_Extensions();
+  EReference getConfiguration_Extended();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.Configuration#getCombined <em>Combined</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Combined</em>'.
+   * @see org.osate.gtse.config.config.Configuration#getCombined()
+   * @see #getConfiguration()
+   * @generated
+   */
+  EReference getConfiguration_Combined();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.Configuration#getArguments <em>Arguments</em>}'.
@@ -694,36 +714,36 @@ public interface ConfigPackage extends EPackage
   EReference getConfiguration_Assignments();
 
   /**
-   * Returns the meta object for class '{@link org.osate.gtse.config.config.Extension <em>Extension</em>}'.
+   * Returns the meta object for class '{@link org.osate.gtse.config.config.Combination <em>Combination</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Extension</em>'.
-   * @see org.osate.gtse.config.config.Extension
+   * @return the meta object for class '<em>Combination</em>'.
+   * @see org.osate.gtse.config.config.Combination
    * @generated
    */
-  EClass getExtension();
+  EClass getCombination();
 
   /**
-   * Returns the meta object for the attribute '{@link org.osate.gtse.config.config.Extension#isUnsafe <em>Unsafe</em>}'.
+   * Returns the meta object for the attribute '{@link org.osate.gtse.config.config.Combination#isUnsafe <em>Unsafe</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Unsafe</em>'.
-   * @see org.osate.gtse.config.config.Extension#isUnsafe()
-   * @see #getExtension()
+   * @see org.osate.gtse.config.config.Combination#isUnsafe()
+   * @see #getCombination()
    * @generated
    */
-  EAttribute getExtension_Unsafe();
+  EAttribute getCombination_Unsafe();
 
   /**
-   * Returns the meta object for the reference '{@link org.osate.gtse.config.config.Extension#getExtended <em>Extended</em>}'.
+   * Returns the meta object for the reference '{@link org.osate.gtse.config.config.Combination#getConfiguration <em>Configuration</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Extended</em>'.
-   * @see org.osate.gtse.config.config.Extension#getExtended()
-   * @see #getExtension()
+   * @return the meta object for the reference '<em>Configuration</em>'.
+   * @see org.osate.gtse.config.config.Combination#getConfiguration()
+   * @see #getCombination()
    * @generated
    */
-  EReference getExtension_Extended();
+  EReference getCombination_Configuration();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.ConfigParameter <em>Parameter</em>}'.
@@ -1028,12 +1048,20 @@ public interface ConfigPackage extends EPackage
     EReference CONFIGURATION__PARAMETERS = eINSTANCE.getConfiguration_Parameters();
 
     /**
-     * The meta object literal for the '<em><b>Extensions</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Extended</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONFIGURATION__EXTENSIONS = eINSTANCE.getConfiguration_Extensions();
+    EReference CONFIGURATION__EXTENDED = eINSTANCE.getConfiguration_Extended();
+
+    /**
+     * The meta object literal for the '<em><b>Combined</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONFIGURATION__COMBINED = eINSTANCE.getConfiguration_Combined();
 
     /**
      * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
@@ -1052,14 +1080,14 @@ public interface ConfigPackage extends EPackage
     EReference CONFIGURATION__ASSIGNMENTS = eINSTANCE.getConfiguration_Assignments();
 
     /**
-     * The meta object literal for the '{@link org.osate.gtse.config.config.impl.ExtensionImpl <em>Extension</em>}' class.
+     * The meta object literal for the '{@link org.osate.gtse.config.config.impl.CombinationImpl <em>Combination</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.osate.gtse.config.config.impl.ExtensionImpl
-     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getExtension()
+     * @see org.osate.gtse.config.config.impl.CombinationImpl
+     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getCombination()
      * @generated
      */
-    EClass EXTENSION = eINSTANCE.getExtension();
+    EClass COMBINATION = eINSTANCE.getCombination();
 
     /**
      * The meta object literal for the '<em><b>Unsafe</b></em>' attribute feature.
@@ -1067,15 +1095,15 @@ public interface ConfigPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EXTENSION__UNSAFE = eINSTANCE.getExtension_Unsafe();
+    EAttribute COMBINATION__UNSAFE = eINSTANCE.getCombination_Unsafe();
 
     /**
-     * The meta object literal for the '<em><b>Extended</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Configuration</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference EXTENSION__EXTENDED = eINSTANCE.getExtension_Extended();
+    EReference COMBINATION__CONFIGURATION = eINSTANCE.getCombination_Configuration();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.ConfigParameterImpl <em>Parameter</em>}' class.

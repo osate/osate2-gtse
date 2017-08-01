@@ -57,13 +57,13 @@ public interface ConfigFactory extends EFactory
   Configuration createConfiguration();
 
   /**
-   * Returns a new object of class '<em>Extension</em>'.
+   * Returns a new object of class '<em>Combination</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Extension</em>'.
+   * @return a new object of class '<em>Combination</em>'.
    * @generated
    */
-  Extension createExtension();
+  Combination createCombination();
 
   /**
    * Returns a new object of class '<em>Parameter</em>'.

@@ -2,23 +2,24 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="config" nsURI="http://www.osate.org/gtse/config/Config" nsPrefix="config">
   <eClassifiers xsi:type="ecore:EClass" name="ConfigPkg" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="root" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//ComponentImplementation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="root" eType="#//Configuration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="configurations" upperBound="-1"
         eType="#//Configuration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//ConfigParameter" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="extensions" upperBound="-1"
-        eType="#//Extension" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extended" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//ComponentClassifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="combined" upperBound="-1"
+        eType="#//Combination" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
         eType="#//Argument" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1"
         eType="#//Assignment" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Extension">
+  <eClassifiers xsi:type="ecore:EClass" name="Combination">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsafe" eType="ecore:EDataType platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="extended" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigParameter" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EEnum platform:/resource/org.osate.aadl2/model/aadl2.ecore#//ComponentCategory"/>

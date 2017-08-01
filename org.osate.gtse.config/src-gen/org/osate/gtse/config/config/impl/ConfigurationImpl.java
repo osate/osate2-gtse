@@ -20,24 +20,30 @@ package org.osate.gtse.config.config.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.osate.aadl2.ComponentClassifier;
 
 import org.osate.aadl2.impl.NamedElementImpl;
 
 import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
+import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.Configuration;
-import org.osate.gtse.config.config.Extension;
 
 /**
  * <!-- begin-user-doc -->
@@ -48,7 +54,8 @@ import org.osate.gtse.config.config.Extension;
  * </p>
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getExtensions <em>Extensions</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getExtended <em>Extended</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getCombined <em>Combined</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getAssignments <em>Assignments</em>}</li>
  * </ul>
@@ -68,14 +75,24 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
   protected EList<ConfigParameter> parameters;
 
   /**
-   * The cached value of the '{@link #getExtensions() <em>Extensions</em>}' containment reference list.
+   * The cached value of the '{@link #getExtended() <em>Extended</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExtensions()
+   * @see #getExtended()
    * @generated
    * @ordered
    */
-  protected EList<Extension> extensions;
+  protected ComponentClassifier extended;
+
+  /**
+   * The cached value of the '{@link #getCombined() <em>Combined</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCombined()
+   * @generated
+   * @ordered
+   */
+  protected EList<Combination> combined;
 
   /**
    * The cached value of the '{@link #getArguments() <em>Arguments</em>}' containment reference list.
@@ -137,13 +154,56 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Extension> getExtensions()
+  public ComponentClassifier getExtended()
   {
-    if (extensions == null)
+    if (extended != null && ((EObject)extended).eIsProxy())
     {
-      extensions = new EObjectContainmentEList<Extension>(Extension.class, this, ConfigPackage.CONFIGURATION__EXTENSIONS);
+      InternalEObject oldExtended = (InternalEObject)extended;
+      extended = (ComponentClassifier)eResolveProxy(oldExtended);
+      if (extended != oldExtended)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ConfigPackage.CONFIGURATION__EXTENDED, oldExtended, extended));
+      }
     }
-    return extensions;
+    return extended;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ComponentClassifier basicGetExtended()
+  {
+    return extended;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExtended(ComponentClassifier newExtended)
+  {
+    ComponentClassifier oldExtended = extended;
+    extended = newExtended;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.CONFIGURATION__EXTENDED, oldExtended, extended));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Combination> getCombined()
+  {
+    if (combined == null)
+    {
+      combined = new EObjectContainmentEList<Combination>(Combination.class, this, ConfigPackage.CONFIGURATION__COMBINED);
+    }
+    return combined;
   }
 
   /**
@@ -186,8 +246,8 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
     {
       case ConfigPackage.CONFIGURATION__PARAMETERS:
         return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-      case ConfigPackage.CONFIGURATION__EXTENSIONS:
-        return ((InternalEList<?>)getExtensions()).basicRemove(otherEnd, msgs);
+      case ConfigPackage.CONFIGURATION__COMBINED:
+        return ((InternalEList<?>)getCombined()).basicRemove(otherEnd, msgs);
       case ConfigPackage.CONFIGURATION__ARGUMENTS:
         return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
@@ -208,8 +268,11 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
     {
       case ConfigPackage.CONFIGURATION__PARAMETERS:
         return getParameters();
-      case ConfigPackage.CONFIGURATION__EXTENSIONS:
-        return getExtensions();
+      case ConfigPackage.CONFIGURATION__EXTENDED:
+        if (resolve) return getExtended();
+        return basicGetExtended();
+      case ConfigPackage.CONFIGURATION__COMBINED:
+        return getCombined();
       case ConfigPackage.CONFIGURATION__ARGUMENTS:
         return getArguments();
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
@@ -233,9 +296,12 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         getParameters().clear();
         getParameters().addAll((Collection<? extends ConfigParameter>)newValue);
         return;
-      case ConfigPackage.CONFIGURATION__EXTENSIONS:
-        getExtensions().clear();
-        getExtensions().addAll((Collection<? extends Extension>)newValue);
+      case ConfigPackage.CONFIGURATION__EXTENDED:
+        setExtended((ComponentClassifier)newValue);
+        return;
+      case ConfigPackage.CONFIGURATION__COMBINED:
+        getCombined().clear();
+        getCombined().addAll((Collection<? extends Combination>)newValue);
         return;
       case ConfigPackage.CONFIGURATION__ARGUMENTS:
         getArguments().clear();
@@ -262,8 +328,11 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
       case ConfigPackage.CONFIGURATION__PARAMETERS:
         getParameters().clear();
         return;
-      case ConfigPackage.CONFIGURATION__EXTENSIONS:
-        getExtensions().clear();
+      case ConfigPackage.CONFIGURATION__EXTENDED:
+        setExtended((ComponentClassifier)null);
+        return;
+      case ConfigPackage.CONFIGURATION__COMBINED:
+        getCombined().clear();
         return;
       case ConfigPackage.CONFIGURATION__ARGUMENTS:
         getArguments().clear();
@@ -287,8 +356,10 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
     {
       case ConfigPackage.CONFIGURATION__PARAMETERS:
         return parameters != null && !parameters.isEmpty();
-      case ConfigPackage.CONFIGURATION__EXTENSIONS:
-        return extensions != null && !extensions.isEmpty();
+      case ConfigPackage.CONFIGURATION__EXTENDED:
+        return extended != null;
+      case ConfigPackage.CONFIGURATION__COMBINED:
+        return combined != null && !combined.isEmpty();
       case ConfigPackage.CONFIGURATION__ARGUMENTS:
         return arguments != null && !arguments.isEmpty();
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:

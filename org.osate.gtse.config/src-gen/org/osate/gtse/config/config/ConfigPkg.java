@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
-import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.NamedElement;
 
 /**
@@ -53,12 +52,12 @@ public interface ConfigPkg extends EObject, NamedElement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Root</em>' reference.
-   * @see #setRoot(ComponentImplementation)
+   * @see #setRoot(Configuration)
    * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg_Root()
    * @model
    * @generated
    */
-  ComponentImplementation getRoot();
+  Configuration getRoot();
 
   /**
    * Sets the value of the '{@link org.osate.gtse.config.config.ConfigPkg#getRoot <em>Root</em>}' reference.
@@ -68,7 +67,7 @@ public interface ConfigPkg extends EObject, NamedElement
    * @see #getRoot()
    * @generated
    */
-  void setRoot(ComponentImplementation value);
+  void setRoot(Configuration value);
 
   /**
    * Returns the value of the '<em><b>Configurations</b></em>' containment reference list.

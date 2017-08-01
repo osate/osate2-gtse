@@ -26,15 +26,12 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.osate.aadl2.ComponentImplementation;
 
 import org.osate.aadl2.impl.NamedElementImpl;
 
@@ -66,7 +63,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * @generated
    * @ordered
    */
-  protected ComponentImplementation root;
+  protected Configuration root;
 
   /**
    * The cached value of the '{@link #getConfigurations() <em>Configurations</em>}' containment reference list.
@@ -104,12 +101,12 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
-  public ComponentImplementation getRoot()
+  public Configuration getRoot()
   {
-    if (root != null && ((EObject)root).eIsProxy())
+    if (root != null && root.eIsProxy())
     {
       InternalEObject oldRoot = (InternalEObject)root;
-      root = (ComponentImplementation)eResolveProxy(oldRoot);
+      root = (Configuration)eResolveProxy(oldRoot);
       if (root != oldRoot)
       {
         if (eNotificationRequired())
@@ -124,7 +121,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
-  public ComponentImplementation basicGetRoot()
+  public Configuration basicGetRoot()
   {
     return root;
   }
@@ -134,9 +131,9 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRoot(ComponentImplementation newRoot)
+  public void setRoot(Configuration newRoot)
   {
-    ComponentImplementation oldRoot = root;
+    Configuration oldRoot = root;
     root = newRoot;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.CONFIG_PKG__ROOT, oldRoot, root));
@@ -203,7 +200,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
     switch (featureID)
     {
       case ConfigPackage.CONFIG_PKG__ROOT:
-        setRoot((ComponentImplementation)newValue);
+        setRoot((Configuration)newValue);
         return;
       case ConfigPackage.CONFIG_PKG__CONFIGURATIONS:
         getConfigurations().clear();
@@ -224,7 +221,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
     switch (featureID)
     {
       case ConfigPackage.CONFIG_PKG__ROOT:
-        setRoot((ComponentImplementation)null);
+        setRoot((Configuration)null);
         return;
       case ConfigPackage.CONFIG_PKG__CONFIGURATIONS:
         getConfigurations().clear();

@@ -6,20 +6,22 @@ import "http://aadl.info/AADL/2.0" as aadl2
 
 ConfigPkg:
 //	'package' name=PNAME
-		'root' root=[aadl2::ComponentImplementation|CNAME]
+		'root' root=[Configuration|ID]
 		configurations+=Configuration*
 //	'end'
 ;
 	
 Configuration:
-	'configuration' name=ID Parameters? 'extends' extensions+=Extension (',' extensions+=Extension)*
+	'configuration' name=ID Parameters? 
+	('extends' extended=[aadl2::ComponentClassifier|CNAME])? 
+	('with' combined+=Combination (',' combined+=Combination)*)?
 	Arguments?
 	Assignments?
 ;
 
-Extension:
+Combination:
 	unsafe?='unsafe'?
-	extended=[aadl2::NamedElement|CNAME]
+	configuration=[aadl2::NamedElement|CNAME]
 ;
 
 fragment Parameters*:
@@ -39,7 +41,7 @@ fragment FPropertyType*:
 ;
 
 fragment Candidates*:
-	'(' (candidates+=ConfigExpression (',' candidates+=ConfigExpression)*)? ')'
+	'from' '(' (candidates+=ConfigExpression (',' candidates+=ConfigExpression)*)? ')'
 ;
 
 fragment Assignments*:

@@ -104,9 +104,9 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
         return createConfigurationAdapter();
       }
       @Override
-      public Adapter caseExtension(Extension object)
+      public Adapter caseCombination(Combination object)
       {
-        return createExtensionAdapter();
+        return createCombinationAdapter();
       }
       @Override
       public Adapter caseConfigParameter(ConfigParameter object)
@@ -206,16 +206,16 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Extension <em>Extension</em>}'.
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Combination <em>Combination</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.osate.gtse.config.config.Extension
+   * @see org.osate.gtse.config.config.Combination
    * @generated
    */
-  public Adapter createExtensionAdapter()
+  public Adapter createCombinationAdapter()
   {
     return null;
   }

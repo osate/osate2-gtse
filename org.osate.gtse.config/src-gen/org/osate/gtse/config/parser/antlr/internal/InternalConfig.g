@@ -103,12 +103,9 @@ ruleConfigPkg returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getConfigPkgRule());
 					}
 				}
+				otherlv_1=RULE_ID
 				{
-					newCompositeNode(grammarAccess.getConfigPkgAccess().getRootComponentImplementationCrossReference_1_0());
-				}
-				ruleCNAME
-				{
-					afterParserOrEnumRuleCall();
+					newLeafNode(otherlv_1, grammarAccess.getConfigPkgAccess().getRootConfigurationCrossReference_1_0());
 				}
 			)
 		)
@@ -185,64 +182,88 @@ ruleConfiguration returns [EObject current=null]
 				afterParserOrEnumRuleCall();
 			}
 		)?
-		otherlv_3='extends'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getConfigurationAccess().getExtendsKeyword_3());
-		}
 		(
-			(
-				{
-					newCompositeNode(grammarAccess.getConfigurationAccess().getExtensionsExtensionParserRuleCall_4_0());
-				}
-				lv_extensions_4_0=ruleExtension
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConfigurationRule());
-					}
-					add(
-						$current,
-						"extensions",
-						lv_extensions_4_0,
-						"org.osate.gtse.config.Config.Extension");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_5=','
+			otherlv_3='extends'
 			{
-				newLeafNode(otherlv_5, grammarAccess.getConfigurationAccess().getCommaKeyword_5_0());
+				newLeafNode(otherlv_3, grammarAccess.getConfigurationAccess().getExtendsKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getConfigurationAccess().getExtensionsExtensionParserRuleCall_5_1_0());
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getConfigurationRule());
+						}
 					}
-					lv_extensions_6_0=ruleExtension
+					{
+						newCompositeNode(grammarAccess.getConfigurationAccess().getExtendedComponentClassifierCrossReference_3_1_0());
+					}
+					ruleCNAME
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			otherlv_5='with'
+			{
+				newLeafNode(otherlv_5, grammarAccess.getConfigurationAccess().getWithKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getConfigurationAccess().getCombinedCombinationParserRuleCall_4_1_0());
+					}
+					lv_combined_6_0=ruleCombination
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getConfigurationRule());
 						}
 						add(
 							$current,
-							"extensions",
-							lv_extensions_6_0,
-							"org.osate.gtse.config.Config.Extension");
+							"combined",
+							lv_combined_6_0,
+							"org.osate.gtse.config.Config.Combination");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)*
+			(
+				otherlv_7=','
+				{
+					newLeafNode(otherlv_7, grammarAccess.getConfigurationAccess().getCommaKeyword_4_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getConfigurationAccess().getCombinedCombinationParserRuleCall_4_2_1_0());
+						}
+						lv_combined_8_0=ruleCombination
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getConfigurationRule());
+							}
+							add(
+								$current,
+								"combined",
+								lv_combined_8_0,
+								"org.osate.gtse.config.Config.Combination");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
 		(
 			{
 				if ($current==null) {
 					$current = createModelElement(grammarAccess.getConfigurationRule());
 				}
-				newCompositeNode(grammarAccess.getConfigurationAccess().getArgumentsParserRuleCall_6());
+				newCompositeNode(grammarAccess.getConfigurationAccess().getArgumentsParserRuleCall_5());
 			}
-			this_Arguments_7=ruleArguments[$current]
+			this_Arguments_9=ruleArguments[$current]
 			{
-				$current = $this_Arguments_7.current;
+				$current = $this_Arguments_9.current;
 				afterParserOrEnumRuleCall();
 			}
 		)?
@@ -251,26 +272,26 @@ ruleConfiguration returns [EObject current=null]
 				if ($current==null) {
 					$current = createModelElement(grammarAccess.getConfigurationRule());
 				}
-				newCompositeNode(grammarAccess.getConfigurationAccess().getAssignmentsParserRuleCall_7());
+				newCompositeNode(grammarAccess.getConfigurationAccess().getAssignmentsParserRuleCall_6());
 			}
-			this_Assignments_8=ruleAssignments[$current]
+			this_Assignments_10=ruleAssignments[$current]
 			{
-				$current = $this_Assignments_8.current;
+				$current = $this_Assignments_10.current;
 				afterParserOrEnumRuleCall();
 			}
 		)?
 	)
 ;
 
-// Entry rule entryRuleExtension
-entryRuleExtension returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getExtensionRule()); }
-	iv_ruleExtension=ruleExtension
-	{ $current=$iv_ruleExtension.current; }
+// Entry rule entryRuleCombination
+entryRuleCombination returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getCombinationRule()); }
+	iv_ruleCombination=ruleCombination
+	{ $current=$iv_ruleCombination.current; }
 	EOF;
 
-// Rule Extension
-ruleExtension returns [EObject current=null]
+// Rule Combination
+ruleCombination returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -282,11 +303,11 @@ ruleExtension returns [EObject current=null]
 			(
 				lv_unsafe_0_0='unsafe'
 				{
-					newLeafNode(lv_unsafe_0_0, grammarAccess.getExtensionAccess().getUnsafeUnsafeKeyword_0_0());
+					newLeafNode(lv_unsafe_0_0, grammarAccess.getCombinationAccess().getUnsafeUnsafeKeyword_0_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getExtensionRule());
+						$current = createModelElement(grammarAccess.getCombinationRule());
 					}
 					setWithLastConsumed($current, "unsafe", true, "unsafe");
 				}
@@ -296,11 +317,11 @@ ruleExtension returns [EObject current=null]
 			(
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getExtensionRule());
+						$current = createModelElement(grammarAccess.getCombinationRule());
 					}
 				}
 				{
-					newCompositeNode(grammarAccess.getExtensionAccess().getExtendedNamedElementCrossReference_1_0());
+					newCompositeNode(grammarAccess.getCombinationAccess().getConfigurationNamedElementCrossReference_1_0());
 				}
 				ruleCNAME
 				{
@@ -542,17 +563,21 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 	leaveRule();
 }:
 	(
-		otherlv_0='('
+		otherlv_0='from'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getCandidatesAccess().getLeftParenthesisKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getCandidatesAccess().getFromKeyword_0());
+		}
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getCandidatesAccess().getLeftParenthesisKeyword_1());
 		}
 		(
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_1_0_0());
+						newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_2_0_0());
 					}
-					lv_candidates_1_0=ruleConfigExpression
+					lv_candidates_2_0=ruleConfigExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getCandidatesRule());
@@ -560,23 +585,23 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 						add(
 							$current,
 							"candidates",
-							lv_candidates_1_0,
+							lv_candidates_2_0,
 							"org.osate.gtse.config.Config.ConfigExpression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_2=','
+				otherlv_3=','
 				{
-					newLeafNode(otherlv_2, grammarAccess.getCandidatesAccess().getCommaKeyword_1_1_0());
+					newLeafNode(otherlv_3, grammarAccess.getCandidatesAccess().getCommaKeyword_2_1_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_1_1_1_0());
+							newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_2_1_1_0());
 						}
-						lv_candidates_3_0=ruleConfigExpression
+						lv_candidates_4_0=ruleConfigExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getCandidatesRule());
@@ -584,7 +609,7 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 							add(
 								$current,
 								"candidates",
-								lv_candidates_3_0,
+								lv_candidates_4_0,
 								"org.osate.gtse.config.Config.ConfigExpression");
 							afterParserOrEnumRuleCall();
 						}
@@ -592,9 +617,9 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 				)
 			)*
 		)?
-		otherlv_4=')'
+		otherlv_5=')'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getCandidatesAccess().getRightParenthesisKeyword_2());
+			newLeafNode(otherlv_5, grammarAccess.getCandidatesAccess().getRightParenthesisKeyword_3());
 		}
 	)
 ;

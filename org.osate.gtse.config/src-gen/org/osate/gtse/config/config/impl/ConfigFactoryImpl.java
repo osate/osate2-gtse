@@ -82,7 +82,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
     {
       case ConfigPackage.CONFIG_PKG: return createConfigPkg();
       case ConfigPackage.CONFIGURATION: return createConfiguration();
-      case ConfigPackage.EXTENSION: return createExtension();
+      case ConfigPackage.COMBINATION: return createCombination();
       case ConfigPackage.CONFIG_PARAMETER: return createConfigParameter();
       case ConfigPackage.ASSIGNMENT: return createAssignment();
       case ConfigPackage.CONFIG_VALUE: return createConfigValue();
@@ -122,10 +122,10 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Extension createExtension()
+  public Combination createCombination()
   {
-    ExtensionImpl extension = new ExtensionImpl();
-    return extension;
+    CombinationImpl combination = new CombinationImpl();
+    return combination;
   }
 
   /**

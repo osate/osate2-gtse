@@ -29,24 +29,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.osate.aadl2.NamedElement;
 
+import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
-import org.osate.gtse.config.config.Extension;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Extension</b></em>'.
+ * An implementation of the model object '<em><b>Combination</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.gtse.config.config.impl.ExtensionImpl#isUnsafe <em>Unsafe</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.impl.ExtensionImpl#getExtended <em>Extended</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.CombinationImpl#isUnsafe <em>Unsafe</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.CombinationImpl#getConfiguration <em>Configuration</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ExtensionImpl extends MinimalEObjectImpl.Container implements Extension
+public class CombinationImpl extends MinimalEObjectImpl.Container implements Combination
 {
   /**
    * The default value of the '{@link #isUnsafe() <em>Unsafe</em>}' attribute.
@@ -69,21 +69,21 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
   protected boolean unsafe = UNSAFE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getExtended() <em>Extended</em>}' reference.
+   * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExtended()
+   * @see #getConfiguration()
    * @generated
    * @ordered
    */
-  protected NamedElement extended;
+  protected NamedElement configuration;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ExtensionImpl()
+  protected CombinationImpl()
   {
     super();
   }
@@ -96,7 +96,7 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
   @Override
   protected EClass eStaticClass()
   {
-    return ConfigPackage.Literals.EXTENSION;
+    return ConfigPackage.Literals.COMBINATION;
   }
 
   /**
@@ -119,7 +119,7 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
     boolean oldUnsafe = unsafe;
     unsafe = newUnsafe;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.EXTENSION__UNSAFE, oldUnsafe, unsafe));
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.COMBINATION__UNSAFE, oldUnsafe, unsafe));
   }
 
   /**
@@ -127,19 +127,19 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
    * <!-- end-user-doc -->
    * @generated
    */
-  public NamedElement getExtended()
+  public NamedElement getConfiguration()
   {
-    if (extended != null && ((EObject)extended).eIsProxy())
+    if (configuration != null && ((EObject)configuration).eIsProxy())
     {
-      InternalEObject oldExtended = (InternalEObject)extended;
-      extended = (NamedElement)eResolveProxy(oldExtended);
-      if (extended != oldExtended)
+      InternalEObject oldConfiguration = (InternalEObject)configuration;
+      configuration = (NamedElement)eResolveProxy(oldConfiguration);
+      if (configuration != oldConfiguration)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ConfigPackage.EXTENSION__EXTENDED, oldExtended, extended));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, ConfigPackage.COMBINATION__CONFIGURATION, oldConfiguration, configuration));
       }
     }
-    return extended;
+    return configuration;
   }
 
   /**
@@ -147,9 +147,9 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
    * <!-- end-user-doc -->
    * @generated
    */
-  public NamedElement basicGetExtended()
+  public NamedElement basicGetConfiguration()
   {
-    return extended;
+    return configuration;
   }
 
   /**
@@ -157,12 +157,12 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExtended(NamedElement newExtended)
+  public void setConfiguration(NamedElement newConfiguration)
   {
-    NamedElement oldExtended = extended;
-    extended = newExtended;
+    NamedElement oldConfiguration = configuration;
+    configuration = newConfiguration;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.EXTENSION__EXTENDED, oldExtended, extended));
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.COMBINATION__CONFIGURATION, oldConfiguration, configuration));
   }
 
   /**
@@ -175,11 +175,11 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
   {
     switch (featureID)
     {
-      case ConfigPackage.EXTENSION__UNSAFE:
+      case ConfigPackage.COMBINATION__UNSAFE:
         return isUnsafe();
-      case ConfigPackage.EXTENSION__EXTENDED:
-        if (resolve) return getExtended();
-        return basicGetExtended();
+      case ConfigPackage.COMBINATION__CONFIGURATION:
+        if (resolve) return getConfiguration();
+        return basicGetConfiguration();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -194,11 +194,11 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
   {
     switch (featureID)
     {
-      case ConfigPackage.EXTENSION__UNSAFE:
+      case ConfigPackage.COMBINATION__UNSAFE:
         setUnsafe((Boolean)newValue);
         return;
-      case ConfigPackage.EXTENSION__EXTENDED:
-        setExtended((NamedElement)newValue);
+      case ConfigPackage.COMBINATION__CONFIGURATION:
+        setConfiguration((NamedElement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -214,11 +214,11 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
   {
     switch (featureID)
     {
-      case ConfigPackage.EXTENSION__UNSAFE:
+      case ConfigPackage.COMBINATION__UNSAFE:
         setUnsafe(UNSAFE_EDEFAULT);
         return;
-      case ConfigPackage.EXTENSION__EXTENDED:
-        setExtended((NamedElement)null);
+      case ConfigPackage.COMBINATION__CONFIGURATION:
+        setConfiguration((NamedElement)null);
         return;
     }
     super.eUnset(featureID);
@@ -234,10 +234,10 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
   {
     switch (featureID)
     {
-      case ConfigPackage.EXTENSION__UNSAFE:
+      case ConfigPackage.COMBINATION__UNSAFE:
         return unsafe != UNSAFE_EDEFAULT;
-      case ConfigPackage.EXTENSION__EXTENDED:
-        return extended != null;
+      case ConfigPackage.COMBINATION__CONFIGURATION:
+        return configuration != null;
     }
     return super.eIsSet(featureID);
   }
@@ -259,4 +259,4 @@ public class ExtensionImpl extends MinimalEObjectImpl.Container implements Exten
     return result.toString();
   }
 
-} //ExtensionImpl
+} //CombinationImpl

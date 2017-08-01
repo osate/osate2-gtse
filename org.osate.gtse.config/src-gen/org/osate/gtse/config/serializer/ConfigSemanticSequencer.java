@@ -181,12 +181,12 @@ import org.osate.aadl2.VirtualProcessorSubcomponent;
 import org.osate.aadl2.VirtualProcessorType;
 import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
+import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.ConfigPkg;
 import org.osate.gtse.config.config.Configuration;
 import org.osate.gtse.config.config.ElementRef;
-import org.osate.gtse.config.config.Extension;
 import org.osate.gtse.config.config.NamedElementRef;
 import org.osate.gtse.config.config.PropertyValue;
 import org.osate.gtse.config.services.ConfigGrammarAccess;
@@ -948,6 +948,9 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 			case ConfigPackage.ASSIGNMENT:
 				sequence_Assignment(context, (Assignment) semanticObject); 
 				return; 
+			case ConfigPackage.COMBINATION:
+				sequence_Combination(context, (Combination) semanticObject); 
+				return; 
 			case ConfigPackage.CONFIG_PARAMETER:
 				sequence_Candidates_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
 				return; 
@@ -959,9 +962,6 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 				return; 
 			case ConfigPackage.ELEMENT_REF:
 				sequence_ElementRef(context, (ElementRef) semanticObject); 
-				return; 
-			case ConfigPackage.EXTENSION:
-				sequence_Extension(context, (Extension) semanticObject); 
 				return; 
 			case ConfigPackage.NAMED_ELEMENT_REF:
 				sequence_Arguments_Assignments_ConfigExpression(context, (NamedElementRef) semanticObject); 
@@ -1016,8 +1016,8 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	 *     (
 	 *         name=ID 
 	 *         (parameters+=ConfigParameter parameters+=ConfigParameter*)? 
-	 *         extensions+=Extension 
-	 *         extensions+=Extension* 
+	 *         extended=[ComponentClassifier|CNAME]? 
+	 *         (combined+=Combination combined+=Combination*)? 
 	 *         (arguments+=Argument arguments+=Argument*)? 
 	 *         (assignments+=Assignment assignments+=Assignment*)?
 	 *     )
@@ -1058,6 +1058,18 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Combination returns Combination
+	 *
+	 * Constraint:
+	 *     (unsafe?='unsafe'? configuration=[NamedElement|CNAME])
+	 */
+	protected void sequence_Combination(ISerializationContext context, Combination semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ConfigExpression returns PropertyValue
 	 *
 	 * Constraint:
@@ -1080,7 +1092,7 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	 *     NamedElement returns ConfigPkg
 	 *
 	 * Constraint:
-	 *     (root=[ComponentImplementation|CNAME] configurations+=Configuration*)
+	 *     (root=[Configuration|ID] configurations+=Configuration*)
 	 */
 	protected void sequence_ConfigPkg(ISerializationContext context, ConfigPkg semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1096,18 +1108,6 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	 *     (element=[NamedElement|ID] | (prev=ElementRef_ElementRef_1_0_0 element=[NamedElement|ID]))
 	 */
 	protected void sequence_ElementRef(ISerializationContext context, ElementRef semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Extension returns Extension
-	 *
-	 * Constraint:
-	 *     (unsafe?='unsafe'? extended=[NamedElement|CNAME])
-	 */
-	protected void sequence_Extension(ISerializationContext context, Extension semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

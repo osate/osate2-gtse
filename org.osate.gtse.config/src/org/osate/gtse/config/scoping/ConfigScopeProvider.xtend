@@ -47,10 +47,13 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
  */
 class ConfigScopeProvider extends AbstractConfigScopeProvider {
 
-	def IScope scope_Extension_extended(EObject context, EReference reference) {
+	def IScope scope_ConfigPkg_root(ConfigPkg context, EReference reference) {
+		context.configurations.scopeFor
+	}
+	
+	def IScope scope_Combination_configuration(EObject context, EReference reference) {
 		val pkg = context.getContainerOfType(ConfigPkg)
-		val parent = scope_ComponentClassifier(context, reference)
-		pkg.configurations.scopeFor(parent)
+		pkg.configurations.scopeFor
 	}
 
 	def IScope scope_Property(EObject context, EReference reference) {
@@ -95,11 +98,11 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 				if (container instanceof NamedElementRef) {
 					switch c : container.ref {
 						ComponentClassifier: c
-						Configuration: c.firstExtended
+						Configuration: c.extended
 					}
 				} else {
 					val config = context.getContainerOfType(Configuration)
-					config.firstExtended
+					config.extended
 				}
 			} else {
 				switch previousElement : context.prev.element {
@@ -126,20 +129,4 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 		cls?.allMembers?.filterRefined?.scopeFor ?: IScope::NULLSCOPE
 	}
 
-	def ComponentClassifier firstExtended(Configuration config) {
-		if (config.extensions.empty) {
-			null
-		} else {
-			val first = config.extensions.head.extended
-			if (first.eIsProxy)
-				null
-			else
-				switch (first) {
-					ComponentClassifier: first
-					Configuration: first.firstExtended
-					default: null
-				}
-		}
-
-	}
 }

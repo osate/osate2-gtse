@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.osate.aadl2.ComponentClassifier;
 import org.osate.aadl2.NamedElement;
 
 /**
@@ -34,7 +35,8 @@ import org.osate.aadl2.NamedElement;
  * </p>
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getParameters <em>Parameters</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.Configuration#getExtensions <em>Extensions</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Configuration#getExtended <em>Extended</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Configuration#getCombined <em>Combined</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getAssignments <em>Assignments</em>}</li>
  * </ul>
@@ -62,20 +64,46 @@ public interface Configuration extends EObject, NamedElement
   EList<ConfigParameter> getParameters();
 
   /**
-   * Returns the value of the '<em><b>Extensions</b></em>' containment reference list.
-   * The list contents are of type {@link org.osate.gtse.config.config.Extension}.
+   * Returns the value of the '<em><b>Extended</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Extensions</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Extended</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Extensions</em>' containment reference list.
-   * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Extensions()
+   * @return the value of the '<em>Extended</em>' reference.
+   * @see #setExtended(ComponentClassifier)
+   * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Extended()
+   * @model
+   * @generated
+   */
+  ComponentClassifier getExtended();
+
+  /**
+   * Sets the value of the '{@link org.osate.gtse.config.config.Configuration#getExtended <em>Extended</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Extended</em>' reference.
+   * @see #getExtended()
+   * @generated
+   */
+  void setExtended(ComponentClassifier value);
+
+  /**
+   * Returns the value of the '<em><b>Combined</b></em>' containment reference list.
+   * The list contents are of type {@link org.osate.gtse.config.config.Combination}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Combined</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Combined</em>' containment reference list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Combined()
    * @model containment="true"
    * @generated
    */
-  EList<Extension> getExtensions();
+  EList<Combination> getCombined();
 
   /**
    * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.

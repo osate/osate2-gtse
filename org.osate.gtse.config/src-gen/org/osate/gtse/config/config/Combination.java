@@ -24,22 +24,22 @@ import org.osate.aadl2.NamedElement;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Extension</b></em>'.
+ * A representation of the model object '<em><b>Combination</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.osate.gtse.config.config.Extension#isUnsafe <em>Unsafe</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.Extension#getExtended <em>Extended</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Combination#isUnsafe <em>Unsafe</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Combination#getConfiguration <em>Configuration</em>}</li>
  * </ul>
  *
- * @see org.osate.gtse.config.config.ConfigPackage#getExtension()
+ * @see org.osate.gtse.config.config.ConfigPackage#getCombination()
  * @model
  * @generated
  */
-public interface Extension extends EObject
+public interface Combination extends EObject
 {
   /**
    * Returns the value of the '<em><b>Unsafe</b></em>' attribute.
@@ -51,14 +51,14 @@ public interface Extension extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Unsafe</em>' attribute.
    * @see #setUnsafe(boolean)
-   * @see org.osate.gtse.config.config.ConfigPackage#getExtension_Unsafe()
+   * @see org.osate.gtse.config.config.ConfigPackage#getCombination_Unsafe()
    * @model
    * @generated
    */
   boolean isUnsafe();
 
   /**
-   * Sets the value of the '{@link org.osate.gtse.config.config.Extension#isUnsafe <em>Unsafe</em>}' attribute.
+   * Sets the value of the '{@link org.osate.gtse.config.config.Combination#isUnsafe <em>Unsafe</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Unsafe</em>' attribute.
@@ -68,29 +68,29 @@ public interface Extension extends EObject
   void setUnsafe(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Extended</b></em>' reference.
+   * Returns the value of the '<em><b>Configuration</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Extended</em>' reference isn't clear,
+   * If the meaning of the '<em>Configuration</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Extended</em>' reference.
-   * @see #setExtended(NamedElement)
-   * @see org.osate.gtse.config.config.ConfigPackage#getExtension_Extended()
+   * @return the value of the '<em>Configuration</em>' reference.
+   * @see #setConfiguration(NamedElement)
+   * @see org.osate.gtse.config.config.ConfigPackage#getCombination_Configuration()
    * @model
    * @generated
    */
-  NamedElement getExtended();
+  NamedElement getConfiguration();
 
   /**
-   * Sets the value of the '{@link org.osate.gtse.config.config.Extension#getExtended <em>Extended</em>}' reference.
+   * Sets the value of the '{@link org.osate.gtse.config.config.Combination#getConfiguration <em>Configuration</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Extended</em>' reference.
-   * @see #getExtended()
+   * @param value the new value of the '<em>Configuration</em>' reference.
+   * @see #getConfiguration()
    * @generated
    */
-  void setExtended(NamedElement value);
+  void setConfiguration(NamedElement value);
 
-} // Extension
+} // Combination
