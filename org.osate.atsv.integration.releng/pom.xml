@@ -74,7 +74,7 @@
         </repository>
         <repository>
             <id>xtext-tmf</id>
-            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.11.0/</url>
+            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.12.0/</url>
             <layout>p2</layout>
         </repository>
         <repository>
