@@ -31,6 +31,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.ComponentType;
+import org.osate.aadl2.Connection;
+import org.osate.aadl2.Feature;
 import org.osate.aadl2.Property;
 import org.osate.aadl2.PrototypeBinding;
 import org.osate.aadl2.Subcomponent;
@@ -38,6 +40,7 @@ import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.FeatureInstance;
 import org.osate.aadl2.instance.InstanceObject;
 import org.osate.aadl2.instance.SystemInstance;
+import org.osate.aadl2.instance.util.InstanceUtil;
 import org.osate.aadl2.instance.util.InstanceUtil.InstantiatedClassifier;
 import org.osate.aadl2.instantiation.InstantiateModel;
 import org.osate.aadl2.modelsupport.AadlConstants;
@@ -46,6 +49,7 @@ import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
+import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
@@ -66,6 +70,8 @@ public class CustomInstantiator extends InstantiateModel {
 	 */
 	private Set<String> referencePaths;
 
+	private Map<String, Classifier> originalClassifiers;
+
 	public CustomInstantiator(IProgressMonitor pm, AnalysisErrorReporterManager errMgr,
 			Map<String, ChoicePointSpecification> choicepoints) {
 		super(pm, errMgr);
@@ -73,6 +79,7 @@ public class CustomInstantiator extends InstantiateModel {
 		this.referencePaths = choicepoints.values().stream().filter(ReferencePropertyValue.class::isInstance)
 				.map(ChoicePointSpecification::getValueAsString).collect(Collectors.toSet());
 		this.referencedInstances = new HashMap<>();
+		this.originalClassifiers = new HashMap<>();
 	}
 
 	/**
@@ -120,7 +127,8 @@ public class CustomInstantiator extends InstantiateModel {
 	@Override
 	protected InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
 			HashMap<InstanceObject, InstantiatedClassifier> classifierCache) {
-		if (choicepoints.containsKey(iobj.getComponentInstancePath())) {
+		if (choicepoints.containsKey(iobj.getComponentInstancePath())
+				&& choicepoints.get(iobj.getComponentInstancePath()) instanceof SubcomponentChoice) {
 			try {
 				return myGetInstantiatedClassifier(iobj, classifierCache);
 			} catch (UnsupportedFeatureException e) {
@@ -157,7 +165,7 @@ public class CustomInstantiator extends InstantiateModel {
 			EList<PrototypeBinding> prototypeBindings = null;
 			if (iobj instanceof ComponentInstance) {
 				Subcomponent sub = ((ComponentInstance) iobj).getSubcomponent();
-
+				originalClassifiers.put(iobj.getComponentInstancePath(), sub.getClassifier());
 				ChoicePointSpecification cps = choicepoints.get(iobj.getComponentInstancePath());
 				classifier = EMFIndexRetrieval.getClassifierInWorkspace(iobj, cps.getValueAsString());
 				prototypeBindings = sub.getOwnedPrototypeBindings();
@@ -186,35 +194,28 @@ public class CustomInstantiator extends InstantiateModel {
 
 	@Override
 	protected ComponentType getComponentType(ComponentInstance ci) {
-
 		String path = ci.getComponentInstancePath();
 		// If there's a reference to this node, store a reference
 		if (referencePaths.contains(path)) {
 			referencedInstances.put(path, ci);
 		}
-
-		// If we need to swap out this node, we do that here
+		// If this component has been swapped, we need to fix connections that start in it
 		if (choicepoints.containsKey(path)) {
-			ChoicePointSpecification cps = choicepoints.get(ci.getComponentInstancePath());
-			Classifier cl = EMFIndexRetrieval.getClassifierInWorkspace(ci, cps.getValueAsString());
-			if (cl instanceof Classifier && !classifierCache.containsKey(ci)) {
-				// See public static InstantiatedClassifier getInstantiatedClassifier(InstanceObject iobj, int index,
-				// in InstanceUtil.java
-
-				Subcomponent sub = ci.getSubcomponent();
-				EList<PrototypeBinding> prototypeBindings = sub.getOwnedPrototypeBindings();
-				InstantiatedClassifier ic = new InstantiatedClassifier(cl, prototypeBindings);
-
-				classifierCache.put(ci, ic);
-
-				// It's unclear if changing the type of an instantiated object should
-				// be allowed -- if it should be, you can use the following line (and
-				// modify the accompanying if statement above) though this will break
-				// swapping of system subcomponents.
-//				return (ComponentType) cl;
+			ComponentImplementation compImpl = InstanceUtil
+					.getComponentImplementation(ci.getContainingComponentInstance(), 0, classifierCache);
+			for (Connection conn : compImpl.getAllConnections()) {
+				if (conn.getSource().getConnectionEnd().getContainingClassifier()
+						.equals(originalClassifiers.get(path))) {
+					String origName = conn.getSource().getConnectionEnd().getFullName();
+					for (Feature feat : ci.getClassifier().getAllFeatures()) {
+						if (feat.getFullName().equals(origName)) {
+							conn.getSource().setConnectionEnd(feat);
+						}
+					}
+				}
 			}
+
 		}
 		return super.getComponentType(ci);
 	}
-
 }
