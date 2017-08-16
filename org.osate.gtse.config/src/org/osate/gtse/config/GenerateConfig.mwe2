@@ -1,0 +1,104 @@
+module org.osate.gtse.config.GenerateConfig
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+
+var rootPath = ".."
+
+Workflow {
+	bean = StandaloneSetup {
+		scanClassPath = true
+		platformUri = ".."
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"
+			to = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel"
+			to = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.uml2.types/model/Types.ecore"
+			to = "platform:/resource/org.eclipse.uml2.types/model/Types.ecore"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.uml2.types/model/Types.genmodel"
+			to = "platform:/resource/org.eclipse.uml2.types/model/Types.genmodel"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.uml2.uml/model/UML.genmodel"
+			to = "platform:/resource/org.eclipse.uml2.uml/model/UML.genmodel"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore"
+			to = "platform:/resource/org.eclipse.uml2.uml/model/UML.ecore"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore"
+			to = "platform:/resource/org.eclipse.emf.codegen.ecore/model/GenModel.ecore"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
+			to = "platform:/resource/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.uml2.codegen.ecore/model/GenModel.ecore"
+			to = "platform:/resource/org.eclipse.uml2.codegen.ecore/model/GenModel.ecore"
+		}
+		uriMap = {
+			from = "platform:/plugin/org.eclipse.uml2.codegen.ecore/model/GenModel.genmodel"
+			to = "platform:/resource/org.eclipse.uml2.codegen.ecore/model/GenModel.genmodel"
+		}
+		registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"
+		registerGeneratedEPackage = "org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage"
+		registerGeneratedEPackage = "org.eclipse.uml2.types.TypesPackage"
+		registerGeneratedEPackage = "org.eclipse.uml2.uml.UMLPackage"
+		registerGeneratedEPackage = "org.eclipse.uml2.codegen.ecore.genmodel.GenModelPackage"
+
+		registerGenModelFile = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.uml2.types/model/Types.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.uml2.uml/model/UML.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.uml2.codegen.ecore/model/GenModel.genmodel"
+
+		registerGeneratedEPackage = "org.osate.aadl2.Aadl2Package"
+		registerGenModelFile = "platform:/resource/org.osate.aadl2/model/aadl2.genmodel"
+	}
+	
+	component = XtextGenerator {
+		configuration = {
+			project = StandardProjectConfig {
+				baseName = "org.osate.gtse.config"
+				rootPath = rootPath
+				runtimeTest = {
+					enabled = true
+				}
+				eclipsePlugin = {
+					enabled = true
+				}
+				eclipsePluginTest = {
+					enabled = true
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				encoding = "UTF-8"
+				lineDelimiter = "\n"
+				fileHeader = "/* \n * OSATE2-GTSE\n * \n * Copyright 2017 Carnegie Mellon University. All Rights Reserved.\n * \n * NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE\n * MATERIAL IS FURNISHED ON AN \"AS-IS\" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO\n * WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY MATTER INCLUDING,\n * BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,\n * EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON\n * UNIVERSITY DOES NOT MAKE ANY WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM\n * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.\n * \n * Released under an Eclipse Public License - v1.0-style license, please see\n * license.txt or contact permission@sei.cmu.edu for full terms. \n * \n * DM17-0002\n */"
+			}
+		}
+		language = StandardLanguage {
+			name = "org.osate.gtse.config.Config"
+			fileExtensions = "config"
+
+			serializer = {
+				generateStub = false
+			}
+			validator = {
+				inheritImplementation = false
+				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.osate.gtse.config.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.osate.gtse.config.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.osate.gtse.config.config,
+ org.osate.gtse.config.ide,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder,
+ org.eclipse.xtend.lib;resolution:=optional,
+ org.eclipse.xtext.xbase.lib,
+ org.osate.xtext.aadl2.ui;bundle-version="1.0.0",
+ org.osate.xtext.aadl2.properties.ui;bundle-version="1.0.0"
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.osate.gtse.config.ui.internal,
+ org.osate.gtse.config.ui.quickfix,
+ org.osate.gtse.config.ui.contentassist,
+ org.osate.gtse.config.ui.internal
+Bundle-Activator: org.osate.gtse.config.ui.internal.ConfigActivator
