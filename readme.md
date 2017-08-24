@@ -4,9 +4,15 @@ This plugin enables users to automatically explore the tradespace of a system by
 
 If you're interested in a more diagrammatic, foundational understanding of how GTSE and ATSV work together, see the [Workflow documentation](docs/Workflow.md).
 
+## Prerequisites
+
+1. [Java 8+](https://www.java.com/en/download/manual.jsp)
+2. Osate 2.2.3+
+    * If you don't have OSATE you can [download it](http://aadl.info/aadl/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
+
 ## Installing the GTSE Plugin
 
-1. [Download OSATE](http://aadl.info/aadl/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
+1. Launch OSATE
 2. Add the OSATE experimental update site by selecting:
     1. `Help`
     2. `Install New Software...`
@@ -14,7 +20,7 @@ If you're interested in a more diagrammatic, foundational understanding of how G
     4. Type `Osate Experimental` for the Name
     5. Copy/Paste `http://aadl.info/aadl/osate/experimental/` for the Location
     6. Click `OK`
-3. Check the box next to `Guided Tradespace Exploration` to install all available analyzers, or expand the row and select those you want.
+3. Check the box next to `Guided Tradespace Exploration` to install both the GTSE Core and bundle of currently-available analyzers.
 4. Click `Next >`
 5. Click `Next >` again
 6. Accept the License. The full license for this software is in [license.txt](https://github.com/osate/osate2-gtse/blob/master/license.txt).
@@ -45,24 +51,28 @@ If you're interested in a more diagrammatic, foundational understanding of how G
 5. [Optional] Verify that the following files have been created in the directory you specified as part of step 1.4:
     * `ATSVConfig.ecf`
     * `connector.jar`
-    * `input.txt`
-    * `output.txt`
+    * `input.xml`
+    * `output.xml`
     * `parser.jar`
     * `request.properties`
-    * `run.sh`
+    * `run.sh` (Linux and Mac) or `run.bat` (Windows)
+    * `runATSV.bat` (Windows only)
 
 ## Running ATSV
 
 1. Launch OSATE.
 2. Open the project containing the GTSE-compatible packages.
 3. [Optional] Test the generated setup.
-    1. Note the contents of `output.txt`.
-    2. [Optional] Modify the contents of `input.txt`.
-    3. Note the contents of `input.txt`.
+    1. Note the contents of `output.xml`.
+    2. [Optional] Modify the contents of `input.xml`.
+    3. Note the contents of `input.xml`.
     4. Run a single execution of the GTSE plugin by executing `run.sh` on Linux / Mac OS or `run.bat` on Windows.
 4. Launch ATSV according to the [instructions](http://www.atsv.psu.edu/download.html):
-    * Windows: Use the batch file in the base directory to start the application.
-    * Mac OS and linux: Double click ATSV.jar in the /dist folder.
+    * Windows:
+        1. Copy the `runATSV.bat` file generated previously to the ATSV directory.
+        2. When prompted, replace the original `runATSV.bat`.
+        3. Double click `runATSV.bat`.
+    * Mac OS and linux: Double click `ATSV.jar` in ATSV's `dist` folder.
 5. Load the generated engine configuration file into ATSV.
     1. Click `File`.
     2. Click `Link to Exploration Engine`.
@@ -75,3 +85,4 @@ If you're interested in a more diagrammatic, foundational understanding of how G
 7. Wait for the runs to complete. Depending on model size, analyses selected, and number of runs, this may take a while.
 8. In the window titled `Trade Space Visualizer`, click `Plots`.
 9. Select the type of plot you would like to view.
+    * Note that only Windows users will be able to view 3D plots.

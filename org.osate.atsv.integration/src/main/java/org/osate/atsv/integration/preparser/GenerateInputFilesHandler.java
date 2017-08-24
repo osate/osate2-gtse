@@ -110,7 +110,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		generateInputFile();
 		generateOutputFile();
 		generateLimits();
-		generateRunScript();
+		generateRunScripts();
 		generateRequestProperties();
 		copyJars();
 		setPermissions();
@@ -269,13 +269,41 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		}
 	}
 
-	private void generateRunScript() {
-		try (PrintWriter out = new PrintWriter(targetDirStr + (SystemUtils.IS_OS_WINDOWS ? "run.bat" : "run.sh"))) {
+	private void generateRunScripts() {
+		try (PrintWriter runGTSEConnector = new PrintWriter(
+				targetDirStr + (SystemUtils.IS_OS_WINDOWS ? "run.bat" : "run.sh"))) {
 			if (!SystemUtils.IS_OS_WINDOWS) {
-				out.println("#!/bin/sh");
+				runGTSEConnector.println("#!/bin/sh");
+				runGTSEConnector.println("java -classpath . -jar connector.jar "
+						+ Activator.getDefault().getPreferenceStore().getInt(Activator.ATSV_INTEGRATION_PORT));
+			} else {
+				/*
+				 * Running ATSV on windows enables 3D plots, but also requires extra care:
+				 * The included version of Java -- which has the following version info -- must be used
+				 * 
+				 * java version "1.7.0"
+				 * Java(TM) SE Runtime Environment (build 1.7.0-b147)
+				 * Java HotSpot(TM) Client VM (build 21.0-b17, mixed mode)
+				 * 
+				 * So, since a lot of GTSE code requires 1.8 for lambdas and whatnot, we actually have to run
+				 * our two JVMs with different major versions :\
+				 * 
+				 * This requires modifying runATSV.bat to cache the user's path (we also remove memory limits and
+				 * the loading of the car test data that's included with ATSV)
+				 * 
+				 */
+				PrintWriter runATSVJar = new PrintWriter(targetDirStr + "runATSV.bat");
+				runATSVJar.println("set ORIG_PATH=%PATH%");
+				runATSVJar.println("set PATH=jre/bin;jnilib");
+				runATSVJar.println("java -Dsun.java2d.ddoffscreen=false -Dsun.java2d.gdiblit=false -jar dist/atsv.jar");
+				runATSVJar.close();
+
+				/*
+				 * Then in the connector-launching batch file we use the original path to get Java 8+
+				 */
+				runGTSEConnector.println("set PATH=%ORIG_PATH%");
+				runGTSEConnector.println("java -classpath . -jar connector.jar 4444");
 			}
-			out.println("java -classpath . -jar connector.jar "
-					+ Activator.getDefault().getPreferenceStore().getInt(Activator.ATSV_INTEGRATION_PORT));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
