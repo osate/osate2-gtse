@@ -147,11 +147,14 @@ public
 	process implementation EndProcess.imp
 	end EndProcess.imp;
 
-	process MidProcess1
+	process MidProcess
 		features
 			power: in feature Electricity;
 			input: in event port;
 			output: out event port;
+	end MidProcess;
+
+	process MidProcess1 extends MidProcess
 		flows
 			variableTimeFlow: flow path input -> output {
 						Latency => 5 ms .. 5 ms;
@@ -162,11 +165,9 @@ public
 			SEI::Price => 500.00;
 	end MidProcess1;
 
-	process MidProcess2
+	process MidProcess2 extends MidProcess
 		features
-			power: in feature Electricity;
-			input: in event port;
-			output: out event port{
+			output: refined to out event port{
 				Communication_Properties::Output_Rate => [
 					Value_Range => 10.0 .. 50.0;
 					Rate_Unit => PerSecond;
@@ -183,11 +184,7 @@ public
 			SEI::Price => 750.63;
 	end MidProcess2;
 
-	process MidProcess3
-		features
-			power: in feature Electricity;
-			input: in event port;
-			output: out event port;
+	process MidProcess3 extends MidProcess
 		flows
 			variableTimeFlow: flow path input -> output {
 						Latency => 25 ms .. 25 ms;
