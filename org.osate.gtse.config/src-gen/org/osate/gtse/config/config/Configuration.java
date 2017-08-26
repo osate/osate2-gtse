@@ -37,7 +37,6 @@ import org.osate.aadl2.NamedElement;
  *   <li>{@link org.osate.gtse.config.config.Configuration#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getExtended <em>Extended</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getCombined <em>Combined</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.Configuration#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getAssignments <em>Assignments</em>}</li>
  * </ul>
  *
@@ -104,22 +103,6 @@ public interface Configuration extends EObject, NamedElement
    * @generated
    */
   EList<Combination> getCombined();
-
-  /**
-   * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
-   * The list contents are of type {@link org.osate.gtse.config.config.Argument}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Arguments</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Arguments</em>' containment reference list.
-   * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Arguments()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Argument> getArguments();
 
   /**
    * Returns the value of the '<em><b>Assignments</b></em>' containment reference list.

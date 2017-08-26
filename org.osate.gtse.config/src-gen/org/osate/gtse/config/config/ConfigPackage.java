@@ -239,22 +239,13 @@ public interface ConfigPackage extends EPackage
   int CONFIGURATION__COMBINED = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONFIGURATION__ARGUMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 3;
-
-  /**
    * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIGURATION__ASSIGNMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 4;
+  int CONFIGURATION__ASSIGNMENTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Configuration</em>' class.
@@ -263,7 +254,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONFIGURATION_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 5;
+  int CONFIGURATION_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.CombinationImpl <em>Combination</em>}' class.
@@ -294,13 +285,22 @@ public interface ConfigPackage extends EPackage
   int COMBINATION__CONFIGURATION = 1;
 
   /**
+   * The feature id for the '<em><b>Arguments</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMBINATION__ARGUMENTS = 2;
+
+  /**
    * The number of structural features of the '<em>Combination</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMBINATION_FEATURE_COUNT = 2;
+  int COMBINATION_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.ConfigParameterImpl <em>Parameter</em>}' class.
@@ -413,13 +413,13 @@ public interface ConfigPackage extends EPackage
   int ASSIGNMENT = 4;
 
   /**
-   * The feature id for the '<em><b>Element</b></em>' containment reference.
+   * The feature id for the '<em><b>Ref</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__ELEMENT = 0;
+  int ASSIGNMENT__REF = 0;
 
   /**
    * The feature id for the '<em><b>Property</b></em>' reference.
@@ -459,13 +459,22 @@ public interface ConfigPackage extends EPackage
   int CONFIG_VALUE = 5;
 
   /**
+   * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_VALUE__ASSIGNMENTS = 0;
+
+  /**
    * The number of structural features of the '<em>Value</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIG_VALUE_FEATURE_COUNT = 0;
+  int CONFIG_VALUE_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.ArgumentImpl <em>Argument</em>}' class.
@@ -552,6 +561,15 @@ public interface ConfigPackage extends EPackage
   int NAMED_ELEMENT_REF = 8;
 
   /**
+   * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_ELEMENT_REF__ASSIGNMENTS = CONFIG_VALUE__ASSIGNMENTS;
+
+  /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -570,22 +588,13 @@ public interface ConfigPackage extends EPackage
   int NAMED_ELEMENT_REF__ARGUMENTS = CONFIG_VALUE_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAMED_ELEMENT_REF__ASSIGNMENTS = CONFIG_VALUE_FEATURE_COUNT + 2;
-
-  /**
    * The number of structural features of the '<em>Named Element Ref</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAMED_ELEMENT_REF_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 3;
+  int NAMED_ELEMENT_REF_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.PropertyValueImpl <em>Property Value</em>}' class.
@@ -596,6 +605,15 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   int PROPERTY_VALUE = 9;
+
+  /**
+   * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_VALUE__ASSIGNMENTS = CONFIG_VALUE__ASSIGNMENTS;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -692,17 +710,6 @@ public interface ConfigPackage extends EPackage
   EReference getConfiguration_Combined();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.Configuration#getArguments <em>Arguments</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Arguments</em>'.
-   * @see org.osate.gtse.config.config.Configuration#getArguments()
-   * @see #getConfiguration()
-   * @generated
-   */
-  EReference getConfiguration_Arguments();
-
-  /**
    * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.Configuration#getAssignments <em>Assignments</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -744,6 +751,17 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   EReference getCombination_Configuration();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.Combination#getArguments <em>Arguments</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Arguments</em>'.
+   * @see org.osate.gtse.config.config.Combination#getArguments()
+   * @see #getCombination()
+   * @generated
+   */
+  EReference getCombination_Arguments();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.ConfigParameter <em>Parameter</em>}'.
@@ -810,15 +828,15 @@ public interface ConfigPackage extends EPackage
   EClass getAssignment();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.osate.gtse.config.config.Assignment#getElement <em>Element</em>}'.
+   * Returns the meta object for the containment reference '{@link org.osate.gtse.config.config.Assignment#getRef <em>Ref</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Element</em>'.
-   * @see org.osate.gtse.config.config.Assignment#getElement()
+   * @return the meta object for the containment reference '<em>Ref</em>'.
+   * @see org.osate.gtse.config.config.Assignment#getRef()
    * @see #getAssignment()
    * @generated
    */
-  EReference getAssignment_Element();
+  EReference getAssignment_Ref();
 
   /**
    * Returns the meta object for the reference '{@link org.osate.gtse.config.config.Assignment#getProperty <em>Property</em>}'.
@@ -851,6 +869,17 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   EClass getConfigValue();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.ConfigValue#getAssignments <em>Assignments</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Assignments</em>'.
+   * @see org.osate.gtse.config.config.ConfigValue#getAssignments()
+   * @see #getConfigValue()
+   * @generated
+   */
+  EReference getConfigValue_Assignments();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.Argument <em>Argument</em>}'.
@@ -947,17 +976,6 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   EReference getNamedElementRef_Arguments();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.NamedElementRef#getAssignments <em>Assignments</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Assignments</em>'.
-   * @see org.osate.gtse.config.config.NamedElementRef#getAssignments()
-   * @see #getNamedElementRef()
-   * @generated
-   */
-  EReference getNamedElementRef_Assignments();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.PropertyValue <em>Property Value</em>}'.
@@ -1064,14 +1082,6 @@ public interface ConfigPackage extends EPackage
     EReference CONFIGURATION__COMBINED = eINSTANCE.getConfiguration_Combined();
 
     /**
-     * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference CONFIGURATION__ARGUMENTS = eINSTANCE.getConfiguration_Arguments();
-
-    /**
      * The meta object literal for the '<em><b>Assignments</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1104,6 +1114,14 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EReference COMBINATION__CONFIGURATION = eINSTANCE.getCombination_Configuration();
+
+    /**
+     * The meta object literal for the '<em><b>Arguments</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMBINATION__ARGUMENTS = eINSTANCE.getCombination_Arguments();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.ConfigParameterImpl <em>Parameter</em>}' class.
@@ -1158,12 +1176,12 @@ public interface ConfigPackage extends EPackage
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
-     * The meta object literal for the '<em><b>Element</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Ref</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ASSIGNMENT__ELEMENT = eINSTANCE.getAssignment_Element();
+    EReference ASSIGNMENT__REF = eINSTANCE.getAssignment_Ref();
 
     /**
      * The meta object literal for the '<em><b>Property</b></em>' reference feature.
@@ -1190,6 +1208,14 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EClass CONFIG_VALUE = eINSTANCE.getConfigValue();
+
+    /**
+     * The meta object literal for the '<em><b>Assignments</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONFIG_VALUE__ASSIGNMENTS = eINSTANCE.getConfigValue_Assignments();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.ArgumentImpl <em>Argument</em>}' class.
@@ -1268,14 +1294,6 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EReference NAMED_ELEMENT_REF__ARGUMENTS = eINSTANCE.getNamedElementRef_Arguments();
-
-    /**
-     * The meta object literal for the '<em><b>Assignments</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference NAMED_ELEMENT_REF__ASSIGNMENTS = eINSTANCE.getNamedElementRef_Assignments();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.PropertyValueImpl <em>Property Value</em>}' class.

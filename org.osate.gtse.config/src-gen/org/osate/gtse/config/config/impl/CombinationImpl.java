@@ -18,19 +18,26 @@
  */
 package org.osate.gtse.config.config.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.osate.aadl2.NamedElement;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
+import org.osate.gtse.config.config.Configuration;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,6 +49,7 @@ import org.osate.gtse.config.config.ConfigPackage;
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.impl.CombinationImpl#isUnsafe <em>Unsafe</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.CombinationImpl#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.CombinationImpl#getArguments <em>Arguments</em>}</li>
  * </ul>
  *
  * @generated
@@ -76,7 +84,17 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * @generated
    * @ordered
    */
-  protected NamedElement configuration;
+  protected Configuration configuration;
+
+  /**
+   * The cached value of the '{@link #getArguments() <em>Arguments</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getArguments()
+   * @generated
+   * @ordered
+   */
+  protected EList<Argument> arguments;
 
   /**
    * <!-- begin-user-doc -->
@@ -127,12 +145,12 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
-  public NamedElement getConfiguration()
+  public Configuration getConfiguration()
   {
-    if (configuration != null && ((EObject)configuration).eIsProxy())
+    if (configuration != null && configuration.eIsProxy())
     {
       InternalEObject oldConfiguration = (InternalEObject)configuration;
-      configuration = (NamedElement)eResolveProxy(oldConfiguration);
+      configuration = (Configuration)eResolveProxy(oldConfiguration);
       if (configuration != oldConfiguration)
       {
         if (eNotificationRequired())
@@ -147,7 +165,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
-  public NamedElement basicGetConfiguration()
+  public Configuration basicGetConfiguration()
   {
     return configuration;
   }
@@ -157,12 +175,42 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setConfiguration(NamedElement newConfiguration)
+  public void setConfiguration(Configuration newConfiguration)
   {
-    NamedElement oldConfiguration = configuration;
+    Configuration oldConfiguration = configuration;
     configuration = newConfiguration;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.COMBINATION__CONFIGURATION, oldConfiguration, configuration));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Argument> getArguments()
+  {
+    if (arguments == null)
+    {
+      arguments = new EObjectContainmentEList<Argument>(Argument.class, this, ConfigPackage.COMBINATION__ARGUMENTS);
+    }
+    return arguments;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case ConfigPackage.COMBINATION__ARGUMENTS:
+        return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -180,6 +228,8 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
       case ConfigPackage.COMBINATION__CONFIGURATION:
         if (resolve) return getConfiguration();
         return basicGetConfiguration();
+      case ConfigPackage.COMBINATION__ARGUMENTS:
+        return getArguments();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -189,6 +239,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -198,7 +249,11 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
         setUnsafe((Boolean)newValue);
         return;
       case ConfigPackage.COMBINATION__CONFIGURATION:
-        setConfiguration((NamedElement)newValue);
+        setConfiguration((Configuration)newValue);
+        return;
+      case ConfigPackage.COMBINATION__ARGUMENTS:
+        getArguments().clear();
+        getArguments().addAll((Collection<? extends Argument>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -218,7 +273,10 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
         setUnsafe(UNSAFE_EDEFAULT);
         return;
       case ConfigPackage.COMBINATION__CONFIGURATION:
-        setConfiguration((NamedElement)null);
+        setConfiguration((Configuration)null);
+        return;
+      case ConfigPackage.COMBINATION__ARGUMENTS:
+        getArguments().clear();
         return;
     }
     super.eUnset(featureID);
@@ -238,6 +296,8 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
         return unsafe != UNSAFE_EDEFAULT;
       case ConfigPackage.COMBINATION__CONFIGURATION:
         return configuration != null;
+      case ConfigPackage.COMBINATION__ARGUMENTS:
+        return arguments != null && !arguments.isEmpty();
     }
     return super.eIsSet(featureID);
   }

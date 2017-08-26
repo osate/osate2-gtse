@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.osate.aadl2.NamedElement;
 
 import org.osate.gtse.config.config.Argument;
-import org.osate.gtse.config.config.Assignment;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.NamedElementRef;
 
@@ -51,7 +50,6 @@ import org.osate.gtse.config.config.NamedElementRef;
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getRef <em>Ref</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getArguments <em>Arguments</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getAssignments <em>Assignments</em>}</li>
  * </ul>
  *
  * @generated
@@ -77,16 +75,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * @ordered
    */
   protected EList<Argument> arguments;
-
-  /**
-   * The cached value of the '{@link #getAssignments() <em>Assignments</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAssignments()
-   * @generated
-   * @ordered
-   */
-  protected EList<Assignment> assignments;
 
   /**
    * <!-- begin-user-doc -->
@@ -171,20 +159,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Assignment> getAssignments()
-  {
-    if (assignments == null)
-    {
-      assignments = new EObjectContainmentEList<Assignment>(Assignment.class, this, ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS);
-    }
-    return assignments;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -192,8 +166,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
     {
       case ConfigPackage.NAMED_ELEMENT_REF__ARGUMENTS:
         return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
-      case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
-        return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -213,8 +185,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         return basicGetRef();
       case ConfigPackage.NAMED_ELEMENT_REF__ARGUMENTS:
         return getArguments();
-      case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
-        return getAssignments();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -237,10 +207,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         getArguments().clear();
         getArguments().addAll((Collection<? extends Argument>)newValue);
         return;
-      case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
-        getAssignments().clear();
-        getAssignments().addAll((Collection<? extends Assignment>)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -261,9 +227,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
       case ConfigPackage.NAMED_ELEMENT_REF__ARGUMENTS:
         getArguments().clear();
         return;
-      case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
-        getAssignments().clear();
-        return;
     }
     super.eUnset(featureID);
   }
@@ -282,8 +245,6 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         return ref != null;
       case ConfigPackage.NAMED_ELEMENT_REF__ARGUMENTS:
         return arguments != null && !arguments.isEmpty();
-      case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
-        return assignments != null && !assignments.isEmpty();
     }
     return super.eIsSet(featureID);
   }

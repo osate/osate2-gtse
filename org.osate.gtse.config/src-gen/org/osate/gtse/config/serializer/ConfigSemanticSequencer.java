@@ -185,6 +185,7 @@ import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.ConfigPkg;
+import org.osate.gtse.config.config.ConfigValue;
 import org.osate.gtse.config.config.Configuration;
 import org.osate.gtse.config.config.ElementRef;
 import org.osate.gtse.config.config.NamedElementRef;
@@ -949,7 +950,7 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 				sequence_Assignment(context, (Assignment) semanticObject); 
 				return; 
 			case ConfigPackage.COMBINATION:
-				sequence_Combination(context, (Combination) semanticObject); 
+				sequence_Arguments_Combination(context, (Combination) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIG_PARAMETER:
 				sequence_Candidates_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
@@ -957,8 +958,11 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 			case ConfigPackage.CONFIG_PKG:
 				sequence_ConfigPkg(context, (ConfigPkg) semanticObject); 
 				return; 
+			case ConfigPackage.CONFIG_VALUE:
+				sequence_Assignments(context, (ConfigValue) semanticObject); 
+				return; 
 			case ConfigPackage.CONFIGURATION:
-				sequence_Arguments_Assignments_Configuration_Parameters(context, (Configuration) semanticObject); 
+				sequence_Assignments_Configuration_Parameters(context, (Configuration) semanticObject); 
 				return; 
 			case ConfigPackage.ELEMENT_REF:
 				sequence_ElementRef(context, (ElementRef) semanticObject); 
@@ -1009,20 +1013,12 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Configuration returns Configuration
-	 *     NamedElement returns Configuration
+	 *     Combination returns Combination
 	 *
 	 * Constraint:
-	 *     (
-	 *         name=ID 
-	 *         (parameters+=ConfigParameter parameters+=ConfigParameter*)? 
-	 *         extended=[ComponentClassifier|CNAME]? 
-	 *         (combined+=Combination combined+=Combination*)? 
-	 *         (arguments+=Argument arguments+=Argument*)? 
-	 *         (assignments+=Assignment assignments+=Assignment*)?
-	 *     )
+	 *     (unsafe?='unsafe'? configuration=[Configuration|ID] (arguments+=Argument arguments+=Argument*)?)
 	 */
-	protected void sequence_Arguments_Assignments_Configuration_Parameters(ISerializationContext context, Configuration semanticObject) {
+	protected void sequence_Arguments_Combination(ISerializationContext context, Combination semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1032,9 +1028,40 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
-	 *     (((element=ElementRef property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigExpression)
+	 *     (((ref=ElementRef property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigExpression)
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConfigExpression returns ConfigValue
+	 *
+	 * Constraint:
+	 *     (assignments+=Assignment assignments+=Assignment*)?
+	 */
+	protected void sequence_Assignments(ISerializationContext context, ConfigValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Configuration returns Configuration
+	 *     NamedElement returns Configuration
+	 *
+	 * Constraint:
+	 *     (
+	 *         name=ID 
+	 *         (parameters+=ConfigParameter parameters+=ConfigParameter*)? 
+	 *         extended=[ComponentClassifier|CNAME]? 
+	 *         (combined+=Combination combined+=Combination*)? 
+	 *         (assignments+=Assignment assignments+=Assignment*)?
+	 *     )
+	 */
+	protected void sequence_Assignments_Configuration_Parameters(ISerializationContext context, Configuration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1052,18 +1079,6 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	 *     )
 	 */
 	protected void sequence_Candidates_ConfigParameter_FClassifierType_FPropertyType(ISerializationContext context, ConfigParameter semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Combination returns Combination
-	 *
-	 * Constraint:
-	 *     (unsafe?='unsafe'? configuration=[NamedElement|CNAME])
-	 */
-	protected void sequence_Combination(ISerializationContext context, Combination semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

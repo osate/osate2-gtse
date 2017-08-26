@@ -1509,7 +1509,7 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_2_1_1(), "rule__Candidates__CandidatesAssignment_2_1_1");
 					put(grammarAccess.getAssignmentsAccess().getAssignmentsAssignment_1_0(), "rule__Assignments__AssignmentsAssignment_1_0");
 					put(grammarAccess.getAssignmentsAccess().getAssignmentsAssignment_1_1_1(), "rule__Assignments__AssignmentsAssignment_1_1_1");
-					put(grammarAccess.getAssignmentAccess().getElementAssignment_0_0_0(), "rule__Assignment__ElementAssignment_0_0_0");
+					put(grammarAccess.getAssignmentAccess().getRefAssignment_0_0_0(), "rule__Assignment__RefAssignment_0_0_0");
 					put(grammarAccess.getAssignmentAccess().getPropertyAssignment_0_0_1_1(), "rule__Assignment__PropertyAssignment_0_0_1_1");
 					put(grammarAccess.getAssignmentAccess().getPropertyAssignment_0_1_1(), "rule__Assignment__PropertyAssignment_0_1_1");
 					put(grammarAccess.getAssignmentAccess().getValueAssignment_2(), "rule__Assignment__ValueAssignment_2");

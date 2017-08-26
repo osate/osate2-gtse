@@ -43,7 +43,7 @@ import org.osate.gtse.config.config.ElementRef;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getElement <em>Element</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getRef <em>Ref</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getProperty <em>Property</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getValue <em>Value</em>}</li>
  * </ul>
@@ -53,14 +53,14 @@ import org.osate.gtse.config.config.ElementRef;
 public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assignment
 {
   /**
-   * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference.
+   * The cached value of the '{@link #getRef() <em>Ref</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getElement()
+   * @see #getRef()
    * @generated
    * @ordered
    */
-  protected ElementRef element;
+  protected ElementRef ref;
 
   /**
    * The cached value of the '{@link #getProperty() <em>Property</em>}' reference.
@@ -108,9 +108,9 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
-  public ElementRef getElement()
+  public ElementRef getRef()
   {
-    return element;
+    return ref;
   }
 
   /**
@@ -118,13 +118,13 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetElement(ElementRef newElement, NotificationChain msgs)
+  public NotificationChain basicSetRef(ElementRef newRef, NotificationChain msgs)
   {
-    ElementRef oldElement = element;
-    element = newElement;
+    ElementRef oldRef = ref;
+    ref = newRef;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ConfigPackage.ASSIGNMENT__ELEMENT, oldElement, newElement);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ConfigPackage.ASSIGNMENT__REF, oldRef, newRef);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -135,20 +135,20 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setElement(ElementRef newElement)
+  public void setRef(ElementRef newRef)
   {
-    if (newElement != element)
+    if (newRef != ref)
     {
       NotificationChain msgs = null;
-      if (element != null)
-        msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.ASSIGNMENT__ELEMENT, null, msgs);
-      if (newElement != null)
-        msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.ASSIGNMENT__ELEMENT, null, msgs);
-      msgs = basicSetElement(newElement, msgs);
+      if (ref != null)
+        msgs = ((InternalEObject)ref).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.ASSIGNMENT__REF, null, msgs);
+      if (newRef != null)
+        msgs = ((InternalEObject)newRef).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.ASSIGNMENT__REF, null, msgs);
+      msgs = basicSetRef(newRef, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.ASSIGNMENT__ELEMENT, newElement, newElement));
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.ASSIGNMENT__REF, newRef, newRef));
   }
 
   /**
@@ -252,8 +252,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
-      case ConfigPackage.ASSIGNMENT__ELEMENT:
-        return basicSetElement(null, msgs);
+      case ConfigPackage.ASSIGNMENT__REF:
+        return basicSetRef(null, msgs);
       case ConfigPackage.ASSIGNMENT__VALUE:
         return basicSetValue(null, msgs);
     }
@@ -270,8 +270,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
-      case ConfigPackage.ASSIGNMENT__ELEMENT:
-        return getElement();
+      case ConfigPackage.ASSIGNMENT__REF:
+        return getRef();
       case ConfigPackage.ASSIGNMENT__PROPERTY:
         if (resolve) return getProperty();
         return basicGetProperty();
@@ -291,8 +291,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
-      case ConfigPackage.ASSIGNMENT__ELEMENT:
-        setElement((ElementRef)newValue);
+      case ConfigPackage.ASSIGNMENT__REF:
+        setRef((ElementRef)newValue);
         return;
       case ConfigPackage.ASSIGNMENT__PROPERTY:
         setProperty((Property)newValue);
@@ -314,8 +314,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
-      case ConfigPackage.ASSIGNMENT__ELEMENT:
-        setElement((ElementRef)null);
+      case ConfigPackage.ASSIGNMENT__REF:
+        setRef((ElementRef)null);
         return;
       case ConfigPackage.ASSIGNMENT__PROPERTY:
         setProperty((Property)null);
@@ -337,8 +337,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
-      case ConfigPackage.ASSIGNMENT__ELEMENT:
-        return element != null;
+      case ConfigPackage.ASSIGNMENT__REF:
+        return ref != null;
       case ConfigPackage.ASSIGNMENT__PROPERTY:
         return property != null;
       case ConfigPackage.ASSIGNMENT__VALUE:

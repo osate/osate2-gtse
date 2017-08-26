@@ -31,7 +31,7 @@ import org.osate.aadl2.Property;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.osate.gtse.config.config.Assignment#getElement <em>Element</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Assignment#getRef <em>Ref</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Assignment#getProperty <em>Property</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Assignment#getValue <em>Value</em>}</li>
  * </ul>
@@ -43,30 +43,30 @@ import org.osate.aadl2.Property;
 public interface Assignment extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Element</b></em>' containment reference.
+   * Returns the value of the '<em><b>Ref</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Element</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Ref</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Element</em>' containment reference.
-   * @see #setElement(ElementRef)
-   * @see org.osate.gtse.config.config.ConfigPackage#getAssignment_Element()
+   * @return the value of the '<em>Ref</em>' containment reference.
+   * @see #setRef(ElementRef)
+   * @see org.osate.gtse.config.config.ConfigPackage#getAssignment_Ref()
    * @model containment="true"
    * @generated
    */
-  ElementRef getElement();
+  ElementRef getRef();
 
   /**
-   * Sets the value of the '{@link org.osate.gtse.config.config.Assignment#getElement <em>Element</em>}' containment reference.
+   * Sets the value of the '{@link org.osate.gtse.config.config.Assignment#getRef <em>Ref</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Element</em>' containment reference.
-   * @see #getElement()
+   * @param value the new value of the '<em>Ref</em>' containment reference.
+   * @see #getRef()
    * @generated
    */
-  void setElement(ElementRef value);
+  void setRef(ElementRef value);
 
   /**
    * Returns the value of the '<em><b>Property</b></em>' reference.

@@ -12,14 +12,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="extended" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//ComponentClassifier"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="combined" upperBound="-1"
         eType="#//Combination" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
-        eType="#//Argument" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1"
         eType="#//Assignment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Combination">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsafe" eType="ecore:EDataType platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="configuration" eType="#//Configuration"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
+        eType="#//Argument" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigParameter" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="ecore:EEnum platform:/resource/org.osate.aadl2/model/aadl2.ecore#//ComponentCategory"/>
@@ -29,13 +29,16 @@
         eType="#//ConfigValue" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ElementRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//ElementRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//ConfigValue"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConfigValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConfigValue">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1"
+        eType="#//Assignment" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Argument">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="#//ConfigParameter"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//ConfigValue"
@@ -50,8 +53,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
         eType="#//Argument" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="assignments" upperBound="-1"
-        eType="#//Assignment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyValue" eSuperTypes="#//ConfigValue">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//PropertyExpression"

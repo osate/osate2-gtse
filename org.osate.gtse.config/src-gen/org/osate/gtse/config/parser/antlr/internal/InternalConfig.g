@@ -259,24 +259,11 @@ ruleConfiguration returns [EObject current=null]
 				if ($current==null) {
 					$current = createModelElement(grammarAccess.getConfigurationRule());
 				}
-				newCompositeNode(grammarAccess.getConfigurationAccess().getArgumentsParserRuleCall_5());
+				newCompositeNode(grammarAccess.getConfigurationAccess().getAssignmentsParserRuleCall_5());
 			}
-			this_Arguments_9=ruleArguments[$current]
+			this_Assignments_9=ruleAssignments[$current]
 			{
-				$current = $this_Arguments_9.current;
-				afterParserOrEnumRuleCall();
-			}
-		)?
-		(
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getConfigurationRule());
-				}
-				newCompositeNode(grammarAccess.getConfigurationAccess().getAssignmentsParserRuleCall_6());
-			}
-			this_Assignments_10=ruleAssignments[$current]
-			{
-				$current = $this_Assignments_10.current;
+				$current = $this_Assignments_9.current;
 				afterParserOrEnumRuleCall();
 			}
 		)?
@@ -320,15 +307,25 @@ ruleCombination returns [EObject current=null]
 						$current = createModelElement(grammarAccess.getCombinationRule());
 					}
 				}
+				otherlv_1=RULE_ID
 				{
-					newCompositeNode(grammarAccess.getCombinationAccess().getConfigurationNamedElementCrossReference_1_0());
-				}
-				ruleCNAME
-				{
-					afterParserOrEnumRuleCall();
+					newLeafNode(otherlv_1, grammarAccess.getCombinationAccess().getConfigurationConfigurationCrossReference_1_0());
 				}
 			)
 		)
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getCombinationRule());
+				}
+				newCompositeNode(grammarAccess.getCombinationAccess().getArgumentsParserRuleCall_2());
+			}
+			this_Arguments_2=ruleArguments[$current]
+			{
+				$current = $this_Arguments_2.current;
+				afterParserOrEnumRuleCall();
+			}
+		)?
 	)
 ;
 
@@ -712,17 +709,17 @@ ruleAssignment returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getAssignmentAccess().getElementElementRefParserRuleCall_0_0_0_0());
+							newCompositeNode(grammarAccess.getAssignmentAccess().getRefElementRefParserRuleCall_0_0_0_0());
 						}
-						lv_element_0_0=ruleElementRef
+						lv_ref_0_0=ruleElementRef
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getAssignmentRule());
 							}
 							set(
 								$current,
-								"element",
-								lv_element_0_0,
+								"ref",
+								lv_ref_0_0,
 								"org.osate.gtse.config.Config.ElementRef");
 							afterParserOrEnumRuleCall();
 						}
@@ -897,6 +894,18 @@ ruleConfigExpression returns [EObject current=null]
 				)
 			)
 		)
+		    |
+		{
+			if ($current==null) {
+				$current = createModelElement(grammarAccess.getConfigExpressionRule());
+			}
+			newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_2());
+		}
+		this_Assignments_6=ruleAssignments[$current]
+		{
+			$current = $this_Assignments_6.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 

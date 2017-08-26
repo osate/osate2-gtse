@@ -18,9 +18,9 @@
  */
 package org.osate.gtse.config.config;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.util.EList;
 
-import org.osate.aadl2.NamedElement;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,6 +33,7 @@ import org.osate.aadl2.NamedElement;
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.Combination#isUnsafe <em>Unsafe</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Combination#getConfiguration <em>Configuration</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Combination#getArguments <em>Arguments</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getCombination()
@@ -76,12 +77,12 @@ public interface Combination extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Configuration</em>' reference.
-   * @see #setConfiguration(NamedElement)
+   * @see #setConfiguration(Configuration)
    * @see org.osate.gtse.config.config.ConfigPackage#getCombination_Configuration()
    * @model
    * @generated
    */
-  NamedElement getConfiguration();
+  Configuration getConfiguration();
 
   /**
    * Sets the value of the '{@link org.osate.gtse.config.config.Combination#getConfiguration <em>Configuration</em>}' reference.
@@ -91,6 +92,22 @@ public interface Combination extends EObject
    * @see #getConfiguration()
    * @generated
    */
-  void setConfiguration(NamedElement value);
+  void setConfiguration(Configuration value);
+
+  /**
+   * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
+   * The list contents are of type {@link org.osate.gtse.config.config.Argument}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Arguments</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Arguments</em>' containment reference list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getCombination_Arguments()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Argument> getArguments();
 
 } // Combination

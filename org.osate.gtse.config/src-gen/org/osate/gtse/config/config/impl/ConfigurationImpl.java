@@ -38,7 +38,6 @@ import org.osate.aadl2.ComponentClassifier;
 
 import org.osate.aadl2.impl.NamedElementImpl;
 
-import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
 import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
@@ -56,7 +55,6 @@ import org.osate.gtse.config.config.Configuration;
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getExtended <em>Extended</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getCombined <em>Combined</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getAssignments <em>Assignments</em>}</li>
  * </ul>
  *
@@ -93,16 +91,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * @ordered
    */
   protected EList<Combination> combined;
-
-  /**
-   * The cached value of the '{@link #getArguments() <em>Arguments</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getArguments()
-   * @generated
-   * @ordered
-   */
-  protected EList<Argument> arguments;
 
   /**
    * The cached value of the '{@link #getAssignments() <em>Assignments</em>}' containment reference list.
@@ -211,20 +199,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Argument> getArguments()
-  {
-    if (arguments == null)
-    {
-      arguments = new EObjectContainmentEList<Argument>(Argument.class, this, ConfigPackage.CONFIGURATION__ARGUMENTS);
-    }
-    return arguments;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Assignment> getAssignments()
   {
     if (assignments == null)
@@ -248,8 +222,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
       case ConfigPackage.CONFIGURATION__COMBINED:
         return ((InternalEList<?>)getCombined()).basicRemove(otherEnd, msgs);
-      case ConfigPackage.CONFIGURATION__ARGUMENTS:
-        return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
     }
@@ -273,8 +245,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         return basicGetExtended();
       case ConfigPackage.CONFIGURATION__COMBINED:
         return getCombined();
-      case ConfigPackage.CONFIGURATION__ARGUMENTS:
-        return getArguments();
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         return getAssignments();
     }
@@ -303,10 +273,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         getCombined().clear();
         getCombined().addAll((Collection<? extends Combination>)newValue);
         return;
-      case ConfigPackage.CONFIGURATION__ARGUMENTS:
-        getArguments().clear();
-        getArguments().addAll((Collection<? extends Argument>)newValue);
-        return;
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         getAssignments().clear();
         getAssignments().addAll((Collection<? extends Assignment>)newValue);
@@ -334,9 +300,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
       case ConfigPackage.CONFIGURATION__COMBINED:
         getCombined().clear();
         return;
-      case ConfigPackage.CONFIGURATION__ARGUMENTS:
-        getArguments().clear();
-        return;
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         getAssignments().clear();
         return;
@@ -360,8 +323,6 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         return extended != null;
       case ConfigPackage.CONFIGURATION__COMBINED:
         return combined != null && !combined.isEmpty();
-      case ConfigPackage.CONFIGURATION__ARGUMENTS:
-        return arguments != null && !arguments.isEmpty();
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         return assignments != null && !assignments.isEmpty();
     }

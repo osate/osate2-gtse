@@ -32,6 +32,8 @@ import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupPrototype
 import org.osate.aadl2.FeatureGroupType
 import org.osate.aadl2.Subcomponent
+import org.osate.gtse.config.config.Combination
+import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.Configuration
 import org.osate.gtse.config.config.ElementRef
@@ -56,11 +58,31 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 		pkg.configurations.scopeFor
 	}
 
+	def IScope scope_Argument_parameter(EObject context, EReference reference) {
+		val parent = context.eContainer
+		val ne = switch (parent) {
+			Combination: {
+				parent.configuration
+			}
+			NamedElementRef: {
+				parent.ref
+			}
+		}
+		if (ne instanceof Configuration)
+		  ne.parameters.scopeFor
+		else
+			IScope.NULLSCOPE
+	}
+	
 	def IScope scope_Property(EObject context, EReference reference) {
 		val scope = delegateGetScope(context, reference)
 		new SimpleScope(scope.allElements.map [
 			EObjectDescription.create(name.toString("::"), EObjectOrProxy)
 		], false)
+	}
+
+	def IScope scope_NumberValue_unit(ConfigParameter context, EReference reference) {
+		createUnitLiteralsScopeFromPropertyType(context.propertyType.propertyType)
 	}
 
 	def IScope scope_NamedElementRef_ref(EObject context, EReference reference) {

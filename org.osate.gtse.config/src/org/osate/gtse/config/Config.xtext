@@ -15,13 +15,12 @@ Configuration:
 	'configuration' name=ID Parameters? 
 	('extends' extended=[aadl2::ComponentClassifier|CNAME])? 
 	('with' combined+=Combination (',' combined+=Combination)*)?
-	Arguments?
 	Assignments?
 ;
 
 Combination:
 	unsafe?='unsafe'?
-	configuration=[aadl2::NamedElement|CNAME]
+	configuration=[Configuration|ID] Arguments?
 ;
 
 fragment Parameters*:
@@ -52,7 +51,7 @@ Assignment:
 	// LVal
 	// using fragment LVal leads to an exception in LazyLinker for x.y#p => v
 	(
-		element=ElementRef ('#' property=[aadl2::Property|PNAME])? 
+		ref=ElementRef ('#' property=[aadl2::Property|PNAME])? 
 		| '#' property=[aadl2::Property|PNAME]
 	)
 	'=>' 
@@ -68,6 +67,7 @@ ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
 	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
 	| {PropertyValue} exp=CPropertyExpression
+	| Assignments
 ;
 
 fragment Arguments*:
