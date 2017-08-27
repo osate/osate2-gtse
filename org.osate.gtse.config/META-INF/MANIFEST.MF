@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.osate.gtse.config.config
+Bundle-Name: org.osate.gtse.config
 Bundle-Vendor: CMU-SEI
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: org.osate.gtse.config.config;singleton:=true
+Bundle-SymbolicName: org.osate.gtse.config;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,

@@ -5,7 +5,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.osate.gtse.config.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.osate.gtse.config.config,
+Require-Bundle: org.osate.gtse.config,
  org.osate.gtse.config.ide,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,

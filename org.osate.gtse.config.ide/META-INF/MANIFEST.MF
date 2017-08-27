@@ -5,7 +5,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.osate.gtse.config.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.osate.gtse.config.config,
+Require-Bundle: org.osate.gtse.config,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
  org.antlr.runtime,

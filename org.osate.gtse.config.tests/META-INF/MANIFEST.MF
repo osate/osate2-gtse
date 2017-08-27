@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.osate.gtse.config.config.tests
+Bundle-Name: org.osate.gtse.config.tests
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: org.osate.gtse.config.config.tests;singleton:=true
+Bundle-SymbolicName: org.osate.gtse.config.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.osate.gtse.config.config,
+Require-Bundle: org.osate.gtse.config,
  org.osate.aadl2,
  org.junit;bundle-version="4.12.0",
  org.eclipse.xtext.testing,
