@@ -13,4 +13,8 @@ class AssignmentExt {
 	static def boolean isAnnex(Assignment a) {
 		false
 	}
+	
+	static def boolean isNested(Assignment a) {
+		a.value.assignments !== null
+	}
 }

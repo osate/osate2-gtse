@@ -39,6 +39,8 @@ import org.osate.gtse.config.config.ElementRef
 
 import static extension org.osate.gtse.config.config.AssignmentExt.*
 import static extension org.osate.gtse.config.config.ConfigurationExt.*
+import org.osate.gtse.config.config.ConfigValue
+import org.osate.gtse.config.config.NamedElementRef
 
 /**
  * Generates code from your model files on save.
@@ -63,7 +65,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	def Iterable<Pair<List<NamedElement>, Assignment>> process(Classifier cl,
-		List<Pair<ElementRef, Assignment>> lookup) {
+		Iterable<Pair<ElementRef, Assignment>> lookup) {
 		cl.allNamedElements.map [ ne |
 			val result = ne.process(lookup.specialize(ne))
 			result
@@ -71,23 +73,49 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	def Iterable<Pair<List<NamedElement>, Assignment>> process(NamedElement ne,
-		List<Pair<ElementRef, Assignment>> lookup) {
+		Iterable<Pair<ElementRef, Assignment>> lookup) {
 		val assignment = lookup.findFirst[p|p.key === null]?.value
 		if (assignment === null) {
 			// no applicable entry found, continue
 			val cl = ne.classifier
-			val replacements = cl.process(lookup)
-			replacements.map [ p |
-				p.key.add(0, ne)
-				p
-			]
-		} else if (assignment.isProperty) {
-			#[newLinkedList(ne) -> assignment]
-		} else {
-			switch rhs : assignment.value {
-				
+			if (cl === null)
+				#[]
+			else {
+				val replacements = cl.process(lookup)
+				replacements.map [ p |
+					p.key.add(0, ne)
+					p
+				]
 			}
-			
+		} else if (assignment.isProperty) {
+			// TODO: handle property assignments
+			// #[newLinkedList(ne) -> assignment]
+			#[]
+		} else if (assignment.isAnnex) {
+			// TODO: handle annex assignments
+			// #[newLinkedList(ne) -> assignment]
+			#[]
+		} else if (assignment.nested) {
+			// just nested assignments, continue
+			val cl = ne.classifier
+			if (cl === null)
+				#[]
+			else {
+				val newLookup = assignment.value.assignments.map[mkPair]
+				val replacements = cl.process(newLookup + lookup)
+				replacements.map [ p |
+					p.key.add(0, ne)
+					p
+				]
+			}
+		} else {
+			switch rhs: assignment.value {
+				NamedElementRef:
+				  // TODO: complete
+				  null
+				default:
+					throw new RuntimeException("unexpected rhs of assignment")
+			}
 		}
 	}
 
@@ -98,10 +126,11 @@ class ConfigGenerator extends AbstractGenerator {
 	protected dispatch def getClassifier(Subcomponent s) {
 		s.allClassifier
 	}
+
 	protected dispatch def getClassifier(FeatureGroup fg) {
 		fg.allFeatureGroupType
 	}
-		
+
 	/**
 	 * Create a lookup list from the given configuration
 	 */
