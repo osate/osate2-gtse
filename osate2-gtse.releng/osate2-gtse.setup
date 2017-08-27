@@ -75,7 +75,10 @@
           name="*"/>
       <sourceLocator
           rootFolder="${git.clone.osate2-gtse.location}"
-          locateNestedProjects="true"/>
+          locateNestedProjects="true">
+        <excludedPath>docs</excludedPath>
+        <excludedPath>GTSE-Examples</excludedPath>
+      </sourceLocator>
       <repositoryList
           name="Oxygen">
         <repository
