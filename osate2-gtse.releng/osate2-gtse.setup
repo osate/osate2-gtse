@@ -70,7 +70,9 @@
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
       <requirement
-          name="org.eclipse.sdk.feature.group"/>
+          name="org.apache.commons.lang3"/>
+      <requirement
+          name="org.eclipse.xtext.xbase.testing"/>
       <requirement
           name="*"/>
       <sourceLocator
@@ -112,7 +114,9 @@
     </targlet>
   </setupTask>
   <setupTask
-      xsi:type="setup.workingsets:WorkingSetTask">
+      xsi:type="setup.workingsets:WorkingSetTask"
+      filter=""
+      prefix="">
     <workingSet
         name="${scope.project.name}">
       <predicate
