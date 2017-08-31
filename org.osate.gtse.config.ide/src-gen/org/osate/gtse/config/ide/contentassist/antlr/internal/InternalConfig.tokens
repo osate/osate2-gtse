@@ -9,7 +9,7 @@
 '->'=33
 '-['=99
 '.'=93
-'..'=110
+'..'=109
 ':'=88
 '::'=94
 ';'=95
@@ -76,9 +76,9 @@
 'prototypes'=68
 'provides'=31
 'public'=69
-'range'=107
-'record'=109
-'reference'=108
+'range'=110
+'record'=108
+'reference'=107
 'refined'=70
 'renames'=71
 'requires'=30
