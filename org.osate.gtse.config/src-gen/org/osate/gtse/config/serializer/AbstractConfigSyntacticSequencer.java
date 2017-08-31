@@ -34,7 +34,7 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 import org.osate.gtse.config.services.ConfigGrammarAccess;
 
 @SuppressWarnings("all")
-public class ConfigSyntacticSequencer extends AbstractSyntacticSequencer {
+public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected ConfigGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q;

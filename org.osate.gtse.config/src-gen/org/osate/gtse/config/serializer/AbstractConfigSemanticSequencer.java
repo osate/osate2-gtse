@@ -194,7 +194,7 @@ import org.osate.gtse.config.services.ConfigGrammarAccess;
 import org.osate.xtext.aadl2.serializer.Aadl2SemanticSequencer;
 
 @SuppressWarnings("all")
-public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
+public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSequencer {
 
 	@Inject
 	private ConfigGrammarAccess grammarAccess;

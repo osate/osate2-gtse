@@ -93,7 +93,7 @@ Workflow {
 			fileExtensions = "config"
 
 			serializer = {
-				generateStub = false
+				generateStub = true
 			}
 			validator = {
 				inheritImplementation = false
