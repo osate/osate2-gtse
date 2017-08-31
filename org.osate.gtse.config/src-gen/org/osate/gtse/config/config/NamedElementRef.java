@@ -33,6 +33,7 @@ import org.osate.aadl2.NamedElement;
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getRef <em>Ref</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getArguments <em>Arguments</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getAssignments <em>Assignments</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef()
@@ -82,5 +83,21 @@ public interface NamedElementRef extends ConfigValue
    * @generated
    */
   EList<Argument> getArguments();
+
+  /**
+   * Returns the value of the '<em><b>Assignments</b></em>' containment reference list.
+   * The list contents are of type {@link org.osate.gtse.config.config.Assignment}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Assignments</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Assignments</em>' containment reference list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef_Assignments()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Assignment> getAssignments();
 
 } // NamedElementRef

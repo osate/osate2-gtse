@@ -90,6 +90,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
       case ConfigPackage.ELEMENT_REF: return createElementRef();
       case ConfigPackage.NAMED_ELEMENT_REF: return createNamedElementRef();
       case ConfigPackage.PROPERTY_VALUE: return createPropertyValue();
+      case ConfigPackage.NESTED_ASSIGNMENTS: return createNestedAssignments();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -203,6 +204,17 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
   {
     PropertyValueImpl propertyValue = new PropertyValueImpl();
     return propertyValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NestedAssignments createNestedAssignments()
+  {
+    NestedAssignmentsImpl nestedAssignments = new NestedAssignmentsImpl();
+    return nestedAssignments;
   }
 
   /**

@@ -39,6 +39,7 @@ import org.osate.gtse.config.config.ConfigValue;
 import org.osate.gtse.config.config.Configuration;
 import org.osate.gtse.config.config.ElementRef;
 import org.osate.gtse.config.config.NamedElementRef;
+import org.osate.gtse.config.config.NestedAssignments;
 import org.osate.gtse.config.config.PropertyValue;
 
 /**
@@ -120,6 +121,13 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   private EClass propertyValueEClass = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass nestedAssignmentsEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with
    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
    * package URI value.
@@ -168,6 +176,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     isInited = true;
 
     // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
     Aadl2Package.eINSTANCE.eClass();
 
     // Create package meta-data objects
@@ -410,16 +419,6 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConfigValue_Assignments()
-  {
-    return (EReference)configValueEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getArgument()
   {
     return argumentEClass;
@@ -510,6 +509,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getNamedElementRef_Assignments()
+  {
+    return (EReference)namedElementRefEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPropertyValue()
   {
     return propertyValueEClass;
@@ -523,6 +532,26 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   public EReference getPropertyValue_Exp()
   {
     return (EReference)propertyValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getNestedAssignments()
+  {
+    return nestedAssignmentsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNestedAssignments_Assignments()
+  {
+    return (EReference)nestedAssignmentsEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -582,7 +611,6 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     createEReference(assignmentEClass, ASSIGNMENT__VALUE);
 
     configValueEClass = createEClass(CONFIG_VALUE);
-    createEReference(configValueEClass, CONFIG_VALUE__ASSIGNMENTS);
 
     argumentEClass = createEClass(ARGUMENT);
     createEReference(argumentEClass, ARGUMENT__PARAMETER);
@@ -595,9 +623,13 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     namedElementRefEClass = createEClass(NAMED_ELEMENT_REF);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__REF);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ARGUMENTS);
+    createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ASSIGNMENTS);
 
     propertyValueEClass = createEClass(PROPERTY_VALUE);
     createEReference(propertyValueEClass, PROPERTY_VALUE__EXP);
+
+    nestedAssignmentsEClass = createEClass(NESTED_ASSIGNMENTS);
+    createEReference(nestedAssignmentsEClass, NESTED_ASSIGNMENTS__ASSIGNMENTS);
   }
 
   /**
@@ -638,6 +670,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     configParameterEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     namedElementRefEClass.getESuperTypes().add(this.getConfigValue());
     propertyValueEClass.getESuperTypes().add(this.getConfigValue());
+    nestedAssignmentsEClass.getESuperTypes().add(this.getConfigValue());
 
     // Initialize classes and features; add operations and parameters
     initEClass(configPkgEClass, ConfigPkg.class, "ConfigPkg", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -667,7 +700,6 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEReference(getAssignment_Value(), this.getConfigValue(), null, "value", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configValueEClass, ConfigValue.class, "ConfigValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConfigValue_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, ConfigValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(argumentEClass, Argument.class, "Argument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getArgument_Parameter(), this.getConfigParameter(), null, "parameter", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -680,9 +712,13 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEClass(namedElementRefEClass, NamedElementRef.class, "NamedElementRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNamedElementRef_Ref(), theAadl2Package.getNamedElement(), null, "ref", null, 0, 1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedElementRef_Arguments(), this.getArgument(), null, "arguments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNamedElementRef_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPropertyValue_Exp(), theAadl2Package.getPropertyExpression(), null, "exp", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(nestedAssignmentsEClass, NestedAssignments.class, "NestedAssignments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNestedAssignments_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NestedAssignments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

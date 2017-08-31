@@ -14,7 +14,4 @@ class AssignmentExt {
 		false
 	}
 	
-	static def boolean isNested(Assignment a) {
-		a.value.assignments !== null
-	}
 }

@@ -169,6 +169,14 @@ public class ConfigSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case ConfigPackage.NESTED_ASSIGNMENTS:
+      {
+        NestedAssignments nestedAssignments = (NestedAssignments)theEObject;
+        T result = caseNestedAssignments(nestedAssignments);
+        if (result == null) result = caseConfigValue(nestedAssignments);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -329,6 +337,22 @@ public class ConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePropertyValue(PropertyValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Nested Assignments</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Nested Assignments</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNestedAssignments(NestedAssignments object)
   {
     return null;
   }

@@ -40,6 +40,8 @@ import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
+import org.osate.gtse.config.config.NestedAssignments
+import org.osate.gtse.config.config.Assignment
 
 /**
  * This class contains custom scoping description.
@@ -52,7 +54,7 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 	def IScope scope_ConfigPkg_root(ConfigPkg context, EReference reference) {
 		context.configurations.scopeFor
 	}
-	
+
 	def IScope scope_Combination_configuration(EObject context, EReference reference) {
 		val pkg = context.getContainerOfType(ConfigPkg)
 		pkg.configurations.scopeFor
@@ -69,11 +71,11 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 			}
 		}
 		if (ne instanceof Configuration)
-		  ne.parameters.scopeFor
+			ne.parameters.scopeFor
 		else
 			IScope.NULLSCOPE
 	}
-	
+
 	def IScope scope_Property(EObject context, EReference reference) {
 		val scope = delegateGetScope(context, reference)
 		new SimpleScope(scope.allElements.map [
@@ -116,15 +118,24 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 
 	def IScope scope_ElementRef_element(ElementRef context, EReference reference) {
 		val cls = if (context.prev === null) {
-				val container = context.eContainer.eContainer
-				if (container instanceof NamedElementRef) {
-					switch c : container.ref {
-						ComponentClassifier: c
-						Configuration: c.extended
+				switch container: context.eContainer.eContainer {
+					NamedElementRef: {
+						switch c : container.ref {
+							ComponentClassifier: c
+							Configuration: c.extended
+						}
 					}
-				} else {
-					val config = context.getContainerOfType(Configuration)
-					config.extended
+					NestedAssignments: {
+						val a = container.eContainer as Assignment
+						switch e : a.ref.element {
+							Subcomponent: e.allClassifier
+							FeatureGroup: e.allFeatureGroupType
+						}
+					}
+					default: {
+						val config = context.getContainerOfType(Configuration)
+						config.extended
+					}
 				}
 			} else {
 				switch previousElement : context.prev.element {

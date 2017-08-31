@@ -144,6 +144,11 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
         return createPropertyValueAdapter();
       }
       @Override
+      public Adapter caseNestedAssignments(NestedAssignments object)
+      {
+        return createNestedAssignmentsAdapter();
+      }
+      @Override
       public Adapter caseElement(Element object)
       {
         return createElementAdapter();
@@ -321,6 +326,21 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPropertyValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.NestedAssignments <em>Nested Assignments</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.NestedAssignments
+   * @generated
+   */
+  public Adapter createNestedAssignmentsAdapter()
   {
     return null;
   }

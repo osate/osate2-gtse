@@ -67,7 +67,7 @@ ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
 	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
 	| {PropertyValue} exp=CPropertyExpression
-	| Assignments
+	| {NestedAssignments} Assignments
 ;
 
 fragment Arguments*:

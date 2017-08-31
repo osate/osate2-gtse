@@ -463,6 +463,7 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getGroup_0_1(), "rule__Assignment__Group_0_1__0");
 					put(grammarAccess.getConfigExpressionAccess().getGroup_0(), "rule__ConfigExpression__Group_0__0");
 					put(grammarAccess.getConfigExpressionAccess().getGroup_1(), "rule__ConfigExpression__Group_1__0");
+					put(grammarAccess.getConfigExpressionAccess().getGroup_2(), "rule__ConfigExpression__Group_2__0");
 					put(grammarAccess.getArgumentsAccess().getGroup(), "rule__Arguments__Group__0");
 					put(grammarAccess.getArgumentsAccess().getGroup_1(), "rule__Arguments__Group_1__0");
 					put(grammarAccess.getArgumentsAccess().getGroup_1_1(), "rule__Arguments__Group_1_1__0");

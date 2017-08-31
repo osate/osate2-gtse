@@ -185,10 +185,10 @@ import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.ConfigPkg;
-import org.osate.gtse.config.config.ConfigValue;
 import org.osate.gtse.config.config.Configuration;
 import org.osate.gtse.config.config.ElementRef;
 import org.osate.gtse.config.config.NamedElementRef;
+import org.osate.gtse.config.config.NestedAssignments;
 import org.osate.gtse.config.config.PropertyValue;
 import org.osate.gtse.config.services.ConfigGrammarAccess;
 import org.osate.xtext.aadl2.serializer.Aadl2SemanticSequencer;
@@ -958,9 +958,6 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 			case ConfigPackage.CONFIG_PKG:
 				sequence_ConfigPkg(context, (ConfigPkg) semanticObject); 
 				return; 
-			case ConfigPackage.CONFIG_VALUE:
-				sequence_Assignments(context, (ConfigValue) semanticObject); 
-				return; 
 			case ConfigPackage.CONFIGURATION:
 				sequence_Assignments_Configuration_Parameters(context, (Configuration) semanticObject); 
 				return; 
@@ -969,6 +966,9 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 				return; 
 			case ConfigPackage.NAMED_ELEMENT_REF:
 				sequence_Arguments_Assignments_ConfigExpression(context, (NamedElementRef) semanticObject); 
+				return; 
+			case ConfigPackage.NESTED_ASSIGNMENTS:
+				sequence_Assignments_ConfigExpression(context, (NestedAssignments) semanticObject); 
 				return; 
 			case ConfigPackage.PROPERTY_VALUE:
 				sequence_ConfigExpression(context, (PropertyValue) semanticObject); 
@@ -1037,12 +1037,12 @@ public class ConfigSemanticSequencer extends Aadl2SemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     ConfigExpression returns ConfigValue
+	 *     ConfigExpression returns NestedAssignments
 	 *
 	 * Constraint:
 	 *     (assignments+=Assignment assignments+=Assignment*)?
 	 */
-	protected void sequence_Assignments(ISerializationContext context, ConfigValue semanticObject) {
+	protected void sequence_Assignments_ConfigExpression(ISerializationContext context, NestedAssignments semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

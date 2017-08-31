@@ -129,6 +129,15 @@ public interface ConfigFactory extends EFactory
   PropertyValue createPropertyValue();
 
   /**
+   * Returns a new object of class '<em>Nested Assignments</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Nested Assignments</em>'.
+   * @generated
+   */
+  NestedAssignments createNestedAssignments();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

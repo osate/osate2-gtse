@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="OSATE2-GTSE&#xA;&#xA;Copyright 2017 Carnegie Mellon University. All Rights Reserved.&#xA;&#xA;NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE&#xA;MATERIAL IS FURNISHED ON AN &quot;AS-IS&quot; BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO&#xA;WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY MATTER INCLUDING,&#xA;BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,&#xA;EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON&#xA;UNIVERSITY DOES NOT MAKE ANY WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM&#xA;PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.&#xA;&#xA;Released under an Eclipse Public License - v1.0-style license, please see&#xA;license.txt or contact permission@sei.cmu.edu for full terms. &#xA;&#xA;DM17-0002"
     modelDirectory="/org.osate.gtse.config/src-gen" modelPluginID="org.osate.gtse.config"
     forceOverwrite="true" modelName="Config" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.11" usedGenPackages="platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/resource/org.osate.aadl2/model/aadl2.genmodel#//aadl2">
+    complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.13" usedGenPackages="platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/resource/org.osate.aadl2/model/aadl2.genmodel#//aadl2">
   <genPackages prefix="Config" basePackage="org.osate.gtse.config" disposableProviderFactory="true"
       fileExtensions="config" ecorePackage="Config.ecore#/">
     <genClasses ecoreClass="Config.ecore#//ConfigPkg">
@@ -32,9 +32,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/property"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/value"/>
     </genClasses>
-    <genClasses ecoreClass="Config.ecore#//ConfigValue">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigValue/assignments"/>
-    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//ConfigValue"/>
     <genClasses ecoreClass="Config.ecore#//Argument">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Argument/parameter"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Argument/value"/>
@@ -46,9 +44,13 @@
     <genClasses ecoreClass="Config.ecore#//NamedElementRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/ref"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/assignments"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//PropertyValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/exp"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//NestedAssignments">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NestedAssignments/assignments"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -534,7 +534,9 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cPropertyValueAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cExpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cExpCPropertyExpressionParserRuleCall_1_1_0 = (RuleCall)cExpAssignment_1_1.eContents().get(0);
-		private final RuleCall cAssignmentsParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Action cNestedAssignmentsAction_2_0 = (Action)cGroup_2.eContents().get(0);
+		private final RuleCall cAssignmentsParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
 		
 		////fragment LVal*:
 		////	element=ElementRef ('#' property=[aadl2::Property|PNAME])? 
@@ -543,11 +545,11 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//ConfigExpression ConfigValue:
 		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
 		//	| {PropertyValue} exp=CPropertyExpression
-		//	| Assignments;
+		//	| {NestedAssignments} Assignments;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? | {PropertyValue} exp=CPropertyExpression |
-		//Assignments
+		//{NestedAssignments} Assignments
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
@@ -583,8 +585,14 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//CPropertyExpression
 		public RuleCall getExpCPropertyExpressionParserRuleCall_1_1_0() { return cExpCPropertyExpressionParserRuleCall_1_1_0; }
 		
+		//{NestedAssignments} Assignments
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//{NestedAssignments}
+		public Action getNestedAssignmentsAction_2_0() { return cNestedAssignmentsAction_2_0; }
+		
 		//Assignments
-		public RuleCall getAssignmentsParserRuleCall_2() { return cAssignmentsParserRuleCall_2; }
+		public RuleCall getAssignmentsParserRuleCall_2_1() { return cAssignmentsParserRuleCall_2_1; }
 	}
 	public class ArgumentsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Arguments");
@@ -1069,7 +1077,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	//ConfigExpression ConfigValue:
 	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
 	//	| {PropertyValue} exp=CPropertyExpression
-	//	| Assignments;
+	//	| {NestedAssignments} Assignments;
 	public ConfigExpressionElements getConfigExpressionAccess() {
 		return pConfigExpression;
 	}

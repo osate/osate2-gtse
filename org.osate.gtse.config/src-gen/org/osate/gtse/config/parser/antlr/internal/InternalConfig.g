@@ -895,17 +895,26 @@ ruleConfigExpression returns [EObject current=null]
 			)
 		)
 		    |
-		{
-			if ($current==null) {
-				$current = createModelElement(grammarAccess.getConfigExpressionRule());
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getConfigExpressionAccess().getNestedAssignmentsAction_2_0(),
+						$current);
+				}
+			)
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getConfigExpressionRule());
+				}
+				newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_2_1());
 			}
-			newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_2());
-		}
-		this_Assignments_6=ruleAssignments[$current]
-		{
-			$current = $this_Assignments_6.current;
-			afterParserOrEnumRuleCall();
-		}
+			this_Assignments_7=ruleAssignments[$current]
+			{
+				$current = $this_Assignments_7.current;
+				afterParserOrEnumRuleCall();
+			}
+		)
 	)
 ;
 
