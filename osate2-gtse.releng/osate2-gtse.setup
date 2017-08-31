@@ -75,6 +75,10 @@
           name="org.eclipse.xtext.xbase.testing"/>
       <requirement
           name="*"/>
+      <requirement
+          name="de.libutzki.xtext.nodemodeloutline.feature.feature.group"/>
+      <requirement
+          name="de.libutzki.xtext.semanticmodeloutline.feature.feature.group"/>
       <sourceLocator
           rootFolder="${git.clone.osate2-gtse.location}"
           locateNestedProjects="true">
@@ -85,6 +89,8 @@
           name="Oxygen">
         <repository
             url="http://download.eclipse.org/releases/oxygen"/>
+        <repository
+            url="http://xtexttools.libutzki.de/"/>
       </repositoryList>
       <repositoryList
           name="Neon">
