@@ -20,6 +20,7 @@ package org.osate.gtse.config.generator
 
 import java.util.ArrayList
 import java.util.List
+import java.util.Map
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -35,6 +36,7 @@ import org.osate.aadl2.Subcomponent
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
+import org.osate.gtse.config.config.ConfigValue
 import org.osate.gtse.config.config.Configuration
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
@@ -59,71 +61,94 @@ class ConfigGenerator extends AbstractGenerator {
 		val rootConfig = (resource.contents.head as ConfigPkg).root
 		val rootComp = rootConfig.extended
 		val lookup = makeLookupList(rootConfig)
-		val paths = rootComp.process(lookup)
-		fsa.generateFile('paths.txt', paths.map[key].map[map[if(it === null) "NULL" else it.name].join('.')].join('\n'))
+		val arguments = makeArgumentList(rootConfig)
+		val paths = rootComp.process(lookup, arguments)
+		fsa.generateFile('paths.txt', 'componentImplementationName=' + rootComp.qualifiedName() + '\n\n' + paths.map [ path |
+			'SubcompChoice-' + path.key.map [
+				if(it === null) "NULL" else it.name
+
+			].join('.') + '=' + path.value.print
+		].join('\n'))
 
 	}
 
-	def Iterable<Pair<List<NamedElement>, Assignment>> process(Classifier cl,
-		Iterable<Pair<ElementRef, Assignment>> lookup) {
+	def Iterable<Pair<List<NamedElement>, ConfigValue>> process(Classifier cl,
+		Iterable<Pair<ElementRef, Assignment>> assignments, Map<ConfigParameter, ConfigValue> arguments) {
 		if (cl === null)
 			#[]
 		else
 			cl.allNamedElements.map [ ne |
-				val result = ne.process(lookup.specialize(ne))
+				val result = ne.process(assignments.specialize(ne), arguments)
 				result
 			].flatten
 	}
 
-	def Iterable<Pair<List<NamedElement>, Assignment>> process(NamedElement ne,
-		Iterable<Pair<ElementRef, Assignment>> lookup) {
+	def Iterable<Pair<List<NamedElement>, ConfigValue>> process(NamedElement ne,
+		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		val assignment = lookup.findFirst[p|p.key === null]?.value
 		if (assignment === null) {
 			// no applicable entry found, continue
-			continueDown(ne, ne.classifier, lookup)
+			continueDown(ne, ne.classifier, lookup, arguments)
 		} else if (assignment.isProperty) {
 			// TODO: handle property assignments
-			// #[newLinkedList(ne) -> assignment]
 			#[]
 		} else if (assignment.isAnnex) {
 			// TODO: handle annex assignments
-			// #[newLinkedList(ne) -> assignment]
 			#[]
 		} else {
-			switch rhs : assignment.value {
-				NamedElementRef: {
-					#[#[ne] -> assignment] + switch obj: rhs.ref {
-						Classifier: {
-							val localLookup = makeLookupList(rhs.assignments)
-							continueDown(ne, obj, localLookup + lookup)
-						}
-						Configuration: {
-							val localLookup = makeLookupList(rhs.assignments)
-							val configLookup = makeLookupList(obj)
-							continueDown(ne, obj.extended, localLookup + configLookup)
-						}
-						// TODO
-						// ConfigParameter: {}
-						default:
-							throw new RuntimeException("unexpected named element ref in rhs of assignment")
-					}
-				}
-				NestedAssignments: {
-					val localLookup = makeLookupList(rhs.assignments)
-					continueDown(ne, ne.classifier, localLookup + lookup)
-				}
-				default:
-					throw new RuntimeException("unexpected rhs of assignment")
-			}
+			handleAssignedValue(ne, assignment.value, lookup, arguments)
 		}
 	}
 
-	def Iterable<Pair<List<NamedElement>, Assignment>> continueDown(NamedElement current, Classifier cl,
-		Iterable<Pair<ElementRef, Assignment>> lookup) {
+	def Iterable<Pair<List<NamedElement>, ConfigValue>> handleAssignedValue(NamedElement ne, ConfigValue cfgValue,
+		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
+		switch value : cfgValue {
+			NamedElementRef: {
+				switch obj: value.ref {
+					Classifier: {
+						val localLookup = makeLookupList(value.assignments)
+						#[#[ne] -> cfgValue] + continueDown(ne, obj, localLookup + lookup, arguments)
+					}
+					Configuration: {
+						val localLookup = makeLookupList(value.assignments)
+						val configLookup = makeLookupList(obj)
+						val args = newHashMap
+						arguments.forEach[p, v|args.put(p, v)]
+						value.arguments.forEach[args.put(it.parameter, it.value)]
+						#[#[ne] -> cfgValue] + continueDown(ne, obj.extended, localLookup + configLookup, args)
+					}
+					ConfigParameter: {
+						val argValue = arguments.get(obj)
+						if (argValue !== null) {
+							handleAssignedValue(ne, argValue, lookup, arguments)
+						} else {
+							// TODO: Can this be validated before running the generator?
+							// Should be at least a warning.
+							#[]
+						}
+					}
+					default:
+						// Case missing in the implementation
+						throw new RuntimeException("unexpected named element ref in rhs of assignment")
+				}
+			}
+			NestedAssignments: {
+				val localLookup = makeLookupList(value.assignments)
+				continueDown(ne, ne.classifier, localLookup + lookup, arguments)
+			}
+			default:
+				// Case missing in the implementation
+				throw new RuntimeException("unexpected rhs of assignment")
+		}
+
+	}
+
+	def Iterable<Pair<List<NamedElement>, ConfigValue>> continueDown(NamedElement current, Classifier cl,
+		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		if (cl === null)
 			#[]
 		else {
-			val replacements = cl.process(lookup)
+			val replacements = cl.process(lookup, arguments)
 			replacements.map [ p |
 				((#[current] + p.key).toList -> p.value)
 			]
@@ -147,7 +172,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	/**
-	 * Create a lookup list from the given configuration
+	 * Create an assignment lookup list from the given configuration
 	 */
 	protected def List<Pair<ElementRef, Assignment>> makeLookupList(Configuration cfg) {
 		val result = newLinkedList
@@ -156,8 +181,8 @@ class ConfigGenerator extends AbstractGenerator {
 		result
 	}
 
-	protected def List<Pair<ElementRef, Assignment>> makeLookupList(List<Assignment> assignments) {
-		assignments.map[mkPair]
+	protected def List<Pair<ElementRef, Assignment>> makeLookupList(List<Assignment> lookup) {
+		lookup.map[mkPair]
 	}
 
 	protected def mkPair(Assignment a) {
@@ -168,6 +193,27 @@ class ConfigGenerator extends AbstractGenerator {
 			r
 		}
 		(startRef -> a)
+	}
+
+	/**
+	 * Create a parameter lookup list from the given configuration
+	 */
+	protected def Map<ConfigParameter, ConfigValue> makeArgumentList(Configuration cfg) {
+		val args = newHashMap
+		argsHelper(cfg, cfg.linearization.tail, args)
+		args
+	}
+
+	private def void argsHelper(Configuration cfg, Iterable<Configuration> lin,
+		Map<ConfigParameter, ConfigValue> args) {
+		cfg.combined.forEach [ c |
+			if (c.configuration == lin.head) {
+				c.arguments.forEach [ arg |
+					args.put(arg.parameter, arg.value)
+				]
+				argsHelper(c.configuration, lin.tail, args)
+			}
+		]
 	}
 
 	/**
@@ -221,4 +267,25 @@ class ConfigGenerator extends AbstractGenerator {
 	protected dispatch def Iterable<NamedElement> allNamedElements(Element e) {
 		#[]
 	}
+
+	dispatch def String print(ConfigValue value) {
+		value.toString
+	}
+
+	dispatch def String print(NamedElementRef ner) {
+		ner.ref.print
+	}
+
+	dispatch def String print(NamedElement ne) {
+		ne.name
+	}
+
+	dispatch def String print(Classifier cl) {
+		cl.qualifiedName()
+	}
+
+	dispatch def String print(Configuration cfg) {
+		cfg.extended.print
+	}
+
 }
