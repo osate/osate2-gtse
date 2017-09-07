@@ -75,15 +75,6 @@ public interface ConfigFactory extends EFactory
   ConfigParameter createConfigParameter();
 
   /**
-   * Returns a new object of class '<em>Assignment</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Assignment</em>'.
-   * @generated
-   */
-  Assignment createAssignment();
-
-  /**
    * Returns a new object of class '<em>Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -91,6 +82,15 @@ public interface ConfigFactory extends EFactory
    * @generated
    */
   ConfigValue createConfigValue();
+
+  /**
+   * Returns a new object of class '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assignment</em>'.
+   * @generated
+   */
+  Assignment createAssignment();
 
   /**
    * Returns a new object of class '<em>Argument</em>'.
@@ -109,6 +109,15 @@ public interface ConfigFactory extends EFactory
    * @generated
    */
   ElementRef createElementRef();
+
+  /**
+   * Returns a new object of class '<em>Candidate List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Candidate List</em>'.
+   * @generated
+   */
+  CandidateList createCandidateList();
 
   /**
    * Returns a new object of class '<em>Named Element Ref</em>'.

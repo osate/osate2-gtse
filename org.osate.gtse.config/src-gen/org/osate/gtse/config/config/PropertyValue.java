@@ -18,6 +18,7 @@
  */
 package org.osate.gtse.config.config;
 
+import org.osate.aadl2.ContainedNamedElement;
 import org.osate.aadl2.PropertyExpression;
 
 /**
@@ -30,6 +31,7 @@ import org.osate.aadl2.PropertyExpression;
  * </p>
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.PropertyValue#getExp <em>Exp</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.PropertyValue#getAppliesTo <em>Applies To</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getPropertyValue()
@@ -63,5 +65,31 @@ public interface PropertyValue extends ConfigValue
    * @generated
    */
   void setExp(PropertyExpression value);
+
+  /**
+   * Returns the value of the '<em><b>Applies To</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Applies To</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Applies To</em>' containment reference.
+   * @see #setAppliesTo(ContainedNamedElement)
+   * @see org.osate.gtse.config.config.ConfigPackage#getPropertyValue_AppliesTo()
+   * @model containment="true"
+   * @generated
+   */
+  ContainedNamedElement getAppliesTo();
+
+  /**
+   * Sets the value of the '{@link org.osate.gtse.config.config.PropertyValue#getAppliesTo <em>Applies To</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Applies To</em>' containment reference.
+   * @see #getAppliesTo()
+   * @generated
+   */
+  void setAppliesTo(ContainedNamedElement value);
 
 } // PropertyValue

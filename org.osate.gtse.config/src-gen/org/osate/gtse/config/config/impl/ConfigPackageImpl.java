@@ -30,6 +30,7 @@ import org.osate.aadl2.Aadl2Package;
 
 import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
+import org.osate.gtse.config.config.CandidateList;
 import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigFactory;
 import org.osate.gtse.config.config.ConfigPackage;
@@ -83,14 +84,14 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass assignmentEClass = null;
+  private EClass configValueEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass configValueEClass = null;
+  private EClass assignmentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -105,6 +106,13 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * @generated
    */
   private EClass elementRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass candidateListEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -359,9 +367,19 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConfigParameter_Candidates()
+  public EReference getConfigParameter_Choices()
   {
     return (EReference)configParameterEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConfigValue()
+  {
+    return configValueEClass;
   }
 
   /**
@@ -402,16 +420,6 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   public EReference getAssignment_Value()
   {
     return (EReference)assignmentEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getConfigValue()
-  {
-    return configValueEClass;
   }
 
   /**
@@ -479,6 +487,26 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getCandidateList()
+  {
+    return candidateListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCandidateList_Candidates()
+  {
+    return (EReference)candidateListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getNamedElementRef()
   {
     return namedElementRefEClass;
@@ -532,6 +560,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   public EReference getPropertyValue_Exp()
   {
     return (EReference)propertyValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPropertyValue_AppliesTo()
+  {
+    return (EReference)propertyValueEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -603,14 +641,14 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     createEAttribute(configParameterEClass, CONFIG_PARAMETER__CATEGORY);
     createEReference(configParameterEClass, CONFIG_PARAMETER__CLASSIFIER);
     createEReference(configParameterEClass, CONFIG_PARAMETER__PROPERTY_TYPE);
-    createEReference(configParameterEClass, CONFIG_PARAMETER__CANDIDATES);
+    createEReference(configParameterEClass, CONFIG_PARAMETER__CHOICES);
+
+    configValueEClass = createEClass(CONFIG_VALUE);
 
     assignmentEClass = createEClass(ASSIGNMENT);
     createEReference(assignmentEClass, ASSIGNMENT__REF);
     createEReference(assignmentEClass, ASSIGNMENT__PROPERTY);
     createEReference(assignmentEClass, ASSIGNMENT__VALUE);
-
-    configValueEClass = createEClass(CONFIG_VALUE);
 
     argumentEClass = createEClass(ARGUMENT);
     createEReference(argumentEClass, ARGUMENT__PARAMETER);
@@ -620,6 +658,9 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     createEReference(elementRefEClass, ELEMENT_REF__ELEMENT);
     createEReference(elementRefEClass, ELEMENT_REF__PREV);
 
+    candidateListEClass = createEClass(CANDIDATE_LIST);
+    createEReference(candidateListEClass, CANDIDATE_LIST__CANDIDATES);
+
     namedElementRefEClass = createEClass(NAMED_ELEMENT_REF);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__REF);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ARGUMENTS);
@@ -627,6 +668,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     propertyValueEClass = createEClass(PROPERTY_VALUE);
     createEReference(propertyValueEClass, PROPERTY_VALUE__EXP);
+    createEReference(propertyValueEClass, PROPERTY_VALUE__APPLIES_TO);
 
     nestedAssignmentsEClass = createEClass(NESTED_ASSIGNMENTS);
     createEReference(nestedAssignmentsEClass, NESTED_ASSIGNMENTS__ASSIGNMENTS);
@@ -668,6 +710,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     configPkgEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configurationEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configParameterEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
+    candidateListEClass.getESuperTypes().add(this.getConfigValue());
     namedElementRefEClass.getESuperTypes().add(this.getConfigValue());
     propertyValueEClass.getESuperTypes().add(this.getConfigValue());
     nestedAssignmentsEClass.getESuperTypes().add(this.getConfigValue());
@@ -692,14 +735,14 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEAttribute(getConfigParameter_Category(), theAadl2Package.getComponentCategory(), "category", null, 0, 1, ConfigParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConfigParameter_Classifier(), theAadl2Package.getComponentClassifier(), null, "classifier", null, 0, 1, ConfigParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConfigParameter_PropertyType(), theAadl2Package.getProperty(), null, "propertyType", null, 0, 1, ConfigParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConfigParameter_Candidates(), this.getConfigValue(), null, "candidates", null, 0, -1, ConfigParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConfigParameter_Choices(), this.getConfigValue(), null, "choices", null, 0, 1, ConfigParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(configValueEClass, ConfigValue.class, "ConfigValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAssignment_Ref(), this.getElementRef(), null, "ref", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAssignment_Property(), theAadl2Package.getProperty(), null, "property", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAssignment_Value(), this.getConfigValue(), null, "value", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(configValueEClass, ConfigValue.class, "ConfigValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(argumentEClass, Argument.class, "Argument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getArgument_Parameter(), this.getConfigParameter(), null, "parameter", null, 0, 1, Argument.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -709,6 +752,9 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEReference(getElementRef_Element(), theAadl2Package.getNamedElement(), null, "element", null, 0, 1, ElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getElementRef_Prev(), this.getElementRef(), null, "prev", null, 0, 1, ElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(candidateListEClass, CandidateList.class, "CandidateList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCandidateList_Candidates(), this.getConfigValue(), null, "candidates", null, 0, -1, CandidateList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(namedElementRefEClass, NamedElementRef.class, "NamedElementRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNamedElementRef_Ref(), theAadl2Package.getNamedElement(), null, "ref", null, 0, 1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedElementRef_Arguments(), this.getArgument(), null, "arguments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -716,6 +762,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPropertyValue_Exp(), theAadl2Package.getPropertyExpression(), null, "exp", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertyValue_AppliesTo(), theAadl2Package.getContainedNamedElement(), null, "appliesTo", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(nestedAssignmentsEClass, NestedAssignments.class, "NestedAssignments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNestedAssignments_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NestedAssignments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

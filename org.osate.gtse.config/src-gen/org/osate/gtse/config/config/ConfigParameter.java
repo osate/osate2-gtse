@@ -18,8 +18,6 @@
  */
 package org.osate.gtse.config.config;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 import org.osate.aadl2.ComponentCategory;
@@ -39,7 +37,7 @@ import org.osate.aadl2.Property;
  *   <li>{@link org.osate.gtse.config.config.ConfigParameter#getCategory <em>Category</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.ConfigParameter#getClassifier <em>Classifier</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.ConfigParameter#getPropertyType <em>Property Type</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.ConfigParameter#getCandidates <em>Candidates</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.ConfigParameter#getChoices <em>Choices</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getConfigParameter()
@@ -130,19 +128,29 @@ public interface ConfigParameter extends EObject, NamedElement
   void setPropertyType(Property value);
 
   /**
-   * Returns the value of the '<em><b>Candidates</b></em>' containment reference list.
-   * The list contents are of type {@link org.osate.gtse.config.config.ConfigValue}.
+   * Returns the value of the '<em><b>Choices</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Candidates</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Choices</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Candidates</em>' containment reference list.
-   * @see org.osate.gtse.config.config.ConfigPackage#getConfigParameter_Candidates()
+   * @return the value of the '<em>Choices</em>' containment reference.
+   * @see #setChoices(ConfigValue)
+   * @see org.osate.gtse.config.config.ConfigPackage#getConfigParameter_Choices()
    * @model containment="true"
    * @generated
    */
-  EList<ConfigValue> getCandidates();
+  ConfigValue getChoices();
+
+  /**
+   * Sets the value of the '{@link org.osate.gtse.config.config.ConfigParameter#getChoices <em>Choices</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Choices</em>' containment reference.
+   * @see #getChoices()
+   * @generated
+   */
+  void setChoices(ConfigValue value);
 
 } // ConfigParameter

@@ -2274,12 +2274,12 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_ANNEXTEXT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132941:16: ( '{**' ( options {greedy=false; } : . )* '**}' )
-            // InternalConfig.g:132941:18: '{**' ( options {greedy=false; } : . )* '**}'
+            // InternalConfig.g:133087:16: ( '{**' ( options {greedy=false; } : . )* '**}' )
+            // InternalConfig.g:133087:18: '{**' ( options {greedy=false; } : . )* '**}'
             {
             match("{**"); 
 
-            // InternalConfig.g:132941:24: ( options {greedy=false; } : . )*
+            // InternalConfig.g:133087:24: ( options {greedy=false; } : . )*
             loop1:
             do {
                 int alt1=2;
@@ -2313,7 +2313,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // InternalConfig.g:132941:52: .
+            	    // InternalConfig.g:133087:52: .
             	    {
             	    matchAny(); 
 
@@ -2343,12 +2343,12 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132943:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // InternalConfig.g:132943:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // InternalConfig.g:133089:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // InternalConfig.g:133089:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--"); 
 
-            // InternalConfig.g:132943:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // InternalConfig.g:133089:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop2:
             do {
                 int alt2=2;
@@ -2361,7 +2361,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // InternalConfig.g:132943:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // InternalConfig.g:133089:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2381,7 +2381,7 @@ public class InternalConfigLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalConfig.g:132943:40: ( ( '\\r' )? '\\n' )?
+            // InternalConfig.g:133089:40: ( ( '\\r' )? '\\n' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -2390,9 +2390,9 @@ public class InternalConfigLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // InternalConfig.g:132943:41: ( '\\r' )? '\\n'
+                    // InternalConfig.g:133089:41: ( '\\r' )? '\\n'
                     {
-                    // InternalConfig.g:132943:41: ( '\\r' )?
+                    // InternalConfig.g:133089:41: ( '\\r' )?
                     int alt3=2;
                     int LA3_0 = input.LA(1);
 
@@ -2401,7 +2401,7 @@ public class InternalConfigLexer extends Lexer {
                     }
                     switch (alt3) {
                         case 1 :
-                            // InternalConfig.g:132943:41: '\\r'
+                            // InternalConfig.g:133089:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2431,8 +2431,8 @@ public class InternalConfigLexer extends Lexer {
     // $ANTLR start "RULE_EXPONENT"
     public final void mRULE_EXPONENT() throws RecognitionException {
         try {
-            // InternalConfig.g:132945:24: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_DIGIT )+ )
-            // InternalConfig.g:132945:26: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_DIGIT )+
+            // InternalConfig.g:133091:24: ( ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_DIGIT )+ )
+            // InternalConfig.g:133091:26: ( 'e' | 'E' ) ( '+' | '-' )? ( RULE_DIGIT )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -2443,7 +2443,7 @@ public class InternalConfigLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalConfig.g:132945:36: ( '+' | '-' )?
+            // InternalConfig.g:133091:36: ( '+' | '-' )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -2469,7 +2469,7 @@ public class InternalConfigLexer extends Lexer {
 
             }
 
-            // InternalConfig.g:132945:47: ( RULE_DIGIT )+
+            // InternalConfig.g:133091:47: ( RULE_DIGIT )+
             int cnt6=0;
             loop6:
             do {
@@ -2483,7 +2483,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // InternalConfig.g:132945:47: RULE_DIGIT
+            	    // InternalConfig.g:133091:47: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -2511,8 +2511,8 @@ public class InternalConfigLexer extends Lexer {
     // $ANTLR start "RULE_INT_EXPONENT"
     public final void mRULE_INT_EXPONENT() throws RecognitionException {
         try {
-            // InternalConfig.g:132947:28: ( ( 'e' | 'E' ) ( '+' )? ( RULE_DIGIT )+ )
-            // InternalConfig.g:132947:30: ( 'e' | 'E' ) ( '+' )? ( RULE_DIGIT )+
+            // InternalConfig.g:133093:28: ( ( 'e' | 'E' ) ( '+' )? ( RULE_DIGIT )+ )
+            // InternalConfig.g:133093:30: ( 'e' | 'E' ) ( '+' )? ( RULE_DIGIT )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -2523,7 +2523,7 @@ public class InternalConfigLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalConfig.g:132947:40: ( '+' )?
+            // InternalConfig.g:133093:40: ( '+' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -2532,7 +2532,7 @@ public class InternalConfigLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // InternalConfig.g:132947:40: '+'
+                    // InternalConfig.g:133093:40: '+'
                     {
                     match('+'); 
 
@@ -2541,7 +2541,7 @@ public class InternalConfigLexer extends Lexer {
 
             }
 
-            // InternalConfig.g:132947:45: ( RULE_DIGIT )+
+            // InternalConfig.g:133093:45: ( RULE_DIGIT )+
             int cnt8=0;
             loop8:
             do {
@@ -2555,7 +2555,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // InternalConfig.g:132947:45: RULE_DIGIT
+            	    // InternalConfig.g:133093:45: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -2585,10 +2585,10 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_REAL_LIT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132949:15: ( ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* '.' ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( RULE_EXPONENT )? )
-            // InternalConfig.g:132949:17: ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* '.' ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( RULE_EXPONENT )?
+            // InternalConfig.g:133095:15: ( ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* '.' ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( RULE_EXPONENT )? )
+            // InternalConfig.g:133095:17: ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* '.' ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( RULE_EXPONENT )?
             {
-            // InternalConfig.g:132949:17: ( RULE_DIGIT )+
+            // InternalConfig.g:133095:17: ( RULE_DIGIT )+
             int cnt9=0;
             loop9:
             do {
@@ -2602,7 +2602,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // InternalConfig.g:132949:17: RULE_DIGIT
+            	    // InternalConfig.g:133095:17: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -2618,7 +2618,7 @@ public class InternalConfigLexer extends Lexer {
                 cnt9++;
             } while (true);
 
-            // InternalConfig.g:132949:29: ( '_' ( RULE_DIGIT )+ )*
+            // InternalConfig.g:133095:29: ( '_' ( RULE_DIGIT )+ )*
             loop11:
             do {
                 int alt11=2;
@@ -2631,10 +2631,10 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // InternalConfig.g:132949:30: '_' ( RULE_DIGIT )+
+            	    // InternalConfig.g:133095:30: '_' ( RULE_DIGIT )+
             	    {
             	    match('_'); 
-            	    // InternalConfig.g:132949:34: ( RULE_DIGIT )+
+            	    // InternalConfig.g:133095:34: ( RULE_DIGIT )+
             	    int cnt10=0;
             	    loop10:
             	    do {
@@ -2648,7 +2648,7 @@ public class InternalConfigLexer extends Lexer {
 
             	        switch (alt10) {
             	    	case 1 :
-            	    	    // InternalConfig.g:132949:34: RULE_DIGIT
+            	    	    // InternalConfig.g:133095:34: RULE_DIGIT
             	    	    {
             	    	    mRULE_DIGIT(); 
 
@@ -2674,7 +2674,7 @@ public class InternalConfigLexer extends Lexer {
             } while (true);
 
             match('.'); 
-            // InternalConfig.g:132949:52: ( RULE_DIGIT )+
+            // InternalConfig.g:133095:52: ( RULE_DIGIT )+
             int cnt12=0;
             loop12:
             do {
@@ -2688,7 +2688,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // InternalConfig.g:132949:52: RULE_DIGIT
+            	    // InternalConfig.g:133095:52: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -2704,7 +2704,7 @@ public class InternalConfigLexer extends Lexer {
                 cnt12++;
             } while (true);
 
-            // InternalConfig.g:132949:64: ( '_' ( RULE_DIGIT )+ )*
+            // InternalConfig.g:133095:64: ( '_' ( RULE_DIGIT )+ )*
             loop14:
             do {
                 int alt14=2;
@@ -2717,10 +2717,10 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // InternalConfig.g:132949:65: '_' ( RULE_DIGIT )+
+            	    // InternalConfig.g:133095:65: '_' ( RULE_DIGIT )+
             	    {
             	    match('_'); 
-            	    // InternalConfig.g:132949:69: ( RULE_DIGIT )+
+            	    // InternalConfig.g:133095:69: ( RULE_DIGIT )+
             	    int cnt13=0;
             	    loop13:
             	    do {
@@ -2734,7 +2734,7 @@ public class InternalConfigLexer extends Lexer {
 
             	        switch (alt13) {
             	    	case 1 :
-            	    	    // InternalConfig.g:132949:69: RULE_DIGIT
+            	    	    // InternalConfig.g:133095:69: RULE_DIGIT
             	    	    {
             	    	    mRULE_DIGIT(); 
 
@@ -2759,7 +2759,7 @@ public class InternalConfigLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalConfig.g:132949:83: ( RULE_EXPONENT )?
+            // InternalConfig.g:133095:83: ( RULE_EXPONENT )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -2768,7 +2768,7 @@ public class InternalConfigLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // InternalConfig.g:132949:83: RULE_EXPONENT
+                    // InternalConfig.g:133095:83: RULE_EXPONENT
                     {
                     mRULE_EXPONENT(); 
 
@@ -2793,10 +2793,10 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_INTEGER_LIT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132951:18: ( ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )? | ( RULE_INT_EXPONENT )? ) )
-            // InternalConfig.g:132951:20: ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )? | ( RULE_INT_EXPONENT )? )
+            // InternalConfig.g:133097:18: ( ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )? | ( RULE_INT_EXPONENT )? ) )
+            // InternalConfig.g:133097:20: ( RULE_DIGIT )+ ( '_' ( RULE_DIGIT )+ )* ( '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )? | ( RULE_INT_EXPONENT )? )
             {
-            // InternalConfig.g:132951:20: ( RULE_DIGIT )+
+            // InternalConfig.g:133097:20: ( RULE_DIGIT )+
             int cnt16=0;
             loop16:
             do {
@@ -2810,7 +2810,7 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt16) {
             	case 1 :
-            	    // InternalConfig.g:132951:20: RULE_DIGIT
+            	    // InternalConfig.g:133097:20: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -2826,7 +2826,7 @@ public class InternalConfigLexer extends Lexer {
                 cnt16++;
             } while (true);
 
-            // InternalConfig.g:132951:32: ( '_' ( RULE_DIGIT )+ )*
+            // InternalConfig.g:133097:32: ( '_' ( RULE_DIGIT )+ )*
             loop18:
             do {
                 int alt18=2;
@@ -2839,10 +2839,10 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt18) {
             	case 1 :
-            	    // InternalConfig.g:132951:33: '_' ( RULE_DIGIT )+
+            	    // InternalConfig.g:133097:33: '_' ( RULE_DIGIT )+
             	    {
             	    match('_'); 
-            	    // InternalConfig.g:132951:37: ( RULE_DIGIT )+
+            	    // InternalConfig.g:133097:37: ( RULE_DIGIT )+
             	    int cnt17=0;
             	    loop17:
             	    do {
@@ -2856,7 +2856,7 @@ public class InternalConfigLexer extends Lexer {
 
             	        switch (alt17) {
             	    	case 1 :
-            	    	    // InternalConfig.g:132951:37: RULE_DIGIT
+            	    	    // InternalConfig.g:133097:37: RULE_DIGIT
             	    	    {
             	    	    mRULE_DIGIT(); 
 
@@ -2881,7 +2881,7 @@ public class InternalConfigLexer extends Lexer {
                 }
             } while (true);
 
-            // InternalConfig.g:132951:51: ( '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )? | ( RULE_INT_EXPONENT )? )
+            // InternalConfig.g:133097:51: ( '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )? | ( RULE_INT_EXPONENT )? )
             int alt21=2;
             int LA21_0 = input.LA(1);
 
@@ -2892,12 +2892,12 @@ public class InternalConfigLexer extends Lexer {
                 alt21=2;}
             switch (alt21) {
                 case 1 :
-                    // InternalConfig.g:132951:52: '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )?
+                    // InternalConfig.g:133097:52: '#' RULE_BASED_INTEGER '#' ( RULE_INT_EXPONENT )?
                     {
                     match('#'); 
                     mRULE_BASED_INTEGER(); 
                     match('#'); 
-                    // InternalConfig.g:132951:79: ( RULE_INT_EXPONENT )?
+                    // InternalConfig.g:133097:79: ( RULE_INT_EXPONENT )?
                     int alt19=2;
                     int LA19_0 = input.LA(1);
 
@@ -2906,7 +2906,7 @@ public class InternalConfigLexer extends Lexer {
                     }
                     switch (alt19) {
                         case 1 :
-                            // InternalConfig.g:132951:79: RULE_INT_EXPONENT
+                            // InternalConfig.g:133097:79: RULE_INT_EXPONENT
                             {
                             mRULE_INT_EXPONENT(); 
 
@@ -2919,9 +2919,9 @@ public class InternalConfigLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalConfig.g:132951:98: ( RULE_INT_EXPONENT )?
+                    // InternalConfig.g:133097:98: ( RULE_INT_EXPONENT )?
                     {
-                    // InternalConfig.g:132951:98: ( RULE_INT_EXPONENT )?
+                    // InternalConfig.g:133097:98: ( RULE_INT_EXPONENT )?
                     int alt20=2;
                     int LA20_0 = input.LA(1);
 
@@ -2930,7 +2930,7 @@ public class InternalConfigLexer extends Lexer {
                     }
                     switch (alt20) {
                         case 1 :
-                            // InternalConfig.g:132951:98: RULE_INT_EXPONENT
+                            // InternalConfig.g:133097:98: RULE_INT_EXPONENT
                             {
                             mRULE_INT_EXPONENT(); 
 
@@ -2959,8 +2959,8 @@ public class InternalConfigLexer extends Lexer {
     // $ANTLR start "RULE_DIGIT"
     public final void mRULE_DIGIT() throws RecognitionException {
         try {
-            // InternalConfig.g:132953:21: ( '0' .. '9' )
-            // InternalConfig.g:132953:23: '0' .. '9'
+            // InternalConfig.g:133099:21: ( '0' .. '9' )
+            // InternalConfig.g:133099:23: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -2975,8 +2975,8 @@ public class InternalConfigLexer extends Lexer {
     // $ANTLR start "RULE_EXTENDED_DIGIT"
     public final void mRULE_EXTENDED_DIGIT() throws RecognitionException {
         try {
-            // InternalConfig.g:132955:30: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
-            // InternalConfig.g:132955:32: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
+            // InternalConfig.g:133101:30: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+            // InternalConfig.g:133101:32: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f') ) {
                 input.consume();
@@ -2999,11 +2999,11 @@ public class InternalConfigLexer extends Lexer {
     // $ANTLR start "RULE_BASED_INTEGER"
     public final void mRULE_BASED_INTEGER() throws RecognitionException {
         try {
-            // InternalConfig.g:132957:29: ( RULE_EXTENDED_DIGIT ( ( '_' )? RULE_EXTENDED_DIGIT )* )
-            // InternalConfig.g:132957:31: RULE_EXTENDED_DIGIT ( ( '_' )? RULE_EXTENDED_DIGIT )*
+            // InternalConfig.g:133103:29: ( RULE_EXTENDED_DIGIT ( ( '_' )? RULE_EXTENDED_DIGIT )* )
+            // InternalConfig.g:133103:31: RULE_EXTENDED_DIGIT ( ( '_' )? RULE_EXTENDED_DIGIT )*
             {
             mRULE_EXTENDED_DIGIT(); 
-            // InternalConfig.g:132957:51: ( ( '_' )? RULE_EXTENDED_DIGIT )*
+            // InternalConfig.g:133103:51: ( ( '_' )? RULE_EXTENDED_DIGIT )*
             loop23:
             do {
                 int alt23=2;
@@ -3016,9 +3016,9 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt23) {
             	case 1 :
-            	    // InternalConfig.g:132957:52: ( '_' )? RULE_EXTENDED_DIGIT
+            	    // InternalConfig.g:133103:52: ( '_' )? RULE_EXTENDED_DIGIT
             	    {
-            	    // InternalConfig.g:132957:52: ( '_' )?
+            	    // InternalConfig.g:133103:52: ( '_' )?
             	    int alt22=2;
             	    int LA22_0 = input.LA(1);
 
@@ -3027,7 +3027,7 @@ public class InternalConfigLexer extends Lexer {
             	    }
             	    switch (alt22) {
             	        case 1 :
-            	            // InternalConfig.g:132957:52: '_'
+            	            // InternalConfig.g:133103:52: '_'
             	            {
             	            match('_'); 
 
@@ -3060,10 +3060,10 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132959:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // InternalConfig.g:132959:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalConfig.g:133105:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // InternalConfig.g:133105:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // InternalConfig.g:132959:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // InternalConfig.g:133105:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -3081,10 +3081,10 @@ public class InternalConfigLexer extends Lexer {
             }
             switch (alt26) {
                 case 1 :
-                    // InternalConfig.g:132959:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // InternalConfig.g:133105:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // InternalConfig.g:132959:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // InternalConfig.g:133105:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop24:
                     do {
                         int alt24=3;
@@ -3100,7 +3100,7 @@ public class InternalConfigLexer extends Lexer {
 
                         switch (alt24) {
                     	case 1 :
-                    	    // InternalConfig.g:132959:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // InternalConfig.g:133105:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -3116,7 +3116,7 @@ public class InternalConfigLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalConfig.g:132959:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // InternalConfig.g:133105:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -3141,10 +3141,10 @@ public class InternalConfigLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // InternalConfig.g:132959:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // InternalConfig.g:133105:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // InternalConfig.g:132959:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // InternalConfig.g:133105:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop25:
                     do {
                         int alt25=3;
@@ -3160,7 +3160,7 @@ public class InternalConfigLexer extends Lexer {
 
                         switch (alt25) {
                     	case 1 :
-                    	    // InternalConfig.g:132959:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // InternalConfig.g:133105:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -3176,7 +3176,7 @@ public class InternalConfigLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // InternalConfig.g:132959:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // InternalConfig.g:133105:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -3219,8 +3219,8 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132961:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )* )
-            // InternalConfig.g:132961:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
+            // InternalConfig.g:133107:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )* )
+            // InternalConfig.g:133107:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -3231,7 +3231,7 @@ public class InternalConfigLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // InternalConfig.g:132961:31: ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
+            // InternalConfig.g:133107:31: ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
             loop28:
             do {
                 int alt28=2;
@@ -3244,9 +3244,9 @@ public class InternalConfigLexer extends Lexer {
 
                 switch (alt28) {
             	case 1 :
-            	    // InternalConfig.g:132961:32: ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )
+            	    // InternalConfig.g:133107:32: ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )
             	    {
-            	    // InternalConfig.g:132961:32: ( '_' )?
+            	    // InternalConfig.g:133107:32: ( '_' )?
             	    int alt27=2;
             	    int LA27_0 = input.LA(1);
 
@@ -3255,7 +3255,7 @@ public class InternalConfigLexer extends Lexer {
             	    }
             	    switch (alt27) {
             	        case 1 :
-            	            // InternalConfig.g:132961:32: '_'
+            	            // InternalConfig.g:133107:32: '_'
             	            {
             	            match('_'); 
 
@@ -3298,10 +3298,10 @@ public class InternalConfigLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // InternalConfig.g:132963:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // InternalConfig.g:132963:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalConfig.g:133109:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // InternalConfig.g:133109:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // InternalConfig.g:132963:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // InternalConfig.g:133109:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt29=0;
             loop29:
             do {

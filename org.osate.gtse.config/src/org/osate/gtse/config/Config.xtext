@@ -28,7 +28,7 @@ fragment Parameters*:
 ;
 
 ConfigParameter:
-	name=ID ':' (FClassifierType | FPropertyType) Candidates?
+	name=ID ':' (FClassifierType | FPropertyType) choices=Candidates?
 ;
 
 fragment FClassifierType*:
@@ -39,8 +39,8 @@ fragment FPropertyType*:
 	propertyType=[aadl2::Property|PNAME]
 ;
 
-fragment Candidates*:
-	'from' '(' (candidates+=ConfigExpression (',' candidates+=ConfigExpression)*)? ')'
+Candidates returns ConfigValue:
+	{CandidateList} 'from' '(' (candidates+=ConfigExpression (',' candidates+=ConfigExpression)*)? ')'
 ;
 
 fragment Assignments*:
@@ -66,7 +66,7 @@ Assignment:
 ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
 	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
-	| {PropertyValue} exp=CPropertyExpression
+	| {PropertyValue} exp=CPropertyExpression (AppliesToKeywords appliesTo=ContainmentPath)?
 	| {NestedAssignments} Assignments
 ;
 

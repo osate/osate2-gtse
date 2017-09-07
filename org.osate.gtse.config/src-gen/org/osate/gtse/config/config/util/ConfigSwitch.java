@@ -125,17 +125,17 @@ public class ConfigSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case ConfigPackage.ASSIGNMENT:
-      {
-        Assignment assignment = (Assignment)theEObject;
-        T result = caseAssignment(assignment);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case ConfigPackage.CONFIG_VALUE:
       {
         ConfigValue configValue = (ConfigValue)theEObject;
         T result = caseConfigValue(configValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.ASSIGNMENT:
+      {
+        Assignment assignment = (Assignment)theEObject;
+        T result = caseAssignment(assignment);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -150,6 +150,14 @@ public class ConfigSwitch<T> extends Switch<T>
       {
         ElementRef elementRef = (ElementRef)theEObject;
         T result = caseElementRef(elementRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.CANDIDATE_LIST:
+      {
+        CandidateList candidateList = (CandidateList)theEObject;
+        T result = caseCandidateList(candidateList);
+        if (result == null) result = caseConfigValue(candidateList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -246,22 +254,6 @@ public class ConfigSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAssignment(Assignment object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Value</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -273,6 +265,22 @@ public class ConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseConfigValue(ConfigValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Assignment</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAssignment(Assignment object)
   {
     return null;
   }
@@ -305,6 +313,22 @@ public class ConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseElementRef(ElementRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Candidate List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Candidate List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCandidateList(CandidateList object)
   {
     return null;
   }

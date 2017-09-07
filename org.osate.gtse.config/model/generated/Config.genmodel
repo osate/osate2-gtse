@@ -25,14 +25,14 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//ConfigParameter/category"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/classifier"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/propertyType"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/candidates"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigParameter/choices"/>
     </genClasses>
+    <genClasses ecoreClass="Config.ecore#//ConfigValue"/>
     <genClasses ecoreClass="Config.ecore#//Assignment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/ref"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/property"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/value"/>
     </genClasses>
-    <genClasses ecoreClass="Config.ecore#//ConfigValue"/>
     <genClasses ecoreClass="Config.ecore#//Argument">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Argument/parameter"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Argument/value"/>
@@ -41,6 +41,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ElementRef/element"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ElementRef/prev"/>
     </genClasses>
+    <genClasses ecoreClass="Config.ecore#//CandidateList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//CandidateList/candidates"/>
+    </genClasses>
     <genClasses ecoreClass="Config.ecore#//NamedElementRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/ref"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/arguments"/>
@@ -48,6 +51,7 @@
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//PropertyValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/exp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/appliesTo"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//NestedAssignments">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NestedAssignments/assignments"/>

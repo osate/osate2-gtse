@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.osate.aadl2.ContainedNamedElement;
 import org.osate.aadl2.PropertyExpression;
 
 import org.osate.gtse.config.config.ConfigPackage;
@@ -40,6 +41,7 @@ import org.osate.gtse.config.config.PropertyValue;
  * </p>
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.impl.PropertyValueImpl#getExp <em>Exp</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.PropertyValueImpl#getAppliesTo <em>Applies To</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,6 +57,16 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
    * @ordered
    */
   protected PropertyExpression exp;
+
+  /**
+   * The cached value of the '{@link #getAppliesTo() <em>Applies To</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAppliesTo()
+   * @generated
+   * @ordered
+   */
+  protected ContainedNamedElement appliesTo;
 
   /**
    * <!-- begin-user-doc -->
@@ -130,6 +142,54 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated
    */
+  public ContainedNamedElement getAppliesTo()
+  {
+    return appliesTo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetAppliesTo(ContainedNamedElement newAppliesTo, NotificationChain msgs)
+  {
+    ContainedNamedElement oldAppliesTo = appliesTo;
+    appliesTo = newAppliesTo;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ConfigPackage.PROPERTY_VALUE__APPLIES_TO, oldAppliesTo, newAppliesTo);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAppliesTo(ContainedNamedElement newAppliesTo)
+  {
+    if (newAppliesTo != appliesTo)
+    {
+      NotificationChain msgs = null;
+      if (appliesTo != null)
+        msgs = ((InternalEObject)appliesTo).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.PROPERTY_VALUE__APPLIES_TO, null, msgs);
+      if (newAppliesTo != null)
+        msgs = ((InternalEObject)newAppliesTo).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.PROPERTY_VALUE__APPLIES_TO, null, msgs);
+      msgs = basicSetAppliesTo(newAppliesTo, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.PROPERTY_VALUE__APPLIES_TO, newAppliesTo, newAppliesTo));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -137,6 +197,8 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
     {
       case ConfigPackage.PROPERTY_VALUE__EXP:
         return basicSetExp(null, msgs);
+      case ConfigPackage.PROPERTY_VALUE__APPLIES_TO:
+        return basicSetAppliesTo(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -153,6 +215,8 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
     {
       case ConfigPackage.PROPERTY_VALUE__EXP:
         return getExp();
+      case ConfigPackage.PROPERTY_VALUE__APPLIES_TO:
+        return getAppliesTo();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -169,6 +233,9 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
     {
       case ConfigPackage.PROPERTY_VALUE__EXP:
         setExp((PropertyExpression)newValue);
+        return;
+      case ConfigPackage.PROPERTY_VALUE__APPLIES_TO:
+        setAppliesTo((ContainedNamedElement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -187,6 +254,9 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
       case ConfigPackage.PROPERTY_VALUE__EXP:
         setExp((PropertyExpression)null);
         return;
+      case ConfigPackage.PROPERTY_VALUE__APPLIES_TO:
+        setAppliesTo((ContainedNamedElement)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -203,6 +273,8 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
     {
       case ConfigPackage.PROPERTY_VALUE__EXP:
         return exp != null;
+      case ConfigPackage.PROPERTY_VALUE__APPLIES_TO:
+        return appliesTo != null;
     }
     return super.eIsSet(featureID);
   }

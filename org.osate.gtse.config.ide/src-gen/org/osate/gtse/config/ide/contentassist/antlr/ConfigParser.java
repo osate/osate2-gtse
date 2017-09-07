@@ -452,8 +452,8 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConfigParameterAccess().getGroup(), "rule__ConfigParameter__Group__0");
 					put(grammarAccess.getFClassifierTypeAccess().getGroup(), "rule__FClassifierType__Group__0");
 					put(grammarAccess.getCandidatesAccess().getGroup(), "rule__Candidates__Group__0");
-					put(grammarAccess.getCandidatesAccess().getGroup_2(), "rule__Candidates__Group_2__0");
-					put(grammarAccess.getCandidatesAccess().getGroup_2_1(), "rule__Candidates__Group_2_1__0");
+					put(grammarAccess.getCandidatesAccess().getGroup_3(), "rule__Candidates__Group_3__0");
+					put(grammarAccess.getCandidatesAccess().getGroup_3_1(), "rule__Candidates__Group_3_1__0");
 					put(grammarAccess.getAssignmentsAccess().getGroup(), "rule__Assignments__Group__0");
 					put(grammarAccess.getAssignmentsAccess().getGroup_1(), "rule__Assignments__Group_1__0");
 					put(grammarAccess.getAssignmentsAccess().getGroup_1_1(), "rule__Assignments__Group_1_1__0");
@@ -463,6 +463,7 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getGroup_0_1(), "rule__Assignment__Group_0_1__0");
 					put(grammarAccess.getConfigExpressionAccess().getGroup_0(), "rule__ConfigExpression__Group_0__0");
 					put(grammarAccess.getConfigExpressionAccess().getGroup_1(), "rule__ConfigExpression__Group_1__0");
+					put(grammarAccess.getConfigExpressionAccess().getGroup_1_2(), "rule__ConfigExpression__Group_1_2__0");
 					put(grammarAccess.getConfigExpressionAccess().getGroup_2(), "rule__ConfigExpression__Group_2__0");
 					put(grammarAccess.getArgumentsAccess().getGroup(), "rule__Arguments__Group__0");
 					put(grammarAccess.getArgumentsAccess().getGroup_1(), "rule__Arguments__Group_1__0");
@@ -1540,11 +1541,12 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getParametersAccess().getParametersAssignment_1_0(), "rule__Parameters__ParametersAssignment_1_0");
 					put(grammarAccess.getParametersAccess().getParametersAssignment_1_1_1(), "rule__Parameters__ParametersAssignment_1_1_1");
 					put(grammarAccess.getConfigParameterAccess().getNameAssignment_0(), "rule__ConfigParameter__NameAssignment_0");
+					put(grammarAccess.getConfigParameterAccess().getChoicesAssignment_3(), "rule__ConfigParameter__ChoicesAssignment_3");
 					put(grammarAccess.getFClassifierTypeAccess().getCategoryAssignment_0(), "rule__FClassifierType__CategoryAssignment_0");
 					put(grammarAccess.getFClassifierTypeAccess().getClassifierAssignment_1(), "rule__FClassifierType__ClassifierAssignment_1");
 					put(grammarAccess.getFPropertyTypeAccess().getPropertyTypeAssignment(), "rule__FPropertyType__PropertyTypeAssignment");
-					put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_2_0(), "rule__Candidates__CandidatesAssignment_2_0");
-					put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_2_1_1(), "rule__Candidates__CandidatesAssignment_2_1_1");
+					put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_3_0(), "rule__Candidates__CandidatesAssignment_3_0");
+					put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_3_1_1(), "rule__Candidates__CandidatesAssignment_3_1_1");
 					put(grammarAccess.getAssignmentsAccess().getAssignmentsAssignment_1_0(), "rule__Assignments__AssignmentsAssignment_1_0");
 					put(grammarAccess.getAssignmentsAccess().getAssignmentsAssignment_1_1_1(), "rule__Assignments__AssignmentsAssignment_1_1_1");
 					put(grammarAccess.getAssignmentAccess().getRefAssignment_0_0_0(), "rule__Assignment__RefAssignment_0_0_0");
@@ -1553,6 +1555,7 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getValueAssignment_2(), "rule__Assignment__ValueAssignment_2");
 					put(grammarAccess.getConfigExpressionAccess().getRefAssignment_0_1(), "rule__ConfigExpression__RefAssignment_0_1");
 					put(grammarAccess.getConfigExpressionAccess().getExpAssignment_1_1(), "rule__ConfigExpression__ExpAssignment_1_1");
+					put(grammarAccess.getConfigExpressionAccess().getAppliesToAssignment_1_2_1(), "rule__ConfigExpression__AppliesToAssignment_1_2_1");
 					put(grammarAccess.getArgumentsAccess().getArgumentsAssignment_1_0(), "rule__Arguments__ArgumentsAssignment_1_0");
 					put(grammarAccess.getArgumentsAccess().getArgumentsAssignment_1_1_1(), "rule__Arguments__ArgumentsAssignment_1_1_1");
 					put(grammarAccess.getArgumentAccess().getParameterAssignment_0(), "rule__Argument__ParameterAssignment_0");

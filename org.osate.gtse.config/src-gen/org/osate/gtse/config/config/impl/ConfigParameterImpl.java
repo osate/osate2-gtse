@@ -18,21 +18,14 @@
  */
 package org.osate.gtse.config.config.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.osate.aadl2.ComponentCategory;
 import org.osate.aadl2.ComponentClassifier;
@@ -55,7 +48,7 @@ import org.osate.gtse.config.config.ConfigValue;
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigParameterImpl#getCategory <em>Category</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigParameterImpl#getClassifier <em>Classifier</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigParameterImpl#getPropertyType <em>Property Type</em>}</li>
- *   <li>{@link org.osate.gtse.config.config.impl.ConfigParameterImpl#getCandidates <em>Candidates</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.ConfigParameterImpl#getChoices <em>Choices</em>}</li>
  * </ul>
  *
  * @generated
@@ -103,14 +96,14 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
   protected Property propertyType;
 
   /**
-   * The cached value of the '{@link #getCandidates() <em>Candidates</em>}' containment reference list.
+   * The cached value of the '{@link #getChoices() <em>Choices</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCandidates()
+   * @see #getChoices()
    * @generated
    * @ordered
    */
-  protected EList<ConfigValue> candidates;
+  protected ConfigValue choices;
 
   /**
    * <!-- begin-user-doc -->
@@ -247,13 +240,47 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ConfigValue> getCandidates()
+  public ConfigValue getChoices()
   {
-    if (candidates == null)
+    return choices;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetChoices(ConfigValue newChoices, NotificationChain msgs)
+  {
+    ConfigValue oldChoices = choices;
+    choices = newChoices;
+    if (eNotificationRequired())
     {
-      candidates = new EObjectContainmentEList<ConfigValue>(ConfigValue.class, this, ConfigPackage.CONFIG_PARAMETER__CANDIDATES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ConfigPackage.CONFIG_PARAMETER__CHOICES, oldChoices, newChoices);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return candidates;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setChoices(ConfigValue newChoices)
+  {
+    if (newChoices != choices)
+    {
+      NotificationChain msgs = null;
+      if (choices != null)
+        msgs = ((InternalEObject)choices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.CONFIG_PARAMETER__CHOICES, null, msgs);
+      if (newChoices != null)
+        msgs = ((InternalEObject)newChoices).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ConfigPackage.CONFIG_PARAMETER__CHOICES, null, msgs);
+      msgs = basicSetChoices(newChoices, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.CONFIG_PARAMETER__CHOICES, newChoices, newChoices));
   }
 
   /**
@@ -266,8 +293,8 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
   {
     switch (featureID)
     {
-      case ConfigPackage.CONFIG_PARAMETER__CANDIDATES:
-        return ((InternalEList<?>)getCandidates()).basicRemove(otherEnd, msgs);
+      case ConfigPackage.CONFIG_PARAMETER__CHOICES:
+        return basicSetChoices(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -290,8 +317,8 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
       case ConfigPackage.CONFIG_PARAMETER__PROPERTY_TYPE:
         if (resolve) return getPropertyType();
         return basicGetPropertyType();
-      case ConfigPackage.CONFIG_PARAMETER__CANDIDATES:
-        return getCandidates();
+      case ConfigPackage.CONFIG_PARAMETER__CHOICES:
+        return getChoices();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -301,7 +328,6 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -316,9 +342,8 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
       case ConfigPackage.CONFIG_PARAMETER__PROPERTY_TYPE:
         setPropertyType((Property)newValue);
         return;
-      case ConfigPackage.CONFIG_PARAMETER__CANDIDATES:
-        getCandidates().clear();
-        getCandidates().addAll((Collection<? extends ConfigValue>)newValue);
+      case ConfigPackage.CONFIG_PARAMETER__CHOICES:
+        setChoices((ConfigValue)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -343,8 +368,8 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
       case ConfigPackage.CONFIG_PARAMETER__PROPERTY_TYPE:
         setPropertyType((Property)null);
         return;
-      case ConfigPackage.CONFIG_PARAMETER__CANDIDATES:
-        getCandidates().clear();
+      case ConfigPackage.CONFIG_PARAMETER__CHOICES:
+        setChoices((ConfigValue)null);
         return;
     }
     super.eUnset(featureID);
@@ -366,8 +391,8 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
         return classifier != null;
       case ConfigPackage.CONFIG_PARAMETER__PROPERTY_TYPE:
         return propertyType != null;
-      case ConfigPackage.CONFIG_PARAMETER__CANDIDATES:
-        return candidates != null && !candidates.isEmpty();
+      case ConfigPackage.CONFIG_PARAMETER__CHOICES:
+        return choices != null;
     }
     return super.eIsSet(featureID);
   }

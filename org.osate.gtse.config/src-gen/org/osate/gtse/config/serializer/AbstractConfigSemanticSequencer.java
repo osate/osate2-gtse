@@ -181,6 +181,7 @@ import org.osate.aadl2.VirtualProcessorSubcomponent;
 import org.osate.aadl2.VirtualProcessorType;
 import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
+import org.osate.gtse.config.config.CandidateList;
 import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
@@ -949,11 +950,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 			case ConfigPackage.ASSIGNMENT:
 				sequence_Assignment(context, (Assignment) semanticObject); 
 				return; 
+			case ConfigPackage.CANDIDATE_LIST:
+				sequence_Candidates(context, (CandidateList) semanticObject); 
+				return; 
 			case ConfigPackage.COMBINATION:
 				sequence_Arguments_Combination(context, (Combination) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIG_PARAMETER:
-				sequence_Candidates_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
+				sequence_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIG_PKG:
 				sequence_ConfigPkg(context, (ConfigPkg) semanticObject); 
@@ -1068,17 +1072,12 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	/**
 	 * Contexts:
-	 *     ConfigParameter returns ConfigParameter
-	 *     NamedElement returns ConfigParameter
+	 *     Candidates returns CandidateList
 	 *
 	 * Constraint:
-	 *     (
-	 *         name=ID 
-	 *         ((category=ComponentCategory classifier=[ComponentClassifier|CNAME]) | propertyType=[Property|PNAME]) 
-	 *         (candidates+=ConfigExpression candidates+=ConfigExpression*)?
-	 *     )
+	 *     (candidates+=ConfigExpression candidates+=ConfigExpression*)?
 	 */
-	protected void sequence_Candidates_ConfigParameter_FClassifierType_FPropertyType(ISerializationContext context, ConfigParameter semanticObject) {
+	protected void sequence_Candidates(ISerializationContext context, CandidateList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1088,16 +1087,23 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     ConfigExpression returns PropertyValue
 	 *
 	 * Constraint:
-	 *     exp=CPropertyExpression
+	 *     (exp=CPropertyExpression appliesTo=ContainmentPath?)
 	 */
 	protected void sequence_ConfigExpression(ISerializationContext context, PropertyValue semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConfigExpressionAccess().getExpCPropertyExpressionParserRuleCall_1_1_0(), semanticObject.getExp());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConfigParameter returns ConfigParameter
+	 *     NamedElement returns ConfigParameter
+	 *
+	 * Constraint:
+	 *     (name=ID ((category=ComponentCategory classifier=[ComponentClassifier|CNAME]) | propertyType=[Property|PNAME]) choices=Candidates?)
+	 */
+	protected void sequence_ConfigParameter_FClassifierType_FPropertyType(ISerializationContext context, ConfigParameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

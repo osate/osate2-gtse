@@ -114,14 +114,14 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
         return createConfigParameterAdapter();
       }
       @Override
-      public Adapter caseAssignment(Assignment object)
-      {
-        return createAssignmentAdapter();
-      }
-      @Override
       public Adapter caseConfigValue(ConfigValue object)
       {
         return createConfigValueAdapter();
+      }
+      @Override
+      public Adapter caseAssignment(Assignment object)
+      {
+        return createAssignmentAdapter();
       }
       @Override
       public Adapter caseArgument(Argument object)
@@ -132,6 +132,11 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
       public Adapter caseElementRef(ElementRef object)
       {
         return createElementRefAdapter();
+      }
+      @Override
+      public Adapter caseCandidateList(CandidateList object)
+      {
+        return createCandidateListAdapter();
       }
       @Override
       public Adapter caseNamedElementRef(NamedElementRef object)
@@ -241,21 +246,6 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Assignment <em>Assignment</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.osate.gtse.config.config.Assignment
-   * @generated
-   */
-  public Adapter createAssignmentAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.ConfigValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -266,6 +256,21 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConfigValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.Assignment
+   * @generated
+   */
+  public Adapter createAssignmentAdapter()
   {
     return null;
   }
@@ -296,6 +301,21 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createElementRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.CandidateList <em>Candidate List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.CandidateList
+   * @generated
+   */
+  public Adapter createCandidateListAdapter()
   {
     return null;
   }

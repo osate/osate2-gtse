@@ -460,17 +460,23 @@ ruleConfigParameter returns [EObject current=null]
 			}
 		)
 		(
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getConfigParameterRule());
+			(
+				{
+					newCompositeNode(grammarAccess.getConfigParameterAccess().getChoicesCandidatesParserRuleCall_3_0());
 				}
-				newCompositeNode(grammarAccess.getConfigParameterAccess().getCandidatesParserRuleCall_3());
-			}
-			this_Candidates_4=ruleCandidates[$current]
-			{
-				$current = $this_Candidates_4.current;
-				afterParserOrEnumRuleCall();
-			}
+				lv_choices_4_0=ruleCandidates
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConfigParameterRule());
+					}
+					set(
+						$current,
+						"choices",
+						lv_choices_4_0,
+						"org.osate.gtse.config.Config.Candidates");
+					afterParserOrEnumRuleCall();
+				}
+			)
 		)?
 	)
 ;
@@ -550,9 +556,15 @@ ruleFPropertyType[EObject in_current]  returns [EObject current=in_current]
 	)
 ;
 
+// Entry rule entryRuleCandidates
+entryRuleCandidates returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getCandidatesRule()); }
+	iv_ruleCandidates=ruleCandidates
+	{ $current=$iv_ruleCandidates.current; }
+	EOF;
 
 // Rule Candidates
-ruleCandidates[EObject in_current]  returns [EObject current=in_current]
+ruleCandidates returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -560,21 +572,28 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 	leaveRule();
 }:
 	(
-		otherlv_0='from'
+		(
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getCandidatesAccess().getCandidateListAction_0(),
+					$current);
+			}
+		)
+		otherlv_1='from'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getCandidatesAccess().getFromKeyword_0());
+			newLeafNode(otherlv_1, grammarAccess.getCandidatesAccess().getFromKeyword_1());
 		}
-		otherlv_1='('
+		otherlv_2='('
 		{
-			newLeafNode(otherlv_1, grammarAccess.getCandidatesAccess().getLeftParenthesisKeyword_1());
+			newLeafNode(otherlv_2, grammarAccess.getCandidatesAccess().getLeftParenthesisKeyword_2());
 		}
 		(
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_2_0_0());
+						newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_3_0_0());
 					}
-					lv_candidates_2_0=ruleConfigExpression
+					lv_candidates_3_0=ruleConfigExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getCandidatesRule());
@@ -582,23 +601,23 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 						add(
 							$current,
 							"candidates",
-							lv_candidates_2_0,
+							lv_candidates_3_0,
 							"org.osate.gtse.config.Config.ConfigExpression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_3=','
+				otherlv_4=','
 				{
-					newLeafNode(otherlv_3, grammarAccess.getCandidatesAccess().getCommaKeyword_2_1_0());
+					newLeafNode(otherlv_4, grammarAccess.getCandidatesAccess().getCommaKeyword_3_1_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_2_1_1_0());
+							newCompositeNode(grammarAccess.getCandidatesAccess().getCandidatesConfigExpressionParserRuleCall_3_1_1_0());
 						}
-						lv_candidates_4_0=ruleConfigExpression
+						lv_candidates_5_0=ruleConfigExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getCandidatesRule());
@@ -606,7 +625,7 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 							add(
 								$current,
 								"candidates",
-								lv_candidates_4_0,
+								lv_candidates_5_0,
 								"org.osate.gtse.config.Config.ConfigExpression");
 							afterParserOrEnumRuleCall();
 						}
@@ -614,9 +633,9 @@ ruleCandidates[EObject in_current]  returns [EObject current=in_current]
 				)
 			)*
 		)?
-		otherlv_5=')'
+		otherlv_6=')'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getCandidatesAccess().getRightParenthesisKeyword_3());
+			newLeafNode(otherlv_6, grammarAccess.getCandidatesAccess().getRightParenthesisKeyword_4());
 		}
 	)
 ;
@@ -893,6 +912,34 @@ ruleConfigExpression returns [EObject current=null]
 					}
 				)
 			)
+			(
+				{
+					newCompositeNode(grammarAccess.getConfigExpressionAccess().getAppliesToKeywordsParserRuleCall_1_2_0());
+				}
+				ruleAppliesToKeywords
+				{
+					afterParserOrEnumRuleCall();
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getConfigExpressionAccess().getAppliesToContainmentPathParserRuleCall_1_2_1_0());
+						}
+						lv_appliesTo_7_0=ruleContainmentPath
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getConfigExpressionRule());
+							}
+							set(
+								$current,
+								"appliesTo",
+								lv_appliesTo_7_0,
+								"org.osate.xtext.aadl2.properties.Properties.ContainmentPath");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)?
 		)
 		    |
 		(
@@ -909,9 +956,9 @@ ruleConfigExpression returns [EObject current=null]
 				}
 				newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_2_1());
 			}
-			this_Assignments_7=ruleAssignments[$current]
+			this_Assignments_9=ruleAssignments[$current]
 			{
-				$current = $this_Assignments_7.current;
+				$current = $this_Assignments_9.current;
 				afterParserOrEnumRuleCall();
 			}
 		)

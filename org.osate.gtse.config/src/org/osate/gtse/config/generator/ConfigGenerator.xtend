@@ -18,13 +18,16 @@
  */
 package org.osate.gtse.config.generator
 
+import com.google.inject.Inject
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.eclipse.xtext.serializer.ISerializer
 import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentImplementation
 import org.osate.aadl2.ComponentType
@@ -32,8 +35,10 @@ import org.osate.aadl2.Element
 import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupType
 import org.osate.aadl2.NamedElement
+import org.osate.aadl2.Property
 import org.osate.aadl2.Subcomponent
 import org.osate.gtse.config.config.Assignment
+import org.osate.gtse.config.config.CandidateList
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.ConfigValue
@@ -41,6 +46,7 @@ import org.osate.gtse.config.config.Configuration
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.NestedAssignments
+import org.osate.gtse.config.config.PropertyValue
 
 import static extension org.osate.gtse.config.config.AssignmentExt.*
 import static extension org.osate.gtse.config.config.ConfigurationExt.*
@@ -51,6 +57,45 @@ import static extension org.osate.gtse.config.config.ConfigurationExt.*
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class ConfigGenerator extends AbstractGenerator {
+	
+	@Inject 
+	ISerializer serializer
+	
+	static class Mapping {
+		@Accessors
+		Iterable<NamedElement> path = #[]
+
+		@Accessors
+		Property property
+
+		@Accessors
+		ConfigValue value
+
+		new(List<NamedElement> p, ConfigValue v) {
+			path = p
+			value = v
+		}
+
+		new(List<NamedElement> p, Property prop, ConfigValue v) {
+			path = p
+			property = prop
+			value = v
+		}
+
+		def isSubcomponent() {
+			property === null
+		}
+
+		def isProperty() {
+			property !== null
+		}
+
+		def prepend(NamedElement element) {
+			path = #[element] + path
+			this
+		}
+
+	}
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
@@ -62,18 +107,24 @@ class ConfigGenerator extends AbstractGenerator {
 		val rootComp = rootConfig.extended
 		val lookup = makeLookupList(rootConfig)
 		val arguments = makeArgumentList(rootConfig)
-		val paths = rootComp.process(lookup, arguments)
-		fsa.generateFile('paths.txt', 'componentImplementationName=' + rootComp.qualifiedName() + '\n\n' + paths.map [ path |
-			'SubcompChoice-' + path.key.map [
-				if(it === null) "NULL" else it.name
-
-			].join('.') + '=' + path.value.print
-		].join('\n'))
+		val replacements = rootComp.process(lookup, arguments)
+		fsa.generateFile('paths.txt',
+			'componentImplementationName=' + rootComp.qualifiedName() + '\n\n' + replacements.map [ r |
+				if (r.isSubcomponent) {
+					'SubcompChoice-' + r.path.map [
+						if(it === null) "NULL" else it.name
+					].join('.') + '=' + r.value.print
+				} else if (r.isProperty) {
+					'LitPropertyValue-' + r.path.map [
+						if(it === null) "NULL" else it.name
+					].join('.') + '-' + r.property.print + '=' + serializer.serialize(r.value)
+				}
+			].join('\n'))
 
 	}
 
-	def Iterable<Pair<List<NamedElement>, ConfigValue>> process(Classifier cl,
-		Iterable<Pair<ElementRef, Assignment>> assignments, Map<ConfigParameter, ConfigValue> arguments) {
+	def Iterable<Mapping> process(Classifier cl, Iterable<Pair<ElementRef, Assignment>> assignments,
+		Map<ConfigParameter, ConfigValue> arguments) {
 		if (cl === null)
 			#[]
 		else
@@ -83,48 +134,43 @@ class ConfigGenerator extends AbstractGenerator {
 			].flatten
 	}
 
-	def Iterable<Pair<List<NamedElement>, ConfigValue>> process(NamedElement ne,
-		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
-		val assignment = lookup.findFirst[p|p.key === null]?.value
-		if (assignment === null) {
+	def Iterable<Mapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
+		Map<ConfigParameter, ConfigValue> arguments) {
+		val localResult = lookup.filter[key === null && value.isProperty].map [
+			val assignment = value
+			new Mapping(#[ne], assignment.property, assignment.value)
+		]
+		val downAssignment = lookup.findFirst[key === null]?.value
+		localResult + if (downAssignment === null)
 			// no applicable entry found, continue
 			continueDown(ne, ne.classifier, lookup, arguments)
-		} else if (assignment.isProperty) {
-			// TODO: handle property assignments
-			#[]
-		} else if (assignment.isAnnex) {
-			// TODO: handle annex assignments
-			#[]
-		} else {
-			handleAssignedValue(ne, assignment.value, lookup, arguments)
-		}
+		else
+			handleAssignedValue(ne, downAssignment.value, lookup, arguments)
 	}
 
-	def Iterable<Pair<List<NamedElement>, ConfigValue>> handleAssignedValue(NamedElement ne, ConfigValue cfgValue,
+	def Iterable<Mapping> handleAssignedValue(NamedElement ne, ConfigValue cfgValue,
 		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		switch value : cfgValue {
 			NamedElementRef: {
+				val localLookup = makeLookupList(value.assignments)
 				switch obj: value.ref {
 					Classifier: {
-						val localLookup = makeLookupList(value.assignments)
-						#[#[ne] -> cfgValue] + continueDown(ne, obj, localLookup + lookup, arguments)
+						#[new Mapping(#[ne], cfgValue)] + continueDown(ne, obj, localLookup + lookup, arguments)
 					}
 					Configuration: {
-						val localLookup = makeLookupList(value.assignments)
 						val configLookup = makeLookupList(obj)
 						val args = newHashMap
 						arguments.forEach[p, v|args.put(p, v)]
 						value.arguments.forEach[args.put(it.parameter, it.value)]
-						#[#[ne] -> cfgValue] + continueDown(ne, obj.extended, localLookup + configLookup, args)
+						#[new Mapping(#[ne], cfgValue)] +
+							continueDown(ne, obj.extended, localLookup + configLookup + lookup, args)
 					}
 					ConfigParameter: {
 						val argValue = arguments.get(obj)
 						if (argValue !== null) {
-							handleAssignedValue(ne, argValue, lookup, arguments)
+							handleAssignedValue(ne, argValue, localLookup + lookup, arguments)
 						} else {
-							// TODO: Can this be validated before running the generator?
-							// Should be at least a warning.
-							#[]
+							#[new Mapping(#[ne], cfgValue)]
 						}
 					}
 					default:
@@ -143,15 +189,13 @@ class ConfigGenerator extends AbstractGenerator {
 
 	}
 
-	def Iterable<Pair<List<NamedElement>, ConfigValue>> continueDown(NamedElement current, Classifier cl,
+	def Iterable<Mapping> continueDown(NamedElement current, Classifier cl,
 		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		if (cl === null)
 			#[]
 		else {
 			val replacements = cl.process(lookup, arguments)
-			replacements.map [ p |
-				((#[current] + p.key).toList -> p.value)
-			]
+			replacements.map[prepend(current)]
 		}
 	}
 
@@ -268,14 +312,28 @@ class ConfigGenerator extends AbstractGenerator {
 		#[]
 	}
 
+	/**
+	 * Print configuration value
+	 */
 	dispatch def String print(ConfigValue value) {
-		value.toString
+		'unhandled dispatch case print (' + value.class.name + ')'
+	}
+
+	dispatch def String print(CandidateList l) {
+		l.candidates.map[print].join(',')
 	}
 
 	dispatch def String print(NamedElementRef ner) {
 		ner.ref.print
 	}
 
+	dispatch def String print(PropertyValue pv) {
+		"TODO: print property value"
+	}
+
+	/**
+	 * Print named element
+	 */
 	dispatch def String print(NamedElement ne) {
 		ne.name
 	}
@@ -286,6 +344,19 @@ class ConfigGenerator extends AbstractGenerator {
 
 	dispatch def String print(Configuration cfg) {
 		cfg.extended.print
+	}
+
+	dispatch def String print(Property p) {
+		p.qualifiedName()
+	}
+
+
+	dispatch def String print(ConfigParameter p) {
+		val ch = p.choices
+		if (ch === null)
+			"#no choices given"
+		else
+			ch.print
 	}
 
 }

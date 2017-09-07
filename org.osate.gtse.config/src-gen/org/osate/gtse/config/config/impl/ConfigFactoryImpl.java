@@ -84,10 +84,11 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
       case ConfigPackage.CONFIGURATION: return createConfiguration();
       case ConfigPackage.COMBINATION: return createCombination();
       case ConfigPackage.CONFIG_PARAMETER: return createConfigParameter();
-      case ConfigPackage.ASSIGNMENT: return createAssignment();
       case ConfigPackage.CONFIG_VALUE: return createConfigValue();
+      case ConfigPackage.ASSIGNMENT: return createAssignment();
       case ConfigPackage.ARGUMENT: return createArgument();
       case ConfigPackage.ELEMENT_REF: return createElementRef();
+      case ConfigPackage.CANDIDATE_LIST: return createCandidateList();
       case ConfigPackage.NAMED_ELEMENT_REF: return createNamedElementRef();
       case ConfigPackage.PROPERTY_VALUE: return createPropertyValue();
       case ConfigPackage.NESTED_ASSIGNMENTS: return createNestedAssignments();
@@ -145,10 +146,10 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Assignment createAssignment()
+  public ConfigValue createConfigValue()
   {
-    AssignmentImpl assignment = new AssignmentImpl();
-    return assignment;
+    ConfigValueImpl configValue = new ConfigValueImpl();
+    return configValue;
   }
 
   /**
@@ -156,10 +157,10 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConfigValue createConfigValue()
+  public Assignment createAssignment()
   {
-    ConfigValueImpl configValue = new ConfigValueImpl();
-    return configValue;
+    AssignmentImpl assignment = new AssignmentImpl();
+    return assignment;
   }
 
   /**
@@ -182,6 +183,17 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
   {
     ElementRefImpl elementRef = new ElementRefImpl();
     return elementRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CandidateList createCandidateList()
+  {
+    CandidateListImpl candidateList = new CandidateListImpl();
+    return candidateList;
   }
 
   /**
