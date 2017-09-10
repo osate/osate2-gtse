@@ -34,11 +34,15 @@ import org.osate.aadl2.ComponentType
 import org.osate.aadl2.Element
 import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupType
+import org.osate.aadl2.ListType
 import org.osate.aadl2.NamedElement
 import org.osate.aadl2.Property
+import org.osate.aadl2.ReferenceType
+import org.osate.aadl2.ReferenceValue
 import org.osate.aadl2.Subcomponent
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.CandidateList
+import org.osate.gtse.config.config.ConfigFactory
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.ConfigValue
@@ -56,11 +60,14 @@ import static extension org.osate.gtse.config.config.ConfigurationExt.*
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
+// TODO: add wildcard handling
+// Simple wildcard: '*' -> flag isWildcard -> don't remove from lookup list
+// Structure wildcard: '*' -> flag isWildcard + remainingPath -> duplicate as non-wildcard with remaining path as path
 class ConfigGenerator extends AbstractGenerator {
-	
-	@Inject 
+
+	@Inject
 	ISerializer serializer
-	
+
 	static class Mapping {
 		@Accessors
 		Iterable<NamedElement> path = #[]
@@ -105,47 +112,64 @@ class ConfigGenerator extends AbstractGenerator {
 //				.join(', '))
 		val rootConfig = (resource.contents.head as ConfigPkg).root
 		val rootComp = rootConfig.extended
-		val lookup = makeLookupList(rootConfig)
+		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig)
-		val replacements = rootComp.process(lookup, arguments)
-		fsa.generateFile('paths.txt',
-			'componentImplementationName=' + rootComp.qualifiedName() + '\n\n' + replacements.map [ r |
-				if (r.isSubcomponent) {
-					'SubcompChoice-' + r.path.map [
-						if(it === null) "NULL" else it.name
-					].join('.') + '=' + r.value.print
-				} else if (r.isProperty) {
-					'LitPropertyValue-' + r.path.map [
-						if(it === null) "NULL" else it.name
-					].join('.') + '-' + r.property.print + '=' + serializer.serialize(r.value)
+		val replacements = rootComp.process(lookup, arguments).toList
+		fsa.generateFile('paths.txt', replacements.map [ r |
+			val tl = r.path.tail
+			val pathName = tl.map[name].join('.')
+			if (r.isSubcomponent) {
+				if (tl.empty) {
+					'componentImplementationName=' + r.value.print + '\n'
+				} else {
+					'SubcompChoice-' + pathName + '=' + r.value.print
 				}
-			].join('\n'))
-
+			} else if (r.isProperty) {
+				// TODO: handle parameter as value
+				if (r.property.propertyType instanceof ReferenceType) {
+					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim
+				} else if (r.property.propertyType instanceof ListType &&
+					(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
+					val pv = r.value as PropertyValue
+					val appto = serializer.serialize(pv.appliesTo).trim
+					val p = pathName + '.' + appto
+					'RefPropertyValue-' + p + '-' + r.property.print + '=' + pathName + '.' +
+						serializer.serialize((pv.exp as ReferenceValue).path).trim
+				} else {
+					'LitPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim
+				}
+			}
+		].join('\n'))
 	}
 
-	def Iterable<Mapping> process(Classifier cl, Iterable<Pair<ElementRef, Assignment>> assignments,
-		Map<ConfigParameter, ConfigValue> arguments) {
-		if (cl === null)
-			#[]
-		else
-			cl.allNamedElements.map [ ne |
-				val result = ne.process(assignments.specialize(ne), arguments)
-				result
-			].flatten
+	static private def Iterable<Pair<ElementRef, Assignment>> makeLookup(Configuration cfg) {
+		val ner = ConfigFactory.eINSTANCE.createNamedElementRef
+		ner.ref = cfg
+		val a = ConfigFactory.eINSTANCE.createAssignment
+		a.value = ner
+		#[null -> a]
 	}
 
 	def Iterable<Mapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
 		Map<ConfigParameter, ConfigValue> arguments) {
-		val localResult = lookup.filter[key === null && value.isProperty].map [
-			val assignment = value
-			new Mapping(#[ne], assignment.property, assignment.value)
-		]
-		val downAssignment = lookup.findFirst[key === null]?.value
-		localResult + if (downAssignment === null)
+		val downAssignment = lookup.findFirst[key === null && !value.isProperty]?.value
+		val localResult = lookup.makePropertyMappings(ne) + {
+			if (ne instanceof Configuration)
+				ne.assignments.makeLocalPropertyMappings(ne)
+			else
+				#[]
+		}
+		if (downAssignment === null)
 			// no applicable entry found, continue
-			continueDown(ne, ne.classifier, lookup, arguments)
-		else
-			handleAssignedValue(ne, downAssignment.value, lookup, arguments)
+			localResult + continueDown(ne, ne.classifier, lookup, arguments)
+		else {
+			val propertiesFromNested = switch value: downAssignment.value {
+				NamedElementRef: value.assignments
+				NestedAssignments: value.assignments
+				default: #[]
+			}.makeLocalPropertyMappings(ne)
+			propertiesFromNested + localResult + handleAssignedValue(ne, downAssignment.value, lookup, arguments)
+		}
 	}
 
 	def Iterable<Mapping> handleAssignedValue(NamedElement ne, ConfigValue cfgValue,
@@ -159,10 +183,11 @@ class ConfigGenerator extends AbstractGenerator {
 					}
 					Configuration: {
 						val configLookup = makeLookupList(obj)
+						val propertiesFromConfiguration = obj.assignments.makeLocalPropertyMappings(ne)
 						val args = newHashMap
 						arguments.forEach[p, v|args.put(p, v)]
 						value.arguments.forEach[args.put(it.parameter, it.value)]
-						#[new Mapping(#[ne], cfgValue)] +
+						#[new Mapping(#[ne], cfgValue)] + propertiesFromConfiguration +
 							continueDown(ne, obj.extended, localLookup + configLookup + lookup, args)
 					}
 					ConfigParameter: {
@@ -194,12 +219,27 @@ class ConfigGenerator extends AbstractGenerator {
 		if (cl === null)
 			#[]
 		else {
-			val replacements = cl.process(lookup, arguments)
+			val replacements = cl.allNamedElements.map [ ne |
+				val result = ne.process(lookup.specialize(ne), arguments)
+				result
+			].flatten
 			replacements.map[prepend(current)]
 		}
 	}
 
-	def isStructured(NamedElement ne) {
+	def private static makePropertyMappings(Iterable<Pair<ElementRef, Assignment>> lookup, NamedElement ne) {
+		lookup.filter[key === null && value.isProperty].map [
+			new Mapping(#[ne], value.property, value.value)
+		]
+	}
+
+	def private static makeLocalPropertyMappings(Iterable<Assignment> assignments, NamedElement ne) {
+		assignments.filter[ref === null && isProperty].map [
+			new Mapping(#[ne], property, value)
+		]
+	}
+
+	def private static isStructured(NamedElement ne) {
 		ne instanceof Subcomponent || ne instanceof FeatureGroup
 	}
 
@@ -232,7 +272,7 @@ class ConfigGenerator extends AbstractGenerator {
 	protected def mkPair(Assignment a) {
 		val startRef = {
 			var r = a.ref
-			while (r.prev !== null)
+			while (r?.prev !== null)
 				r = r.prev
 			r
 		}
@@ -350,11 +390,10 @@ class ConfigGenerator extends AbstractGenerator {
 		p.qualifiedName()
 	}
 
-
 	dispatch def String print(ConfigParameter p) {
 		val ch = p.choices
 		if (ch === null)
-			"#no choices given"
+			'#no choices given'
 		else
 			ch.print
 	}
