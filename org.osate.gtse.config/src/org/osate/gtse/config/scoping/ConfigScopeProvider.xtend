@@ -26,22 +26,30 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.SimpleScope
 import org.osate.aadl2.Aadl2Package
+import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentClassifier
 import org.osate.aadl2.ComponentPrototype
+import org.osate.aadl2.ContainedNamedElement
+import org.osate.aadl2.ContainmentPathElement
+import org.osate.aadl2.Element
 import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupPrototype
 import org.osate.aadl2.FeatureGroupType
+import org.osate.aadl2.NamedElement
+import org.osate.aadl2.ReferenceValue
 import org.osate.aadl2.Subcomponent
+import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.Combination
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.Configuration
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
+import org.osate.gtse.config.config.NestedAssignments
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
-import org.osate.gtse.config.config.NestedAssignments
-import org.osate.gtse.config.config.Assignment
+import static extension org.osate.aadl2.modelsupport.util.ResolvePrototypeUtil.resolveComponentPrototype
+import static extension org.osate.aadl2.modelsupport.util.ResolvePrototypeUtil.resolveFeatureGroupPrototype
 
 /**
  * This class contains custom scoping description.
@@ -160,6 +168,95 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 				}
 			}
 		cls?.allMembers?.filterRefined?.scopeFor ?: IScope::NULLSCOPE
+	}
+
+	// Reference is from ContainmentPathElement in Properties.xtext
+	override def scope_ContainmentPathElement_namedElement(Element context, EReference reference) {
+		val container = context.eContainer
+		val Classifier namespace = switch container {
+			ReferenceValue: {
+				// Scoping for first element of a reference value when providing the scope for content assist
+				container.getContainerOfType(Assignment)?.namespaceForAssignment
+			}
+			ContainedNamedElement: {
+				// Scoping for first element of the applies to when providing the scope for content assist
+				container.getContainerOfType(Assignment)?.namespaceForAssignment
+			}
+			ContainmentPathElement: {
+				// Scoping for chained element after the first element when providing the scope for content assist
+				container.classifierForPreviousContainmentPathElement
+			}
+		}
+		namespace?.allMembers?.filterRefined?.scopeFor ?: IScope::NULLSCOPE
+	}
+
+	def private static Classifier namespaceForAssignment(Assignment assignment) {
+		if (assignment.ref !== null) {
+			// ID before #
+			assignment.ref.element?.namespaceFor
+		} else {
+			// just #property
+			switch container: assignment.eContainer {
+				NestedAssignments:
+					container.getContainerOfType(Assignment).namespaceForAssignment
+				NamedElementRef:
+					switch e : container.ref {
+						Classifier:
+							e.namespaceFor
+						Configuration:
+							e.extended?.namespaceFor
+						ConfigParameter:
+							e.classifier?.namespaceFor
+					}
+			}
+		}
+	}
+
+	def private static Classifier namespaceFor(NamedElement ne) {
+		switch ne {
+			FeatureGroup: {
+				switch featureType : ne.allFeatureType {
+					FeatureGroupType:
+						featureType
+					FeatureGroupPrototype:
+						featureType.resolveFeatureGroupPrototype(ne.getContainerOfType(Classifier))
+				}
+			}
+			Subcomponent: {
+				switch subcomponentType : ne.allSubcomponentType {
+					ComponentClassifier:
+						subcomponentType
+					ComponentPrototype:
+						subcomponentType.resolveComponentPrototype(ne.getContainerOfType(Classifier))
+				}
+			}
+		}
+
+	}
+
+	def private static getClassifierForPreviousContainmentPathElement(ContainmentPathElement previousCpe) {
+		switch previousElement : previousCpe.namedElement {
+			case null,
+			case previousElement.eIsProxy:
+				// Don't provide a scope if the previous element could not be resolved
+				null
+			Subcomponent: {
+				switch subcomponentType : previousElement.allSubcomponentType {
+					ComponentClassifier:
+						subcomponentType
+					ComponentPrototype:
+						subcomponentType.resolveComponentPrototype(previousCpe)
+				}
+			}
+			FeatureGroup: {
+				switch featureType : previousElement.allFeatureType {
+					FeatureGroupType:
+						featureType
+					FeatureGroupPrototype:
+						featureType.resolveFeatureGroupPrototype(previousCpe)
+				}
+			}
+		}
 	}
 
 }
