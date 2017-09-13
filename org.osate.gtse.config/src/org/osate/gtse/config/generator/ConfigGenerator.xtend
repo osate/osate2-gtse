@@ -28,6 +28,10 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.eclipse.xtext.serializer.ISerializer
+import org.osate.aadl2.AadlBoolean
+import org.osate.aadl2.AadlInteger
+import org.osate.aadl2.AadlReal
+import org.osate.aadl2.AadlString
 import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentImplementation
 import org.osate.aadl2.ComponentType
@@ -121,6 +125,7 @@ class ConfigGenerator extends AbstractGenerator {
 		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig)
 		val replacements = rootComp.process(lookup, arguments).toList
+
 		fsa.generateFile('paths.txt', replacements.map [ r |
 			val tl = r.path.tail
 			val pathName = tl.map[name].join('.')
@@ -148,8 +153,7 @@ class ConfigGenerator extends AbstractGenerator {
 					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
 						serializer.serialize((pv.exp as ReferenceValue).path).trim
 				} else {
-					val type = 'int'
-					'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + type +'=' + serializer.serialize(r.value).trim
+					'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) +'=' + serializer.serialize(r.value).trim
 				}
 			}
 		].join('\n'))
@@ -163,6 +167,16 @@ class ConfigGenerator extends AbstractGenerator {
 		#[null -> a]
 	}
 
+	static private def propertyType(Property p) {
+		switch p.propertyType {
+			AadlInteger: 'int'
+			AadlBoolean: 'bool'
+			AadlString: 'string'
+			AadlReal: 'float'
+			default: ''
+		}	
+	}
+	
 	def Iterable<Mapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
 		Map<ConfigParameter, ConfigValue> arguments) {
 		val downAssignment = lookup.findFirst[key === null && !value.isProperty]?.value
