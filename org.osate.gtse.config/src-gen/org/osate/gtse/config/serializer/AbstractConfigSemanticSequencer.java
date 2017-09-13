@@ -1032,7 +1032,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
-	 *     (((ref=ElementRef property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigExpression)
+	 *     ((((wildcard?='*' | ref=ElementRef) property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigExpression)
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1087,10 +1087,16 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     ConfigExpression returns PropertyValue
 	 *
 	 * Constraint:
-	 *     (exp=CPropertyExpression appliesTo=ContainmentPath?)
+	 *     exp=CPropertyExpression
 	 */
 	protected void sequence_ConfigExpression(ISerializationContext context, PropertyValue semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConfigExpressionAccess().getExpCPropertyExpressionParserRuleCall_1_1_0(), semanticObject.getExp());
+		feeder.finish();
 	}
 	
 	

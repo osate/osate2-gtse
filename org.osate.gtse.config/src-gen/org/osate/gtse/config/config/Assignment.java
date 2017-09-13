@@ -31,6 +31,7 @@ import org.osate.aadl2.Property;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.osate.gtse.config.config.Assignment#isWildcard <em>Wildcard</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Assignment#getRef <em>Ref</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Assignment#getProperty <em>Property</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Assignment#getValue <em>Value</em>}</li>
@@ -42,6 +43,32 @@ import org.osate.aadl2.Property;
  */
 public interface Assignment extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Wildcard</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Wildcard</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Wildcard</em>' attribute.
+   * @see #setWildcard(boolean)
+   * @see org.osate.gtse.config.config.ConfigPackage#getAssignment_Wildcard()
+   * @model
+   * @generated
+   */
+  boolean isWildcard();
+
+  /**
+   * Sets the value of the '{@link org.osate.gtse.config.config.Assignment#isWildcard <em>Wildcard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Wildcard</em>' attribute.
+   * @see #isWildcard()
+   * @generated
+   */
+  void setWildcard(boolean value);
+
   /**
    * Returns the value of the '<em><b>Ref</b></em>' containment reference.
    * <!-- begin-user-doc -->

@@ -52,6 +52,7 @@ import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.NestedAssignments
 import org.osate.gtse.config.config.PropertyValue
 
+import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
 import static extension org.osate.gtse.config.config.ConfigurationExt.*
 
@@ -60,9 +61,12 @@ import static extension org.osate.gtse.config.config.ConfigurationExt.*
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
-// TODO: add wildcard handling
-// Simple wildcard: '*' -> flag isWildcard -> don't remove from lookup list
-// Structure wildcard: '*' -> flag isWildcard + remainingPath -> duplicate as non-wildcard with remaining path as path
+
+// TODO
+// - check applicability of wildcards for subcomponents
+// - add classifier option to lhs of assignments
+// - add match mode selection (type only, classifier match, type extension, etc.
+
 class ConfigGenerator extends AbstractGenerator {
 
 	@Inject
@@ -127,13 +131,19 @@ class ConfigGenerator extends AbstractGenerator {
 			} else if (r.isProperty) {
 				// TODO: handle parameter as value
 				if (r.property.propertyType instanceof ReferenceType) {
-					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim
+					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim // FIXME
 				} else if (r.property.propertyType instanceof ListType &&
 					(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
 					val pv = r.value as PropertyValue
-					val appto = serializer.serialize(pv.appliesTo).trim
-					val p = pathName + '.' + appto
-					'RefPropertyValue-' + p + '-' + r.property.print + '=' + pathName + '.' +
+					val a = pv.getContainerOfType(Assignment)
+					var ref = a.ref
+					// reference value is relative to assignment's container
+					var refPath = pathName
+					while (ref !== null && refPath.endsWith(ref.element.name)) {
+						refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
+						ref = ref.prev
+					}
+					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
 						serializer.serialize((pv.exp as ReferenceValue).path).trim
 				} else {
 					'LitPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim
@@ -304,34 +314,48 @@ class ConfigGenerator extends AbstractGenerator {
 	 * Filter lookup list by current named element and strip the current element from the keys of the remaining elements
 	 */
 	protected def List<Pair<ElementRef, Assignment>> specialize(Iterable<Pair<ElementRef, Assignment>> lookup,
-		NamedElement sub) {
+		NamedElement ne) {
 		if (lookup.empty)
 			new ArrayList
 		else {
-			val result = specialize(lookup.tail, sub)
+			val result = specialize(lookup.tail, ne)
 			val first = lookup.head
-			if (first.key !== null) {
-				val ref = first.key
-				val a = first.value
-				if (ref.element == sub) {
-					if (ref == a.ref)
-						// key = null indicates that the value applies to this subcomponent
-						result.add(0, (null -> a))
-					else {
-						// calculate the opposite of prev here, reference is unidirectional
-						var r = a.ref
-						while (r !== null) {
-							if (r.prev === ref) {
-								result.add(0, (r -> a))
-								r = null
-							} else {
-								r = r.prev
-							}
+			val ref = first.key
+			val a = first.value
+
+			if (a.wildcard) {
+				// keep all wild cards
+				result.add(0, ref -> a)
+			}
+
+			if (ref !== null && ref.element == ne) {
+				// filter entries that match this element
+				if (ref == a.ref) {
+					if (propertyApplies(a, ne))
+						// key = null indicates that the value applies to this element
+						result.add(0, null -> a)
+				} else {
+					// calculate the opposite of prev here, reference is unidirectional
+					var r = a.ref
+					while (r !== null) {
+						if (r.prev === ref) {
+							result.add(0, r -> a)
+							r = null
+						} else {
+							r = r.prev
 						}
 					}
 				}
+
 			}
 			result
+		}
+	}
+
+	protected static def propertyApplies(Assignment a, NamedElement ne) {
+		!a.isProperty || {
+			val pv = a.value
+			pv instanceof PropertyValue && ne.acceptsProperty(a.property)
 		}
 	}
 

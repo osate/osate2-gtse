@@ -29,6 +29,7 @@
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//ConfigValue"/>
     <genClasses ecoreClass="Config.ecore#//Assignment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//Assignment/wildcard"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/ref"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/property"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Assignment/value"/>
@@ -51,7 +52,6 @@
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//PropertyValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/exp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/appliesTo"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//NestedAssignments">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NestedAssignments/assignments"/>

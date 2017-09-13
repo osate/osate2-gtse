@@ -175,30 +175,30 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 		val container = context.eContainer
 		val Classifier namespace = switch container {
 			ReferenceValue: {
-				// Scoping for first element of a reference value when providing the scope for content assist
-				container.getContainerOfType(Assignment)?.namespaceForAssignment
+				// Scoping for first element of a reference value when providing
+				container.getContainerOfType(Assignment)?.namespaceForAssignment(true)
 			}
 			ContainedNamedElement: {
-				// Scoping for first element of the applies to when providing the scope for content assist
-				container.getContainerOfType(Assignment)?.namespaceForAssignment
+				// Scoping for first element of the applies to
+				container.getContainerOfType(Assignment)?.namespaceForAssignment(false)
 			}
 			ContainmentPathElement: {
-				// Scoping for chained element after the first element when providing the scope for content assist
+				// Scoping for chained element after the first element
 				container.classifierForPreviousContainmentPathElement
 			}
 		}
 		namespace?.allMembers?.filterRefined?.scopeFor ?: IScope::NULLSCOPE
 	}
 
-	def private static Classifier namespaceForAssignment(Assignment assignment) {
-		if (assignment.ref !== null) {
+	def private static Classifier namespaceForAssignment(Assignment assignment, boolean skip) {
+		if (!skip && assignment.ref !== null) {
 			// ID before #
 			assignment.ref.element?.namespaceFor
 		} else {
 			// just #property
 			switch container: assignment.eContainer {
 				NestedAssignments:
-					container.getContainerOfType(Assignment).namespaceForAssignment
+					container.getContainerOfType(Assignment).namespaceForAssignment(false)
 				NamedElementRef:
 					switch e : container.ref {
 						Classifier:

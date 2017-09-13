@@ -432,13 +432,22 @@ public interface ConfigPackage extends EPackage
   int ASSIGNMENT = 5;
 
   /**
+   * The feature id for the '<em><b>Wildcard</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__WILDCARD = 0;
+
+  /**
    * The feature id for the '<em><b>Ref</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__REF = 0;
+  int ASSIGNMENT__REF = 1;
 
   /**
    * The feature id for the '<em><b>Property</b></em>' reference.
@@ -447,7 +456,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__PROPERTY = 1;
+  int ASSIGNMENT__PROPERTY = 2;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' containment reference.
@@ -456,7 +465,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__VALUE = 2;
+  int ASSIGNMENT__VALUE = 3;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -465,7 +474,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = 3;
+  int ASSIGNMENT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.ArgumentImpl <em>Argument</em>}' class.
@@ -635,22 +644,13 @@ public interface ConfigPackage extends EPackage
   int PROPERTY_VALUE__EXP = CONFIG_VALUE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Applies To</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_VALUE__APPLIES_TO = CONFIG_VALUE_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Property Value</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROPERTY_VALUE_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 2;
+  int PROPERTY_VALUE_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.NestedAssignmentsImpl <em>Nested Assignments</em>}' class.
@@ -885,6 +885,17 @@ public interface ConfigPackage extends EPackage
   EClass getAssignment();
 
   /**
+   * Returns the meta object for the attribute '{@link org.osate.gtse.config.config.Assignment#isWildcard <em>Wildcard</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Wildcard</em>'.
+   * @see org.osate.gtse.config.config.Assignment#isWildcard()
+   * @see #getAssignment()
+   * @generated
+   */
+  EAttribute getAssignment_Wildcard();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.osate.gtse.config.config.Assignment#getRef <em>Ref</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1065,17 +1076,6 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   EReference getPropertyValue_Exp();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.osate.gtse.config.config.PropertyValue#getAppliesTo <em>Applies To</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Applies To</em>'.
-   * @see org.osate.gtse.config.config.PropertyValue#getAppliesTo()
-   * @see #getPropertyValue()
-   * @generated
-   */
-  EReference getPropertyValue_AppliesTo();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.NestedAssignments <em>Nested Assignments</em>}'.
@@ -1286,6 +1286,14 @@ public interface ConfigPackage extends EPackage
     EClass ASSIGNMENT = eINSTANCE.getAssignment();
 
     /**
+     * The meta object literal for the '<em><b>Wildcard</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ASSIGNMENT__WILDCARD = eINSTANCE.getAssignment_Wildcard();
+
+    /**
      * The meta object literal for the '<em><b>Ref</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1430,14 +1438,6 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EReference PROPERTY_VALUE__EXP = eINSTANCE.getPropertyValue_Exp();
-
-    /**
-     * The meta object literal for the '<em><b>Applies To</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTY_VALUE__APPLIES_TO = eINSTANCE.getPropertyValue_AppliesTo();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.NestedAssignmentsImpl <em>Nested Assignments</em>}' class.

@@ -51,7 +51,7 @@ Assignment:
 	// LVal
 	// using fragment LVal leads to an exception in LazyLinker for x.y#p => v
 	(
-		ref=ElementRef ('#' property=[aadl2::Property|PNAME])? 
+		(wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])? 
 		| '#' property=[aadl2::Property|PNAME]
 	)
 	'=>' 
@@ -66,7 +66,7 @@ Assignment:
 ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
 	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
-	| {PropertyValue} exp=CPropertyExpression (AppliesToKeywords appliesTo=ContainmentPath)?
+	| {PropertyValue} exp=CPropertyExpression
 	| {NestedAssignments} Assignments
 ;
 

@@ -43,6 +43,7 @@ import org.osate.gtse.config.config.ElementRef;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#isWildcard <em>Wildcard</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getRef <em>Ref</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getProperty <em>Property</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.AssignmentImpl#getValue <em>Value</em>}</li>
@@ -52,6 +53,26 @@ import org.osate.gtse.config.config.ElementRef;
  */
 public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assignment
 {
+  /**
+   * The default value of the '{@link #isWildcard() <em>Wildcard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isWildcard()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean WILDCARD_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isWildcard() <em>Wildcard</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isWildcard()
+   * @generated
+   * @ordered
+   */
+  protected boolean wildcard = WILDCARD_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getRef() <em>Ref</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -101,6 +122,29 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   protected EClass eStaticClass()
   {
     return ConfigPackage.Literals.ASSIGNMENT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isWildcard()
+  {
+    return wildcard;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setWildcard(boolean newWildcard)
+  {
+    boolean oldWildcard = wildcard;
+    wildcard = newWildcard;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ConfigPackage.ASSIGNMENT__WILDCARD, oldWildcard, wildcard));
   }
 
   /**
@@ -270,6 +314,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
+      case ConfigPackage.ASSIGNMENT__WILDCARD:
+        return isWildcard();
       case ConfigPackage.ASSIGNMENT__REF:
         return getRef();
       case ConfigPackage.ASSIGNMENT__PROPERTY:
@@ -291,6 +337,9 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
+      case ConfigPackage.ASSIGNMENT__WILDCARD:
+        setWildcard((Boolean)newValue);
+        return;
       case ConfigPackage.ASSIGNMENT__REF:
         setRef((ElementRef)newValue);
         return;
@@ -314,6 +363,9 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
+      case ConfigPackage.ASSIGNMENT__WILDCARD:
+        setWildcard(WILDCARD_EDEFAULT);
+        return;
       case ConfigPackage.ASSIGNMENT__REF:
         setRef((ElementRef)null);
         return;
@@ -337,6 +389,8 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     switch (featureID)
     {
+      case ConfigPackage.ASSIGNMENT__WILDCARD:
+        return wildcard != WILDCARD_EDEFAULT;
       case ConfigPackage.ASSIGNMENT__REF:
         return ref != null;
       case ConfigPackage.ASSIGNMENT__PROPERTY:
@@ -345,6 +399,23 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
         return value != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (wildcard: ");
+    result.append(wildcard);
+    result.append(')');
+    return result.toString();
   }
 
 } //AssignmentImpl

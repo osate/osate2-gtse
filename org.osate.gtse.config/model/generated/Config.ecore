@@ -30,6 +30,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wildcard" eType="ecore:EDataType platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//ElementRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//Property"/>
@@ -59,8 +60,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyValue" eSuperTypes="#//ConfigValue">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exp" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//PropertyExpression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="appliesTo" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//ContainedNamedElement"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NestedAssignments" eSuperTypes="#//ConfigValue">

@@ -727,27 +727,44 @@ ruleAssignment returns [EObject current=null]
 			(
 				(
 					(
-						{
-							newCompositeNode(grammarAccess.getAssignmentAccess().getRefElementRefParserRuleCall_0_0_0_0());
-						}
-						lv_ref_0_0=ruleElementRef
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getAssignmentRule());
+						(
+							lv_wildcard_0_0='*'
+							{
+								newLeafNode(lv_wildcard_0_0, grammarAccess.getAssignmentAccess().getWildcardAsteriskKeyword_0_0_0_0_0());
 							}
-							set(
-								$current,
-								"ref",
-								lv_ref_0_0,
-								"org.osate.gtse.config.Config.ElementRef");
-							afterParserOrEnumRuleCall();
-						}
+							{
+								if ($current==null) {
+									$current = createModelElement(grammarAccess.getAssignmentRule());
+								}
+								setWithLastConsumed($current, "wildcard", true, "*");
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getAssignmentAccess().getRefElementRefParserRuleCall_0_0_0_1_0());
+							}
+							lv_ref_1_0=ruleElementRef
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getAssignmentRule());
+								}
+								set(
+									$current,
+									"ref",
+									lv_ref_1_0,
+									"org.osate.gtse.config.Config.ElementRef");
+								afterParserOrEnumRuleCall();
+							}
+						)
 					)
 				)
 				(
-					otherlv_1='#'
+					otherlv_2='#'
 					{
-						newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getNumberSignKeyword_0_0_1_0());
+						newLeafNode(otherlv_2, grammarAccess.getAssignmentAccess().getNumberSignKeyword_0_0_1_0());
 					}
 					(
 						(
@@ -769,9 +786,9 @@ ruleAssignment returns [EObject current=null]
 			)
 			    |
 			(
-				otherlv_3='#'
+				otherlv_4='#'
 				{
-					newLeafNode(otherlv_3, grammarAccess.getAssignmentAccess().getNumberSignKeyword_0_1_0());
+					newLeafNode(otherlv_4, grammarAccess.getAssignmentAccess().getNumberSignKeyword_0_1_0());
 				}
 				(
 					(
@@ -791,16 +808,16 @@ ruleAssignment returns [EObject current=null]
 				)
 			)
 		)
-		otherlv_5='=>'
+		otherlv_6='=>'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getAssignmentAccess().getEqualsSignGreaterThanSignKeyword_1());
+			newLeafNode(otherlv_6, grammarAccess.getAssignmentAccess().getEqualsSignGreaterThanSignKeyword_1());
 		}
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getAssignmentAccess().getValueConfigExpressionParserRuleCall_2_0());
 				}
-				lv_value_6_0=ruleConfigExpression
+				lv_value_7_0=ruleConfigExpression
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getAssignmentRule());
@@ -808,7 +825,7 @@ ruleAssignment returns [EObject current=null]
 					set(
 						$current,
 						"value",
-						lv_value_6_0,
+						lv_value_7_0,
 						"org.osate.gtse.config.Config.ConfigExpression");
 					afterParserOrEnumRuleCall();
 				}
@@ -912,34 +929,6 @@ ruleConfigExpression returns [EObject current=null]
 					}
 				)
 			)
-			(
-				{
-					newCompositeNode(grammarAccess.getConfigExpressionAccess().getAppliesToKeywordsParserRuleCall_1_2_0());
-				}
-				ruleAppliesToKeywords
-				{
-					afterParserOrEnumRuleCall();
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getConfigExpressionAccess().getAppliesToContainmentPathParserRuleCall_1_2_1_0());
-						}
-						lv_appliesTo_7_0=ruleContainmentPath
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getConfigExpressionRule());
-							}
-							set(
-								$current,
-								"appliesTo",
-								lv_appliesTo_7_0,
-								"org.osate.xtext.aadl2.properties.Properties.ContainmentPath");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)?
 		)
 		    |
 		(
@@ -956,9 +945,9 @@ ruleConfigExpression returns [EObject current=null]
 				}
 				newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_2_1());
 			}
-			this_Assignments_9=ruleAssignments[$current]
+			this_Assignments_7=ruleAssignments[$current]
 			{
-				$current = $this_Assignments_9.current;
+				$current = $this_Assignments_7.current;
 				afterParserOrEnumRuleCall();
 			}
 		)
