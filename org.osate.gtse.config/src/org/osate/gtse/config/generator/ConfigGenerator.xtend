@@ -66,6 +66,8 @@ import static extension org.osate.gtse.config.config.ConfigurationExt.*
 // - check applicability of wildcards for subcomponents
 // - add classifier option to lhs of assignments
 // - add match mode selection (type only, classifier match, type extension, etc.
+// - dotted name for config; configs are classifiers
+
 
 class ConfigGenerator extends AbstractGenerator {
 
@@ -146,7 +148,8 @@ class ConfigGenerator extends AbstractGenerator {
 					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
 						serializer.serialize((pv.exp as ReferenceValue).path).trim
 				} else {
-					'LitPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim
+					val type = 'int'
+					'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + type +'=' + serializer.serialize(r.value).trim
 				}
 			}
 		].join('\n'))
@@ -411,7 +414,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	dispatch def String print(Property p) {
-		p.qualifiedName()
+		p.qualifiedName().replaceAll(':', '\\\\:')
 	}
 
 	dispatch def String print(ConfigParameter p) {
