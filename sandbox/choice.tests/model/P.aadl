@@ -1,0 +1,48 @@
+package P
+public
+
+	system S
+	end S;
+
+	system implementation S.i
+		subcomponents
+			t1: system T;
+			t2: system T;
+			t3: system T.i3;
+	end S.i;
+
+	system T
+	end T;
+
+	system implementation T.i1
+		subcomponents
+			u: system U;
+	end T.i1;
+	
+	system implementation T.i2
+		subcomponents
+			v: system V;
+	end T.i2;
+	
+	system implementation T.i3
+		subcomponents
+			u: system U;
+			v: system V;
+	end T.i3;
+	
+	system U
+	end U;
+	
+	system implementation U.i
+	end U.i;
+
+	system implementation U.i1
+	end U.i1;
+
+	system V
+	end V;
+	
+	system implementation V.i
+	end V.i;
+
+end P;
