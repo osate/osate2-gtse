@@ -67,11 +67,11 @@ import static extension org.osate.gtse.config.config.ConfigurationExt.*
  */
 
 // TODO
+// - dotted name for config; configs are classifiers
 // - check applicability of wildcards for subcomponents
 // - add classifier option to lhs of assignments
 // - add match mode selection (type only, classifier match, type extension, etc.
-// - dotted name for config; configs are classifiers
-
+// - lots of validation
 
 class ConfigGenerator extends AbstractGenerator {
 
