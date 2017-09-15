@@ -56,20 +56,9 @@ import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.network.Limit;
-import org.osate.atsv.standalone.ATSVVarCollection;
 import org.osgi.framework.Bundle;
 
 public class GenerateInputFilesHandler extends AbstractHandler {
-
-	/**
-	 * Initial values for input.xml, which will be overwritten by ATSV
-	 */
-	private ATSVVarCollection startingInputs = null;
-
-	/**
-	 * Initial values for output.xml, which will be overwritten by ATSV
-	 */
-	private ATSVVarCollection startingOutputs = null;
 
 	/**
 	 * These are specified by the user, currently as a properties file but eventually as a custom
@@ -122,8 +111,6 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	}
 
 	private void initializeFields() {
-		startingInputs = new ATSVVarCollection();
-		startingOutputs = new ATSVVarCollection();
 		userProps = null;
 		osateProps = new Properties();
 		ecf = new EngineConfigGenerator();
@@ -182,27 +169,23 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	}
 
 	private void addGeneratedChoicePoint(String title, ATSVVariableType type, ValuesModel values) {
-		ecf.addInputVariable(title, false, type, values);
-		startingInputs.addVar(title, type, values.getDefault());
+		ecf.addChoicePointDefinition(title, type, values);
 	}
 
 	private void addGeneratedChoicePoint(String title, ATSVVariableType type, DistributionModel dist) {
-		ecf.addInputVariable(title, false, type, dist);
-		startingInputs.addVar(title, type, dist.getDefault());
+		ecf.addChoicePointDefinition(title, type, dist);
 	}
 
 	private void addOutputVariables(String varStr, String limitStr) {
 		String[] varArr = varStr.split("-");
 		String varName = varArr[1];
 		ATSVVariableType type = ATSVVariableType.getTypeByName(varArr[2]);
-		String defaultVal = ATSVVariableType.getDefaultFromType(type);
 		Limit limit = null;
 		if (limitStr.length() > 0) {
 			String[] limitArr = limitStr.split("-");
 			limit = new Limit(limitArr[0], limitArr[1]);
 		}
 		ecf.addOutputVariable(varName, type, limit);
-		startingOutputs.addVar(varName, type, defaultVal);
 	}
 
 	private Properties initializeProperties() {
@@ -246,7 +229,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void generateOutputFile() {
 		try {
-			startingOutputs.writeToFile(targetDirStr + "output.xml");
+			ecf.getStartingOutputs().writeToFile(targetDirStr + "output.xml");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -254,7 +237,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void generateInputFile() {
 		try {
-			startingInputs.writeToFile(targetDirStr + "input.xml");
+			ecf.getStartingInputs().writeToFile(targetDirStr + "input.xml");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

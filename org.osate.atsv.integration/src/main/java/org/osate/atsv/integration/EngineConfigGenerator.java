@@ -40,6 +40,7 @@ import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.network.Limit;
+import org.osate.atsv.standalone.ATSVVarCollection;
 
 /**
  * This is the main API for specifying ATSV engine configurations by adding variables and constraints.
@@ -52,6 +53,8 @@ public final class EngineConfigGenerator {
 	private JAXBElement<ExplorationEngineModel> cfg;
 	private ExplorationEngineModel ecf;
 	private Map<String, Limit> limits = new HashMap<>();
+	private ATSVVarCollection startingInputs = new ATSVVarCollection();
+	private ATSVVarCollection startingOutputs = new ATSVVarCollection();
 
 	public EngineConfigGenerator() {
 		try {
@@ -73,6 +76,14 @@ public final class EngineConfigGenerator {
 			e.printStackTrace();
 		}
 
+	}
+
+	public ATSVVarCollection getStartingInputs() {
+		return startingInputs;
+	}
+
+	public ATSVVarCollection getStartingOutputs() {
+		return startingOutputs;
 	}
 
 	/**
@@ -102,34 +113,35 @@ public final class EngineConfigGenerator {
 		if (limit != null) {
 			limits.put(title, limit);
 		}
+		startingOutputs.addVar(title, type, value);
 	}
 
 	/**
-	 * Add an input variable to the engine configuration.
+	 * Define a choicepoint.
 	 * 
-	 * @param title The name of this variable
-	 * @param sampled Whether or not this variable is sampled
-	 * @param type The type of this variable
-	 * @param values The values this variable can take 
+	 * @param title The name of this choicepoint
+	 * @param type The type of this choicepoint
+	 * @param values The values this choicepoint can take 
 	 */
-	public void addInputVariable(String title, boolean sampled, ATSVVariableType type, ValuesModel values) {
+	public void addChoicePointDefinition(String title, ATSVVariableType type, ValuesModel values) {
 		String value = values.getDefault();
-		VariableModel vm = new VariableModel(title, sampled, true, type, value, values);
+		VariableModel vm = new VariableModel(title, false, true, type, value, values);
 		ecf.addVariable(vm);
+		startingInputs.addVar(title, type, values.getDefault());
 	}
 
 	/**
-	 * Add an input variable to the engine configuration.
+	 * Define a choicepoint.
 	 * 
-	 * @param title The name of this variable
-	 * @param sampled Whether or not this variable is sampled
-	 * @param type The type of this variable
-	 * @param distribution The distribution that the data this variable tracks fit 
+	 * @param title The name of this choicepoint
+	 * @param type The type of this choicepoint
+	 * @param distribution The distribution of this choicepoint's values
 	 */
-	public void addInputVariable(String title, boolean sampled, ATSVVariableType type, DistributionModel distribution) {
+	public void addChoicePointDefinition(String title, ATSVVariableType type, DistributionModel distribution) {
 		String value = distribution.getDefault();
-		VariableModel vm = new VariableModel(title, sampled, true, type, value, distribution);
+		VariableModel vm = new VariableModel(title, false, true, type, value, distribution);
 		ecf.addVariable(vm);
+		startingInputs.addVar(title, type, distribution.getDefault());
 	}
 
 	/**
