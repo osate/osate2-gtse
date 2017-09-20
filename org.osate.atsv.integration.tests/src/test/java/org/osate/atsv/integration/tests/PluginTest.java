@@ -34,5 +34,5 @@ public class PluginTest {
 	/**
 	 * The name of the top-level component in the omnibus test package
 	 */
-	public static final String COMPONENT_NAME = "MySystem.Tier0";
+	public static final String COMPONENT_NAME = "SimpleComponentChoice::MySystem.Tier0";
 }

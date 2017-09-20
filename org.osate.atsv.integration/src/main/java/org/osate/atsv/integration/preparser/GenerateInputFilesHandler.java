@@ -53,6 +53,7 @@ import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
+import org.osate.atsv.integration.exception.BadPathException;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.network.Limit;
@@ -204,9 +205,6 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			return null;
 		}
 
-		osateProps.setProperty("packageName", propFile.getName().substring(0,
-				propFile.getName().length() - propFile.getFileExtension().length() - 1));
-
 		// Assume choicepoint definitions are named the same as the package they specify
 		userProps = new Properties();
 		IPath propFilePath = propFile.getRawLocation();
@@ -216,6 +214,23 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			e.printStackTrace();
 			return null;
 		}
+
+		String compImplName = userProps.getProperty("componentImplementationName");
+		String packageName;
+		try {
+			if (compImplName.lastIndexOf("::") > 0) {
+				// Qualified packagename
+				packageName = compImplName.substring(0, compImplName.lastIndexOf("::"));
+			} else {
+				throw new BadPathException(
+						"The componentImplementationName must be qualified. Use the format 'PackageName::ComponentImplementationName'");
+			}
+			osateProps.setProperty("packageName", packageName);
+		} catch (BadPathException e) {
+			// TODO: Get this to the user
+			e.printStackTrace();
+		}
+
 		return userProps;
 	}
 
