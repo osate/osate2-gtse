@@ -1,0 +1,118 @@
+package impl::power
+
+public
+with common;
+with ARP4761;
+with EMV2;
+
+	with SEI;
+
+device powersource
+features
+	socket : provides bus access common::power.generic;
+annex EMV2 {**                                                                                                                                                              
+	use types WBSImplementationErrorLib;
+	use behavior WBSImplementationErrorLib::Twostate;
+
+	error propagations
+		socket 		: out propagation {NoPower};
+		bindings 	: out propagation {AnyImplementationError};
+	flows
+		f1 : error source socket{NoPower};
+		f2 : error source bindings{AnyImplementationError};
+	end propagations;
+	component error behavior
+	events
+		Depleted : error event;
+		Explode  : error event;
+	transitions
+		Operational -[Depleted]-> Failed;
+		Operational -[Explode]-> Failed;
+	propagations
+		p1: Failed -[]-> socket{NoPower};
+		normal : Operational -[]-> socket{NoError};
+	end component;
+	properties
+		EMV2::Severity => ARP4761::Major applies to socket.NoPower;
+		EMV2::Likelihood => ARP4761::Probable applies to socket.NoPower;
+		EMV2::Hazards => 
+			([	crossreference => "ARP4761 page 277 figure 9";
+				failure => "Loss of one power source, might be critical if both are lost (primary and redundant)";
+				phases => ("Landing","RTO");
+				description => "Loss of Electrical Power to BSCU";
+				comment => "Major hazard if both power are lost";
+			])
+			applies to socket.NoPower;
+		EMV2::OccurrenceDistribution => [ ProbabilityValue => 1.35e-5 ; Distribution => Poisson;] applies to socket.NoPower;
+--		EMV2::OccurrenceDistribution => [ ProbabilityValue => 6.75e-5 ; Distribution => Fixed;] applies to socket.NoPower;
+
+		EMV2::Severity => ARP4761::Catastrophic applies to Explode;		
+		EMV2::Likelihood =>  ARP4761::ExtremelyImprobable applies to Explode;
+		EMV2::Hazards => 
+			([	crossreference => "TBD";
+				failure => "Battery Explode";
+				phases => ("all");
+				description => "Battery Explode, major hazard";
+				comment => "Have a physical impact on the surrounding components";
+			])
+			applies to Explode;
+			
+		EMV2::Severity => ARP4761::Major applies to Depleted;		
+		EMV2::Likelihood => ARP4761::Probable applies to Depleted;
+		EMV2::Hazards => 
+			([	crossreference => "TBD";
+				failure => "Battery Depleted";
+				phases => ("all");
+				description => "No more power in the battery";
+				comment => "Can be an issue if redundant battery is failing also";
+			])
+			applies to Depleted;**};
+end powersource;
+
+device implementation powersource.small
+	properties
+		SEI::Price => 750.00;
+		SEI::NetWeight => 3.0 kg;
+end powersource.small;
+
+device implementation powersource.large
+	properties
+		SEI::Price => 1000.00;
+		SEI::NetWeight => 7.5 kg;
+end powersource.large;
+
+device implementation powersource.systempower
+	properties
+		SEI::Price => 50.00;
+		SEI::NetWeight => 0.5 kg;
+end powersource.systempower;
+
+system power
+features
+	line1 : provides bus access common::power.generic;
+	line2 : provides bus access common::power.generic;
+annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+	use types WBSImplementationErrorLib;
+	use behavior WBSImplementationErrorLib::Twostate;
+
+	error propagations
+		bindings 	: out propagation {AnyImplementationError};
+	flows
+		f0 : error source bindings{AnyImplementationError};
+	end propagations;**};
+end power;
+
+system implementation power.generic
+subcomponents
+    --  Power buses
+	powerbus1 : device powersource.large;
+	powerbus2 : device powersource.large;
+connections
+	pwr1 : bus access  powerbus1.socket <-> line1;
+	pwr2 : bus access  powerbus2.socket <-> line2;
+properties
+	SEI::WeightLimit => 50.0 kg;
+end power.generic;
+
+
+end impl::power;
