@@ -44,6 +44,7 @@ import org.osate.aadl2.PropertyExpression;
 import org.osate.aadl2.RealLiteral;
 import org.osate.aadl2.StringLiteral;
 import org.osate.aadl2.instance.ComponentInstance;
+import org.osate.aadl2.instance.FeatureInstance;
 import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
@@ -131,6 +132,32 @@ public class InstantiatorTests extends OsateTest {
 	public void testReferencePropertyValueSwapInstance() throws Exception {
 		propSwapHelper("scs.mdev", "Deployment_Properties::Actual_Processor_Binding", "scs.processor2",
 				"scs.processor1", ReferencePropertyValue.class);
+	}
+
+	@Test
+	public void testRefinedToSubcomponentSwap() throws Exception {
+		SystemInstance si = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
+				Collections.singleton(new SubcomponentChoice("scs.sdev", "SimpleComponentChoice::StartProcess.imp2",
+						ATSVVariableType.STRING)));
+
+		for (ComponentInstance outerCI : si.getAllComponentInstances()) {
+			if (!outerCI.getName().equalsIgnoreCase("scs")) {
+				continue;
+			}
+			for (ComponentInstance innerCI : outerCI.getAllComponentInstances()) {
+				if (!innerCI.getName().equalsIgnoreCase("sdev")) {
+					continue;
+				}
+				for (FeatureInstance fi : innerCI.getFeatureInstances()) {
+					if (!fi.getName().equals("power")) {
+						continue;
+					}
+					assertEquals(6000.0, GetProperties.getPowerBudget(fi, 10.0), .0001);
+					return;
+				}
+			}
+		}
+		fail("Couldn't find scs.sdev component");
 	}
 
 	@Override

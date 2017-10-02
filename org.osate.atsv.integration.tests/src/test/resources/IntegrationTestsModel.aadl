@@ -21,7 +21,6 @@ package SimpleComponentChoice
 public
 
 	with SEI;
-
 	system SimpleComponentChoiceSystem
 		features
 			power: in feature Electricity;
@@ -78,7 +77,7 @@ public
 		subcomponents
 			EPSU: system ElectrialPowerSupply;
 			Grid: system ElectricGrid;
-			scs: system SimpleComponentChoiceSystem.imp;
+			scs: system SimpleComponentChoiceSystem.refinement;
 		connections
 			psupply: feature EPSU.Supplier -> Grid.Supplier;
 			pconsume: feature Grid.Consumer -> scs.power;
@@ -109,6 +108,11 @@ public
 			Deployment_Properties::Actual_Processor_Binding => (reference (processor1)) applies to mdev;
 	end SimpleComponentChoiceSystem.imp;
 
+	system implementation SimpleComponentChoiceSystem.refinement extends SimpleComponentChoiceSystem.imp
+		subcomponents
+			sdev : refined to process StartProcess.imp1;
+	end SimpleComponentChoiceSystem.refinement;
+
 	process StartProcess
 		features
 			output: out event port;
@@ -118,12 +122,19 @@ public
 						Latency => 5 Ms .. 5 Ms;
 					};
 		properties
-			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::PowerBudget => 4.0 w applies to power;
 			SEI::Price => 500.00;
 	end StartProcess;
 
-	process implementation StartProcess.imp
-	end StartProcess.imp;
+	process implementation StartProcess.imp1
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
+	end StartProcess.imp1;
+
+	process implementation StartProcess.imp2
+		properties
+			SEI::PowerBudget => 6.0 w applies to power;
+	end StartProcess.imp2;
 
 	process EndProcess
 		features
@@ -148,11 +159,14 @@ public
 	process implementation EndProcess.imp
 	end EndProcess.imp;
 
-	process MidProcess1
+	process MidProcess
 		features
 			power: in feature Electricity;
 			input: in event port;
 			output: out event port;
+	end MidProcess;
+
+	process MidProcess1 extends MidProcess
 		flows
 			variableTimeFlow: flow path input -> output {
 						Latency => 5 ms .. 5 ms;
@@ -163,11 +177,9 @@ public
 			SEI::Price => 500.00;
 	end MidProcess1;
 
-	process MidProcess2
+	process MidProcess2 extends MidProcess
 		features
-			power: in feature Electricity;
-			input: in event port;
-			output: out event port{
+			output: refined to out event port{
 				Communication_Properties::Output_Rate => [
 					Value_Range => 10.0 .. 50.0;
 					Rate_Unit => PerSecond;
@@ -184,11 +196,7 @@ public
 			SEI::Price => 750.63;
 	end MidProcess2;
 
-	process MidProcess3
-		features
-			power: in feature Electricity;
-			input: in event port;
-			output: out event port;
+	process MidProcess3 extends MidProcess
 		flows
 			variableTimeFlow: flow path input -> output {
 						Latency => 25 ms .. 25 ms;
@@ -198,5 +206,7 @@ public
 			SEI::RAMActual => 1000.0 bytes;
 			SEI::Price => 1337.42;
 	end MidProcess3;
+
+
 
 end SimpleComponentChoice;
