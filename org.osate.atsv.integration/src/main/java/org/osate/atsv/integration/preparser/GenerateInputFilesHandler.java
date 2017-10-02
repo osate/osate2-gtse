@@ -50,7 +50,6 @@ import org.eclipse.ui.PlatformUI;
 import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.EngineConfigGenerator;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
-import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.exception.BadPathException;
@@ -167,14 +166,6 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void addGeneratedChoicePoint(String title, ATSVVariableType type, ValuesModel values) {
-		ecf.addChoicePointDefinition(title, type, values);
-	}
-
-	private void addGeneratedChoicePoint(String title, ATSVVariableType type, DistributionModel dist) {
-		ecf.addChoicePointDefinition(title, type, dist);
 	}
 
 	private void addOutputVariables(String varStr, String limitStr) {
@@ -314,7 +305,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 				osateProps.setProperty("pluginIds", userProps.getProperty(propName));
 			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
 				String[] options = userProps.getProperty(propName).split(",");
-				addGeneratedChoicePoint(propNames[1], ATSVVariableType.STRING, new ValuesModel(options));
+				ecf.addChoicePointDefinition(propNames[1], ATSVVariableType.STRING, new ValuesModel(options));
 				// Pass the choicepoint definition through to the properties used to build the request...
 				osateProps.setProperty(propName, "(Key value is unused for subcomponent values)");
 			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
@@ -324,6 +315,12 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
 				// Just pass this straight through as-is
 				osateProps.setProperty(propName, userProps.getProperty(propName));
+			} else if (propNames[0].equalsIgnoreCase("EqConfigurator")) {
+				ecf.addEqualityConstraint(propName.substring("EqConfigurator-".length()),
+						userProps.getProperty(propName));
+			} else if (propNames[0].equalsIgnoreCase("NeqConfigurator")) {
+				ecf.addUniquenessConstraint(propName.substring("NeqConfigurator-".length()),
+						userProps.getProperty(propName));
 			}
 		}
 	}
@@ -333,15 +330,16 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		String[] range = userProps.getProperty(propName).split(",");
 		ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[3]);
 		if (type == ATSVVariableType.FLOAT) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
+			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], type,
 					new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
 		} else if (type == ATSVVariableType.INTEGER) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type,
+			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], type,
 					new UniformDistributionModel(Integer.valueOf(range[0]), Integer.valueOf(range[1])));
 		} else if (type == ATSVVariableType.STRING) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], type, new ValuesModel(range));
+			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], type, new ValuesModel(range));
 		} else if (type == null && propNames[3].equals("reference")) {
-			addGeneratedChoicePoint(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING, new ValuesModel(range));
+			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING,
+					new ValuesModel(range));
 		}
 		osateProps.setProperty(propName, "(Key value is unused for property values)");
 	}
