@@ -47,24 +47,29 @@ public class Limit implements Serializable {
 		this.limit = Float.valueOf(limit);
 	}
 
-	public boolean checkLimit(String val) throws Exception {
-		float actual = Float.valueOf(val);
-		if (op == RelationalOperator.GT) {
-			return actual > limit;
-		} else if (op == RelationalOperator.GTE) {
-			return actual >= limit;
-		} else if (op == RelationalOperator.EQ) {
-			return actual == limit;
-		} else if (op == RelationalOperator.NEQ) {
-			return actual != limit;
-		} else if (op == RelationalOperator.LT) {
-			return actual < limit;
-		} else if (op == RelationalOperator.LTE) {
-			return actual <= limit;
-		} else {
-			// This should be impossible.
-			throw new Exception("Corrupt relational operator!");
+	/**
+	 * Checks that the provided value meets the limit encoded in this object.
+	 * If it doesn't, return a descriptive error message.
+	 * 
+	 * @param varName Name of the variable, used for error message creation
+	 * @param val The value to check
+	 * @return A descriptive error message, or an empty string if the limit isn't violated
+	 */
+	public String checkLimit(String varName, float val) {
+		if (op == RelationalOperator.GT && !(val > limit)) {
+			return varName + " (" + val + ") must be greater than " + limit + " but isn't.";
+		} else if (op == RelationalOperator.GTE && !(val >= limit)) {
+			return varName + " (" + val + ") must be greater than or equal to " + limit + " but isn't.";
+		} else if (op == RelationalOperator.EQ && !(val == limit)) {
+			return varName + " (" + val + ") must be equal to " + limit + " but isn't.";
+		} else if (op == RelationalOperator.NEQ && !(val != limit)) {
+			return varName + " (" + val + ") must not be equal to " + limit + " but is.";
+		} else if (op == RelationalOperator.LT && !(val < limit)) {
+			return varName + " (" + val + ") must be less than " + limit + " but isn't.";
+		} else if (op == RelationalOperator.LTE && !(val <= limit)) {
+			return varName + " (" + val + ") must be less than or equal to " + limit + " but isn't.";
 		}
+		return "";
 	}
 
 	private RelationalOperator getOp(String op) {

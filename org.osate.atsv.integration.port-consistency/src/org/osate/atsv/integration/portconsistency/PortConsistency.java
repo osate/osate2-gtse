@@ -49,7 +49,7 @@ public class PortConsistency extends AbstractAnalysis {
 
 		@Override
 		protected void error(NamedElement el, String s) {
-			resp.markInvalid();
+			resp.markInvalid("Port Consistency Analysis -- In " + el.getFullName() + ": " + s);
 		}
 	}
 
