@@ -10,12 +10,17 @@ ConfigPkg:
 		configurations+=Configuration*
 //	'end'
 ;
-	
+
+// TODO: extends configuration / configuration with arguments
+// TODO: extends parameter? probably not
 Configuration:
 	'configuration' name=ID Parameters? 
-	('extends' extended=[aadl2::ComponentClassifier|CNAME])? 
-	('with' combined+=Combination (',' combined+=Combination)*)?
+	('extends' extended=[aadl2::ComponentClassifier|CNAME] With? )?
 	Assignments?
+;
+
+fragment With:
+	'with' combined+=Combination (',' combined+=Combination)*
 ;
 
 Combination:
@@ -65,7 +70,7 @@ Assignment:
 
 ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
-	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments?
 	| {PropertyValue} exp=CPropertyExpression
 	| {NestedAssignments} Assignments
 ;
