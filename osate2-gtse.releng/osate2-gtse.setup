@@ -84,6 +84,7 @@
           locateNestedProjects="true">
         <excludedPath>docs</excludedPath>
         <excludedPath>GTSE-Examples</excludedPath>
+        <excludedPath>choice.tests</excludedPath>
       </sourceLocator>
       <repositoryList
           name="Oxygen">
