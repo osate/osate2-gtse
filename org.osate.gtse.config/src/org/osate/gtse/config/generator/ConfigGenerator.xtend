@@ -124,7 +124,7 @@ class ConfigGenerator extends AbstractGenerator {
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig)
-		val replacements = rootComp.process(lookup, arguments).toList
+		val replacements = process(rootComp, lookup, arguments).toList
 
 		fsa.generateFile('paths.txt', replacements.map [ r |
 			val tl = r.path.tail
@@ -247,7 +247,7 @@ class ConfigGenerator extends AbstractGenerator {
 			#[]
 		else {
 			val replacements = cl.allNamedElements.map [ ne |
-				val result = ne.process(lookup.specialize(ne), arguments)
+				val result = process(ne, lookup.specialize(ne), arguments)
 				result
 			].flatten
 			replacements.map[prepend(current)]
