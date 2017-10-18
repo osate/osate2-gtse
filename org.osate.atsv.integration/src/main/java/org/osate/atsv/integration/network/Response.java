@@ -19,8 +19,10 @@
 package org.osate.atsv.integration.network;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
+import org.osate.atsv.standalone.ATSVVar;
 import org.osate.atsv.standalone.ATSVVarCollection;
 
 public class Response implements Serializable {
@@ -49,12 +51,19 @@ public class Response implements Serializable {
 	 */
 	private boolean valid = true;
 
+	/**
+	 * Pointer to the set of variables in the response. Not meant to be shared / used
+	 * outside this class.
+	 */
+	private Map<String, ATSVVar> innerMap = null;;
+
 	public Response() {
 		addVariable("ValidModel", ATSVVariableType.FLOAT, "1.0");
+		addVariable("InvalidReason", ATSVVariableType.STRING, "");
 	}
 
 	public void setException(Exception e) {
-		markInvalid();
+		markInvalid("Encountered exception: " + e.getMessage());
 		exception = e;
 	}
 
@@ -78,8 +87,16 @@ public class Response implements Serializable {
 		return variables;
 	}
 
-	public void markInvalid() {
+	public void markInvalid(String reason) {
+		if (innerMap == null) {
+			innerMap = variables.getVars();
+		}
 		addVariable("ValidModel", ATSVVariableType.FLOAT, "0.0");
+		String existingReasons = "";
+		if (innerMap.get("InvalidReason").getVal().length() > 0) {
+			existingReasons = innerMap.get("InvalidReason").getVal() + ";\n";
+		}
+		addVariable("InvalidReason", ATSVVariableType.STRING, existingReasons + reason);
 		valid = false;
 	}
 

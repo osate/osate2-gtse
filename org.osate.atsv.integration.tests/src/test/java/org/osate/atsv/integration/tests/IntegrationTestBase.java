@@ -90,8 +90,8 @@ public class IntegrationTestBase extends OsateTest {
 	 * @throws ClassNotFoundException
 	 */
 	protected void testHelper(String pluginId, String expectedException, boolean expectValid,
-			Map<String, VarDescriptor> expectedVars, Set<ChoicePointSpecification> CPSpecs)
-			throws IOException, ClassNotFoundException {
+			String expectedInvalidReasons, Map<String, VarDescriptor> expectedVars,
+			Set<ChoicePointSpecification> CPSpecs) throws IOException, ClassNotFoundException {
 		Request r = new Request();
 		r.addPluginId(pluginId);
 		for (ChoicePointSpecification cps : CPSpecs) {
@@ -118,6 +118,9 @@ public class IntegrationTestBase extends OsateTest {
 			assertEquals(expectedException, res.getException().getMessage());
 		}
 		assertTrue("The ValidModel value isn't set", res.getVariables().getVars().containsKey("ValidModel"));
+		assertTrue("The InvalidReason value isn't set", res.getVariables().getVars().containsKey("InvalidReason"));
+		assertEquals("Wrong InvalidReason", expectedInvalidReasons,
+				res.getVariables().getVars().get("InvalidReason").getVal());
 		if (expectValid) {
 			assertTrue("The model is marked invalid, but it shouldn't be", res.isValidModel());
 			assertEquals("Wrong ValidModel score", "1.0", res.getVariables().getVars().get("ValidModel").getVal());

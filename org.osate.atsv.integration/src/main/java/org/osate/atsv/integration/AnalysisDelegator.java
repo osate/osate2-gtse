@@ -128,8 +128,10 @@ public class AnalysisDelegator {
 			}
 			for (String limitVar : limits.keySet()) {
 				if (response.getVariables().getVars().containsKey(limitVar)) {
-					if (!limits.get(limitVar).checkLimit(response.getVariables().getVars().get(limitVar).getVal())) {
-						response.markInvalid();
+					String reason = limits.get(limitVar).checkLimit(limitVar,
+							Float.valueOf(response.getVariables().getVars().get(limitVar).getVal()));
+					if (reason.length() > 0) {
+						response.markInvalid("Limit Violation -- " + reason);
 						break;
 					}
 				}

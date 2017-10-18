@@ -30,37 +30,40 @@ public class IntegrationTests extends IntegrationTestBase {
 	@Test
 	public void badPluginIdTest() throws IOException, ClassNotFoundException {
 		final String fakePluginID = "this.isnt.a.real.plugin.id";
-		testHelper(fakePluginID, "No extension with id '" + fakePluginID + "' found!", false, Collections.emptyMap(),
+		testHelper(fakePluginID, "No extension with id '" + fakePluginID + "' found!", false,
+				"Encountered exception: No extension with id '" + fakePluginID + "' found!", Collections.emptyMap(),
 				Collections.emptySet());
 	}
 
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.flow-latency", null, true,
+		testHelper("org.osate.atsv.integration.flow-latency", null, true, "",
 				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")), Collections.emptySet());
 	}
 
 	@Test
 	public void portConsistencyTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.port-consistency", null, false, Collections.emptyMap(),
-				Collections.emptySet());
+		testHelper("org.osate.atsv.integration.port-consistency", null, false,
+				"Port Consistency Analysis -- In mdev.output -> edev.input: Source rate unit PerSecond and destination rate unit PerDispatch differ;\nPort Consistency Analysis -- In mdev.output -> edev.input: Maximum source data rate 50.0 is greater than maximum destination data rate 1.0",
+				Collections.emptyMap(), Collections.emptySet());
 	}
 
 	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.power-consumption", null, true,
+		testHelper("org.osate.atsv.integration.power-consumption", null, true, "",
 				Collections.singletonMap("Grid", new VarDescriptor("20.0")), Collections.emptySet());
 	}
 
 	@Test
 	public void unhandledFaultsTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.unhandled-faults", null, false, Collections.emptyMap(),
-				Collections.emptySet());
+		testHelper("org.osate.atsv.integration.unhandled-faults", null, false,
+				"Unhandled Faults Analysis -- EPSU.Supplier -> Grid.Supplier: Outgoing propagation  Supplier{ValueError} has error types not handled by incoming propagation Supplier{SequenceValueError};\nUnhandled Faults Analysis -- Outgoing propagation  Supplier{ValueError} has error types not handled by incoming propagation Supplier{SequenceValueError}",
+				Collections.emptyMap(), Collections.emptySet());
 	}
 
 	@Test
 	public void priceAndWeightTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.property-totals", null, true,
+		testHelper("org.osate.atsv.integration.property-totals", null, true, "",
 				Stream.of(new Object[] { "Price", new VarDescriptor("1750.63") },
 						new Object[] { "Weight", new VarDescriptor("8.41") })
 						.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
@@ -70,6 +73,7 @@ public class IntegrationTests extends IntegrationTestBase {
 	@Test
 	public void limitTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.property-totals", null, false,
+				"Limit Violation -- Price (1750.63) must be less than 1500.0 but isn't.",
 				Collections.singletonMap("Price", new VarDescriptor("1750.63", "lt", "1500.0")),
 				Collections.emptySet());
 	}
