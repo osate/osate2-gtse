@@ -65,14 +65,12 @@ import static extension org.osate.gtse.config.config.ConfigurationExt.*
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
-
 // TODO
 // - dotted name for config; configs are classifiers
 // - check applicability of wildcards for subcomponents
 // - add classifier option to lhs of assignments
 // - add match mode selection (type only, classifier match, type extension, etc.
 // - lots of validation
-
 class ConfigGenerator extends AbstractGenerator {
 
 	@Inject
@@ -153,7 +151,8 @@ class ConfigGenerator extends AbstractGenerator {
 					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
 						serializer.serialize((pv.exp as ReferenceValue).path).trim
 				} else {
-					'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) +'=' + serializer.serialize(r.value).trim
+					'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) + '=' +
+						serializer.serialize(r.value).trim
 				}
 			}
 		].join('\n'))
@@ -174,9 +173,9 @@ class ConfigGenerator extends AbstractGenerator {
 			AadlString: 'string'
 			AadlReal: 'float'
 			default: ''
-		}	
+		}
 	}
-	
+
 	def Iterable<Mapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
 		Map<ConfigParameter, ConfigValue> arguments) {
 		val downAssignment = lookup.findFirst[key === null && !value.isProperty]?.value
@@ -206,7 +205,8 @@ class ConfigGenerator extends AbstractGenerator {
 				val localLookup = makeLookupList(value.assignments)
 				switch obj: value.ref {
 					Classifier: {
-						#[new Mapping(#[ne], cfgValue)] + continueDown(ne, obj, localLookup + lookup, arguments)
+						val m = makeComponentMapping(ne, obj, cfgValue)
+						m + continueDown(ne, obj, localLookup + lookup, arguments)
 					}
 					Configuration: {
 						val configLookup = makeLookupList(obj)
@@ -214,7 +214,8 @@ class ConfigGenerator extends AbstractGenerator {
 						val args = newHashMap
 						arguments.forEach[p, v|args.put(p, v)]
 						value.arguments.forEach[args.put(it.parameter, it.value)]
-						#[new Mapping(#[ne], cfgValue)] + propertiesFromConfiguration +
+						val m = makeComponentMapping(ne, obj, cfgValue)
+						m + propertiesFromConfiguration +
 							continueDown(ne, obj.extended, localLookup + configLookup + lookup, args)
 					}
 					ConfigParameter: {
@@ -266,19 +267,30 @@ class ConfigGenerator extends AbstractGenerator {
 		]
 	}
 
+	def private static makeComponentMapping(NamedElement ne, Configuration cfg, ConfigValue cfgValue) {
+		makeComponentMapping(ne, cfg.extended, cfgValue)
+	}
+
+	def private static makeComponentMapping(NamedElement ne, Classifier cl, ConfigValue cfgValue) {
+		if (ne instanceof Classifier || ne.classifier != cl)
+			#[new Mapping(#[ne], cfgValue)]
+		else
+			#[]
+	}
+
 	def private static isStructured(NamedElement ne) {
 		ne instanceof Subcomponent || ne instanceof FeatureGroup
 	}
 
-	protected dispatch def getClassifier(NamedElement ne) {
+	protected dispatch static def getClassifier(NamedElement ne) {
 		null
 	}
 
-	protected dispatch def getClassifier(Subcomponent s) {
+	protected dispatch static def getClassifier(Subcomponent s) {
 		s.allClassifier
 	}
 
-	protected dispatch def getClassifier(FeatureGroup fg) {
+	protected dispatch static def getClassifier(FeatureGroup fg) {
 		fg.allFeatureGroupType
 	}
 
