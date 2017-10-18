@@ -23,5 +23,6 @@ Require-Bundle: org.junit,
  org.osate.xtext.aadl2,
  org.osate.xtext.aadl2.ui,
  org.osate.atsv.integration,
- com.itemis.xtext.testing
+ com.itemis.xtext.testing,
+ org.osate.pluginsupport;bundle-version="1.0.0"
 Bundle-ClassPath: .

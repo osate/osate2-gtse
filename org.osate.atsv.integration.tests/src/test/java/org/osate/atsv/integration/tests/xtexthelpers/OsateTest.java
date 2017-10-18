@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -62,9 +62,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.ComparisonFailure;
 import org.osate.aadl2.ModelUnit;
-import org.osate.aadl2.modelsupport.resources.PredeclaredProperties;
 import org.osate.aadl2.modelsupport.util.AadlUtil;
 import org.osate.core.AadlNature;
+import org.osate.pluginsupport.PluginSupportUtil;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
@@ -88,12 +88,11 @@ public abstract class OsateTest extends XtextTest {
 
 	protected final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-	private Set<String> pluginResourcesNames;
+	private Set<String> contributedAadlNames;
 
 	@Before
 	public void setUp() {
 		this.createProject(this.getProjectName());
-		this.buildProject("Plugin_Resources", true);
 		String _projectName = this.getProjectName();
 		String _plus = ("platform:/resource/" + _projectName);
 		this.setResourceRoot(_plus);
@@ -104,7 +103,9 @@ public abstract class OsateTest extends XtextTest {
 		this.deleteProject(this.getProjectName());
 	}
 
-	public abstract String getProjectName();
+	public String getProjectName() {
+		return this.getClass().getSimpleName();
+	}
 
 	/**
 	 * Create a project with subdirectories in the current workspace.
@@ -118,8 +119,6 @@ public abstract class OsateTest extends XtextTest {
 					@Override
 					public void execute(final IProgressMonitor monitor) {
 						try {
-							PredeclaredProperties.initPluginContributedAadl();
-							final IProject plugin_resources = OsateTest.this.getPluginResources();
 							boolean _exists = project.exists();
 							boolean _not = (!_exists);
 							if (_not) {
@@ -128,7 +127,6 @@ public abstract class OsateTest extends XtextTest {
 								final IProjectDescription description = project.getDescription();
 								description.setNatureIds(
 										new String[] { "org.eclipse.xtext.ui.shared.xtextNature", AadlNature.ID });
-								description.setReferencedProjects(new IProject[] { plugin_resources });
 								project.setDescription(description, monitor);
 								for (final String srcDir : srcDirs) {
 									{
@@ -174,7 +172,6 @@ public abstract class OsateTest extends XtextTest {
 	 * Build the named project. Optionally wait until the build is done.
 	 */
 	public void buildProject(final String name, final boolean wait) {
-		this.getPluginResources();
 		final IProject project = this.workspaceRoot.getProject(name);
 		Assert.isTrue(project.exists(), (("Project " + name) + " does not exist in the workspace"));
 		this.buildProject(project, wait);
@@ -184,7 +181,6 @@ public abstract class OsateTest extends XtextTest {
 	 * Build a given project. Optionally wait until the build is done.
 	 */
 	public void buildProject(final IProject project, final boolean wait) {
-		this.getPluginResources();
 		try {
 			project.build(IncrementalProjectBuilder.CLEAN_BUILD, null);
 		} catch (final Throwable _t) {
@@ -197,29 +193,6 @@ public abstract class OsateTest extends XtextTest {
 		}
 		if (wait) {
 			this.waitForBuild();
-		}
-	}
-
-	/**
-	 * Check if plugin resources exists, wait up to 10s. Return project.
-	 */
-	public IProject getPluginResources() {
-		try {
-			IProject _xblockexpression = null;
-			{
-				final IProject project = this.workspaceRoot
-						.getProject(PredeclaredProperties.PLUGIN_RESOURCES_PROJECT_NAME);
-				int i = 0;
-				for (; ((!project.exists()) && (i < 20)); i++) {
-					Thread.sleep(500);
-				}
-				Assert.isTrue(project.exists(), (("Project " + PredeclaredProperties.PLUGIN_RESOURCES_PROJECT_NAME)
-						+ " does not exist in the workspace"));
-				_xblockexpression = project;
-			}
-			return _xblockexpression;
-		} catch (Throwable _e) {
-			throw Exceptions.sneakyThrow(_e);
 		}
 	}
 
@@ -311,14 +284,10 @@ public abstract class OsateTest extends XtextTest {
 
 	protected static void assertIssue(final EObject eObject, final List<Issue> allIssues,
 			final FluentIssueCollection issueCollection, final Severity severity, final String... expectedMessages) {
-		final Function1<Issue, Boolean> _function = (Issue it) -> {
-			return Boolean.valueOf((Objects.equal(it.getSeverity(), severity)
-					&& Objects.equal(it.getUriToProblem(), EcoreUtil.getURI(eObject))));
-		};
+		final Function1<Issue, Boolean> _function = it -> Boolean.valueOf((Objects.equal(it.getSeverity(), severity)
+				&& Objects.equal(it.getUriToProblem(), EcoreUtil.getURI(eObject))));
 		final Iterable<Issue> issuesForEObject = IterableExtensions.<Issue> filter(allIssues, _function);
-		final Function1<Issue, String> _function_1 = (Issue it) -> {
-			return it.getMessage();
-		};
+		final Function1<Issue, String> _function_1 = it -> it.getMessage();
 		final Iterable<String> messagesForEObject = IterableExtensions.<Issue, String> map(issuesForEObject,
 				_function_1);
 		Set<String> _set = IterableExtensions.<String> toSet(messagesForEObject);
@@ -330,9 +299,7 @@ public abstract class OsateTest extends XtextTest {
 			String _join_1 = IterableExtensions.join(messagesForEObject, "\n");
 			throw new ComparisonFailure("", _join, _join_1);
 		}
-		final Consumer<Issue> _function_2 = (Issue it) -> {
-			issueCollection.addIssue(it);
-		};
+		final Consumer<Issue> _function_2 = it -> issueCollection.addIssue(it);
 		issuesForEObject.forEach(_function_2);
 	}
 
@@ -352,14 +319,10 @@ public abstract class OsateTest extends XtextTest {
 
 	private void assertScope(final IScopeProvider scopeProvider, final EObject context, final EReference reference,
 			final boolean scopingForModelUnits, final Iterable<String> expected) {
-		if ((this.pluginResourcesNames == null)) {
-			final Function1<IFile, Boolean> _function = (IFile it) -> {
-				return Boolean.valueOf(it.getName().toLowerCase().endsWith(".aadl"));
-			};
-			final Function1<IFile, String> _function_1 = (IFile it) -> {
+		if ((this.contributedAadlNames == null)) {
+			final Function1<URI, String> _function = uri -> {
 				String _xblockexpression = null;
 				{
-					final URI uri = URI.createPlatformResourceURI(it.getFullPath().toString(), false);
 					EObject _head = IterableExtensions
 							.<EObject> head(context.eResource().getResourceSet().getResource(uri, true).getContents());
 					final ModelUnit modelUnit = ((ModelUnit) _head);
@@ -367,18 +330,13 @@ public abstract class OsateTest extends XtextTest {
 				}
 				return _xblockexpression;
 			};
-			this.pluginResourcesNames = IterableExtensions
-					.<String> toSet(IterableExtensions.<IFile, String> map(
-							IterableExtensions.<IFile> filter(Iterables.<IFile> filter(
-									OsateTest.getAllMembers(this.getPluginResources()), IFile.class), _function),
-							_function_1));
+			this.contributedAadlNames = IterableExtensions.<String> toSet(
+					ListExtensions.<URI, String> map(PluginSupportUtil.getContributedAadl(), _function));
 		}
 		final String expectedNames = IterableExtensions
 				.join(IterableExtensions.<String> sortWith(expected, OsateTest.CUSTOM_NAME_COMPARATOR), ", ");
-		final Function1<IEObjectDescription, String> _function_2 = (IEObjectDescription it) -> {
-			return it.getName().toString("::");
-		};
-		final Function1<String, Boolean> _function_3 = (String it) -> {
+		final Function1<IEObjectDescription, String> _function_1 = it -> it.getName().toString("::");
+		final Function1<String, Boolean> _function_2 = it -> {
 			boolean _xblockexpression = false;
 			{
 				final int separatorIndex = it.lastIndexOf("::");
@@ -390,23 +348,20 @@ public abstract class OsateTest extends XtextTest {
 				}
 				final String modelUnitName = _xifexpression;
 				_xblockexpression = (AadlUtil.isPredeclaredPropertySet(modelUnitName)
-						|| (!this.pluginResourcesNames.contains(modelUnitName.toLowerCase())));
+						|| (!OsateTest.this.contributedAadlNames.contains(modelUnitName.toLowerCase())));
 			}
 			return Boolean.valueOf(_xblockexpression);
 		};
-		final String actualNames = IterableExtensions
-				.join(IterableExtensions
-						.<String> sortWith(IterableExtensions.<String> filter(
-								IterableExtensions.<IEObjectDescription, String> map(
-										scopeProvider.getScope(context, reference).getAllElements(), _function_2),
-								_function_3), OsateTest.CUSTOM_NAME_COMPARATOR),
-						", ");
+		final String actualNames = IterableExtensions.join(IterableExtensions.<String> sortWith(
+				IterableExtensions.<String> filter(IterableExtensions.<IEObjectDescription, String> map(
+						scopeProvider.getScope(context, reference).getAllElements(), _function_1), _function_2),
+				OsateTest.CUSTOM_NAME_COMPARATOR), ", ");
 		org.junit.Assert.assertEquals(expectedNames, actualNames);
 	}
 
 	private static Iterable<IResource> getAllMembers(final IContainer container) {
 		try {
-			final Function1<IResource, Iterable<IResource>> _function = (IResource it) -> {
+			final Function1<IResource, Iterable<IResource>> _function = it -> {
 				Iterable<IResource> _xifexpression = null;
 				if ((it instanceof IContainer)) {
 					_xifexpression = OsateTest.getAllMembers(((IContainer) it));

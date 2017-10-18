@@ -19,10 +19,21 @@
 package org.osate.gtse.config.ui
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.xtext.ui.shared.Access
+import org.osate.xtext.aadl2.ui.containers.Aadl2ProjectsState
+import org.osate.xtext.aadl2.ui.containers.Aadl2ProjectsStateHelper
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
  */
 @FinalFieldsConstructor
 class ConfigUiModule extends AbstractConfigUiModule {
+	
+		override provideIAllContainersState() {
+			Access.provider(Aadl2ProjectsState)
+		}
+		
+		def bindWorkspaceProjectsStateHelper() {
+			Aadl2ProjectsStateHelper
+		}
 }
