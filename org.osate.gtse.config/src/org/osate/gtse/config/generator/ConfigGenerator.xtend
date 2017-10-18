@@ -99,11 +99,11 @@ class ConfigGenerator extends AbstractGenerator {
 			value = v
 		}
 
-		def isSubcomponent() {
+		def isSubcomponentMapping() {
 			property === null
 		}
 
-		def isProperty() {
+		def isPropertyMapping() {
 			property !== null
 		}
 
@@ -129,13 +129,13 @@ class ConfigGenerator extends AbstractGenerator {
 		fsa.generateFile('paths.txt', replacements.map [ r |
 			val tl = r.path.tail
 			val pathName = tl.map[name].join('.')
-			if (r.isSubcomponent) {
+			if (r.isSubcomponentMapping) {
 				if (tl.empty) {
 					'componentImplementationName=' + r.value.print + '\n'
 				} else {
 					'SubcompChoice-' + pathName + '=' + r.value.print
 				}
-			} else if (r.isProperty) {
+			} else if (r.isPropertyMapping) {
 				// TODO: handle parameter as value
 				if (r.property.propertyType instanceof ReferenceType) {
 					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim // FIXME
