@@ -89,7 +89,7 @@
       <repositoryList
           name="Oxygen">
         <repository
-            url="http://download.eclipse.org/releases/oxygen"/>
+            url="http://download.eclipse.org/releases/oxygen/201709271000"/>
         <repository
             url="http://xtexttools.libutzki.de/"/>
       </repositoryList>
