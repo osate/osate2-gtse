@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tycho.version>0.26.0</tycho.version>
+        <tycho.version>1.0.0</tycho.version>
         <eclipse-repo.url>http://download.eclipse.org/releases/oxygen/</eclipse-repo.url>
         <osate-repo.url>http://www.aadl.info/aadl/osate/testing/update-site/</osate-repo.url>
         <osate.version>[0.0.0,3.0.0)</osate.version>
@@ -86,6 +86,15 @@
         </repository>
     </repositories>
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.tycho</groupId>
+                    <artifactId>tycho-compiler-plugin</artifactId>
+                    <version>${tycho.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.eclipse.tycho</groupId>
