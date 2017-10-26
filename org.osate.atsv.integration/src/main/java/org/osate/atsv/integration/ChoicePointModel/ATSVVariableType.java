@@ -19,7 +19,11 @@
 package org.osate.atsv.integration.ChoicePointModel;
 
 public enum ATSVVariableType {
-	FLOAT(0), DISCRETE_FLOAT(1), STRING(2), INTEGER(4);
+	// ATSV-Compatible Types
+	FLOAT(0), DISCRETE_FLOAT(1), STRING(2), INTEGER(4),
+
+	// OSATE-Compatible Types, all get mapped to string for ATSV's needs...
+	REFERENCE(-1), LIST(-2), RANGE(-3);
 
 	private int typeVal;
 
@@ -27,7 +31,27 @@ public enum ATSVVariableType {
 		this.typeVal = typeVal;
 	}
 
-	public int getTypeVal() {
+	/**
+	 * This gets the ATSV-compatible type value. That is, any non-atsv
+	 * compatible types (reference, list, range, etc.) will return the 
+	 * type value for strings.
+	 * 
+	 * @return The ordinal for the type
+	 */
+	public int getATSVTypeVal() {
+		if (typeVal >= 0) {
+			return typeVal;
+		} else {
+			return STRING.typeVal;
+		}
+	}
+
+	/**
+	 * This gets the OSATE-compatible / "true" type value. 
+	 * 
+	 * @return The ordinal for the type
+	 */
+	public int getRawTypeVal() {
 		return typeVal;
 	}
 

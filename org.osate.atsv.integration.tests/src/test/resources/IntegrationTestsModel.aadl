@@ -122,13 +122,14 @@ public
 						Latency => 5 Ms .. 5 Ms;
 					};
 		properties
-			SEI::PowerBudget => 4.0 w applies to power;
+			SEI::PowerBudget => 5.0 w applies to power;
 			SEI::Price => 500.00;
+			Thread_Properties::Time_Slot => (1);
 	end StartProcess;
 
 	process implementation StartProcess.imp1
 		properties
-			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::PowerBudget => 4.0 w applies to power;
 	end StartProcess.imp1;
 
 	process implementation StartProcess.imp2

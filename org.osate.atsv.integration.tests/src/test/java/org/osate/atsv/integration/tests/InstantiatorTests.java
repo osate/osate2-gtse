@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -29,6 +29,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.ChoicePointModel.ListPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
@@ -119,6 +121,12 @@ public class InstantiatorTests extends OsateTest {
 	}
 
 	@Test
+	public void testListFloatPropertyValueSwapInstance() throws Exception {
+		propSwapHelper("scs.sdev", "Thread_Properties::Time_Slot", Arrays.asList(1), Arrays.asList(2),
+				LiteralPropertyValue.class);
+	}
+
+	@Test
 	public void testRangedIntPropertyValueSwapInstance() throws Exception {
 		propSwapHelper("scs.edev", "SEI::SecurityLevel", 42L, 5L, LiteralPropertyValue.class);
 	}
@@ -169,27 +177,36 @@ public class InstantiatorTests extends OsateTest {
 			Class<? extends PropertyValue> cpsClazz) throws Exception {
 		ATSVVariableType type;
 		Class<? extends PropertyExpression> propValClazz;
+		ChoicePointSpecification cps;
 		if (newValue instanceof Double) {
 			type = ATSVVariableType.FLOAT;
 			propValClazz = RealLiteral.class;
+			cps = new LiteralPropertyValue(path, prop, String.valueOf(newValue), type);
 		} else if (newValue instanceof Long) {
 			type = ATSVVariableType.INTEGER;
 			propValClazz = IntegerLiteral.class;
+			cps = new LiteralPropertyValue(path, prop, String.valueOf(newValue), type);
 		} else if (newValue instanceof String) {
 			type = ATSVVariableType.STRING;
 			if (cpsClazz.equals(ReferencePropertyValue.class)) {
 				propValClazz = InstanceReferenceValue.class;
+				cps = new ReferencePropertyValue(path, prop, String.valueOf(newValue), type);
 			} else {
 				propValClazz = StringLiteral.class;
+				cps = new LiteralPropertyValue(path, prop, String.valueOf(newValue), type);
 			}
+		} else if (newValue instanceof List) {
+			// FIXME: this can't be hardcoded...
+			type = ATSVVariableType.INTEGER;
+			// FIXME: Derive this from cpsClazz?
+			propValClazz = IntegerLiteral.class;
+			cps = new ListPropertyValue(path, prop, String.valueOf(newValue), type);
 		} else {
 			throw new Exception("Can't figure out the type of " + newValue);
 		}
 
 		SystemInstance swappedSI = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(cpsClazz
-						.getDeclaredConstructor(String.class, String.class, String.class, ATSVVariableType.class)
-						.newInstance(path, prop, String.valueOf(newValue), type)));
+				Collections.singleton(cps));
 		propCheckHelper(path, prop, newValue, propValClazz, swappedSI);
 
 		SystemInstance emptySI = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
