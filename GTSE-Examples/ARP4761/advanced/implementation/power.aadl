@@ -9,7 +9,7 @@ with EMV2;
 
 device powersource
 features
-	socket : provides bus access common::power.generic;
+	socket : provides bus access common::power.heavygauge;
 annex EMV2 {**                                                                                                                                                              
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
@@ -89,8 +89,8 @@ end powersource.systempower;
 
 system power
 features
-	line1 : provides bus access common::power.generic;
-	line2 : provides bus access common::power.generic;
+	line1 : provides bus access common::power.heavygauge;
+	line2 : provides bus access common::power.heavygauge;
 annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;

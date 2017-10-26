@@ -73,6 +73,15 @@ annex EMV2 {**
 	end component;**};
 end command.i;
 
+process implementation command.i1 extends command.i
+	properties
+		SEI::Price => 500.00;
+end command.i1;
+
+process implementation command.i2 extends command.i
+	properties
+		SEI::Price => 1000.00;
+end command.i2;
 
 --  The monitor component receive the values
 --  (brake and skid values) from the command system
@@ -128,7 +137,6 @@ annex EMV2 {**
 			applies to InvalidReport;**};
 end monitor.i;
 
-
 process implementation monitor.i1 extends monitor.i
 	properties
 		SEI::Price => 500.00;
@@ -141,7 +149,7 @@ end monitor.i2;
 
 system bscu_subsystem
 features
-	pwr      : requires bus access common::power.generic;
+	pwr      : requires bus access common::power.heavygauge;
 	pedal    : in data port common::command.pedal;
 	cmd_skid : out data port common::command.skid;
 	cmd_brk  : out data port common::command.brake;
@@ -258,8 +266,8 @@ end select_alternate;
 
 system bscu
 features
-	pwr1              : requires bus access common::power.generic;
-	pwr2              : requires bus access common::power.generic;
+	pwr1              : requires bus access common::power.heavygauge;
+	pwr2              : requires bus access common::power.heavygauge;
 	pedal1            : in data port common::command.pedal;
 	pedal2            : in data port common::command.pedal;
 	Select_Alternate  : out data port Base_Types::Boolean;
