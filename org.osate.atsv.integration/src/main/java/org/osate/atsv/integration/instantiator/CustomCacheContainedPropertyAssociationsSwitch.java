@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -28,7 +28,9 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.BasicEList;
+import org.osate.aadl2.Aadl2Factory;
 import org.osate.aadl2.ContainmentPathElement;
+import org.osate.aadl2.ListValue;
 import org.osate.aadl2.NamedElement;
 import org.osate.aadl2.Property;
 import org.osate.aadl2.PropertyAssociation;
@@ -44,6 +46,7 @@ import org.osate.aadl2.instantiation.SCProperties;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.ChoicePointModel.ListPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
@@ -190,9 +193,15 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 		} else if (type == ATSVVariableType.STRING && pv instanceof LiteralPropertyValue) {
 			return PropertyUtils.createStringValue(pv.getValueAsString());
 		} else if (type == ATSVVariableType.STRING && pv instanceof ReferencePropertyValue) {
-			InstanceReferenceValue irf = InstanceFactory.eINSTANCE.createInstanceReferenceValue();
-			irf.setReferencedInstanceObject(referencedInstances.get(pv.getValueAsString()));
-			return irf;
+			InstanceReferenceValue irv = InstanceFactory.eINSTANCE.createInstanceReferenceValue();
+			irv.setReferencedInstanceObject(referencedInstances.get(pv.getValueAsString()));
+			return irv;
+		} else if (type == ATSVVariableType.LIST) {
+			ListValue value = Aadl2Factory.eINSTANCE.createListValue();
+			for (PropertyValue innerPV : ((ListPropertyValue) pv).getItems()) {
+				value.getOwnedListElements().add(getPropValue(innerPV));
+			}
+			return value;
 		}
 		throw new UnhandledVariableTypeException(
 				"Can't get the property value for " + pv.getPropertyName() + " in " + pv.getComponentPath());
@@ -220,7 +229,7 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 	}
 
 	/**
-	 * This class is used to build a tree-like structure that corresponds, partially, to the 
+	 * This class is used to build a tree-like structure that corresponds, partially, to the
 	 * instance model. The idea is that it is created using the set of choicepoint specifications
 	 * (see processChoicepoints(...)) and then traversed when creating / inserting the property
 	 * values (see buildPAList(...))
@@ -253,7 +262,7 @@ public class CustomCacheContainedPropertyAssociationsSwitch extends CacheContain
 		public List<String> propSet = new LinkedList<>();
 
 		/**
-		 * The ordered list of property names. 
+		 * The ordered list of property names.
 		 */
 		public List<String> propName = new LinkedList<>();
 

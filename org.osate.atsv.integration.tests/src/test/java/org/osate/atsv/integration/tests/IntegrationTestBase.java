@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -81,7 +81,7 @@ public class IntegrationTestBase extends OsateTest {
 
 	/**
 	 * Helps run the tests by thoroughly inspecting the response returned by OSATE
-	 * 
+	 *
 	 * @param pluginId The id of the plugin to run, eg, 'org.osate.atsv.integration.property-totals'
 	 * @param expectedException Either null, if no exception is expected, or the message that should be returned
 	 * @param expectValid True if a valid model is expected, false otherwise
@@ -130,7 +130,7 @@ public class IntegrationTestBase extends OsateTest {
 		}
 		expectedVars.forEach((name, value) -> {
 			assertTrue(name + " is not set", res.getVariables().getVars().containsKey(name));
-			assertEquals("Incorrect value for " + name, value.expectedValue,
+			assertEquals("Incorrect value for " + name + ".", value.expectedValue,
 					res.getVariables().getVars().get(name).getVal());
 		});
 	}

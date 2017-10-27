@@ -101,7 +101,7 @@ public class VariableModel {
 		this.capture = true;
 		this.sampled = sampled;
 		this.ioValue = isInput ? 0 : 1;
-		this.type = type.getTypeVal();
+		this.type = type.getATSVTypeVal();
 		if (isInput) {
 			this.value = value;
 			if (type == ATSVVariableType.INTEGER) {

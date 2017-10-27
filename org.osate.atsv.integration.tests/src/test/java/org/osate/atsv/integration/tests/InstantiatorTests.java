@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -23,12 +23,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,6 +43,7 @@ import org.junit.Test;
 import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.IntegerLiteral;
+import org.osate.aadl2.ListValue;
 import org.osate.aadl2.PropertyExpression;
 import org.osate.aadl2.RealLiteral;
 import org.osate.aadl2.StringLiteral;
@@ -50,6 +54,7 @@ import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.ChoicePointModel.ListPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
@@ -119,6 +124,12 @@ public class InstantiatorTests extends OsateTest {
 	}
 
 	@Test
+	public void testListFloatPropertyValueSwapInstance() throws Exception {
+		propSwapHelper("scs.sdev", "Thread_Properties::Time_Slot", Arrays.asList(2), Arrays.asList(1),
+				LiteralPropertyValue.class);
+	}
+
+	@Test
 	public void testRangedIntPropertyValueSwapInstance() throws Exception {
 		propSwapHelper("scs.edev", "SEI::SecurityLevel", 42L, 5L, LiteralPropertyValue.class);
 	}
@@ -169,27 +180,36 @@ public class InstantiatorTests extends OsateTest {
 			Class<? extends PropertyValue> cpsClazz) throws Exception {
 		ATSVVariableType type;
 		Class<? extends PropertyExpression> propValClazz;
+		ChoicePointSpecification cps;
 		if (newValue instanceof Double) {
 			type = ATSVVariableType.FLOAT;
 			propValClazz = RealLiteral.class;
+			cps = new LiteralPropertyValue(path, prop, String.valueOf(newValue), type);
 		} else if (newValue instanceof Long) {
 			type = ATSVVariableType.INTEGER;
 			propValClazz = IntegerLiteral.class;
+			cps = new LiteralPropertyValue(path, prop, String.valueOf(newValue), type);
 		} else if (newValue instanceof String) {
 			type = ATSVVariableType.STRING;
 			if (cpsClazz.equals(ReferencePropertyValue.class)) {
 				propValClazz = InstanceReferenceValue.class;
+				cps = new ReferencePropertyValue(path, prop, String.valueOf(newValue), type);
 			} else {
 				propValClazz = StringLiteral.class;
+				cps = new LiteralPropertyValue(path, prop, String.valueOf(newValue), type);
 			}
+		} else if (newValue instanceof List) {
+			// FIXME: this can't be hardcoded...
+			type = ATSVVariableType.INTEGER;
+			// FIXME: Derive this from cpsClazz?
+			propValClazz = ListValue.class;
+			cps = new ListPropertyValue(path, prop, String.valueOf(newValue), type);
 		} else {
 			throw new Exception("Can't figure out the type of " + newValue);
 		}
 
 		SystemInstance swappedSI = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
-				Collections.singleton(cpsClazz
-						.getDeclaredConstructor(String.class, String.class, String.class, ATSVVariableType.class)
-						.newInstance(path, prop, String.valueOf(newValue), type)));
+				Collections.singleton(cps));
 		propCheckHelper(path, prop, newValue, propValClazz, swappedSI);
 
 		SystemInstance emptySI = getComponentInstance(PluginTest.PACKAGE_NAME, PluginTest.COMPONENT_NAME,
@@ -203,6 +223,7 @@ public class InstantiatorTests extends OsateTest {
 		Iterator<String> pathIter = Arrays.asList(path.split("\\.")).iterator();
 		ComponentInstance ci = null;
 		String pathSegment = pathIter.next();
+		boolean asserted = false;
 		while (cisIter.hasNext()) {
 			ci = cisIter.next();
 			if (ci.getName().equalsIgnoreCase(pathSegment)) {
@@ -210,24 +231,45 @@ public class InstantiatorTests extends OsateTest {
 					pathSegment = pathIter.next();
 					cisIter = ci.getAllComponentInstances().iterator();
 				} else {
-					for (PropertyExpression pe : ci.getPropertyValues(prop.split("\\:\\:")[0],
-							prop.split("\\:\\:")[1])) {
-						if (propValClazz.isInstance(pe)) {
-							if (value instanceof Double) {
-								assertEquals((Double) value, (Double) propValClazz.getMethod("getValue").invoke(pe),
-										.0001);
-							} else if (pe instanceof InstanceReferenceValue) {
-								assertEquals(value, ((InstanceReferenceValue) pe).getReferencedInstanceObject()
-										.getComponentInstancePath());
-							} else {
-								assertEquals(value, propValClazz.getMethod("getValue").invoke(pe));
-							}
-							return;
+					List<PropertyExpression> propVals = ci.getPropertyValues(prop.split("\\:\\:")[0], prop.split("\\:\\:")[1]);
+					if(value instanceof Collection) {
+						Iterator<PropertyExpression> propIter = propVals.iterator();
+						@SuppressWarnings("unchecked")
+						Iterator<Object> valIter = ((Collection<Object>) value).iterator();
+						while(propIter.hasNext() && valIter.hasNext()) {
+							checkEquality(propIter.next(), valIter.next(), propVals.get(0).getClass());
 						}
+						return;
+					}
+					for (PropertyExpression pe : propVals) {
+						asserted = checkEquality(pe, value, propValClazz);
 					}
 				}
+
 			}
 		}
-		fail("Couldn't find the " + prop + " property");
+		if (!asserted) {
+			fail("Couldn't find the " + prop + " property");
+		}
+	}
+
+	private boolean checkEquality(PropertyExpression pe, Object value, Class<? extends PropertyExpression> propValClazz)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
+			SecurityException {
+		if (propValClazz.isInstance(pe)) {
+			if (value instanceof Integer) {
+				assertEquals(((Integer) value).longValue(),
+						propValClazz.getMethod("getValue").invoke(pe));
+			} else if (value instanceof Double) {
+				assertEquals((double) value, (double) propValClazz.getMethod("getValue").invoke(pe), .0001);
+			} else if (pe instanceof InstanceReferenceValue) {
+				assertEquals(value,
+						((InstanceReferenceValue) pe).getReferencedInstanceObject().getComponentInstancePath());
+			} else {
+				assertEquals(value, propValClazz.getMethod("getValue").invoke(pe));
+			}
+			return true;
+		}
+		return false;
 	}
 }

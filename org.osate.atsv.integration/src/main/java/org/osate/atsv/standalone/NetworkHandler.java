@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -33,6 +33,7 @@ import java.util.Properties;
 import javax.xml.bind.JAXBException;
 
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
+import org.osate.atsv.integration.ChoicePointModel.ListPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.LiteralPropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
@@ -40,9 +41,9 @@ import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 
 /**
- * 
+ *
  * A simple standalone client designed to be connected to an ATSV-Integration enabled version of OSATE.
- * 
+ *
  * @author Sam Procter
  *
  */
@@ -108,7 +109,14 @@ public class NetworkHandler {
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.getTypeByName(propNames[3])));
 			} else if (propNames[0].equalsIgnoreCase("RefPropertyValue")) {
 				r.addChoicePoint(new ReferencePropertyValue(propNames[1], propNames[2],
+						// TODO: Change to ATSVVariableType.REFERENCE?
 						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.STRING));
+			} else if (propNames[0].equalsIgnoreCase("ListRefPropertyValue")) {
+				r.addChoicePoint(new ListPropertyValue(propNames[1], propNames[2],
+						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.REFERENCE));
+			} else if (propNames[0].equalsIgnoreCase("ListLitPropertyValue")) {
+				r.addChoicePoint(new ListPropertyValue(propNames[1], propNames[2],
+						inputMap.get(propNames[1] + "-" + propNames[2]), ATSVVariableType.getTypeByName(propNames[3])));
 			} else if (propNames[0].equalsIgnoreCase("Limit")) {
 				String[] limitArr = prop.getProperty(propName).split("-");
 				r.addLimit(propNames[1], limitArr[0], limitArr[1]);
