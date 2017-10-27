@@ -1,17 +1,9 @@
 package impl::platform
 public
+	with ARINC653, EMV2, ARP4761, SEI, common;
 
-with ARINC653;
-with EMV2;
-with ARP4761; 
-
-
---
---  We associate a fault with the partition layer, the runtime associated
---  to manage/handle the partition itself.
---
-virtual processor partition
-annex EMV2 {**
+	virtual processor partition
+		annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                              
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 
@@ -33,9 +25,9 @@ annex EMV2 {**
 		p2     : Failed -[]-> bindings{SoftwareFailure};
 	end component;
 	properties
-		EMV2::severity => ARP4761::Major applies to SoftwareFailure;
-		EMV2::likelihood => ARP4761::Probable applies to SoftwareFailure;
-		EMV2::hazards => 
+		EMV2::Severity => ARP4761::Major applies to SoftwareFailure;
+		EMV2::Likelihood => ARP4761::Probable applies to SoftwareFailure;
+		EMV2::Hazards => 
 			([	crossreference => "TBD";
 				failure => "";
 				phases => ("all");
@@ -45,21 +37,24 @@ annex EMV2 {**
 			applies to SoftwareFailure;
 		EMV2::OccurrenceDistribution => [ ProbabilityValue => 1.35e-5 ; Distribution => Poisson;] applies to SoftwareFailure;
 --		EMV2::OccurrenceDistribution => [ ProbabilityValue => 6.75e-5 ; Distribution => Fixed;] applies to SoftwareFailure;
-
 **};
-end partition;
+	end partition;
 
-virtual processor implementation partition.generic
-end partition.generic;
-
+	virtual processor implementation partition.generic
+	end partition.generic;
 
 --
 --  This is the generic CPU. In this model, this is used to capture the
 --  physical part of the processor. Then, for each implementation (federated and IMA)
 --  we defined the appropriate software failures.
 -- 
-processor cpu
-annex EMV2 {**
+	processor cpu
+		features
+			power: requires bus access common::power.heavygauge {
+			SEI::PowerBudget => 5.0 mw;	
+			};
+			 
+		annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 
@@ -84,9 +79,9 @@ annex EMV2 {**
 		pfail  : Failed -[]-> bindings{HardwareFailure};
 	end component;
 	properties
-		EMV2::severity => ARP4761::Major applies to InternalFailure;
-		EMV2::likelihood => ARP4761::Probable applies to InternalFailure;
-		EMV2::hazards => 
+		EMV2::Severity => ARP4761::Major applies to InternalFailure;
+		EMV2::Likelihood => ARP4761::Probable applies to InternalFailure;
+		EMV2::Hazards => 
 			([	crossreference => "TBD";
 				failure => "";
 				phases => ("all");
@@ -96,28 +91,26 @@ annex EMV2 {**
 			applies to InternalFailure;
 		EMV2::OccurrenceDistribution => [ ProbabilityValue => 1.35e-5 ; Distribution => Poisson;] applies to InternalFailure;
 --		EMV2::OccurrenceDistribution => [ ProbabilityValue => 6.75e-5 ; Distribution => Fixed;] applies to HardwareFailure;
-
 **};
-end cpu;
-
+	end cpu;
 
 --
 --  We do not add a software failure to the IMA processor. Instead, we
 --  capture this error within the partition itself.
 --
-processor implementation cpu.ima
-subcomponents
-	partition1 : virtual processor partition.generic;
-	partition2 : virtual processor partition.generic;
-	partition3 : virtual processor partition.generic;
-	partition4 : virtual processor partition.generic;
-end cpu.ima;
+	processor implementation cpu.ima
+		subcomponents
+			partition1: virtual processor partition.generic;
+			partition2: virtual processor partition.generic;
+			partition3: virtual processor partition.generic;
+			partition4: virtual processor partition.generic;
+	end cpu.ima;
 
 --
 --  The single processor is used for the federated architecture.
 --
-processor implementation cpu.single
-annex EMV2 {**
+	processor implementation cpu.single
+		annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 
@@ -137,9 +130,9 @@ annex EMV2 {**
 		psoft  : Failed -[]-> processor{SoftwareFailure};
 	end component;
 	properties
-		EMV2::severity => ARP4761::Major applies to SoftwareFailure;
-		EMV2::likelihood => ARP4761::Probable applies to SoftwareFailure;
-		EMV2::hazards => 
+		EMV2::Severity => ARP4761::Major applies to SoftwareFailure;
+		EMV2::Likelihood => ARP4761::Probable applies to SoftwareFailure;
+		EMV2::Hazards => 
 			([	crossreference => "TBD";
 				failure => "";
 				phases => ("all");
@@ -149,33 +142,43 @@ annex EMV2 {**
 			applies to SoftwareFailure;
 		EMV2::OccurrenceDistribution => [ ProbabilityValue => 1.35e-5 ; Distribution => Poisson;] applies to SoftwareFailure;
 --		EMV2::OccurrenceDistribution => [ ProbabilityValue => 6.75e-5 ; Distribution => Fixed;] applies to SoftwareFailure;
-
 **};
-end cpu.single;
+	end cpu.single;
 
+	processor implementation cpu.x86
+		properties
+			SEI::Price => 100.00;
+	end cpu.x86;
 
-system platform
-end platform;
+	processor implementation cpu.x64
+		properties
+			SEI::Price => 150.00;
+	end cpu.x64;
 
+	processor implementation cpu.arm
+		properties
+			SEI::Price => 30.00;
+	end cpu.arm;
+
+	system platform
+		features
+			power: requires bus access common::power.heavygauge;
+	end platform;
 
 --
 --  The IMA platform architecture
 --
-system implementation platform.ima
-subcomponents
-	cpu : processor cpu.ima;
-end platform.ima;
-
+	system implementation platform.ima
+		subcomponents
+			cpu: processor cpu.ima;
+	end platform.ima;
 
 --
 --  The federated platform architecture
 --
-system implementation platform.federated
-subcomponents
-	cpu1 : processor cpu.single;
-	cpu2 : processor cpu.single;
-end platform.federated;
-
-
-
+	system implementation platform.federated
+		subcomponents
+			cpu1: processor cpu.single;
+			cpu2: processor cpu.single;
+	end platform.federated;
 end impl::platform;
