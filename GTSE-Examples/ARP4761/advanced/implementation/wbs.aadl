@@ -30,11 +30,11 @@ subcomponents
 	power      		: system impl::power::power.generic;
 	
     --  The two pumps at the top of the diagram
-	blue_pump  		: system impl::pump::pump.i;
-	green_pump 		: system impl::pump::pump.i;
+	blue_pump  		: system impl::pump::pump.generic;
+	green_pump 		: system impl::pump::pump.generic;
 	
 	--  The accumulator pump
-	accumulator		: system impl::pump::pump.i;
+	accumulator		: system impl::pump::pump.generic;
 	
 	--  The selector subsystem
 	selector   		: system impl::valves::selector;

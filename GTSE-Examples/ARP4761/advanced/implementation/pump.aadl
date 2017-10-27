@@ -7,10 +7,12 @@ with common;
 with ARP4761;
 with EMV2;
 
+	with SEI;
+
 system pump
 features
 	pressure_output : provides bus access common::pressure.i;
-annex EMV2 {**
+annex EMV2 {**                                                                                                                                                                  
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 	
@@ -35,9 +37,9 @@ annex EMV2 {**
 	end component;
 	
 	properties
-		EMV2::severity => ARP4761::Major applies to HydraulicError;
-		EMV2::likelihood => ARP4761::Probable applies to HydraulicError;
-		EMV2::hazards => 
+		EMV2::Severity => ARP4761::Major applies to HydraulicError;
+		EMV2::Likelihood => ARP4761::Probable applies to HydraulicError;
+		EMV2::Hazards => 
 			([	crossreference => "ARP4761 page 275 figure L9";
 				failure => "Hydraulic Error on a pump";
 				phases => ("TBD");
@@ -46,13 +48,24 @@ annex EMV2 {**
 			])
 			applies to HydraulicError;
 		-- EMV2::OccurrenceDistribution => [ ProbabilityValue => 1.20e-4 ; Distribution => Fixed;] applies to HydraulicError, pressure_output.NoService;
-		EMV2::OccurrenceDistribution => [ ProbabilityValue => 2.5e-5 ; Distribution => Poisson;] applies to HydraulicError, pressure_output.NoService;
-		
-**};
+		EMV2::OccurrenceDistribution => [ ProbabilityValue => 2.5e-5 ; Distribution => Poisson;] applies to HydraulicError, pressure_output.NoService;**};
 end pump;
 
 
-system implementation pump.i
-end pump.i;
+system implementation pump.generic
+end pump.generic;
+
+system implementation pump.large extends pump.generic
+	properties
+		SEI::Price => 500.00;
+		SEI::NetWeight => 3.7 kg;
+end pump.large;
+
+system implementation pump.small extends pump.generic
+	properties
+		SEI::Price => 750.00;
+		SEI::NetWeight => 1.32 kg;
+end pump.small;
+
 
 end impl::pump;
