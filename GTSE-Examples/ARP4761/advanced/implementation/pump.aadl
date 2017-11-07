@@ -3,7 +3,7 @@ package impl::pump
 
 public
 
-with common;
+with impl::common;
 with ARP4761;
 with EMV2;
 
@@ -11,7 +11,7 @@ with EMV2;
 
 system pump
 features
-	pressure_output : provides bus access common::pressure.i;
+	pressure_output : provides bus access impl::common::pressure.i;
 annex EMV2 {**                                                                                                                                                                  
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;

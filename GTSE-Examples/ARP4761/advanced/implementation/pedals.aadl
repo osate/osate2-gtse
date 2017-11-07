@@ -2,7 +2,7 @@ package impl::pedals
 
 public
 
-with common;
+with impl::common;
 with EMV2;
 with ARP4761;
 --
@@ -10,8 +10,8 @@ with ARP4761;
 -- 
 system pedals
 features
-	signal1 : out data port common::command.pedal;
-	signal2 : out data port common::command.pedal;
+	signal1 : out data port impl::common::command.pedal;
+	signal2 : out data port impl::common::command.pedal;
 annex EMV2 {**
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;

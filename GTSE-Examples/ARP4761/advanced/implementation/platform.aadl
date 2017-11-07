@@ -1,6 +1,6 @@
 package impl::platform
 public
-	with ARINC653, EMV2, ARP4761, SEI, common;
+	with ARINC653, EMV2, ARP4761, SEI, impl::common;
 
 	virtual processor partition
 		annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                              
@@ -50,8 +50,8 @@ public
 -- 
 	processor cpu
 		features
-			power: requires bus access common::power.heavygauge {
-			SEI::PowerBudget => 5.0 mw;	
+			power: requires bus access impl::common::power.heavygauge {
+				SEI::PowerBudget => 5.0 w;	
 			};
 			 
 		annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
@@ -162,7 +162,9 @@ public
 
 	system platform
 		features
-			power: requires bus access common::power.heavygauge;
+			power: requires bus access impl::common::power.heavygauge{
+				SEI::PowerBudget => 5.0 w;	
+			};
 	end platform;
 
 --

@@ -2,7 +2,7 @@ package impl::communication
 
 public
 
-with common;
+with impl::common;
 with EMV2;
 with ARP4761;
 
@@ -24,7 +24,7 @@ device annunciation
 features
 	--  We add a data port that abstracts communication
 	--  within the system.
-	information : out data port common::command.announce;
+	information : out data port impl::common::command.announce;
 annex EMV2 {**
 
 	use types WBSImplementationErrorLib;

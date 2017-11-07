@@ -1,7 +1,7 @@
 package impl::power
 
 public
-with common;
+with impl::common;
 with ARP4761;
 with EMV2;
 
@@ -9,7 +9,7 @@ with EMV2;
 
 device powersource
 features
-	socket : provides bus access common::power.heavygauge;
+	socket : provides bus access impl::common::power.heavygauge;
 annex EMV2 {**                                                                                                                                                              
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
@@ -73,24 +73,27 @@ device implementation powersource.small
 	properties
 		SEI::Price => 750.00;
 		SEI::NetWeight => 3.0 kg;
+		SEI::PowerCapacity => 50.0 w;
 end powersource.small;
 
 device implementation powersource.large
 	properties
 		SEI::Price => 1000.00;
 		SEI::NetWeight => 7.5 kg;
+		SEI::PowerCapacity => 300.0 w;
 end powersource.large;
 
 device implementation powersource.systempower
 	properties
 		SEI::Price => 50.00;
 		SEI::NetWeight => 0.5 kg;
+		SEI::PowerCapacity => 999.0 w;
 end powersource.systempower;
 
 system power
 features
-	line1 : provides bus access common::power.heavygauge;
-	line2 : provides bus access common::power.heavygauge;
+	line1 : provides bus access impl::common::power.heavygauge;
+	line2 : provides bus access impl::common::power.heavygauge;
 annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;

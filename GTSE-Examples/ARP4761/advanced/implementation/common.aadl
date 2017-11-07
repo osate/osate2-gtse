@@ -1,12 +1,25 @@
 package impl::common
 
 public
+	with SEI;
 
 bus power
 end power;
 
 bus implementation power.generic
 end power.generic;
+
+bus implementation power.heavygauge extends power.generic
+	properties
+		SEI::Price => 25.0;
+		SEI::NetWeight => 0.3 kg;
+end power.heavygauge;
+
+bus implementation power.lightgauge extends power.generic
+	properties
+		SEI::Price => 7.5;
+		SEI::NetWeight => 0.05 kg;
+end power.lightgauge;
 
 bus pwm
 end pwm;
@@ -31,12 +44,13 @@ end command.announce;
 
 -- The pressure bus represents the pressure sent/received by
 -- other devices/pumps
-bus pressure
+	bus pressure
 end pressure;
 
 
 bus implementation pressure.i
 end pressure.i;
+
 
 
 
