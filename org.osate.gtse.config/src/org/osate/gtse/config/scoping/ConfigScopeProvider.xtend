@@ -95,6 +95,10 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 		createUnitLiteralsScopeFromPropertyType(context.propertyType.propertyType)
 	}
 
+	def IScope scope_NumberValue_unit(Assignment context, EReference reference) {
+		createUnitLiteralsScopeFromPropertyType(context.property.propertyType)
+	}
+
 	def IScope scope_NamedElementRef_ref(EObject context, EReference reference) {
 		val config = context.getContainerOfType(Configuration)
 		val parameters = config.parameters
