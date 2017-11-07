@@ -161,7 +161,6 @@ system implementation bscu_subsystem.generic
 subcomponents
 	mon   		: process monitor.i;
 	cmd   		: process command.i;
-	cpu1        : processor impl::platform::cpu; 
 connections
 	pedaltocmd    : port pedal     -> cmd.pedalvalue;
 	brakecmd      : port cmd.brake -> mon.brake;
@@ -169,7 +168,6 @@ connections
 	skidcmd_ext   : port cmd.skid  -> cmd_skid;
 	skidcmd       : port cmd.skid  -> mon.skid;
 	isvalid       : port mon.valid -> valid;
-	powertoplatform : bus access pwr <-> cpu1.power;
 annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 	use types     WBSImplementationErrorLib;
 	use behavior  error_library::simple;
@@ -323,10 +321,11 @@ subcomponents
 	sub1    : system bscu_subsystem.generic;
 	sub2    : system bscu_subsystem.generic;
 	select  : system select_alternate;
-
+	platform        : system impl::platform::platform;
 connections
 	sub1pwr        : bus access pwr1 <-> sub1.pwr;
 	sub2pwr        : bus access pwr2 <-> sub2.pwr;
+	powertoplatform : bus access pwr1 <-> platform.power;
 	sub1pedal      : port pedal1 <-> sub1.pedal;
 	sub2pedal      : port pedal2 <-> sub2.pedal;
 	selectvalid1   : port sub1.valid -> select.input1;
@@ -367,7 +366,7 @@ end bscu.generic;
 
 system implementation bscu.federated extends bscu.generic
 subcomponents
-	platform : system impl::platform::platform.federated;
+	platform : refined to system impl::platform::platform.federated;
 properties
 	Actual_Processor_Binding => (reference (platform.cpu1)) applies to sub1.cmd;
 	Actual_Processor_Binding => (reference (platform.cpu1)) applies to sub1.mon;
@@ -379,7 +378,7 @@ end bscu.federated;
 
 system implementation bscu.ima extends bscu.generic
 subcomponents
-	platform : system impl::platform::platform.ima;
+	platform : refined to system impl::platform::platform.ima;
 properties
 	Actual_Processor_Binding => (reference (platform.cpu.partition1)) applies to sub1.cmd;
 	Actual_Processor_Binding => (reference (platform.cpu.partition2)) applies to sub1.mon;

@@ -13,12 +13,14 @@ bus implementation power.heavygauge extends power.generic
 	properties
 		SEI::Price => 25.0;
 		SEI::NetWeight => 0.3 kg;
+		SEI::PowerCapacity => 500.0 w;
 end power.heavygauge;
 
 bus implementation power.lightgauge extends power.generic
 	properties
 		SEI::Price => 7.5;
 		SEI::NetWeight => 0.05 kg;
+		SEI::PowerCapacity => 50.0 w;
 end power.lightgauge;
 
 bus pwm
