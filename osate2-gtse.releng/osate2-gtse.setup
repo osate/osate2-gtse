@@ -131,6 +131,12 @@
         <operand
             xsi:type="predicates:RepositoryPredicate"
             project="org.osate.gtse.config"/>
+        <operand
+            xsi:type="predicates:NotPredicate">
+          <operand
+              xsi:type="predicates:NamePredicate"
+              pattern="choice.tests"/>
+        </operand>
       </predicate>
     </workingSet>
     <description>The dynamic working sets for ${scope.project.label}</description>
