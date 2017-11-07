@@ -20,6 +20,7 @@ package org.osate.gtse.config.config;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -148,13 +149,150 @@ public interface ConfigPackage extends EPackage
   int CONFIG_PKG__CONFIGURATIONS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Analyses</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_PKG__ANALYSES = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONFIG_PKG__OUTPUTS = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Pkg</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONFIG_PKG_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 2;
+  int CONFIG_PKG_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
+   * The meta object id for the '{@link org.osate.gtse.config.config.impl.OutputVariableImpl <em>Output Variable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.gtse.config.config.impl.OutputVariableImpl
+   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getOutputVariable()
+   * @generated
+   */
+  int OUTPUT_VARIABLE = 1;
+
+  /**
+   * The feature id for the '<em><b>Owned Element</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__OWNED_ELEMENT = Aadl2Package.NAMED_ELEMENT__OWNED_ELEMENT;
+
+  /**
+   * The feature id for the '<em><b>Owned Comment</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__OWNED_COMMENT = Aadl2Package.NAMED_ELEMENT__OWNED_COMMENT;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__NAME = Aadl2Package.NAMED_ELEMENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Qualified Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__QUALIFIED_NAME = Aadl2Package.NAMED_ELEMENT__QUALIFIED_NAME;
+
+  /**
+   * The feature id for the '<em><b>Owned Property Association</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__OWNED_PROPERTY_ASSOCIATION = Aadl2Package.NAMED_ELEMENT__OWNED_PROPERTY_ASSOCIATION;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__TYPE = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Limit</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE__LIMIT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Output Variable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OUTPUT_VARIABLE_FEATURE_COUNT = Aadl2Package.NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.osate.gtse.config.config.impl.LimitImpl <em>Limit</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.gtse.config.config.impl.LimitImpl
+   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getLimit()
+   * @generated
+   */
+  int LIMIT = 2;
+
+  /**
+   * The feature id for the '<em><b>Relation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIMIT__RELATION = 0;
+
+  /**
+   * The feature id for the '<em><b>Bound</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIMIT__BOUND = 1;
+
+  /**
+   * The number of structural features of the '<em>Limit</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LIMIT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.ConfigurationImpl <em>Configuration</em>}' class.
@@ -164,7 +302,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getConfiguration()
    * @generated
    */
-  int CONFIGURATION = 1;
+  int CONFIGURATION = 3;
 
   /**
    * The feature id for the '<em><b>Owned Element</b></em>' reference list.
@@ -264,7 +402,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getCombination()
    * @generated
    */
-  int COMBINATION = 2;
+  int COMBINATION = 4;
 
   /**
    * The feature id for the '<em><b>Unsafe</b></em>' attribute.
@@ -310,7 +448,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getConfigParameter()
    * @generated
    */
-  int CONFIG_PARAMETER = 3;
+  int CONFIG_PARAMETER = 5;
 
   /**
    * The feature id for the '<em><b>Owned Element</b></em>' reference list.
@@ -410,7 +548,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getConfigValue()
    * @generated
    */
-  int CONFIG_VALUE = 4;
+  int CONFIG_VALUE = 6;
 
   /**
    * The number of structural features of the '<em>Value</em>' class.
@@ -429,7 +567,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 5;
+  int ASSIGNMENT = 7;
 
   /**
    * The feature id for the '<em><b>Wildcard</b></em>' attribute.
@@ -484,7 +622,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getArgument()
    * @generated
    */
-  int ARGUMENT = 6;
+  int ARGUMENT = 8;
 
   /**
    * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -521,7 +659,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getElementRef()
    * @generated
    */
-  int ELEMENT_REF = 7;
+  int ELEMENT_REF = 9;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference.
@@ -558,7 +696,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getCandidateList()
    * @generated
    */
-  int CANDIDATE_LIST = 8;
+  int CANDIDATE_LIST = 10;
 
   /**
    * The feature id for the '<em><b>Candidates</b></em>' containment reference list.
@@ -586,7 +724,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getNamedElementRef()
    * @generated
    */
-  int NAMED_ELEMENT_REF = 9;
+  int NAMED_ELEMENT_REF = 11;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -632,7 +770,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getPropertyValue()
    * @generated
    */
-  int PROPERTY_VALUE = 10;
+  int PROPERTY_VALUE = 12;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -660,7 +798,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getNestedAssignments()
    * @generated
    */
-  int NESTED_ASSIGNMENTS = 11;
+  int NESTED_ASSIGNMENTS = 13;
 
   /**
    * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
@@ -679,6 +817,26 @@ public interface ConfigPackage extends EPackage
    * @ordered
    */
   int NESTED_ASSIGNMENTS_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.osate.gtse.config.config.Type <em>Type</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.gtse.config.config.Type
+   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getType()
+   * @generated
+   */
+  int TYPE = 14;
+
+  /**
+   * The meta object id for the '{@link org.osate.gtse.config.config.Relation <em>Relation</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.gtse.config.config.Relation
+   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getRelation()
+   * @generated
+   */
+  int RELATION = 15;
 
 
   /**
@@ -712,6 +870,92 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   EReference getConfigPkg_Configurations();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.osate.gtse.config.config.ConfigPkg#getAnalyses <em>Analyses</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Analyses</em>'.
+   * @see org.osate.gtse.config.config.ConfigPkg#getAnalyses()
+   * @see #getConfigPkg()
+   * @generated
+   */
+  EAttribute getConfigPkg_Analyses();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.ConfigPkg#getOutputs <em>Outputs</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Outputs</em>'.
+   * @see org.osate.gtse.config.config.ConfigPkg#getOutputs()
+   * @see #getConfigPkg()
+   * @generated
+   */
+  EReference getConfigPkg_Outputs();
+
+  /**
+   * Returns the meta object for class '{@link org.osate.gtse.config.config.OutputVariable <em>Output Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Output Variable</em>'.
+   * @see org.osate.gtse.config.config.OutputVariable
+   * @generated
+   */
+  EClass getOutputVariable();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.osate.gtse.config.config.OutputVariable#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see org.osate.gtse.config.config.OutputVariable#getType()
+   * @see #getOutputVariable()
+   * @generated
+   */
+  EAttribute getOutputVariable_Type();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.osate.gtse.config.config.OutputVariable#getLimit <em>Limit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Limit</em>'.
+   * @see org.osate.gtse.config.config.OutputVariable#getLimit()
+   * @see #getOutputVariable()
+   * @generated
+   */
+  EReference getOutputVariable_Limit();
+
+  /**
+   * Returns the meta object for class '{@link org.osate.gtse.config.config.Limit <em>Limit</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Limit</em>'.
+   * @see org.osate.gtse.config.config.Limit
+   * @generated
+   */
+  EClass getLimit();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.osate.gtse.config.config.Limit#getRelation <em>Relation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Relation</em>'.
+   * @see org.osate.gtse.config.config.Limit#getRelation()
+   * @see #getLimit()
+   * @generated
+   */
+  EAttribute getLimit_Relation();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.osate.gtse.config.config.Limit#getBound <em>Bound</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Bound</em>'.
+   * @see org.osate.gtse.config.config.Limit#getBound()
+   * @see #getLimit()
+   * @generated
+   */
+  EReference getLimit_Bound();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.Configuration <em>Configuration</em>}'.
@@ -1099,6 +1343,26 @@ public interface ConfigPackage extends EPackage
   EReference getNestedAssignments_Assignments();
 
   /**
+   * Returns the meta object for enum '{@link org.osate.gtse.config.config.Type <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Type</em>'.
+   * @see org.osate.gtse.config.config.Type
+   * @generated
+   */
+  EEnum getType();
+
+  /**
+   * Returns the meta object for enum '{@link org.osate.gtse.config.config.Relation <em>Relation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>Relation</em>'.
+   * @see org.osate.gtse.config.config.Relation
+   * @generated
+   */
+  EEnum getRelation();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1146,6 +1410,74 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EReference CONFIG_PKG__CONFIGURATIONS = eINSTANCE.getConfigPkg_Configurations();
+
+    /**
+     * The meta object literal for the '<em><b>Analyses</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CONFIG_PKG__ANALYSES = eINSTANCE.getConfigPkg_Analyses();
+
+    /**
+     * The meta object literal for the '<em><b>Outputs</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONFIG_PKG__OUTPUTS = eINSTANCE.getConfigPkg_Outputs();
+
+    /**
+     * The meta object literal for the '{@link org.osate.gtse.config.config.impl.OutputVariableImpl <em>Output Variable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.osate.gtse.config.config.impl.OutputVariableImpl
+     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getOutputVariable()
+     * @generated
+     */
+    EClass OUTPUT_VARIABLE = eINSTANCE.getOutputVariable();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OUTPUT_VARIABLE__TYPE = eINSTANCE.getOutputVariable_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Limit</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OUTPUT_VARIABLE__LIMIT = eINSTANCE.getOutputVariable_Limit();
+
+    /**
+     * The meta object literal for the '{@link org.osate.gtse.config.config.impl.LimitImpl <em>Limit</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.osate.gtse.config.config.impl.LimitImpl
+     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getLimit()
+     * @generated
+     */
+    EClass LIMIT = eINSTANCE.getLimit();
+
+    /**
+     * The meta object literal for the '<em><b>Relation</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LIMIT__RELATION = eINSTANCE.getLimit_Relation();
+
+    /**
+     * The meta object literal for the '<em><b>Bound</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LIMIT__BOUND = eINSTANCE.getLimit_Bound();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.ConfigurationImpl <em>Configuration</em>}' class.
@@ -1456,6 +1788,26 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EReference NESTED_ASSIGNMENTS__ASSIGNMENTS = eINSTANCE.getNestedAssignments_Assignments();
+
+    /**
+     * The meta object literal for the '{@link org.osate.gtse.config.config.Type <em>Type</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.osate.gtse.config.config.Type
+     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getType()
+     * @generated
+     */
+    EEnum TYPE = eINSTANCE.getType();
+
+    /**
+     * The meta object literal for the '{@link org.osate.gtse.config.config.Relation <em>Relation</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.osate.gtse.config.config.Relation
+     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getRelation()
+     * @generated
+     */
+    EEnum RELATION = eINSTANCE.getRelation();
 
   }
 

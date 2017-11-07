@@ -25,6 +25,7 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.EnumLiteralDeclaration;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -33,6 +34,7 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
 import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.osate.xtext.aadl2.properties.services.PropertiesGrammarAccess;
@@ -50,14 +52,16 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRootConfigurationIDTerminalRuleCall_1_0_1 = (RuleCall)cRootConfigurationCrossReference_1_0.eContents().get(1);
 		private final Assignment cConfigurationsAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cConfigurationsConfigurationParserRuleCall_2_0 = (RuleCall)cConfigurationsAssignment_2.eContents().get(0);
+		private final RuleCall cAnalysesParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final RuleCall cOutputsParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		//ConfigPkg: //	'package' name=PNAME
-		//	'root' root=[Configuration] configurations+=Configuration* //	'end'
+		//	'root' root=[Configuration] configurations+=Configuration* Analyses? Outputs? //	'end'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
 		////	'package' name=PNAME
-		//'root' root=[Configuration] configurations+=Configuration*
+		//'root' root=[Configuration] configurations+=Configuration* Analyses? Outputs?
 		public Group getGroup() { return cGroup; }
 		
 		////	'package' name=PNAME
@@ -78,6 +82,206 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Configuration
 		public RuleCall getConfigurationsConfigurationParserRuleCall_2_0() { return cConfigurationsConfigurationParserRuleCall_2_0; }
+		
+		//Analyses?
+		public RuleCall getAnalysesParserRuleCall_3() { return cAnalysesParserRuleCall_3; }
+		
+		//Outputs?
+		public RuleCall getOutputsParserRuleCall_4() { return cOutputsParserRuleCall_4; }
+	}
+	public class AnalysesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Analyses");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Keyword cAnalysesKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cAnalysesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cAnalysesSTRINGTerminalRuleCall_2_0 = (RuleCall)cAnalysesAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cAnalysesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cAnalysesSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cAnalysesAssignment_3_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//fragment Analyses *:
+		//	'analyses' '{'
+		//	analyses+=STRING (',' analyses+=STRING)*
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'analyses' '{' analyses+=STRING (',' analyses+=STRING)* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'analyses'
+		public Keyword getAnalysesKeyword_0() { return cAnalysesKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//analyses+=STRING
+		public Assignment getAnalysesAssignment_2() { return cAnalysesAssignment_2; }
+		
+		//STRING
+		public RuleCall getAnalysesSTRINGTerminalRuleCall_2_0() { return cAnalysesSTRINGTerminalRuleCall_2_0; }
+		
+		//(',' analyses+=STRING)*
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		
+		//analyses+=STRING
+		public Assignment getAnalysesAssignment_3_1() { return cAnalysesAssignment_3_1; }
+		
+		//STRING
+		public RuleCall getAnalysesSTRINGTerminalRuleCall_3_1_0() { return cAnalysesSTRINGTerminalRuleCall_3_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+	public class OutputsElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Outputs");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Keyword cOutputsKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cOutputsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cOutputsOutputVariableParserRuleCall_2_0 = (RuleCall)cOutputsAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cOutputsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cOutputsOutputVariableParserRuleCall_3_1_0 = (RuleCall)cOutputsAssignment_3_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//fragment Outputs *:
+		//	'outputs' '{'
+		//	outputs+=OutputVariable (',' outputs+=OutputVariable)*
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'outputs' '{' outputs+=OutputVariable (',' outputs+=OutputVariable)* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'outputs'
+		public Keyword getOutputsKeyword_0() { return cOutputsKeyword_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		
+		//outputs+=OutputVariable
+		public Assignment getOutputsAssignment_2() { return cOutputsAssignment_2; }
+		
+		//OutputVariable
+		public RuleCall getOutputsOutputVariableParserRuleCall_2_0() { return cOutputsOutputVariableParserRuleCall_2_0; }
+		
+		//(',' outputs+=OutputVariable)*
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//','
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		
+		//outputs+=OutputVariable
+		public Assignment getOutputsAssignment_3_1() { return cOutputsAssignment_3_1; }
+		
+		//OutputVariable
+		public RuleCall getOutputsOutputVariableParserRuleCall_3_1_0() { return cOutputsOutputVariableParserRuleCall_3_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_4() { return cRightCurlyBracketKeyword_4; }
+	}
+	public class OutputVariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.OutputVariable");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cColonKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cTypeTypeEnumRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
+		private final Assignment cLimitAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cLimitLimitParserRuleCall_2_0 = (RuleCall)cLimitAssignment_2.eContents().get(0);
+		
+		//OutputVariable:
+		//	name=ID (':' type=Type)? limit=Limit?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=ID (':' type=Type)? limit=Limit?
+		public Group getGroup() { return cGroup; }
+		
+		//name=ID
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		
+		//(':' type=Type)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//':'
+		public Keyword getColonKeyword_1_0() { return cColonKeyword_1_0; }
+		
+		//type=Type
+		public Assignment getTypeAssignment_1_1() { return cTypeAssignment_1_1; }
+		
+		//Type
+		public RuleCall getTypeTypeEnumRuleCall_1_1_0() { return cTypeTypeEnumRuleCall_1_1_0; }
+		
+		//limit=Limit?
+		public Assignment getLimitAssignment_2() { return cLimitAssignment_2; }
+		
+		//Limit
+		public RuleCall getLimitLimitParserRuleCall_2_0() { return cLimitLimitParserRuleCall_2_0; }
+	}
+	public class LimitElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Limit");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cRelationAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cRelationRelationEnumRuleCall_0_0 = (RuleCall)cRelationAssignment_0.eContents().get(0);
+		private final Assignment cBoundAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cBoundLiteralParserRuleCall_1_0 = (RuleCall)cBoundAssignment_1.eContents().get(0);
+		
+		//Limit:
+		//	relation=Relation
+		//	bound=Literal;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//relation=Relation bound=Literal
+		public Group getGroup() { return cGroup; }
+		
+		//relation=Relation
+		public Assignment getRelationAssignment_0() { return cRelationAssignment_0; }
+		
+		//Relation
+		public RuleCall getRelationRelationEnumRuleCall_0_0() { return cRelationRelationEnumRuleCall_0_0; }
+		
+		//bound=Literal
+		public Assignment getBoundAssignment_1() { return cBoundAssignment_1; }
+		
+		//Literal
+		public RuleCall getBoundLiteralParserRuleCall_1_0() { return cBoundLiteralParserRuleCall_1_0; }
+	}
+	public class LiteralElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Literal");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cIntegerTermParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cRealTermParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cStringTermParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Literal aadl2::PropertyExpression:
+		//	IntegerTerm
+		//	| RealTerm
+		//	| StringTerm;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//IntegerTerm | RealTerm | StringTerm
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//IntegerTerm
+		public RuleCall getIntegerTermParserRuleCall_0() { return cIntegerTermParserRuleCall_0; }
+		
+		//RealTerm
+		public RuleCall getRealTermParserRuleCall_1() { return cRealTermParserRuleCall_1; }
+		
+		//StringTerm
+		public RuleCall getStringTermParserRuleCall_2() { return cStringTermParserRuleCall_2; }
 	}
 	public class ConfigurationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Configuration");
@@ -91,24 +295,17 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExtendedAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final CrossReference cExtendedComponentClassifierCrossReference_3_1_0 = (CrossReference)cExtendedAssignment_3_1.eContents().get(0);
 		private final RuleCall cExtendedComponentClassifierCNAMEParserRuleCall_3_1_0_1 = (RuleCall)cExtendedComponentClassifierCrossReference_3_1_0.eContents().get(1);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cWithKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cCombinedAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cCombinedCombinationParserRuleCall_4_1_0 = (RuleCall)cCombinedAssignment_4_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cCombinedAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cCombinedCombinationParserRuleCall_4_2_1_0 = (RuleCall)cCombinedAssignment_4_2_1.eContents().get(0);
-		private final RuleCall cAssignmentsParserRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
+		private final RuleCall cWithParserRuleCall_3_2 = (RuleCall)cGroup_3.eContents().get(2);
+		private final RuleCall cAssignmentsParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
+		//// TODO: extends configuration / configuration with arguments
+		//// TODO: extends parameter? probably not
 		//Configuration:
-		//	'configuration' name=ID Parameters? ('extends' extended=[aadl2::ComponentClassifier|CNAME])? ('with'
-		//	combined+=Combination (',' combined+=Combination)*)?
+		//	'configuration' name=ID Parameters? ('extends' extended=[aadl2::ComponentClassifier|CNAME] With?)?
 		//	Assignments?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'configuration' name=ID Parameters? ('extends' extended=[aadl2::ComponentClassifier|CNAME])? ('with'
-		//combined+=Combination (',' combined+=Combination)*)? Assignments?
+		//'configuration' name=ID Parameters? ('extends' extended=[aadl2::ComponentClassifier|CNAME] With?)? Assignments?
 		public Group getGroup() { return cGroup; }
 		
 		//'configuration'
@@ -123,7 +320,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//Parameters?
 		public RuleCall getParametersParserRuleCall_2() { return cParametersParserRuleCall_2; }
 		
-		//('extends' extended=[aadl2::ComponentClassifier|CNAME])?
+		//('extends' extended=[aadl2::ComponentClassifier|CNAME] With?)?
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'extends'
@@ -138,32 +335,50 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//CNAME
 		public RuleCall getExtendedComponentClassifierCNAMEParserRuleCall_3_1_0_1() { return cExtendedComponentClassifierCNAMEParserRuleCall_3_1_0_1; }
 		
-		//('with' combined+=Combination (',' combined+=Combination)*)?
-		public Group getGroup_4() { return cGroup_4; }
-		
-		//'with'
-		public Keyword getWithKeyword_4_0() { return cWithKeyword_4_0; }
-		
-		//combined+=Combination
-		public Assignment getCombinedAssignment_4_1() { return cCombinedAssignment_4_1; }
-		
-		//Combination
-		public RuleCall getCombinedCombinationParserRuleCall_4_1_0() { return cCombinedCombinationParserRuleCall_4_1_0; }
-		
-		//(',' combined+=Combination)*
-		public Group getGroup_4_2() { return cGroup_4_2; }
-		
-		//','
-		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
-		
-		//combined+=Combination
-		public Assignment getCombinedAssignment_4_2_1() { return cCombinedAssignment_4_2_1; }
-		
-		//Combination
-		public RuleCall getCombinedCombinationParserRuleCall_4_2_1_0() { return cCombinedCombinationParserRuleCall_4_2_1_0; }
+		//With?
+		public RuleCall getWithParserRuleCall_3_2() { return cWithParserRuleCall_3_2; }
 		
 		//Assignments?
-		public RuleCall getAssignmentsParserRuleCall_5() { return cAssignmentsParserRuleCall_5; }
+		public RuleCall getAssignmentsParserRuleCall_4() { return cAssignmentsParserRuleCall_4; }
+	}
+	public class WithElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.With");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Keyword cWithKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cCombinedAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cCombinedCombinationParserRuleCall_1_0 = (RuleCall)cCombinedAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cCombinedAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cCombinedCombinationParserRuleCall_2_1_0 = (RuleCall)cCombinedAssignment_2_1.eContents().get(0);
+		
+		//fragment With *:
+		//	'with' combined+=Combination (',' combined+=Combination)*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'with' combined+=Combination (',' combined+=Combination)*
+		public Group getGroup() { return cGroup; }
+		
+		//'with'
+		public Keyword getWithKeyword_0() { return cWithKeyword_0; }
+		
+		//combined+=Combination
+		public Assignment getCombinedAssignment_1() { return cCombinedAssignment_1; }
+		
+		//Combination
+		public RuleCall getCombinedCombinationParserRuleCall_1_0() { return cCombinedCombinationParserRuleCall_1_0; }
+		
+		//(',' combined+=Combination)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//combined+=Combination
+		public Assignment getCombinedAssignment_2_1() { return cCombinedAssignment_2_1; }
+		
+		//Combination
+		public RuleCall getCombinedCombinationParserRuleCall_2_1_0() { return cCombinedCombinationParserRuleCall_2_1_0; }
 	}
 	public class CombinationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Combination");
@@ -176,14 +391,14 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cArgumentsParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
 		
 		//Combination:
-		//	unsafe?='unsafe'?
+		//	-> unsafe?='unsafe'?
 		//	configuration=[Configuration] Arguments?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//unsafe?='unsafe'? configuration=[Configuration] Arguments?
+		//-> unsafe?='unsafe'? configuration=[Configuration] Arguments?
 		public Group getGroup() { return cGroup; }
 		
-		//unsafe?='unsafe'?
+		//-> unsafe?='unsafe'?
 		public Assignment getUnsafeAssignment_0() { return cUnsafeAssignment_0; }
 		
 		//'unsafe'
@@ -561,13 +776,13 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		////	| '#' property=[aadl2::Property|PNAME]
 		////;
 		//ConfigExpression ConfigValue:
-		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
+		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
 		//	| {PropertyValue} exp=CPropertyExpression
 		//	| {NestedAssignments} Assignments;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? | {PropertyValue} exp=CPropertyExpression |
-		//{NestedAssignments} Assignments
+		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
+		//| {PropertyValue} exp=CPropertyExpression | {NestedAssignments} Assignments
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
@@ -809,12 +1024,13 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cConfigPkgParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cConfigurationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cConfigParameterParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cOutputVariableParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//NamedElement aadl2::NamedElement:
-		//	ConfigPkg | Configuration | ConfigParameter;
+		//	ConfigPkg | Configuration | ConfigParameter | OutputVariable;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ConfigPkg | Configuration | ConfigParameter
+		//ConfigPkg | Configuration | ConfigParameter | OutputVariable
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//ConfigPkg
@@ -825,6 +1041,9 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConfigParameter
 		public RuleCall getConfigParameterParserRuleCall_2() { return cConfigParameterParserRuleCall_2; }
+		
+		//OutputVariable
+		public RuleCall getOutputVariableParserRuleCall_3() { return cOutputVariableParserRuleCall_3; }
 	}
 	public class CNAMEElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.CNAME");
@@ -897,9 +1116,111 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
 	
+	public class TypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Type");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cINTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cINTIntKeyword_0_0 = (Keyword)cINTEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cFLOATFloatKeyword_1_0 = (Keyword)cFLOATEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cSTRINGStringKeyword_2_0 = (Keyword)cSTRINGEnumLiteralDeclaration_2.eContents().get(0);
+		
+		//enum Type:
+		//	INT='int' | FLOAT='float' | STRING='string';
+		public EnumRule getRule() { return rule; }
+		
+		//INT='int' | FLOAT='float' | STRING='string'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//INT='int'
+		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_0() { return cINTEnumLiteralDeclaration_0; }
+		
+		//'int'
+		public Keyword getINTIntKeyword_0_0() { return cINTIntKeyword_0_0; }
+		
+		//FLOAT='float'
+		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_1() { return cFLOATEnumLiteralDeclaration_1; }
+		
+		//'float'
+		public Keyword getFLOATFloatKeyword_1_0() { return cFLOATFloatKeyword_1_0; }
+		
+		//STRING='string'
+		public EnumLiteralDeclaration getSTRINGEnumLiteralDeclaration_2() { return cSTRINGEnumLiteralDeclaration_2; }
+		
+		//'string'
+		public Keyword getSTRINGStringKeyword_2_0() { return cSTRINGStringKeyword_2_0; }
+	}
+	public class RelationElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Relation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cGTGreaterThanSignKeyword_0_0 = (Keyword)cGTEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cGTEEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cGTEGreaterThanSignEqualsSignKeyword_1_0 = (Keyword)cGTEEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cEQEqualsSignEqualsSignKeyword_2_0 = (Keyword)cEQEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cNEQEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cNEQExclamationMarkEqualsSignKeyword_3_0 = (Keyword)cNEQEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cLTLessThanSignKeyword_4_0 = (Keyword)cLTEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cLTEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cLTELessThanSignEqualsSignKeyword_5_0 = (Keyword)cLTEEnumLiteralDeclaration_5.eContents().get(0);
+		
+		//enum Relation:
+		//	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=';
+		public EnumRule getRule() { return rule; }
+		
+		//GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<='
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//GT='>'
+		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_0() { return cGTEnumLiteralDeclaration_0; }
+		
+		//'>'
+		public Keyword getGTGreaterThanSignKeyword_0_0() { return cGTGreaterThanSignKeyword_0_0; }
+		
+		//GTE='>='
+		public EnumLiteralDeclaration getGTEEnumLiteralDeclaration_1() { return cGTEEnumLiteralDeclaration_1; }
+		
+		//'>='
+		public Keyword getGTEGreaterThanSignEqualsSignKeyword_1_0() { return cGTEGreaterThanSignEqualsSignKeyword_1_0; }
+		
+		//EQ='=='
+		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_2() { return cEQEnumLiteralDeclaration_2; }
+		
+		//'=='
+		public Keyword getEQEqualsSignEqualsSignKeyword_2_0() { return cEQEqualsSignEqualsSignKeyword_2_0; }
+		
+		//NEQ='!='
+		public EnumLiteralDeclaration getNEQEnumLiteralDeclaration_3() { return cNEQEnumLiteralDeclaration_3; }
+		
+		//'!='
+		public Keyword getNEQExclamationMarkEqualsSignKeyword_3_0() { return cNEQExclamationMarkEqualsSignKeyword_3_0; }
+		
+		//LT='<'
+		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_4() { return cLTEnumLiteralDeclaration_4; }
+		
+		//'<'
+		public Keyword getLTLessThanSignKeyword_4_0() { return cLTLessThanSignKeyword_4_0; }
+		
+		//LTE='<='
+		public EnumLiteralDeclaration getLTEEnumLiteralDeclaration_5() { return cLTEEnumLiteralDeclaration_5; }
+		
+		//'<='
+		public Keyword getLTELessThanSignEqualsSignKeyword_5_0() { return cLTELessThanSignEqualsSignKeyword_5_0; }
+	}
 	
 	private final ConfigPkgElements pConfigPkg;
+	private final AnalysesElements pAnalyses;
+	private final OutputsElements pOutputs;
+	private final OutputVariableElements pOutputVariable;
+	private final LimitElements pLimit;
+	private final TypeElements eType;
+	private final RelationElements eRelation;
+	private final LiteralElements pLiteral;
 	private final ConfigurationElements pConfiguration;
+	private final WithElements pWith;
 	private final CombinationElements pCombination;
 	private final ParametersElements pParameters;
 	private final ConfigParameterElements pConfigParameter;
@@ -931,7 +1252,15 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAadl2 = gaAadl2;
 		this.gaProperties = gaProperties;
 		this.pConfigPkg = new ConfigPkgElements();
+		this.pAnalyses = new AnalysesElements();
+		this.pOutputs = new OutputsElements();
+		this.pOutputVariable = new OutputVariableElements();
+		this.pLimit = new LimitElements();
+		this.eType = new TypeElements();
+		this.eRelation = new RelationElements();
+		this.pLiteral = new LiteralElements();
 		this.pConfiguration = new ConfigurationElements();
+		this.pWith = new WithElements();
 		this.pCombination = new CombinationElements();
 		this.pParameters = new ParametersElements();
 		this.pConfigParameter = new ConfigParameterElements();
@@ -982,7 +1311,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//ConfigPkg: //	'package' name=PNAME
-	//	'root' root=[Configuration] configurations+=Configuration* //	'end'
+	//	'root' root=[Configuration] configurations+=Configuration* Analyses? Outputs? //	'end'
 	//;
 	public ConfigPkgElements getConfigPkgAccess() {
 		return pConfigPkg;
@@ -992,9 +1321,87 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		return getConfigPkgAccess().getRule();
 	}
 	
+	//fragment Analyses *:
+	//	'analyses' '{'
+	//	analyses+=STRING (',' analyses+=STRING)*
+	//	'}';
+	public AnalysesElements getAnalysesAccess() {
+		return pAnalyses;
+	}
+	
+	public ParserRule getAnalysesRule() {
+		return getAnalysesAccess().getRule();
+	}
+	
+	//fragment Outputs *:
+	//	'outputs' '{'
+	//	outputs+=OutputVariable (',' outputs+=OutputVariable)*
+	//	'}';
+	public OutputsElements getOutputsAccess() {
+		return pOutputs;
+	}
+	
+	public ParserRule getOutputsRule() {
+		return getOutputsAccess().getRule();
+	}
+	
+	//OutputVariable:
+	//	name=ID (':' type=Type)? limit=Limit?;
+	public OutputVariableElements getOutputVariableAccess() {
+		return pOutputVariable;
+	}
+	
+	public ParserRule getOutputVariableRule() {
+		return getOutputVariableAccess().getRule();
+	}
+	
+	//Limit:
+	//	relation=Relation
+	//	bound=Literal;
+	public LimitElements getLimitAccess() {
+		return pLimit;
+	}
+	
+	public ParserRule getLimitRule() {
+		return getLimitAccess().getRule();
+	}
+	
+	//enum Type:
+	//	INT='int' | FLOAT='float' | STRING='string';
+	public TypeElements getTypeAccess() {
+		return eType;
+	}
+	
+	public EnumRule getTypeRule() {
+		return getTypeAccess().getRule();
+	}
+	
+	//enum Relation:
+	//	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=';
+	public RelationElements getRelationAccess() {
+		return eRelation;
+	}
+	
+	public EnumRule getRelationRule() {
+		return getRelationAccess().getRule();
+	}
+	
+	//Literal aadl2::PropertyExpression:
+	//	IntegerTerm
+	//	| RealTerm
+	//	| StringTerm;
+	public LiteralElements getLiteralAccess() {
+		return pLiteral;
+	}
+	
+	public ParserRule getLiteralRule() {
+		return getLiteralAccess().getRule();
+	}
+	
+	//// TODO: extends configuration / configuration with arguments
+	//// TODO: extends parameter? probably not
 	//Configuration:
-	//	'configuration' name=ID Parameters? ('extends' extended=[aadl2::ComponentClassifier|CNAME])? ('with'
-	//	combined+=Combination (',' combined+=Combination)*)?
+	//	'configuration' name=ID Parameters? ('extends' extended=[aadl2::ComponentClassifier|CNAME] With?)?
 	//	Assignments?;
 	public ConfigurationElements getConfigurationAccess() {
 		return pConfiguration;
@@ -1004,8 +1411,18 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		return getConfigurationAccess().getRule();
 	}
 	
+	//fragment With *:
+	//	'with' combined+=Combination (',' combined+=Combination)*;
+	public WithElements getWithAccess() {
+		return pWith;
+	}
+	
+	public ParserRule getWithRule() {
+		return getWithAccess().getRule();
+	}
+	
 	//Combination:
-	//	unsafe?='unsafe'?
+	//	-> unsafe?='unsafe'?
 	//	configuration=[Configuration] Arguments?;
 	public CombinationElements getCombinationAccess() {
 		return pCombination;
@@ -1093,7 +1510,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	////	| '#' property=[aadl2::Property|PNAME]
 	////;
 	//ConfigExpression ConfigValue:
-	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
+	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
 	//	| {PropertyValue} exp=CPropertyExpression
 	//	| {NestedAssignments} Assignments;
 	public ConfigExpressionElements getConfigExpressionAccess() {
@@ -1155,7 +1572,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//NamedElement aadl2::NamedElement:
-	//	ConfigPkg | Configuration | ConfigParameter;
+	//	ConfigPkg | Configuration | ConfigParameter | OutputVariable;
 	public NamedElementElements getNamedElementAccess() {
 		return pNamedElement;
 	}
@@ -2813,7 +3230,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//AbstractFeature aadl2::AbstractFeature:
 	//	(name=ID ':' | refined=[aadl2::AbstractFeature|REFINEDNAME] ':' RefinedToKeywords) (in?='in' | out?='out')?
-	//	('prototype' featurePrototype=[aadl2::FeaturePrototype|QCREF]? | 'feature'
+	//	('prototype' featurePrototype=[aadl2::FeaturePrototype|QCREF] | 'feature'
 	//	abstractFeatureClassifier=[aadl2::FeatureClassifier|QCREF]?) arrayDimension+=ArrayDimension? ('{'
 	//	ownedPropertyAssociation+=PropertyAssociation+ '}')? ';';
 	public Aadl2GrammarAccess.AbstractFeatureElements getAbstractFeatureAccess() {

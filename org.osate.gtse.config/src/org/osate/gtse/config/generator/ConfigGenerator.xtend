@@ -59,6 +59,7 @@ import org.osate.gtse.config.config.PropertyValue
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
 import static extension org.osate.gtse.config.config.ConfigurationExt.*
+import org.osate.gtse.config.config.Relation
 
 /**
  * Generates code from your model files on save.
@@ -118,44 +119,68 @@ class ConfigGenerator extends AbstractGenerator {
 //				.filter(Greeting)
 //				.map[name]
 //				.join(', '))
+		val package = resource.contents.head as ConfigPkg
 		val rootConfig = (resource.contents.head as ConfigPkg).root
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig)
 		val replacements = process(rootComp, lookup, arguments).toList
 
-		fsa.generateFile('paths.txt', replacements.map [ r |
-			val tl = r.path.tail
-			val pathName = tl.map[name].join('.')
-			if (r.isSubcomponentMapping) {
-				if (tl.empty) {
-					'componentImplementationName=' + r.value.print + '\n'
-				} else {
-					'SubcompChoice-' + pathName + '=' + r.value.print
-				}
-			} else if (r.isPropertyMapping) {
-				// TODO: handle parameter as value
-				if (r.property.propertyType instanceof ReferenceType) {
-					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + serializer.serialize(r.value).trim // FIXME
-				} else if (r.property.propertyType instanceof ListType &&
-					(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
-					val pv = r.value as PropertyValue
-					val a = pv.getContainerOfType(Assignment)
-					var ref = a.ref
-					// reference value is relative to assignment's container
-					var refPath = pathName
-					while (ref !== null && refPath.endsWith(ref.element.name)) {
-						refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
-						ref = ref.prev
+		fsa.generateFile('paths.txt', {
+			if (package.analyses.empty)
+				''
+			else
+				'Analyses=' + package.analyses.join(',')
+		} + '\n\n' + {
+			replacements.map [ r |
+				val tl = r.path.tail
+				val pathName = tl.map[name].join('.')
+				if (r.isSubcomponentMapping) {
+					if (tl.empty) {
+						'componentImplementationName=' + r.value.print + '\n'
+					} else {
+						'SubcompChoice-' + pathName + '=' + r.value.print
 					}
-					'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
-						serializer.serialize((pv.exp as ReferenceValue).path).trim
-				} else {
-					'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) + '=' +
-						serializer.serialize(r.value).trim
+				} else if (r.isPropertyMapping) {
+					// TODO: handle parameter as value
+					if (r.property.propertyType instanceof ReferenceType) {
+						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' +
+							serializer.serialize(r.value).trim // FIXME
+					} else if (r.property.propertyType instanceof ListType &&
+						(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
+						val pv = r.value as PropertyValue
+						val a = pv.getContainerOfType(Assignment)
+						var ref = a.ref
+						// reference value is relative to assignment's container
+						var refPath = pathName
+						while (ref !== null && refPath.endsWith(ref.element.name)) {
+							refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
+							ref = ref.prev
+						}
+						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
+							serializer.serialize((pv.exp as ReferenceValue).path).trim
+					} else {
+						'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) + '=' +
+							serializer.serialize(r.value).trim
+					}
 				}
-			}
-		].join('\n'))
+			].join('\n')
+		} + '\n\n' + {
+			if (package.outputs.empty)
+				''
+			else
+				package.outputs.map [ o |
+					val tn = o.type.toString
+					#['Output', o.name, Character.toUpperCase(tn.charAt(0)) + tn.substring(1)].join('-') + {
+						if (o.limit !== null) {
+							val bound = serializer.serialize(o.limit.bound).trim
+							val str = if (bound.startsWith("'")) bound.substring(1, bound.length - 1) else bound
+							'=' + o.limit.relation.print + '-' + str
+						} else
+							''
+					}
+				].join('\n')
+		})
 	}
 
 	static private def Iterable<Pair<ElementRef, Assignment>> makeLookup(Configuration cfg) {
@@ -451,4 +476,14 @@ class ConfigGenerator extends AbstractGenerator {
 			ch.print
 	}
 
+	dispatch def String print(Relation r) {
+		switch r {
+			case EQ: 'eq'
+			case NEQ: 'neq'
+			case GT: 'gt'
+			case GTE: 'gte'
+			case LT: 'lt'
+			case LTE: 'lte'
+		}
+	}
 }

@@ -35,6 +35,8 @@ import org.osate.aadl2.NamedElement;
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.ConfigPkg#getRoot <em>Root</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.ConfigPkg#getConfigurations <em>Configurations</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.ConfigPkg#getAnalyses <em>Analyses</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.ConfigPkg#getOutputs <em>Outputs</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg()
@@ -84,5 +86,37 @@ public interface ConfigPkg extends EObject, NamedElement
    * @generated
    */
   EList<Configuration> getConfigurations();
+
+  /**
+   * Returns the value of the '<em><b>Analyses</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Analyses</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Analyses</em>' attribute list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg_Analyses()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getAnalyses();
+
+  /**
+   * Returns the value of the '<em><b>Outputs</b></em>' containment reference list.
+   * The list contents are of type {@link org.osate.gtse.config.config.OutputVariable}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Outputs</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Outputs</em>' containment reference list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg_Outputs()
+   * @model containment="true"
+   * @generated
+   */
+  EList<OutputVariable> getOutputs();
 
 } // ConfigPkg

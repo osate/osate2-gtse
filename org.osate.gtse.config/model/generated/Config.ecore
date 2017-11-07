@@ -5,6 +5,33 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="root" eType="#//Configuration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="configurations" upperBound="-1"
         eType="#//Configuration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="analyses" unique="false"
+        upperBound="-1" eType="ecore:EDataType platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="#//OutputVariable" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputVariable" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="limit" eType="#//Limit"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Limit">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relation" eType="#//Relation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bound" eType="ecore:EClass platform:/resource/org.osate.aadl2/model/aadl2.ecore#//PropertyExpression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Type">
+    <eLiterals name="INT" literal="int"/>
+    <eLiterals name="FLOAT" value="1" literal="float"/>
+    <eLiterals name="STRING" value="2" literal="string"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Relation">
+    <eLiterals name="GT" literal=">"/>
+    <eLiterals name="GTE" value="1" literal=">="/>
+    <eLiterals name="EQ" value="2" literal="=="/>
+    <eLiterals name="NEQ" value="3" literal="!="/>
+    <eLiterals name="LT" value="4" literal="&lt;"/>
+    <eLiterals name="LTE" value="5" literal="&lt;="/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"

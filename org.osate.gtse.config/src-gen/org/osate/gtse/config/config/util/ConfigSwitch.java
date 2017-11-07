@@ -100,6 +100,22 @@ public class ConfigSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case ConfigPackage.OUTPUT_VARIABLE:
+      {
+        OutputVariable outputVariable = (OutputVariable)theEObject;
+        T result = caseOutputVariable(outputVariable);
+        if (result == null) result = caseNamedElement(outputVariable);
+        if (result == null) result = caseElement(outputVariable);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.LIMIT:
+      {
+        Limit limit = (Limit)theEObject;
+        T result = caseLimit(limit);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case ConfigPackage.CONFIGURATION:
       {
         Configuration configuration = (Configuration)theEObject;
@@ -201,6 +217,38 @@ public class ConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseConfigPkg(ConfigPkg object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Output Variable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Output Variable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOutputVariable(OutputVariable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Limit</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Limit</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLimit(Limit object)
   {
     return null;
   }

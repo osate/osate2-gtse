@@ -188,8 +188,10 @@ import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.ConfigPkg;
 import org.osate.gtse.config.config.Configuration;
 import org.osate.gtse.config.config.ElementRef;
+import org.osate.gtse.config.config.Limit;
 import org.osate.gtse.config.config.NamedElementRef;
 import org.osate.gtse.config.config.NestedAssignments;
+import org.osate.gtse.config.config.OutputVariable;
 import org.osate.gtse.config.config.PropertyValue;
 import org.osate.gtse.config.services.ConfigGrammarAccess;
 import org.osate.xtext.aadl2.serializer.Aadl2SemanticSequencer;
@@ -572,7 +574,8 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 					sequence_IntegerLit(context, (IntegerLiteral) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getCPropertyExpressionRule()
+				else if (rule == grammarAccess.getLiteralRule()
+						|| rule == grammarAccess.getCPropertyExpressionRule()
 						|| rule == grammarAccess.getConstantPropertyExpressionRule()
 						|| rule == grammarAccess.getPropertyExpressionRule()
 						|| rule == grammarAccess.getIntegerTermRule()
@@ -762,7 +765,8 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 					sequence_RealLit(context, (RealLiteral) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getCPropertyExpressionRule()
+				else if (rule == grammarAccess.getLiteralRule()
+						|| rule == grammarAccess.getCPropertyExpressionRule()
 						|| rule == grammarAccess.getConstantPropertyExpressionRule()
 						|| rule == grammarAccess.getPropertyExpressionRule()
 						|| rule == grammarAccess.getRealTermRule()
@@ -960,19 +964,25 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 				sequence_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIG_PKG:
-				sequence_ConfigPkg(context, (ConfigPkg) semanticObject); 
+				sequence_Analyses_ConfigPkg_Outputs(context, (ConfigPkg) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIGURATION:
-				sequence_Assignments_Configuration_Parameters(context, (Configuration) semanticObject); 
+				sequence_Assignments_Configuration_Parameters_With(context, (Configuration) semanticObject); 
 				return; 
 			case ConfigPackage.ELEMENT_REF:
 				sequence_ElementRef(context, (ElementRef) semanticObject); 
+				return; 
+			case ConfigPackage.LIMIT:
+				sequence_Limit(context, (Limit) semanticObject); 
 				return; 
 			case ConfigPackage.NAMED_ELEMENT_REF:
 				sequence_Arguments_Assignments_ConfigExpression(context, (NamedElementRef) semanticObject); 
 				return; 
 			case ConfigPackage.NESTED_ASSIGNMENTS:
 				sequence_Assignments_ConfigExpression(context, (NestedAssignments) semanticObject); 
+				return; 
+			case ConfigPackage.OUTPUT_VARIABLE:
+				sequence_OutputVariable(context, (OutputVariable) semanticObject); 
 				return; 
 			case ConfigPackage.PROPERTY_VALUE:
 				sequence_ConfigExpression(context, (PropertyValue) semanticObject); 
@@ -981,6 +991,24 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     ConfigPkg returns ConfigPkg
+	 *     NamedElement returns ConfigPkg
+	 *
+	 * Constraint:
+	 *     (
+	 *         root=[Configuration|ID] 
+	 *         configurations+=Configuration* 
+	 *         (analyses+=STRING analyses+=STRING*)? 
+	 *         (outputs+=OutputVariable outputs+=OutputVariable*)?
+	 *     )
+	 */
+	protected void sequence_Analyses_ConfigPkg_Outputs(ISerializationContext context, ConfigPkg semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -1060,12 +1088,11 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     (
 	 *         name=ID 
 	 *         (parameters+=ConfigParameter parameters+=ConfigParameter*)? 
-	 *         extended=[ComponentClassifier|CNAME]? 
-	 *         (combined+=Combination combined+=Combination*)? 
+	 *         (extended=[ComponentClassifier|CNAME] (combined+=Combination combined+=Combination*)?)? 
 	 *         (assignments+=Assignment assignments+=Assignment*)?
 	 *     )
 	 */
-	protected void sequence_Assignments_Configuration_Parameters(ISerializationContext context, Configuration semanticObject) {
+	protected void sequence_Assignments_Configuration_Parameters_With(ISerializationContext context, Configuration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1115,19 +1142,6 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	/**
 	 * Contexts:
-	 *     ConfigPkg returns ConfigPkg
-	 *     NamedElement returns ConfigPkg
-	 *
-	 * Constraint:
-	 *     (root=[Configuration|ID] configurations+=Configuration*)
-	 */
-	protected void sequence_ConfigPkg(ISerializationContext context, ConfigPkg semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     ElementRef returns ElementRef
 	 *     ElementRef.ElementRef_1_0_0 returns ElementRef
 	 *
@@ -1135,6 +1149,40 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     (element=[NamedElement|ID] | (prev=ElementRef_ElementRef_1_0_0 element=[NamedElement|ID]))
 	 */
 	protected void sequence_ElementRef(ISerializationContext context, ElementRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Limit returns Limit
+	 *
+	 * Constraint:
+	 *     (relation=Relation bound=Literal)
+	 */
+	protected void sequence_Limit(ISerializationContext context, Limit semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.LIMIT__RELATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.LIMIT__RELATION));
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.LIMIT__BOUND) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.LIMIT__BOUND));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLimitAccess().getRelationRelationEnumRuleCall_0_0(), semanticObject.getRelation());
+		feeder.accept(grammarAccess.getLimitAccess().getBoundLiteralParserRuleCall_1_0(), semanticObject.getBound());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     OutputVariable returns OutputVariable
+	 *     NamedElement returns OutputVariable
+	 *
+	 * Constraint:
+	 *     (name=ID type=Type? limit=Limit?)
+	 */
+	protected void sequence_OutputVariable(ISerializationContext context, OutputVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -99,6 +99,16 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
         return createConfigPkgAdapter();
       }
       @Override
+      public Adapter caseOutputVariable(OutputVariable object)
+      {
+        return createOutputVariableAdapter();
+      }
+      @Override
+      public Adapter caseLimit(Limit object)
+      {
+        return createLimitAdapter();
+      }
+      @Override
       public Adapter caseConfiguration(Configuration object)
       {
         return createConfigurationAdapter();
@@ -196,6 +206,36 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConfigPkgAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.OutputVariable <em>Output Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.OutputVariable
+   * @generated
+   */
+  public Adapter createOutputVariableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Limit <em>Limit</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.Limit
+   * @generated
+   */
+  public Adapter createLimitAdapter()
   {
     return null;
   }

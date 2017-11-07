@@ -19,6 +19,7 @@
 package org.osate.gtse.config.config.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -81,6 +82,8 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
     switch (eClass.getClassifierID())
     {
       case ConfigPackage.CONFIG_PKG: return createConfigPkg();
+      case ConfigPackage.OUTPUT_VARIABLE: return createOutputVariable();
+      case ConfigPackage.LIMIT: return createLimit();
       case ConfigPackage.CONFIGURATION: return createConfiguration();
       case ConfigPackage.COMBINATION: return createCombination();
       case ConfigPackage.CONFIG_PARAMETER: return createConfigParameter();
@@ -102,10 +105,70 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case ConfigPackage.TYPE:
+        return createTypeFromString(eDataType, initialValue);
+      case ConfigPackage.RELATION:
+        return createRelationFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case ConfigPackage.TYPE:
+        return convertTypeToString(eDataType, instanceValue);
+      case ConfigPackage.RELATION:
+        return convertRelationToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public ConfigPkg createConfigPkg()
   {
     ConfigPkgImpl configPkg = new ConfigPkgImpl();
     return configPkg;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public OutputVariable createOutputVariable()
+  {
+    OutputVariableImpl outputVariable = new OutputVariableImpl();
+    return outputVariable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Limit createLimit()
+  {
+    LimitImpl limit = new LimitImpl();
+    return limit;
   }
 
   /**
@@ -227,6 +290,50 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
   {
     NestedAssignmentsImpl nestedAssignments = new NestedAssignmentsImpl();
     return nestedAssignments;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type createTypeFromString(EDataType eDataType, String initialValue)
+  {
+    Type result = Type.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Relation createRelationFromString(EDataType eDataType, String initialValue)
+  {
+    Relation result = Relation.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertRelationToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

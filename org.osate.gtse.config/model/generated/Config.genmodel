@@ -6,9 +6,32 @@
     complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.13" usedGenPackages="platform:/resource/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/resource/org.osate.aadl2/model/aadl2.genmodel#//aadl2">
   <genPackages prefix="Config" basePackage="org.osate.gtse.config" disposableProviderFactory="true"
       fileExtensions="config" ecorePackage="Config.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Config.ecore#//Type">
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Type/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Type/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Type/STRING"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Config.ecore#//Relation">
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/GTE"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/NEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/LTE"/>
+    </genEnums>
     <genClasses ecoreClass="Config.ecore#//ConfigPkg">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/root"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/configurations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//ConfigPkg/analyses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/outputs"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//OutputVariable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//OutputVariable/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//OutputVariable/limit"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//Limit">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//Limit/relation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Limit/bound"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//Configuration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/parameters"/>

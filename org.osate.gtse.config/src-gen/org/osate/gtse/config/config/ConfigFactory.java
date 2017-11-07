@@ -48,6 +48,24 @@ public interface ConfigFactory extends EFactory
   ConfigPkg createConfigPkg();
 
   /**
+   * Returns a new object of class '<em>Output Variable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Output Variable</em>'.
+   * @generated
+   */
+  OutputVariable createOutputVariable();
+
+  /**
+   * Returns a new object of class '<em>Limit</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Limit</em>'.
+   * @generated
+   */
+  Limit createLimit();
+
+  /**
    * Returns a new object of class '<em>Configuration</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

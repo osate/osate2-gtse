@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -38,6 +39,7 @@ import org.osate.aadl2.impl.NamedElementImpl;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigPkg;
 import org.osate.gtse.config.config.Configuration;
+import org.osate.gtse.config.config.OutputVariable;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,6 +51,8 @@ import org.osate.gtse.config.config.Configuration;
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigPkgImpl#getRoot <em>Root</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigPkgImpl#getConfigurations <em>Configurations</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.ConfigPkgImpl#getAnalyses <em>Analyses</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.ConfigPkgImpl#getOutputs <em>Outputs</em>}</li>
  * </ul>
  *
  * @generated
@@ -74,6 +78,26 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * @ordered
    */
   protected EList<Configuration> configurations;
+
+  /**
+   * The cached value of the '{@link #getAnalyses() <em>Analyses</em>}' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnalyses()
+   * @generated
+   * @ordered
+   */
+  protected EList<String> analyses;
+
+  /**
+   * The cached value of the '{@link #getOutputs() <em>Outputs</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOutputs()
+   * @generated
+   * @ordered
+   */
+  protected EList<OutputVariable> outputs;
 
   /**
    * <!-- begin-user-doc -->
@@ -158,6 +182,34 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<String> getAnalyses()
+  {
+    if (analyses == null)
+    {
+      analyses = new EDataTypeEList<String>(String.class, this, ConfigPackage.CONFIG_PKG__ANALYSES);
+    }
+    return analyses;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<OutputVariable> getOutputs()
+  {
+    if (outputs == null)
+    {
+      outputs = new EObjectContainmentEList<OutputVariable>(OutputVariable.class, this, ConfigPackage.CONFIG_PKG__OUTPUTS);
+    }
+    return outputs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -165,6 +217,8 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
     {
       case ConfigPackage.CONFIG_PKG__CONFIGURATIONS:
         return ((InternalEList<?>)getConfigurations()).basicRemove(otherEnd, msgs);
+      case ConfigPackage.CONFIG_PKG__OUTPUTS:
+        return ((InternalEList<?>)getOutputs()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -184,6 +238,10 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
         return basicGetRoot();
       case ConfigPackage.CONFIG_PKG__CONFIGURATIONS:
         return getConfigurations();
+      case ConfigPackage.CONFIG_PKG__ANALYSES:
+        return getAnalyses();
+      case ConfigPackage.CONFIG_PKG__OUTPUTS:
+        return getOutputs();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -206,6 +264,14 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
         getConfigurations().clear();
         getConfigurations().addAll((Collection<? extends Configuration>)newValue);
         return;
+      case ConfigPackage.CONFIG_PKG__ANALYSES:
+        getAnalyses().clear();
+        getAnalyses().addAll((Collection<? extends String>)newValue);
+        return;
+      case ConfigPackage.CONFIG_PKG__OUTPUTS:
+        getOutputs().clear();
+        getOutputs().addAll((Collection<? extends OutputVariable>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -226,6 +292,12 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
       case ConfigPackage.CONFIG_PKG__CONFIGURATIONS:
         getConfigurations().clear();
         return;
+      case ConfigPackage.CONFIG_PKG__ANALYSES:
+        getAnalyses().clear();
+        return;
+      case ConfigPackage.CONFIG_PKG__OUTPUTS:
+        getOutputs().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -244,8 +316,29 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
         return root != null;
       case ConfigPackage.CONFIG_PKG__CONFIGURATIONS:
         return configurations != null && !configurations.isEmpty();
+      case ConfigPackage.CONFIG_PKG__ANALYSES:
+        return analyses != null && !analyses.isEmpty();
+      case ConfigPackage.CONFIG_PKG__OUTPUTS:
+        return outputs != null && !outputs.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (analyses: ");
+    result.append(analyses);
+    result.append(')');
+    return result.toString();
   }
 
 } //ConfigPkgImpl

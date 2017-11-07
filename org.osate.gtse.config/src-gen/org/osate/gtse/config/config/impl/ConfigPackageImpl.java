@@ -20,6 +20,7 @@ package org.osate.gtse.config.config.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -39,9 +40,13 @@ import org.osate.gtse.config.config.ConfigPkg;
 import org.osate.gtse.config.config.ConfigValue;
 import org.osate.gtse.config.config.Configuration;
 import org.osate.gtse.config.config.ElementRef;
+import org.osate.gtse.config.config.Limit;
 import org.osate.gtse.config.config.NamedElementRef;
 import org.osate.gtse.config.config.NestedAssignments;
+import org.osate.gtse.config.config.OutputVariable;
 import org.osate.gtse.config.config.PropertyValue;
+import org.osate.gtse.config.config.Relation;
+import org.osate.gtse.config.config.Type;
 
 /**
  * <!-- begin-user-doc -->
@@ -57,6 +62,20 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * @generated
    */
   private EClass configPkgEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass outputVariableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass limitEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -134,6 +153,20 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * @generated
    */
   private EClass nestedAssignmentsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum typeEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum relationEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -230,6 +263,86 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   public EReference getConfigPkg_Configurations()
   {
     return (EReference)configPkgEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConfigPkg_Analyses()
+  {
+    return (EAttribute)configPkgEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConfigPkg_Outputs()
+  {
+    return (EReference)configPkgEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getOutputVariable()
+  {
+    return outputVariableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getOutputVariable_Type()
+  {
+    return (EAttribute)outputVariableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getOutputVariable_Limit()
+  {
+    return (EReference)outputVariableEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLimit()
+  {
+    return limitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLimit_Relation()
+  {
+    return (EAttribute)limitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLimit_Bound()
+  {
+    return (EReference)limitEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -597,6 +710,26 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EEnum getType()
+  {
+    return typeEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getRelation()
+  {
+    return relationEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public ConfigFactory getConfigFactory()
   {
     return (ConfigFactory)getEFactoryInstance();
@@ -625,6 +758,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     configPkgEClass = createEClass(CONFIG_PKG);
     createEReference(configPkgEClass, CONFIG_PKG__ROOT);
     createEReference(configPkgEClass, CONFIG_PKG__CONFIGURATIONS);
+    createEAttribute(configPkgEClass, CONFIG_PKG__ANALYSES);
+    createEReference(configPkgEClass, CONFIG_PKG__OUTPUTS);
+
+    outputVariableEClass = createEClass(OUTPUT_VARIABLE);
+    createEAttribute(outputVariableEClass, OUTPUT_VARIABLE__TYPE);
+    createEReference(outputVariableEClass, OUTPUT_VARIABLE__LIMIT);
+
+    limitEClass = createEClass(LIMIT);
+    createEAttribute(limitEClass, LIMIT__RELATION);
+    createEReference(limitEClass, LIMIT__BOUND);
 
     configurationEClass = createEClass(CONFIGURATION);
     createEReference(configurationEClass, CONFIGURATION__PARAMETERS);
@@ -672,6 +815,10 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     nestedAssignmentsEClass = createEClass(NESTED_ASSIGNMENTS);
     createEReference(nestedAssignmentsEClass, NESTED_ASSIGNMENTS__ASSIGNMENTS);
+
+    // Create enums
+    typeEEnum = createEEnum(TYPE);
+    relationEEnum = createEEnum(RELATION);
   }
 
   /**
@@ -708,6 +855,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     // Add supertypes to classes
     configPkgEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
+    outputVariableEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configurationEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configParameterEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     candidateListEClass.getESuperTypes().add(this.getConfigValue());
@@ -719,6 +867,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEClass(configPkgEClass, ConfigPkg.class, "ConfigPkg", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConfigPkg_Root(), this.getConfiguration(), null, "root", null, 0, 1, ConfigPkg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConfigPkg_Configurations(), this.getConfiguration(), null, "configurations", null, 0, -1, ConfigPkg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConfigPkg_Analyses(), theEcorePackage.getEString(), "analyses", null, 0, -1, ConfigPkg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConfigPkg_Outputs(), this.getOutputVariable(), null, "outputs", null, 0, -1, ConfigPkg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(outputVariableEClass, OutputVariable.class, "OutputVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getOutputVariable_Type(), this.getType(), "type", null, 0, 1, OutputVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOutputVariable_Limit(), this.getLimit(), null, "limit", null, 0, 1, OutputVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(limitEClass, Limit.class, "Limit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLimit_Relation(), this.getRelation(), "relation", null, 0, 1, Limit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLimit_Bound(), theAadl2Package.getPropertyExpression(), null, "bound", null, 0, 1, Limit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(configurationEClass, Configuration.class, "Configuration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConfiguration_Parameters(), this.getConfigParameter(), null, "parameters", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -766,6 +924,20 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     initEClass(nestedAssignmentsEClass, NestedAssignments.class, "NestedAssignments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNestedAssignments_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NestedAssignments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    // Initialize enums and add enum literals
+    initEEnum(typeEEnum, Type.class, "Type");
+    addEEnumLiteral(typeEEnum, Type.INT);
+    addEEnumLiteral(typeEEnum, Type.FLOAT);
+    addEEnumLiteral(typeEEnum, Type.STRING);
+
+    initEEnum(relationEEnum, Relation.class, "Relation");
+    addEEnumLiteral(relationEEnum, Relation.GT);
+    addEEnumLiteral(relationEEnum, Relation.GTE);
+    addEEnumLiteral(relationEEnum, Relation.EQ);
+    addEEnumLiteral(relationEEnum, Relation.NEQ);
+    addEEnumLiteral(relationEEnum, Relation.LT);
+    addEEnumLiteral(relationEEnum, Relation.LTE);
 
     // Create resource
     createResource(eNS_URI);

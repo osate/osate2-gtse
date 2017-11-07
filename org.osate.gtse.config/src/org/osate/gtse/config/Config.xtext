@@ -2,13 +2,51 @@ grammar org.osate.gtse.config.Config with org.osate.xtext.aadl2.Aadl2
 
 generate config "http://www.osate.org/gtse/config/Config"
 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://aadl.info/AADL/2.0" as aadl2
 
 ConfigPkg:
 //	'package' name=PNAME
 		'root' root=[Configuration|ID]
 		configurations+=Configuration*
+		Analyses?
+		Outputs?
 //	'end'
+;
+
+fragment Analyses*:
+	'analyses' '{' 
+		analyses+=STRING (',' analyses+=STRING)* 
+	'}'
+;
+
+fragment Outputs*:
+	'outputs' '{'
+		outputs+=OutputVariable (',' outputs+=OutputVariable)* 
+	'}'
+;
+
+OutputVariable:
+	name=ID (':' type=Type)? limit=Limit?
+;
+
+Limit:
+	relation=Relation
+	bound=Literal
+;
+
+enum Type:
+	INT='int' | FLOAT='float' | STRING='string'
+;
+
+enum Relation:
+	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<='
+;
+
+Literal returns aadl2::PropertyExpression:
+	IntegerTerm
+	| RealTerm
+	| StringTerm
 ;
 
 // TODO: extends configuration / configuration with arguments
@@ -19,12 +57,12 @@ Configuration:
 	Assignments?
 ;
 
-fragment With:
+fragment With*:
 	'with' combined+=Combination (',' combined+=Combination)*
 ;
 
 Combination:
-	unsafe?='unsafe'?
+	->unsafe?='unsafe'?
 	configuration=[Configuration|ID] Arguments?
 ;
 
@@ -70,7 +108,7 @@ Assignment:
 
 ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
-	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments?
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
 	| {PropertyValue} exp=CPropertyExpression
 	| {NestedAssignments} Assignments
 ;
@@ -101,7 +139,7 @@ CPropertyExpression returns aadl2::PropertyExpression:
 ;
 
 NamedElement returns aadl2::NamedElement:
-	ConfigPkg | Configuration | ConfigParameter
+	ConfigPkg | Configuration | ConfigParameter | OutputVariable
 ;
 
 // classifier name

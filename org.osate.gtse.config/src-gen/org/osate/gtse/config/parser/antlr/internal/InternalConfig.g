@@ -128,6 +128,351 @@ ruleConfigPkg returns [EObject current=null]
 				}
 			)
 		)*
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getConfigPkgRule());
+				}
+				newCompositeNode(grammarAccess.getConfigPkgAccess().getAnalysesParserRuleCall_3());
+			}
+			this_Analyses_3=ruleAnalyses[$current]
+			{
+				$current = $this_Analyses_3.current;
+				afterParserOrEnumRuleCall();
+			}
+		)?
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getConfigPkgRule());
+				}
+				newCompositeNode(grammarAccess.getConfigPkgAccess().getOutputsParserRuleCall_4());
+			}
+			this_Outputs_4=ruleOutputs[$current]
+			{
+				$current = $this_Outputs_4.current;
+				afterParserOrEnumRuleCall();
+			}
+		)?
+	)
+;
+
+
+// Rule Analyses
+ruleAnalyses[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='analyses'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getAnalysesAccess().getAnalysesKeyword_0());
+		}
+		otherlv_1='{'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getAnalysesAccess().getLeftCurlyBracketKeyword_1());
+		}
+		(
+			(
+				lv_analyses_2_0=RULE_STRING
+				{
+					newLeafNode(lv_analyses_2_0, grammarAccess.getAnalysesAccess().getAnalysesSTRINGTerminalRuleCall_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getAnalysesRule());
+					}
+					addWithLastConsumed(
+						$current,
+						"analyses",
+						lv_analyses_2_0,
+						"org.osate.xtext.aadl2.properties.Properties.STRING");
+				}
+			)
+		)
+		(
+			otherlv_3=','
+			{
+				newLeafNode(otherlv_3, grammarAccess.getAnalysesAccess().getCommaKeyword_3_0());
+			}
+			(
+				(
+					lv_analyses_4_0=RULE_STRING
+					{
+						newLeafNode(lv_analyses_4_0, grammarAccess.getAnalysesAccess().getAnalysesSTRINGTerminalRuleCall_3_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getAnalysesRule());
+						}
+						addWithLastConsumed(
+							$current,
+							"analyses",
+							lv_analyses_4_0,
+							"org.osate.xtext.aadl2.properties.Properties.STRING");
+					}
+				)
+			)
+		)*
+		otherlv_5='}'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getAnalysesAccess().getRightCurlyBracketKeyword_4());
+		}
+	)
+;
+
+
+// Rule Outputs
+ruleOutputs[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='outputs'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getOutputsAccess().getOutputsKeyword_0());
+		}
+		otherlv_1='{'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getOutputsAccess().getLeftCurlyBracketKeyword_1());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getOutputsAccess().getOutputsOutputVariableParserRuleCall_2_0());
+				}
+				lv_outputs_2_0=ruleOutputVariable
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getOutputsRule());
+					}
+					add(
+						$current,
+						"outputs",
+						lv_outputs_2_0,
+						"org.osate.gtse.config.Config.OutputVariable");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_3=','
+			{
+				newLeafNode(otherlv_3, grammarAccess.getOutputsAccess().getCommaKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getOutputsAccess().getOutputsOutputVariableParserRuleCall_3_1_0());
+					}
+					lv_outputs_4_0=ruleOutputVariable
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getOutputsRule());
+						}
+						add(
+							$current,
+							"outputs",
+							lv_outputs_4_0,
+							"org.osate.gtse.config.Config.OutputVariable");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		otherlv_5='}'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getOutputsAccess().getRightCurlyBracketKeyword_4());
+		}
+	)
+;
+
+// Entry rule entryRuleOutputVariable
+entryRuleOutputVariable returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getOutputVariableRule()); }
+	iv_ruleOutputVariable=ruleOutputVariable
+	{ $current=$iv_ruleOutputVariable.current; }
+	EOF;
+
+// Rule OutputVariable
+ruleOutputVariable returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_name_0_0=RULE_ID
+				{
+					newLeafNode(lv_name_0_0, grammarAccess.getOutputVariableAccess().getNameIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getOutputVariableRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_0_0,
+						"org.osate.xtext.aadl2.properties.Properties.ID");
+				}
+			)
+		)
+		(
+			otherlv_1=':'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getOutputVariableAccess().getColonKeyword_1_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getOutputVariableAccess().getTypeTypeEnumRuleCall_1_1_0());
+					}
+					lv_type_2_0=ruleType
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getOutputVariableRule());
+						}
+						set(
+							$current,
+							"type",
+							lv_type_2_0,
+							"org.osate.gtse.config.Config.Type");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getOutputVariableAccess().getLimitLimitParserRuleCall_2_0());
+				}
+				lv_limit_3_0=ruleLimit
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getOutputVariableRule());
+					}
+					set(
+						$current,
+						"limit",
+						lv_limit_3_0,
+						"org.osate.gtse.config.Config.Limit");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+	)
+;
+
+// Entry rule entryRuleLimit
+entryRuleLimit returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLimitRule()); }
+	iv_ruleLimit=ruleLimit
+	{ $current=$iv_ruleLimit.current; }
+	EOF;
+
+// Rule Limit
+ruleLimit returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLimitAccess().getRelationRelationEnumRuleCall_0_0());
+				}
+				lv_relation_0_0=ruleRelation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLimitRule());
+					}
+					set(
+						$current,
+						"relation",
+						lv_relation_0_0,
+						"org.osate.gtse.config.Config.Relation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLimitAccess().getBoundLiteralParserRuleCall_1_0());
+				}
+				lv_bound_1_0=ruleLiteral
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLimitRule());
+					}
+					set(
+						$current,
+						"bound",
+						lv_bound_1_0,
+						"org.osate.gtse.config.Config.Literal");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleLiteral
+entryRuleLiteral returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLiteralRule()); }
+	iv_ruleLiteral=ruleLiteral
+	{ $current=$iv_ruleLiteral.current; }
+	EOF;
+
+// Rule Literal
+ruleLiteral returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			newCompositeNode(grammarAccess.getLiteralAccess().getIntegerTermParserRuleCall_0());
+		}
+		this_IntegerTerm_0=ruleIntegerTerm
+		{
+			$current = $this_IntegerTerm_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getLiteralAccess().getRealTermParserRuleCall_1());
+		}
+		this_RealTerm_1=ruleRealTerm
+		{
+			$current = $this_RealTerm_1.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getLiteralAccess().getStringTermParserRuleCall_2());
+		}
+		this_StringTerm_2=ruleStringTerm
+		{
+			$current = $this_StringTerm_2.current;
+			afterParserOrEnumRuleCall();
+		}
 	)
 ;
 
@@ -203,70 +548,94 @@ ruleConfiguration returns [EObject current=null]
 					}
 				)
 			)
-		)?
-		(
-			otherlv_5='with'
-			{
-				newLeafNode(otherlv_5, grammarAccess.getConfigurationAccess().getWithKeyword_4_0());
-			}
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getConfigurationAccess().getCombinedCombinationParserRuleCall_4_1_0());
-					}
-					lv_combined_6_0=ruleCombination
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getConfigurationRule());
-						}
-						add(
-							$current,
-							"combined",
-							lv_combined_6_0,
-							"org.osate.gtse.config.Config.Combination");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				otherlv_7=','
 				{
-					newLeafNode(otherlv_7, grammarAccess.getConfigurationAccess().getCommaKeyword_4_2_0());
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConfigurationRule());
+					}
+					newCompositeNode(grammarAccess.getConfigurationAccess().getWithParserRuleCall_3_2());
 				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getConfigurationAccess().getCombinedCombinationParserRuleCall_4_2_1_0());
-						}
-						lv_combined_8_0=ruleCombination
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getConfigurationRule());
-							}
-							add(
-								$current,
-								"combined",
-								lv_combined_8_0,
-								"org.osate.gtse.config.Config.Combination");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)*
+				this_With_5=ruleWith[$current]
+				{
+					$current = $this_With_5.current;
+					afterParserOrEnumRuleCall();
+				}
+			)?
 		)?
 		(
 			{
 				if ($current==null) {
 					$current = createModelElement(grammarAccess.getConfigurationRule());
 				}
-				newCompositeNode(grammarAccess.getConfigurationAccess().getAssignmentsParserRuleCall_5());
+				newCompositeNode(grammarAccess.getConfigurationAccess().getAssignmentsParserRuleCall_4());
 			}
-			this_Assignments_9=ruleAssignments[$current]
+			this_Assignments_6=ruleAssignments[$current]
 			{
-				$current = $this_Assignments_9.current;
+				$current = $this_Assignments_6.current;
 				afterParserOrEnumRuleCall();
 			}
 		)?
+	)
+;
+
+
+// Rule With
+ruleWith[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='with'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getWithAccess().getWithKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getWithAccess().getCombinedCombinationParserRuleCall_1_0());
+				}
+				lv_combined_1_0=ruleCombination
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getWithRule());
+					}
+					add(
+						$current,
+						"combined",
+						lv_combined_1_0,
+						"org.osate.gtse.config.Config.Combination");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_2=','
+			{
+				newLeafNode(otherlv_2, grammarAccess.getWithAccess().getCommaKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getWithAccess().getCombinedCombinationParserRuleCall_2_1_0());
+					}
+					lv_combined_3_0=ruleCombination
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getWithRule());
+						}
+						add(
+							$current,
+							"combined",
+							lv_combined_3_0,
+							"org.osate.gtse.config.Config.Combination");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
 	)
 ;
 
@@ -287,6 +656,7 @@ ruleCombination returns [EObject current=null]
 }:
 	(
 		(
+			('unsafe')=>
 			(
 				lv_unsafe_0_0='unsafe'
 				{
@@ -30707,7 +31077,7 @@ ruleAbstractFeature returns [EObject current=null]
 							afterParserOrEnumRuleCall();
 						}
 					)
-				)?
+				)
 			)
 			    |
 			(
@@ -42817,6 +43187,100 @@ ruleSTAR returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 		$current.merge(kw);
 		newLeafNode(kw, grammarAccess.getSTARAccess().getAsteriskKeyword());
 	}
+;
+
+// Rule Type
+ruleType returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='int'
+			{
+				$current = grammarAccess.getTypeAccess().getINTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getTypeAccess().getINTEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='float'
+			{
+				$current = grammarAccess.getTypeAccess().getFLOATEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getTypeAccess().getFLOATEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='string'
+			{
+				$current = grammarAccess.getTypeAccess().getSTRINGEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getTypeAccess().getSTRINGEnumLiteralDeclaration_2());
+			}
+		)
+	)
+;
+
+// Rule Relation
+ruleRelation returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='>'
+			{
+				$current = grammarAccess.getRelationAccess().getGTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getRelationAccess().getGTEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='>='
+			{
+				$current = grammarAccess.getRelationAccess().getGTEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getRelationAccess().getGTEEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='=='
+			{
+				$current = grammarAccess.getRelationAccess().getEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getRelationAccess().getEQEnumLiteralDeclaration_2());
+			}
+		)
+		    |
+		(
+			enumLiteral_3='!='
+			{
+				$current = grammarAccess.getRelationAccess().getNEQEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getRelationAccess().getNEQEnumLiteralDeclaration_3());
+			}
+		)
+		    |
+		(
+			enumLiteral_4='<'
+			{
+				$current = grammarAccess.getRelationAccess().getLTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getRelationAccess().getLTEnumLiteralDeclaration_4());
+			}
+		)
+		    |
+		(
+			enumLiteral_5='<='
+			{
+				$current = grammarAccess.getRelationAccess().getLTEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getRelationAccess().getLTEEnumLiteralDeclaration_5());
+			}
+		)
+	)
 ;
 
 // Rule FlowKind

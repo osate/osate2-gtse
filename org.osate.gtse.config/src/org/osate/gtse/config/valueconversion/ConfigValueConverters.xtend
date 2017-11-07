@@ -9,8 +9,8 @@ import org.eclipse.xtext.nodemodel.INode
 import org.osate.aadl2.ComponentCategory
 
 class ConfigValueConverters extends DefaultTerminalConverters {
-	
-	@ValueConverter(rule = "ComponentCategory")
+
+	@ValueConverter(rule="ComponentCategory")
 	def IValueConverter<ComponentCategory> ComponentCategory() {
 		new AbstractNullSafeConverter<ComponentCategory>() {
 
@@ -25,34 +25,51 @@ class ConfigValueConverters extends DefaultTerminalConverters {
 		};
 	}
 
-	@ValueConverter(rule = "AadlClassifierReference")
+	@ValueConverter(rule="AadlClassifierReference")
 	def IValueConverter<String> AadlClassifierReference() {
-		new AbstractNullSafeConverter<String> () {
-			
+		new AbstractNullSafeConverter<String>() {
+
 			override protected internalToString(String value) {
-				value.split('::').map[it.split('\\.').map[id | ID().toString(id)].join('.')].join('::')
+				value.split('::').map[it.split('\\.').map[id|ID().toString(id)].join('.')].join('::')
 			}
-			
+
 			override protected internalToValue(String string, INode node) throws ValueConverterException {
 				string.replace('^', '')
 			}
-			
+
 		}
 	}
 
-	@ValueConverter(rule = "QualifiedName")
+	@ValueConverter(rule="QualifiedName")
 	def IValueConverter<String> QualifiedName() {
-		new AbstractNullSafeConverter<String> () {
-			
+		new AbstractNullSafeConverter<String>() {
+
 			override protected internalToString(String value) {
-				value.split('::').map[it.split('\\.').map[id | ID().toString(id)].join('.')].join('::')
+				value.split('::').map[it.split('\\.').map[id|ID().toString(id)].join('.')].join('::')
 			}
-			
+
 			override protected internalToValue(String string, INode node) throws ValueConverterException {
 				string.replace('^', '')
 			}
-			
+
 		}
+	}
+
+	@ValueConverter(rule="FloatVal")
+	def IValueConverter<Double> FLOAT() {
+		new AbstractNullSafeConverter<Double>() {
+			override protected Double internalToValue(String string, INode node) throws ValueConverterException{
+				try {
+					Double.parseDouble(string)
+				} catch (NumberFormatException e) {
+					0.0
+				}
+			}
+
+			override protected String internalToString(Double value) {
+				value.toString()
+			}
+		};
 	}
 
 }
