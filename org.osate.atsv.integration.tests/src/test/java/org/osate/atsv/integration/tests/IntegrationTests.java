@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -51,7 +51,7 @@ public class IntegrationTests extends IntegrationTestBase {
 	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.power-consumption", null, true, "",
-				Collections.singletonMap("Grid", new VarDescriptor("20.0")), Collections.emptySet());
+				Collections.singletonMap("Grid", new VarDescriptor("19.0")), Collections.emptySet());
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class IntegrationTests extends IntegrationTestBase {
 		testHelper("org.osate.atsv.integration.property-totals", null, true, "",
 				Stream.of(new Object[] { "Price", new VarDescriptor("1750.63") },
 						new Object[] { "Weight", new VarDescriptor("8.41") })
-						.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
+				.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
 				Collections.emptySet());
 	}
 

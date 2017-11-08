@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -52,11 +52,25 @@ public class PowerConsumption extends AbstractAnalysis {
 						varName = cell.getMessage().substring(31);
 					}
 					if (cell.getMessage().startsWith("Budget: ")) {
-						ret.addVariable(varName, ATSVVariableType.FLOAT,
-								cell.getMessage().substring(8, cell.getMessage().lastIndexOf(" W")));
+						ret.addVariable(varName, ATSVVariableType.FLOAT, scaleToWatts(cell.getMessage()));
 					}
 				}
 			}
 		}
+	}
+
+	private String scaleToWatts(String msg) {
+		String unscaledStr = msg.substring(8, msg.lastIndexOf(" "));
+		String units = msg.substring(msg.lastIndexOf(" ") + 1);
+		double unscaledDbl = Double.parseDouble(unscaledStr);
+		double wattsVal = 0.0;
+		if (units.equalsIgnoreCase("mW")) {
+			wattsVal = unscaledDbl / 1000;
+		} else if (units.equalsIgnoreCase("W")) {
+			wattsVal = unscaledDbl;
+		} else if (units.equalsIgnoreCase("kW")) {
+			wattsVal = unscaledDbl * 1000;
+		}
+		return String.valueOf(wattsVal);
 	}
 }
