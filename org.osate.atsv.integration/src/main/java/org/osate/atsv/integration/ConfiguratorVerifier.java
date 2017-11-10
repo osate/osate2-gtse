@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.osate.atsv.integration.EngineConfigModel.ConfiguratorModel;
+import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 
 public class ConfiguratorVerifier {
@@ -41,13 +42,13 @@ public class ConfiguratorVerifier {
 	 * @param configurators The constraints to check the consistency of
 	 * @throws UnsatisfiableConstraint Signifies the given constraints are unsatisfiable
 	 */
-	public static void validate(List<ConfiguratorModel> configurators) throws UnsatisfiableConstraint {
+	public static void validate(List<SimpleConfiguratorModel> configurators) throws UnsatisfiableConstraint {
 		// TODO: Reimplement using union find
 
 		Map<String, Set<String>> eqClasses = new HashMap<String, Set<String>>();
-		Set<ConfiguratorModel> eqConfs = configurators.stream().filter(ConfiguratorModel::isEquality)
+		Set<SimpleConfiguratorModel> eqConfs = configurators.stream().filter(SimpleConfiguratorModel::isEquality)
 				.collect(Collectors.toSet());
-		Set<ConfiguratorModel> neqConfs = configurators.stream().filter(ConfiguratorModel::isUnique)
+		Set<SimpleConfiguratorModel> neqConfs = configurators.stream().filter(SimpleConfiguratorModel::isUnique)
 				.collect(Collectors.toSet());
 		Set<String> union;
 		String name1, name2;

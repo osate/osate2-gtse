@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -60,7 +60,7 @@ public class ExplorationEngineModel {
 	private final String parser = baseDir + "parser.jar";
 
 	/**
-	 * File path to the file that ATSV writes inputs to 
+	 * File path to the file that ATSV writes inputs to
 	 */
 	@XmlElement
 	private final String inputFile = baseDir + "input.xml";
@@ -112,7 +112,7 @@ public class ExplorationEngineModel {
 	 */
 	@XmlElement
 	private final String sampleCount = Activator.getDefault().getPreferenceStore()
-			.getString(Activator.ATSV_SAMPLE_COUNT);
+	.getString(Activator.ATSV_SAMPLE_COUNT);
 
 	/**
 	 * I'm not sure what this does, but it seems safe to set it to the same value as the sample count
@@ -122,30 +122,31 @@ public class ExplorationEngineModel {
 
 	/**
 	 * This is an XML string that can define "must be equal" or "must be unique" relationships between variables
-	 * 
+	 *
 	 * That is, it is an XML string (which will be re-xml encoded when the full model is serialized)
 	 * Its value is set by the {@link #renderConfigurator() renderConfigurator} method, which has to be called
 	 * after all the configurators have been added (typically right before the model is generated.
 	 */
-	@XmlElement
+	@XmlElement(name = "Configurator")
 	private String configurator = null;
 	private ConfiguratorsModel cm = new ConfiguratorsModel();
 
 	/**
-	 * Any additional entries for the PATH environment variable can be 
+	 * Any additional entries for the PATH environment variable can be
 	 */
 	@XmlElement
 	private final String userDefinedPath = "";
 
 	/**
 	 * Add a variable to the internal list of variables.
-	 * 
+	 *
 	 * This is not designed to be called by clients, @see org.osate.atsv.integration.EngineConfigGenerator#addVariable()
 	 * @param vm The variable model to add
 	 */
 	public void addVariable(VariableModel vm) {
-		if (vm.isInput())
+		if (vm.isInput()) {
 			inputTokens.addTokenModel(new InputTokenModel(vm.getTitle()));
+		}
 		variables.addVariable(vm);
 	}
 
@@ -157,7 +158,7 @@ public class ExplorationEngineModel {
 		variables.clear();
 	}
 
-	public void addConfigurator(ConfiguratorModel configuratorModel) {
+	public void addConfigurator(SimpleConfiguratorModel configuratorModel) {
 		cm.addConfigurator(configuratorModel);
 	}
 
@@ -168,7 +169,7 @@ public class ExplorationEngineModel {
 			return;
 		}
 		validateConfigurator();
-		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, ConfiguratorModel.class);
+		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, SimpleConfiguratorModel.class);
 		ConfiguratorModelAdapter configuratorAdapter = new ConfiguratorModelAdapter();
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		Marshaller marshal = context.createMarshaller();

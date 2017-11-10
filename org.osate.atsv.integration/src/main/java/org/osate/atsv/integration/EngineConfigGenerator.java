@@ -29,7 +29,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
-import org.osate.atsv.integration.EngineConfigModel.ConfiguratorModel;
+import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
@@ -175,7 +175,7 @@ public final class EngineConfigGenerator {
 	 * @param varName2
 	 */
 	public void addEqualityConstraint(String varName1, String varName2) {
-		ecf.addConfigurator(new ConfiguratorModel(varName1, varName2, true));
+		ecf.addConfigurator(new SimpleConfiguratorModel(varName1, varName2, true));
 	}
 
 	/**
@@ -185,6 +185,6 @@ public final class EngineConfigGenerator {
 	 * @param varName2
 	 */
 	public void addUniquenessConstraint(String varName1, String varName2) {
-		ecf.addConfigurator(new ConfiguratorModel(varName1, varName2, false));
+		ecf.addConfigurator(new SimpleConfiguratorModel(varName1, varName2, false));
 	}
 }

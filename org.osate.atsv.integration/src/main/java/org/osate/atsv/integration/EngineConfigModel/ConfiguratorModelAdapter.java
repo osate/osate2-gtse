@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -24,29 +24,50 @@ import javax.xml.namespace.QName;
 
 /**
  * This class is necessary to map to the naming scheme used in the *.ecf file:
- * <configurator> 
- * 	<Unique>
- * 		<var>VarName1</var>
- * 		<var>VarName2</var>
- * 	</Unique>
- * 	<Equal>
- * 		<var>VarName4</var>
- * 		<var>VarName1</var>
- * 	</Equal>
- * </configurator>
- *  As the tokens are both named "var," each time, we need a custom adapter.
- *  This class has been adapted from http://stackoverflow.com/a/23995734 
+ * <Configurator>
+ *     <Equal>
+ *         <Variable>e</Variable>
+ *         <Variable>f</Variable>
+ *     </Equal>
+ *     <Unique>
+ *         <Variable>c</Variable>
+ *         <Variable>d</Variable>
+ *     </Unique>
+ *     <Requires>
+ *         <Variable>a</Variable>
+ *         <VariableValue>2</VariableValue>
+ *         <DependentVariable>b</DependentVariable>
+ *         <DependentVariableValue>4</DependentVariableValue>
+ *     </Requires>
+ *     <Forbids>
+ *         <Variable>a</Variable>
+ *         <VariableValue>3</VariableValue>
+ *         <DependentVariable>b</DependentVariable>
+ *         <DependentVariableValue>4</DependentVariableValue>
+ *     </Forbids>
+ *     <Membership>
+ *         <Variable>a</Variable>
+ *         <VariableValue>4</VariableValue>
+ *         <DependentVariable v0="1" v1="2" v2="3">b</DependentVariable>
+ *     </Membership>
+ *     <Exclusion>
+ *         <Variable>a</Variable>
+ *         <VariableValue>5</VariableValue>
+ *         <DependentVariable v0="1" v1="2" v2="3">b</DependentVariable>
+ *     </Exclusion>
+ * </Configurator>
+ *  This class has been adapted from http://stackoverflow.com/a/23995734
  */
-public class ConfiguratorModelAdapter extends XmlAdapter<JAXBElement<ConfiguratorModel>, ConfiguratorModel> {
+public class ConfiguratorModelAdapter extends XmlAdapter<JAXBElement<SimpleConfiguratorModel>, SimpleConfiguratorModel> {
 
 	@Override
-	public ConfiguratorModel unmarshal(JAXBElement<ConfiguratorModel> cm) throws Exception {
+	public SimpleConfiguratorModel unmarshal(JAXBElement<SimpleConfiguratorModel> cm) throws Exception {
 		return cm.getValue();
 	}
 
 	@Override
-	public JAXBElement<ConfiguratorModel> marshal(ConfiguratorModel cm) throws Exception {
+	public JAXBElement<SimpleConfiguratorModel> marshal(SimpleConfiguratorModel cm) throws Exception {
 		String type = cm.isEquality() ? "Equal" : "Unique";
-		return new JAXBElement<ConfiguratorModel>(new QName(type), ConfiguratorModel.class, cm);
+		return new JAXBElement<SimpleConfiguratorModel>(new QName(type), SimpleConfiguratorModel.class, cm);
 	}
 }

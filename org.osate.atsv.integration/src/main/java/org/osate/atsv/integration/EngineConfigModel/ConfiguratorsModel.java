@@ -36,7 +36,7 @@ public class ConfiguratorsModel {
 
 	@XmlJavaTypeAdapter(ConfiguratorModelAdapter.class)
 	@XmlAnyElement
-	private List<ConfiguratorModel> configurators = new ArrayList<>();
+	private List<SimpleConfiguratorModel> configurators = new ArrayList<>();
 
 	/**
 	 * Add a configurator to the internal list of variables.
@@ -45,7 +45,7 @@ public class ConfiguratorsModel {
 	 * and @see {@link org.osate.atsv.integration.EngineConfigGenerator#addUniquenessConstraint(String, String)}
 	 * @param cm The configurator model to add
 	 */
-	public void addConfigurator(ConfiguratorModel cm) {
+	public void addConfigurator(SimpleConfiguratorModel cm) {
 		configurators.add(cm);
 	}
 
