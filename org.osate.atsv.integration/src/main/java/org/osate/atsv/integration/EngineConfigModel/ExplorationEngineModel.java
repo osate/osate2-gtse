@@ -158,7 +158,7 @@ public class ExplorationEngineModel {
 		variables.clear();
 	}
 
-	public void addConfigurator(SimpleConfiguratorModel configuratorModel) {
+	public void addConfigurator(ConfiguratorModel configuratorModel) {
 		cm.addConfigurator(configuratorModel);
 	}
 
@@ -169,7 +169,8 @@ public class ExplorationEngineModel {
 			return;
 		}
 		validateConfigurator();
-		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, SimpleConfiguratorModel.class);
+		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, SimpleConfiguratorModel.class,
+				ImpliesConfiguratorModel.class, SetRestrictionConfiguratorModel.class);
 		ConfiguratorModelAdapter configuratorAdapter = new ConfiguratorModelAdapter();
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		Marshaller marshal = context.createMarshaller();

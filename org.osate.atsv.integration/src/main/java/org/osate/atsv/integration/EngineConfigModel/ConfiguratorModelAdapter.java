@@ -22,6 +22,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.namespace.QName;
 
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
+
 /**
  * This class is necessary to map to the naming scheme used in the *.ecf file:
  * <Configurator>
@@ -58,16 +60,31 @@ import javax.xml.namespace.QName;
  * </Configurator>
  *  This class has been adapted from http://stackoverflow.com/a/23995734
  */
-public class ConfiguratorModelAdapter extends XmlAdapter<JAXBElement<SimpleConfiguratorModel>, SimpleConfiguratorModel> {
+public class ConfiguratorModelAdapter extends XmlAdapter<JAXBElement<? extends ConfiguratorModel>, ConfiguratorModel> {
 
 	@Override
-	public SimpleConfiguratorModel unmarshal(JAXBElement<SimpleConfiguratorModel> cm) throws Exception {
+	public ConfiguratorModel unmarshal(JAXBElement<? extends ConfiguratorModel> cm) throws Exception {
 		return cm.getValue();
 	}
 
 	@Override
-	public JAXBElement<SimpleConfiguratorModel> marshal(SimpleConfiguratorModel cm) throws Exception {
-		String type = cm.isEquality() ? "Equal" : "Unique";
-		return new JAXBElement<SimpleConfiguratorModel>(new QName(type), SimpleConfiguratorModel.class, cm);
+	public JAXBElement<? extends ConfiguratorModel> marshal(ConfiguratorModel cm) throws Exception {
+		String type;
+		if (cm instanceof SimpleConfiguratorModel) {
+			SimpleConfiguratorModel scm = (SimpleConfiguratorModel) cm;
+			type = scm.isEquality() ? "Equal" : "Unique";
+			return new JAXBElement<SimpleConfiguratorModel>(new QName(type), SimpleConfiguratorModel.class, scm);
+		} else if (cm instanceof ImpliesConfiguratorModel) {
+			ImpliesConfiguratorModel icm = (ImpliesConfiguratorModel) cm;
+			type = icm.isRequires() ? "Requires" : "Forbids";
+			return new JAXBElement<ImpliesConfiguratorModel>(new QName(type), ImpliesConfiguratorModel.class, icm);
+		} else if (cm instanceof SetRestrictionConfiguratorModel) {
+			SetRestrictionConfiguratorModel srcm = (SetRestrictionConfiguratorModel) cm;
+			type = srcm.isMembership() ? "Membership" : "Exclusion";
+			return new JAXBElement<SetRestrictionConfiguratorModel>(new QName(type),
+					SetRestrictionConfiguratorModel.class, srcm);
+		} else {
+			throw new UnsupportedFeatureException("Got a configurator model of unknown type");
+		}
 	}
 }

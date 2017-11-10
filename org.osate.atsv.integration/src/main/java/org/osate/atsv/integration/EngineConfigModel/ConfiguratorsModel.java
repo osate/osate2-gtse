@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -36,16 +36,16 @@ public class ConfiguratorsModel {
 
 	@XmlJavaTypeAdapter(ConfiguratorModelAdapter.class)
 	@XmlAnyElement
-	private List<SimpleConfiguratorModel> configurators = new ArrayList<>();
+	private List<ConfiguratorModel> configurators = new ArrayList<>();
 
 	/**
 	 * Add a configurator to the internal list of variables.
-	 * 
+	 *
 	 * This is not designed to be called by clients, @see {@link org.osate.atsv.integration.EngineConfigGenerator#addEqualityConstraint(String, String)}
 	 * and @see {@link org.osate.atsv.integration.EngineConfigGenerator#addUniquenessConstraint(String, String)}
 	 * @param cm The configurator model to add
 	 */
-	public void addConfigurator(SimpleConfiguratorModel cm) {
+	public void addConfigurator(ConfiguratorModel cm) {
 		configurators.add(cm);
 	}
 

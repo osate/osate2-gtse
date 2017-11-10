@@ -19,11 +19,13 @@
 package org.osate.atsv.integration.EngineConfigModel;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * This models an individual implies (requires or forbids relationship between variables)
  * configurator -- essentially a constraint on the inputs ATSV will generate
  */
+@XmlType(propOrder = { "varVal1", "varName2", "varVal2" })
 public class ImpliesConfiguratorModel extends ConfiguratorModel {
 
 	private boolean isRequires;
@@ -48,16 +50,8 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 		return this.varName2;
 	}
 
-	public String getVarVal1() {
-		return varVal1;
-	}
-
 	public void setVarVal1(String varVal1) {
 		this.varVal1 = varVal1;
-	}
-
-	public String getVarVal2() {
-		return varVal2;
 	}
 
 	public void setVarVal2(String varVal2) {

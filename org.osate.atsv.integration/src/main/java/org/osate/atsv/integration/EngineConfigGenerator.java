@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -29,11 +29,12 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
-import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
+import org.osate.atsv.integration.EngineConfigModel.ImpliesConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenModel;
+import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
@@ -88,7 +89,7 @@ public final class EngineConfigGenerator {
 
 	/**
 	 * Add an input variable to the engine configuration.
-	 * 
+	 *
 	 * @param title The name of this variable
 	 * @param sampled Whether or not this variable is sampled
 	 * @param type The type of this variable
@@ -101,7 +102,7 @@ public final class EngineConfigGenerator {
 
 	/**
 	 * Add an expected output variable to the engine configuration.
-	 *  
+	 *
 	 * @param title The name of this variable
 	 * @param type The type of this variable
 	 * @param limit A limit for this variable, or null if none
@@ -118,10 +119,10 @@ public final class EngineConfigGenerator {
 
 	/**
 	 * Define a choicepoint.
-	 * 
+	 *
 	 * @param title The name of this choicepoint
 	 * @param type The type of this choicepoint
-	 * @param values The values this choicepoint can take 
+	 * @param values The values this choicepoint can take
 	 */
 	public void addChoicePointDefinition(String title, ATSVVariableType type, ValuesModel values) {
 		String value = values.getDefault();
@@ -132,7 +133,7 @@ public final class EngineConfigGenerator {
 
 	/**
 	 * Define a choicepoint.
-	 * 
+	 *
 	 * @param title The name of this choicepoint
 	 * @param type The type of this choicepoint
 	 * @param distribution The distribution of this choicepoint's values
@@ -170,7 +171,7 @@ public final class EngineConfigGenerator {
 
 	/**
 	 * Add a requirement that two variables must always have equal values
-	 * 
+	 *
 	 * @param varName1
 	 * @param varName2
 	 */
@@ -180,11 +181,19 @@ public final class EngineConfigGenerator {
 
 	/**
 	 * Add a requirement that two variables must never have equal values
-	 * 
+	 *
 	 * @param varName1
 	 * @param varName2
 	 */
 	public void addUniquenessConstraint(String varName1, String varName2) {
 		ecf.addConfigurator(new SimpleConfiguratorModel(varName1, varName2, false));
+	}
+
+	public void addRequiresConstraint(String varName1, String varVal1, String varName2, String varVal2) {
+		ecf.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, true));
+	}
+
+	public void addForbidsConstraint(String varName1, String varVal1, String varName2, String varVal2) {
+		ecf.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false));
 	}
 }

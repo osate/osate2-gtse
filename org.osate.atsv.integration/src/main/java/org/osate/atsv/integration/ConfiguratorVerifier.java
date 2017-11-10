@@ -42,13 +42,17 @@ public class ConfiguratorVerifier {
 	 * @param configurators The constraints to check the consistency of
 	 * @throws UnsatisfiableConstraint Signifies the given constraints are unsatisfiable
 	 */
-	public static void validate(List<SimpleConfiguratorModel> configurators) throws UnsatisfiableConstraint {
+	public static void validate(List<ConfiguratorModel> configurators) throws UnsatisfiableConstraint {
 		// TODO: Reimplement using union find
 
 		Map<String, Set<String>> eqClasses = new HashMap<String, Set<String>>();
-		Set<SimpleConfiguratorModel> eqConfs = configurators.stream().filter(SimpleConfiguratorModel::isEquality)
+		Set<SimpleConfiguratorModel> eqConfs = configurators.stream().filter(SimpleConfiguratorModel.class::isInstance)
+				.map(SimpleConfiguratorModel.class::cast).filter(SimpleConfiguratorModel::isEquality)
 				.collect(Collectors.toSet());
-		Set<SimpleConfiguratorModel> neqConfs = configurators.stream().filter(SimpleConfiguratorModel::isUnique)
+		Set<SimpleConfiguratorModel> neqConfs = configurators.stream()
+				.filter(SimpleConfiguratorModel.class::isInstance)
+				.map(SimpleConfiguratorModel.class::cast)
+				.filter(SimpleConfiguratorModel::isUnique)
 				.collect(Collectors.toSet());
 		Set<String> union;
 		String name1, name2;
