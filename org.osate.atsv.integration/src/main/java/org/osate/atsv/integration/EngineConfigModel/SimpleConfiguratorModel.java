@@ -21,12 +21,38 @@ package org.osate.atsv.integration.EngineConfigModel;
 import javax.xml.bind.annotation.XmlElement;
 
 /**
- * This models an individual simple (equality or inequality between variables) configurator --
- * essentially a constraint on the inputs ATSV will generate
+ * This class models the basic (equal and unique) configurators.
+ *
+ * These restrictions take the following forms:
+ *
+ *   Equality -- Choosing one value means another choicepoint has to have the same value
+ *     X = 7 → Y = 7
+ *     X = 3 → Y = 3.
+ *   Uniqueness -- Choosing one value means another choicepoint can't take that same value
+ *     X = 7 → Y ≠ 7
+ *     X = 3 → Y ≠ 3
+ *
+ * The exclusions serialize to this xml:
+ *   <Equal>
+ *     <Variable>e</Variable>
+ *     <Variable>f</Variable>
+ *   </Equal>
+ *   <Unique>
+ *     <Variable>c</Variable>
+ *     <Variable>d</Variable>
+ *   </Unique>
+ *
+ * @author Sam
  */
 public class SimpleConfiguratorModel extends ConfiguratorModel {
 	private boolean isEquality;
 
+	/**
+	 *
+	 * @param varName1 The name of the left hand side variable
+	 * @param varName2 The name of the right hand side variable
+	 * @param isEquality True if this is an equality configurator, false if it's uniqueness
+	 */
 	public SimpleConfiguratorModel(String varName1, String varName2, boolean isEquality) {
 		super(varName1, varName2);
 		this.isEquality = isEquality;

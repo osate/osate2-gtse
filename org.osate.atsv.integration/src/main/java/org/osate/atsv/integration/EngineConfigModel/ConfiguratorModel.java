@@ -3,6 +3,15 @@ package org.osate.atsv.integration.EngineConfigModel;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * Configurators restrict the values of the values that ATSV chooses based on other selected
+ * values. That is, these allow dynamic relationships between variable values to be enforced,
+ * unlike type restrictions (which are known statically).
+ *
+ * @author Sam
+ *
+ */
 public abstract class ConfiguratorModel {
 
 	@XmlElement(name = "Variable")

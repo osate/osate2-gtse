@@ -22,8 +22,33 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * This models an individual implies (requires or forbids relationship between variables)
- * configurator -- essentially a constraint on the inputs ATSV will generate
+ * This class models the implication (requires and forbids) configurators.
+ *
+ * These restrictions take the following forms:
+ *
+ *   Requires -- Choosing one value means another choicepoint has to have a specific value that is not equal to the first value
+ *     X = 7 → Y = 9
+ *     X = 2 → Y = 4
+ *   Forbids -- Choosing one value means another choicepoint can't take a specific value that is not equal to the first value
+ *     X = 7 → Y ≠ 9
+ *     X = 2 → Y ≠ 4
+ *
+ * The exclusions serialize to this xml:
+ *
+ *   <Requires>
+ *     <Variable>a</Variable>
+ *     <VariableValue>2</VariableValue>
+ *     <DependentVariable>b</DependentVariable>
+ *     <DependentVariableValue>4</DependentVariableValue>
+ *   </Requires>
+ *   <Forbids>
+ *     <Variable>a</Variable>
+ *     <VariableValue>3</VariableValue>
+ *     <DependentVariable>b</DependentVariable>
+ *     <DependentVariableValue>4</DependentVariableValue>
+ *   </Forbids>
+ *
+ * @author Sam
  */
 @XmlType(propOrder = { "varVal1", "varName2", "varVal2" })
 public class ImpliesConfiguratorModel extends ConfiguratorModel {
@@ -36,6 +61,13 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 	@XmlElement(name = "DependentVariableValue")
 	private String varVal2;
 
+	/**
+	 * @param varName1 Name of the variable on the left hand side of the restriction
+	 * @param varVal1 The value on the left hand side -- ie the value that triggers the configurator
+	 * @param varName2 Name of the variable on the right hand side of the restriction
+	 * @param varVals2 The value that the second (RHS) variable is required / forbidden to take
+	 * @param isMembership True for a requires configurator, false for forbids
+	 */
 	public ImpliesConfiguratorModel(String varName1, String varVal1, String varName2, String varVal2,
 			boolean isRequires) {
 		super(varName1, varName2);

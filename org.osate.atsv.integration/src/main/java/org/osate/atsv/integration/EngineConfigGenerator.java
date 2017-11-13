@@ -19,6 +19,7 @@
 package org.osate.atsv.integration;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
 import org.osate.atsv.integration.EngineConfigModel.ImpliesConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
 import org.osate.atsv.integration.EngineConfigModel.InputTokenModel;
+import org.osate.atsv.integration.EngineConfigModel.SetRestrictionConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.EngineConfigModel.VariableModel;
@@ -195,5 +197,13 @@ public final class EngineConfigGenerator {
 
 	public void addForbidsConstraint(String varName1, String varVal1, String varName2, String varVal2) {
 		ecf.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false));
+	}
+
+	public void addMembershipConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
+		ecf.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, true));
+	}
+
+	public void addExclusionConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
+		ecf.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false));
 	}
 }

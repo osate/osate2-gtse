@@ -21,6 +21,9 @@ package org.osate.atsv.integration.tests;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.bind.JAXBException;
 
@@ -116,7 +119,34 @@ public class EngineConfigTests {
 	}
 
 	@Test
-	public void configuratorBoth() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+	public void configuratorMembership()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+		String expectedXML = ECF_PREFIX
+				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"D\" preference=\"0\"><values val3=\"D\" val2=\"C\" val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Membership&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;VariableValue&gt;A&lt;/VariableValue&gt;&lt;DependentVariable v0=\"C\" v1=\"D\"&gt;str2&lt;/DependentVariable&gt;&lt;/Membership&gt;&lt;/Configurator&gt;"
+				+ ECF_SUFFIX;
+		ecf.addChoicePointDefinition("str1", ATSVVariableType.STRING, new ValuesModel("A", "B", "C"));
+		ecf.addChoicePointDefinition("str2", ATSVVariableType.STRING, new ValuesModel("A", "B", "C", "D"));
+		Set<String> ASet = Stream.of("C", "D").collect(Collectors.toSet());
+		ecf.addMembershipConstraint("str1", "A", "str2", ASet);
+		assertEquals(expectedXML, ecf.getXML());
+	}
+
+	@Test
+	public void configuratorExclusion()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+		String expectedXML = ECF_PREFIX
+				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"D\" preference=\"0\"><values val3=\"D\" val2=\"C\" val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Exclusion&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;VariableValue&gt;A&lt;/VariableValue&gt;&lt;DependentVariable v0=\"C\" v1=\"D\"&gt;str2&lt;/DependentVariable&gt;&lt;/Exclusion&gt;&lt;/Configurator&gt;"
+				+ ECF_SUFFIX;
+		ecf.addChoicePointDefinition("str1", ATSVVariableType.STRING, new ValuesModel("A", "B", "C"));
+		ecf.addChoicePointDefinition("str2", ATSVVariableType.STRING, new ValuesModel("A", "B", "C", "D"));
+		Set<String> ASet = Stream.of("C", "D").collect(Collectors.toSet());
+		ecf.addExclusionConstraint("str1", "A", "str2", ASet);
+		assertEquals(expectedXML, ecf.getXML());
+	}
+
+	@Test
+	public void configuratorMultiple()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;Variable&gt;str3&lt;/Variable&gt;&lt;/Equal&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
