@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -55,6 +55,7 @@ import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.exception.BadPathException;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 import org.osate.atsv.integration.network.Limit;
 import org.osgi.framework.Bundle;
 
@@ -74,7 +75,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	 *  <li>Which analysis plugins to use</li>
 	 *  <li>The type of each choicepoint (but not their values -- that comes from ATSV via input.txt)</li>
 	 *  <li>The names of expected variables if they have limits specified </li>
-	 * </ul>  
+	 * </ul>
 	 */
 	private Properties osateProps = null;
 
@@ -253,7 +254,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		try (PrintWriter out = new PrintWriter(targetDirStr + "ATSVConfig.ecf")) {
 			out.println(ecf.getXML());
 		} catch (JAXBException | FileNotFoundException | UnsatisfiableConstraint
-				| ConfiguratorRepresentationException e) {
+				| ConfiguratorRepresentationException | UnsupportedFeatureException e) {
 			e.printStackTrace();
 		}
 	}
@@ -269,17 +270,17 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 				/*
 				 * Running ATSV on windows enables 3D plots, but also requires extra care:
 				 * The included version of Java -- which has the following version info -- must be used
-				 * 
+				 *
 				 * java version "1.7.0"
 				 * Java(TM) SE Runtime Environment (build 1.7.0-b147)
 				 * Java HotSpot(TM) Client VM (build 21.0-b17, mixed mode)
-				 * 
+				 *
 				 * So, since a lot of GTSE code requires 1.8 for lambdas and whatnot, we actually have to run
 				 * our two JVMs with different major versions :\
-				 * 
+				 *
 				 * This requires modifying runATSV.bat to cache the user's path (we also remove memory limits and
 				 * the loading of the car test data that's included with ATSV)
-				 * 
+				 *
 				 */
 				PrintWriter runATSVJar = new PrintWriter(targetDirStr + "runATSV.bat");
 				runATSVJar.println("set ORIG_PATH=%PATH%");

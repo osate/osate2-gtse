@@ -90,6 +90,14 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 		this.varVal2 = varVal2;
 	}
 
+	public String getVarVal1() {
+		return varVal1;
+	}
+
+	public String getVarVal2() {
+		return varVal2;
+	}
+
 	public boolean isRequires() {
 		return isRequires;
 	}

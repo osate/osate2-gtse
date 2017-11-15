@@ -32,6 +32,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 
 public class ExplorationEngineModel {
 
@@ -163,7 +164,8 @@ public class ExplorationEngineModel {
 	}
 
 	public void renderConfigurator()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		if (cm.isEmpty()) {
 			configurator = "";
 			return;
@@ -183,7 +185,8 @@ public class ExplorationEngineModel {
 		configurator = stream.toString();
 	}
 
-	private void validateConfigurator() throws UnsatisfiableConstraint, ConfiguratorRepresentationException {
+	private void validateConfigurator()
+			throws UnsatisfiableConstraint, ConfiguratorRepresentationException, UnsupportedFeatureException {
 		cm.validateConfigurator();
 	}
 }
