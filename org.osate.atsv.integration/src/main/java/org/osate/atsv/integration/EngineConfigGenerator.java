@@ -131,6 +131,7 @@ public final class EngineConfigGenerator {
 		String value = values.getDefault();
 		VariableModel vm = new VariableModel(title, false, true, type, value, values);
 		ecf.addVariable(vm);
+		ecf.addTypeRestriction(title, values);
 		startingInputs.addVar(title, type, values.getDefault());
 	}
 
@@ -157,7 +158,7 @@ public final class EngineConfigGenerator {
 	 * @throws UnsupportedFeatureException
 	 */
 	public String getXML() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
-			UnsupportedFeatureException {
+	UnsupportedFeatureException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		// The configurators have to be double-encoded, so we call that rendering here
 		ecf.renderConfigurator();

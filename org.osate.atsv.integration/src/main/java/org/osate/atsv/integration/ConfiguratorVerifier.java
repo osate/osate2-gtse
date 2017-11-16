@@ -20,6 +20,7 @@ package org.osate.atsv.integration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -84,17 +85,30 @@ public class ConfiguratorVerifier {
 	 * @throws UnsatisfiableConstraint Signifies the given constraints are unsatisfiable
 	 * @throws UnsupportedFeatureException Signifies an unhandleable constraint was used
 	 */
-	public static void validate(List<ConfiguratorModel> configurators)
+	public static void validate(List<ConfiguratorModel> configurators, Collection<TypeRestriction> typeRestrictions)
 			throws ConfiguratorRepresentationException, UnsatisfiableConstraint, UnsupportedFeatureException {
 		ConfiguratorVerifier cnfc = new ConfiguratorVerifier();
 
 		// Phase 1: Configurators -> Equality Logic
 		List<BinaryExp> conjEqs = cnfc.getEqualityLogic(configurators);
 
-		// Phase 2: Equality Logic -> Propositional Logic
+		for (BinaryExp c : conjEqs) {
+			System.out.println(c);
+		}
+
+		conjEqs.addAll(cnfc.processTypeRestrictions(typeRestrictions));
+
+		// Phase 2: Equality logic (with constants) -> Equality logic (without constants)
+		conjEqs.addAll(cnfc.removeConstants());
+
+//		for (BinaryExp c : conjEqs) {
+//			System.out.println(c);
+//		}
+
+		// Phase 3: Equality Logic -> Propositional Logic
 		BinaryExp top = cnfc.equalitySubstitution(conjEqs);
 
-		// Phase 3: Propositional Logic -> CNF
+		// Phase 4: Propositional Logic -> CNF
 		ISolver solver = SolverFactory.newLight();
 		GateTranslator gt = new GateTranslator(solver);
 		try {
@@ -109,6 +123,43 @@ public class ConfiguratorVerifier {
 			throw new UnsatisfiableConstraint("The specified configurators are unsatisfiable");
 		}
 	}
+
+	private Collection<BinaryExp> processTypeRestrictions(Collection<TypeRestriction> typeRestrictions) {
+		Collection<BinaryExp> ors;
+		Collection<BinaryExp> ret = new HashSet<>();
+		BinaryExp bexp, oldBexp;
+		for (TypeRestriction tr : typeRestrictions) {
+			ors = new HashSet<>();
+			for (String value : tr.getAllowedValues()) {
+				bexp = new BinaryExp();
+				bexp.left = new Var(getId(tr.getVarName()));
+				bexp.op = Op.EQ;
+				bexp.right = getConst(value);
+				System.out.print("-" + bexp + "-");
+				ors.add(bexp);
+			}
+			System.out.println();
+			Iterator<BinaryExp> orsIter = ors.iterator();
+			bexp = new BinaryExp();
+			if (ors.size() == 1) {
+				ret.add(ors.iterator().next());
+				continue;
+			}
+			ret.add(bexp);
+			for (int i = 0; i < ors.size() - 2; i++) {
+				oldBexp = bexp;
+				bexp = new BinaryExp();
+				oldBexp.left = orsIter.next();
+				oldBexp.op = Op.OR;
+				oldBexp.right = bexp;
+			}
+			bexp.left = orsIter.next();
+			bexp.op = Op.OR;
+			bexp.right = orsIter.next();
+		}
+		return ret;
+	}
+
 
 	/**
 	 * Transforms the supplied configurators into equality logic (ie, X = Y, Y != Z)
@@ -129,17 +180,18 @@ public class ConfiguratorVerifier {
 			} else if (cm instanceof SetRestrictionConfiguratorModel) {
 				bexp = getEqualityLogicSetRestriction((SetRestrictionConfiguratorModel) cm);
 			} else {
-				throw new UnsupportedFeatureException("Got an unknown configurator model type");
+				throw new UnsupportedFeatureException("Unknown configurator model type");
 			}
 			ret.add(bexp);
 		}
-		ret.addAll(removeConstants());
 		return ret;
 	}
 
 	/**
-	 * Implements Step 3 of Algorithm 4.1.1 'Remove-Constants' from Kroening and Strichman's
-	 * "Decision Procedures: An Algorithmic Point of View" (Second Edition)
+	 * This, along with {@link #getConst(String)} implements of Algorithm 4.1.1 'Remove-Constants'
+	 * from Kroening and Strichman's "Decision Procedures: An Algorithmic Point of View" (Second Edition)
+	 * This method handles step 3.
+	 *
 	 * See https://doi.org/10.1007/978-3-662-50497-0
 	 *
 	 * Briefly, this method takes the fresh variables introduced in place of constants and creates new
@@ -148,6 +200,12 @@ public class ConfiguratorVerifier {
 	 * @return The set of new constraints ensuring that the constants are not equal to one another
 	 */
 	private Collection<BinaryExp> removeConstants() {
+
+		// Bail out immediately if we don't use multiple constants
+		if (constMap.size() < 2) {
+			return Collections.emptySet();
+		}
+
 		Set<BinaryExp> ret = new HashSet<>();
 		Iterator<String> outer = constMap.keySet().iterator();
 		Iterator<String> inner;
@@ -184,14 +242,59 @@ public class ConfiguratorVerifier {
 	}
 
 	public static void main(String[] args) {
-		ImpliesConfiguratorModel icm = new ImpliesConfiguratorModel("x", "7", "y", "8", true);
-//		ImpliesConfiguratorModel icm = new ImpliesConfiguratorModel("x", "7", "z", "9", true);
-		ImpliesConfiguratorModel icm2 = new ImpliesConfiguratorModel("y", "7", "z", "9", true);
+//		ImpliesConfiguratorModel icm = new ImpliesConfiguratorModel("x", "7", "y", "7", true);
+//		ImpliesConfiguratorModel icm2 = new ImpliesConfiguratorModel("x", "7", "y", "9", true);
+//		ImpliesConfiguratorModel icm2 = new ImpliesConfiguratorModel("y", "7", "z", "9", true);
 		ConfiguratorVerifier cv = new ConfiguratorVerifier();
-		cv.getEqualityLogicImplication(icm);
-		System.out.println(cv.getEqualityLogicImplication(icm2));
-		System.out.println(cv.removeConstants().iterator().next());
-		System.out.println(cv.removeConstants().iterator().next());
+		List<BinaryExp> bexpList = new ArrayList<BinaryExp>();
+
+		BinaryExp bexp = cv.new BinaryExp();
+		bexp.left = cv.new Var(cv.getId("x"));
+		bexp.op = Op.EQ;
+		bexp.right = cv.getConst("7");
+		bexpList.add(bexp);
+//
+		BinaryExp bexp2 = cv.new BinaryExp();
+		bexp2.left = cv.new Var(cv.getId("y"));
+		bexp2.op = Op.EQ;
+		bexp2.right = cv.getConst("8");
+		bexpList.add(bexp2);
+
+		bexpList.addAll(cv.removeConstants());
+
+//		BinaryExp bexp = cv.new BinaryExp();
+//		bexp.left = cv.new Var(cv.getId("x"));
+//		bexp.right = cv.new Var(cv.getId("y"));
+//		bexp.op = Op.IMPLY;
+//		bexpList.add(bexp);
+
+//		bexpList.add(cv.getEqualityLogicImplication(icm));
+//		bexpList.add(cv.getEqualityLogicImplication(icm2));
+
+		// Phase 4: Propositional Logic -> CNF
+		ISolver solver = SolverFactory.newLight();
+		GateTranslator gt = new GateTranslator(solver);
+//		try {
+		try {
+			BinaryExp top = cv.equalitySubstitution(bexpList);
+			gt.gateTrue(top.getCNFVar(gt).id);
+//			gt.gateFalse(top.left.getCNFVar(gt).id);
+//			gt.gateFalse(top.right.getCNFVar(gt).id);
+			System.out.println(solver.isSatisfiable());
+		} catch (ContradictionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ConfiguratorRepresentationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsatisfiableConstraint e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private BinaryExp getEqualityLogicImplication(ImpliesConfiguratorModel icm) {
@@ -202,7 +305,6 @@ public class ConfiguratorVerifier {
 		bexp.right = bexpr;
 
 		bexp.op = Op.IMPLY;
-		bexp.rightSign = icm.isRequires();
 
 		bexpl.left = new Var(getId(icm.getVarName1()));
 		bexpl.right = getConst(icm.getVarVal1());
@@ -210,7 +312,7 @@ public class ConfiguratorVerifier {
 
 		bexpr.left = new Var(getId(icm.getVarName2()));
 		bexpr.right = getConst(icm.getVarVal2());
-		bexpr.op = Op.EQ;
+		bexpr.op = icm.isRequires() ? Op.EQ : Op.NEQ;
 
 		return bexp;
 	}
@@ -244,7 +346,11 @@ public class ConfiguratorVerifier {
 			BinaryExp trivialBexp = new BinaryExp();
 			trivialBexp.left = new Var(eqsId++);
 			trivialBexp.right = new Var(eqsId++);
-			trivialBexp.op = Op.AND;
+			if (eq.op == Op.EQ || eq.op == Op.NEQ) {
+				trivialBexp.op = Op.AND;
+			} else {
+				trivialBexp.op = eq.op;
+			}
 			return trivialBexp;
 		}
 
@@ -282,11 +388,19 @@ public class ConfiguratorVerifier {
 	 * equisatisfiable with bexp.
 	 */
 	private Node eqs(BinaryExp bexp) {
+		if (bexp.op == Op.OR || bexp.op == Op.AND || bexp.op == Op.IMPLY) {
+			BinaryExp newBexp = new BinaryExp();
+			newBexp.left = eqs((BinaryExp) bexp.left);
+			newBexp.right = eqs((BinaryExp) bexp.right);
+			newBexp.op = bexp.op;
+			return newBexp;
+		}
+
 		int i = ((Var) bexp.left).id;
 		int j = ((Var) bexp.right).id;
 		if (i < j) {
 			return getP(1, i, j, bexp.leftSign, bexp.rightSign);
-		} else if (j > i) {
+		} else if (j < i) {
 			return getP(1, j, i, bexp.leftSign, bexp.rightSign);
 		} else {
 			// Trivial case
@@ -315,9 +429,21 @@ public class ConfiguratorVerifier {
 	 */
 	private void getCNFRep(GateTranslator gt, Op op, int freshId, int... ids)
 			throws ConfiguratorRepresentationException, ContradictionException {
+		System.out.print(freshId + " " + op);
+		for (int i = 0; i < ids.length; i++) {
+			System.out.print(" " + ids[i]);
+		}
+		System.out.println();
 		if (op == Op.AND) {
 			gt.and(freshId, new VecInt(ids));
 		} else if (op == Op.OR) {
+			gt.or(freshId, new VecInt(ids));
+		} else if (op == Op.IMPLY) {
+			if (ids.length > 2) {
+				throw new ConfiguratorRepresentationException("Implications with > 2 operands aren't allowd");
+			}
+			// p→q is equivalent to ¬(p∧¬q) which by De Morgan's law is equivalent to ¬p∨q
+			ids[0] = -ids[0];
 			gt.or(freshId, new VecInt(ids));
 		} else {
 			throw new ConfiguratorRepresentationException("Invalid operator passed to CNF converter");
@@ -335,7 +461,10 @@ public class ConfiguratorVerifier {
 			ArrayList<Var> row = new ArrayList<>();
 			row.add(null); // and another placeholder here.
 			P_A.add(row);
-			for (int n = 1; n <= configuratorId - 1; n++) {
+			for (int n = 1; n <= m; n++) {
+				row.add(null);
+			}
+			for (int n = m + 1; n <= configuratorId - 1; n++) {
 				row.add(n, new Var(eqsId++));
 			}
 		}
@@ -402,8 +531,22 @@ public class ConfiguratorVerifier {
 		}
 	}
 
+	/**
+	 * This, along with {@link #removeConstants()} implements of Algorithm 4.1.1 'Remove-Constants'
+	 * from Kroening and Strichman's "Decision Procedures: An Algorithmic Point of View" (Second Edition)
+	 * This method handles step 2.
+	 *
+	 * See https://doi.org/10.1007/978-3-662-50497-0
+	 *
+	 * Briefly, this method takes constants and replaces them with fresh variables. It maintains and uses
+	 * {@link #constMap} to ensure the same fresh variable is used if a constant value shows up in multiple
+	 * places
+	 *
+	 * @return A fresh variable representing this constant.
+	 */
 	private Const getConst(String constStr) {
 		if (!constMap.containsKey(constStr)) {
+			System.out.println("var" + configuratorId + " := " + constStr);
 			constMap.put(constStr, new Const(configuratorId++));
 		}
 		return constMap.get(constStr);
@@ -484,6 +627,7 @@ public class ConfiguratorVerifier {
 					rightId = rightVar.id;
 				}
 				getCNFRep(gt, op, freshVar.id, leftId, midId, rightId);
+				System.out.println(freshVar + " := " + op + ", " + leftId + ", " + midId + ", " + rightId);
 			}
 			return freshVar;
 		}
@@ -510,17 +654,20 @@ public class ConfiguratorVerifier {
 				Var leftVar = left.getCNFVar(gt);
 				Var rightVar = right.getCNFVar(gt);
 				int leftId, rightId;
-				if (!leftSign && left instanceof Var) {
+//				if (!leftSign && left instanceof Var) {
+				if (!leftSign) {
 					leftId = leftVar.getNot().id;
 				} else {
 					leftId = leftVar.id;
 				}
-				if (!rightSign && right instanceof Var) {
+//				if (!rightSign && right instanceof Var) {
+				if (!rightSign) {
 					rightId = rightVar.getNot().id;
 				} else {
 					rightId = rightVar.id;
 				}
 				getCNFRep(gt, op, freshVar.id, leftId, rightId);
+				System.out.println(freshVar + " := " + op + ", " + leftId + ", " + rightId);
 			}
 			return freshVar;
 		}
@@ -537,8 +684,9 @@ public class ConfiguratorVerifier {
 
 		@Override
 		public String toString(boolean positive) {
-			String signStr = positive ? "'" : "'~";
-			return signStr + String.valueOf((char) (id + 96)) + "'";
+			String signStr = positive ? "" : "~";
+//			return signStr + String.valueOf((char) (id + 96)) + "";
+			return signStr + id + "";
 		}
 
 		public Var(int id) {

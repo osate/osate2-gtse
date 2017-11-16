@@ -12,12 +12,13 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
 package org.osate.atsv.integration.EngineConfigModel;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,15 +27,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
 /**
- * This class enables the modeling of a list of explicit variable values. Note that types are tracked 
- * elsewhere, so all values must be strings. 
- * 
+ * This class enables the modeling of a list of explicit variable values. Note that types are tracked
+ * elsewhere, so all values must be strings.
+ *
  * Note that ATSV uses floats for value representations (based on rounding errors, eg one of their
  * files has the value 2.299999952316284, and:
- * 
+ *
  * java> double d = x * Math.pow(10,8)
  * double d = 2.2999999523162842E8
- * 
+ *
  * )
  */
 public class ValuesModel {
@@ -65,11 +66,16 @@ public class ValuesModel {
 
 	/**
 	 * Get the first value, if it exists. Used if we can't find a reasonable default
-	 * @return 
+	 * @return
 	 */
 	public String getDefault() {
-		if (values.isEmpty())
+		if (values.isEmpty()) {
 			return "";
+		}
 		return values.values().iterator().next();
+	}
+
+	public Collection<String> getValueSet() {
+		return values.values();
 	}
 }
