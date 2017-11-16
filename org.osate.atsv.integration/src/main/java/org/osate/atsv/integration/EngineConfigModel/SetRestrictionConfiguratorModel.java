@@ -85,4 +85,8 @@ public class SetRestrictionConfiguratorModel extends ConfiguratorModel {
 		return null;
 	}
 
+	public String getVarVal1() {
+		return varVal1;
+	}
+
 }

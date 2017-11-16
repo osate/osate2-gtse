@@ -33,6 +33,7 @@ import java.util.Set;
 import org.osate.atsv.integration.EngineConfigModel.ConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.ImpliesConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.SetRestrictionConfiguratorModel;
+import org.osate.atsv.integration.EngineConfigModel.SetRestrictionDependentVariableModel;
 import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
@@ -92,26 +93,20 @@ public class ConfiguratorVerifier {
 		// Phase 1: Configurators -> Equality Logic
 		List<BinaryExp> conjEqs = cnfc.getEqualityLogic(configurators);
 
-		for (BinaryExp c : conjEqs) {
-			System.out.println(c);
-		}
-
+		// Phase 2: Add type restrictions
 		conjEqs.addAll(cnfc.processTypeRestrictions(typeRestrictions));
 
-		// Phase 2: Equality logic (with constants) -> Equality logic (without constants)
+		// Phase 3: Equality logic (with constants) -> Equality logic (without constants)
 		conjEqs.addAll(cnfc.removeConstants());
 
-//		for (BinaryExp c : conjEqs) {
-//			System.out.println(c);
-//		}
-
-		// Phase 3: Equality Logic -> Propositional Logic
+		// Phase 4: Equality Logic -> Propositional Logic
 		BinaryExp top = cnfc.equalitySubstitution(conjEqs);
 
-		// Phase 4: Propositional Logic -> CNF
+		// Phase 5: Propositional Logic -> CNF
 		ISolver solver = SolverFactory.newLight();
 		GateTranslator gt = new GateTranslator(solver);
 		try {
+			// Phase 6: Require the whole expression to be true and check its satisifability
 			gt.gateTrue(top.getCNFVar(gt).id);
 			if (!solver.isSatisfiable()) {
 				throw new UnsatisfiableConstraint("The specified configurators are unsatisfiable");
@@ -124,28 +119,41 @@ public class ConfiguratorVerifier {
 		}
 	}
 
+	/**
+	 * This informs the SAT solver of the type restrictions on choicepoints
+	 *
+	 * @param typeRestrictions A collection of type restrictions
+	 * @return BinaryExpressions encoding those type restrictions
+	 */
 	private Collection<BinaryExp> processTypeRestrictions(Collection<TypeRestriction> typeRestrictions) {
+		// We encode each individual type restriction as a disjunction with as many terms are there
+		// specified elements in the type
+
+		// One disjunction
 		Collection<BinaryExp> ors;
+
+		// The collection of disjunctions
 		Collection<BinaryExp> ret = new HashSet<>();
 		BinaryExp bexp, oldBexp;
 		for (TypeRestriction tr : typeRestrictions) {
 			ors = new HashSet<>();
+
+			// Get an equality for each particular element, ie, X = 5
 			for (String value : tr.getAllowedValues()) {
 				bexp = new BinaryExp();
 				bexp.left = new Var(getId(tr.getVarName()));
 				bexp.op = Op.EQ;
 				bexp.right = getConst(value);
-				System.out.print("-" + bexp + "-");
 				ors.add(bexp);
 			}
-			System.out.println();
 			Iterator<BinaryExp> orsIter = ors.iterator();
 			bexp = new BinaryExp();
 			if (ors.size() == 1) {
 				ret.add(ors.iterator().next());
 				continue;
 			}
-			ret.add(bexp);
+
+			// Connect the individual equalities together with disjunctions, ie, (x = 5) ∨ (x = 6)
 			for (int i = 0; i < ors.size() - 2; i++) {
 				oldBexp = bexp;
 				bexp = new BinaryExp();
@@ -156,6 +164,9 @@ public class ConfiguratorVerifier {
 			bexp.left = orsIter.next();
 			bexp.op = Op.OR;
 			bexp.right = orsIter.next();
+
+			// Add the large disjunction to the list of type restrictions
+			ret.add(bexp);
 		}
 		return ret;
 	}
@@ -233,6 +244,12 @@ public class ConfiguratorVerifier {
 		return ret;
 	}
 
+	/**
+	 * Encodes statements of the form "x=y" and "x≠y"
+	 *
+	 * @param scm The configurator model
+	 * @return A statement in equality logic
+	 */
 	private BinaryExp getEqualityLogicSimple(SimpleConfiguratorModel scm) {
 		BinaryExp bexp = new BinaryExp();
 		bexp.left = new Var(getId(scm.getVarName1()));
@@ -241,62 +258,12 @@ public class ConfiguratorVerifier {
 		return bexp;
 	}
 
-	public static void main(String[] args) {
-//		ImpliesConfiguratorModel icm = new ImpliesConfiguratorModel("x", "7", "y", "7", true);
-//		ImpliesConfiguratorModel icm2 = new ImpliesConfiguratorModel("x", "7", "y", "9", true);
-//		ImpliesConfiguratorModel icm2 = new ImpliesConfiguratorModel("y", "7", "z", "9", true);
-		ConfiguratorVerifier cv = new ConfiguratorVerifier();
-		List<BinaryExp> bexpList = new ArrayList<BinaryExp>();
-
-		BinaryExp bexp = cv.new BinaryExp();
-		bexp.left = cv.new Var(cv.getId("x"));
-		bexp.op = Op.EQ;
-		bexp.right = cv.getConst("7");
-		bexpList.add(bexp);
-//
-		BinaryExp bexp2 = cv.new BinaryExp();
-		bexp2.left = cv.new Var(cv.getId("y"));
-		bexp2.op = Op.EQ;
-		bexp2.right = cv.getConst("8");
-		bexpList.add(bexp2);
-
-		bexpList.addAll(cv.removeConstants());
-
-//		BinaryExp bexp = cv.new BinaryExp();
-//		bexp.left = cv.new Var(cv.getId("x"));
-//		bexp.right = cv.new Var(cv.getId("y"));
-//		bexp.op = Op.IMPLY;
-//		bexpList.add(bexp);
-
-//		bexpList.add(cv.getEqualityLogicImplication(icm));
-//		bexpList.add(cv.getEqualityLogicImplication(icm2));
-
-		// Phase 4: Propositional Logic -> CNF
-		ISolver solver = SolverFactory.newLight();
-		GateTranslator gt = new GateTranslator(solver);
-//		try {
-		try {
-			BinaryExp top = cv.equalitySubstitution(bexpList);
-			gt.gateTrue(top.getCNFVar(gt).id);
-//			gt.gateFalse(top.left.getCNFVar(gt).id);
-//			gt.gateFalse(top.right.getCNFVar(gt).id);
-			System.out.println(solver.isSatisfiable());
-		} catch (ContradictionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ConfiguratorRepresentationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsatisfiableConstraint e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
+	/**
+	 * Encodes statements of the form "x=7 → y=9" and "x=7 → y≠9"
+	 *
+	 * @param scm The configurator model
+	 * @return A statement in equality logic
+	 */
 	private BinaryExp getEqualityLogicImplication(ImpliesConfiguratorModel icm) {
 		BinaryExp bexp = new BinaryExp();
 		BinaryExp bexpl = new BinaryExp();
@@ -317,9 +284,99 @@ public class ConfiguratorVerifier {
 		return bexp;
 	}
 
+	/**
+	 * Encodes statements of the form "x=7 → y∈{1,3,9}" and "x=7 → y∉{1,3,9}"
+	 *
+	 * @param scm The configurator model
+	 * @return A statement in equality logic
+	 */
 	private BinaryExp getEqualityLogicSetRestriction(SetRestrictionConfiguratorModel srcm) {
+		// Top level binary exp -- the one with the implication
 		BinaryExp bexp = new BinaryExp();
-		// TODO: Not implemented...
+
+		// Left hand side -- the equality we're testing for
+		BinaryExp bexpl = new BinaryExp();
+		bexp.left = bexpl;
+
+		bexp.op = Op.IMPLY;
+
+		bexpl.left = new Var(getId(srcm.getVarName1()));
+		bexpl.right = getConst(srcm.getVarVal1());
+		bexpl.op = Op.EQ;
+
+		SetRestrictionDependentVariableModel depVarMdl = srcm.getDependentVariable();
+		Collection<String> depVarVals = depVarMdl.getValues();
+		Iterator<String> depVarIter = depVarVals.iterator();
+		BinaryExp currentBexp = new BinaryExp();
+		bexp.right = currentBexp;
+		BinaryExp currentEqBexp = new BinaryExp();
+		BinaryExp oldBexp;
+		Var depVar = new Var(getId(depVarMdl.getVarName()));
+
+		// Short circuit if the set is small
+		if (depVarVals.size() == 0) {
+			bexp.left = getConst("placeholder");
+			bexp.right = getConst("placeholder");
+			if (srcm.isMembership()) {
+				bexp.op = Op.NEQ; // Trivially false -- impossible to be a member of an empty set
+			} else {
+				bexp.op = Op.EQ; // Trivially true -- impossible not to be a member of an empty set
+			}
+			return bexp;
+		} else if (depVarVals.size() == 1) {
+			BinaryExp bexpr = new BinaryExp();
+			bexpr.left = depVar;
+			bexpr.right = new Var(getId(depVarIter.next()));
+			if (srcm.isMembership()) {
+				bexpr.op = Op.EQ;
+			} else {
+				bexpr.op = Op.NEQ;
+			}
+			bexp.right = bexpr;
+			return bexp;
+		}
+
+		// If we're testing for membership, we encode it as a disjunction of equalities
+		// ie: x=7 → y∈{1,3,9} ⇒ (x=7)→((y=1)∨(y=3)∨(y=9))
+		// Alternatively, exclusion is encoded as a conjunction of inequalities
+		// ie: x=7 → y∉{1,3,9} ⇒ (x=7)→((y≠1)∧(y≠3)∧(y≠9))
+		Op curOp = srcm.isMembership() ? Op.OR : Op.AND;
+		Op eqOp = srcm.isMembership() ? Op.EQ : Op.NEQ;
+
+		/*- Our encoding of ((y=1)∨(y=3)∨(y=9)) is a tree of the form:
+		 *   ∨
+		 *  / \
+		 * y=1 ∨
+		 *    / \
+		 *  y=3 y=9
+		 *
+		 * This loop builds all but the right/bottom-most two leaves
+		 */
+		for (int i = 0; i < depVarVals.size() - 2; i++) {
+			currentEqBexp.left = depVar;
+			currentEqBexp.op = eqOp;
+			currentEqBexp.right = getConst(depVarIter.next());
+
+			currentBexp.left = currentEqBexp;
+			currentEqBexp = new BinaryExp();
+			currentBexp.op = curOp;
+			oldBexp = currentBexp;
+			currentBexp = new BinaryExp();
+			oldBexp.right = currentBexp;
+		}
+
+		// We build the right/bottom-most two leaves here
+		currentEqBexp.left = depVar;
+		currentEqBexp.op = eqOp;
+		currentEqBexp.right = getConst(depVarIter.next());
+		currentBexp.left = currentEqBexp;
+		currentBexp.op = curOp;
+		currentEqBexp = new BinaryExp();
+		currentEqBexp.left = depVar;
+		currentEqBexp.op = eqOp;
+		currentEqBexp.right = getConst(depVarIter.next());
+		currentBexp.right = currentEqBexp;
+
 		return bexp;
 	}
 
@@ -429,18 +486,13 @@ public class ConfiguratorVerifier {
 	 */
 	private void getCNFRep(GateTranslator gt, Op op, int freshId, int... ids)
 			throws ConfiguratorRepresentationException, ContradictionException {
-		System.out.print(freshId + " " + op);
-		for (int i = 0; i < ids.length; i++) {
-			System.out.print(" " + ids[i]);
-		}
-		System.out.println();
 		if (op == Op.AND) {
 			gt.and(freshId, new VecInt(ids));
 		} else if (op == Op.OR) {
 			gt.or(freshId, new VecInt(ids));
 		} else if (op == Op.IMPLY) {
 			if (ids.length > 2) {
-				throw new ConfiguratorRepresentationException("Implications with > 2 operands aren't allowd");
+				throw new ConfiguratorRepresentationException("Implications with > 2 operands aren't allowed");
 			}
 			// p→q is equivalent to ¬(p∧¬q) which by De Morgan's law is equivalent to ¬p∨q
 			ids[0] = -ids[0];
@@ -457,15 +509,16 @@ public class ConfiguratorVerifier {
 		P_A = new ArrayList<>();
 		P_A.add(null); // The equality substitution algorithm is 1-indexed instead of 0-indexed,
 		// so we insert a placeholder here
-		for (int m = 1; m <= configuratorId - 2; m++) {
+		for (int i = 1; i <= configuratorId - 2; i++) {
 			ArrayList<Var> row = new ArrayList<>();
 			row.add(null); // and another placeholder here.
 			P_A.add(row);
-			for (int n = 1; n <= m; n++) {
-				row.add(null);
+			for (int j = 1; j <= i; j++) {
+				row.add(null); // We only want values where i < j, so we put placeholders where
+				// that's not the case
 			}
-			for (int n = m + 1; n <= configuratorId - 1; n++) {
-				row.add(n, new Var(eqsId++));
+			for (int j = i + 1; j <= configuratorId - 1; j++) {
+				row.add(j, new Var(eqsId++));
 			}
 		}
 	}
@@ -546,7 +599,6 @@ public class ConfiguratorVerifier {
 	 */
 	private Const getConst(String constStr) {
 		if (!constMap.containsKey(constStr)) {
-			System.out.println("var" + configuratorId + " := " + constStr);
 			constMap.put(constStr, new Const(configuratorId++));
 		}
 		return constMap.get(constStr);
@@ -627,7 +679,6 @@ public class ConfiguratorVerifier {
 					rightId = rightVar.id;
 				}
 				getCNFRep(gt, op, freshVar.id, leftId, midId, rightId);
-				System.out.println(freshVar + " := " + op + ", " + leftId + ", " + midId + ", " + rightId);
 			}
 			return freshVar;
 		}
@@ -654,20 +705,17 @@ public class ConfiguratorVerifier {
 				Var leftVar = left.getCNFVar(gt);
 				Var rightVar = right.getCNFVar(gt);
 				int leftId, rightId;
-//				if (!leftSign && left instanceof Var) {
 				if (!leftSign) {
 					leftId = leftVar.getNot().id;
 				} else {
 					leftId = leftVar.id;
 				}
-//				if (!rightSign && right instanceof Var) {
 				if (!rightSign) {
 					rightId = rightVar.getNot().id;
 				} else {
 					rightId = rightVar.id;
 				}
 				getCNFRep(gt, op, freshVar.id, leftId, rightId);
-				System.out.println(freshVar + " := " + op + ", " + leftId + ", " + rightId);
 			}
 			return freshVar;
 		}
@@ -685,7 +733,6 @@ public class ConfiguratorVerifier {
 		@Override
 		public String toString(boolean positive) {
 			String signStr = positive ? "" : "~";
-//			return signStr + String.valueOf((char) (id + 96)) + "";
 			return signStr + id + "";
 		}
 

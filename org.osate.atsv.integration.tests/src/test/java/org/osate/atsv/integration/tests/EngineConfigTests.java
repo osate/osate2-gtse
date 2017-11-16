@@ -21,6 +21,7 @@ package org.osate.atsv.integration.tests;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -191,6 +192,22 @@ public class EngineConfigTests {
 		ecf.addChoicePointDefinition("str3", ATSVVariableType.STRING, new ValuesModel("A"));
 		ecf.addChoicePointDefinition("str4", ATSVVariableType.STRING, new ValuesModel("D"));
 		ecf.addRequiresConstraint("str1", "A", "str2", "C");
+		ecf.addEqualityConstraint("str1", "str3");
+		ecf.addEqualityConstraint("str2", "str4");
+
+		// This should throw the exception
+		ecf.getXML();
+	}
+
+	@Test(expected = UnsatisfiableConstraint.class)
+	public void impossibleMembershipConfigurator() throws JAXBException, UnsatisfiableConstraint,
+	ConfiguratorRepresentationException, UnsupportedFeatureException {
+		ecf.addChoicePointDefinition("str1", ATSVVariableType.STRING, new ValuesModel("A", "B", "C", "D", "E"));
+		ecf.addChoicePointDefinition("str2", ATSVVariableType.STRING,
+				new ValuesModel("A", "B", "C", "D", "E", "F", "G"));
+		ecf.addChoicePointDefinition("str3", ATSVVariableType.STRING, new ValuesModel("A"));
+		ecf.addChoicePointDefinition("str4", ATSVVariableType.STRING, new ValuesModel("G"));
+		ecf.addMembershipConstraint("str1", "A", "str2", Arrays.asList("C", "D", "E", "F"));
 		ecf.addEqualityConstraint("str1", "str3");
 		ecf.addEqualityConstraint("str2", "str4");
 
