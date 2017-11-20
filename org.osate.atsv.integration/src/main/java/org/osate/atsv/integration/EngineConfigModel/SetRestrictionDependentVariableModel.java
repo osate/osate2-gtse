@@ -40,6 +40,14 @@ public class SetRestrictionDependentVariableModel {
 		}
 	}
 
+	public Collection<String> getValues() {
+		return values.values();
+	}
+
+	public String getVarName() {
+		return varName;
+	}
+
 	/**
 	 * Add another possible value to the list
 	 * @param s The new value to add

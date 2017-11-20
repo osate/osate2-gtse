@@ -20,18 +20,23 @@ package org.osate.atsv.integration.EngineConfigModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Collection;
+import java.util.HashSet;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.osate.atsv.integration.Activator;
+import org.osate.atsv.integration.TypeRestriction;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 
 public class ExplorationEngineModel {
 
@@ -137,6 +142,9 @@ public class ExplorationEngineModel {
 	@XmlElement
 	private final String userDefinedPath = "";
 
+	@XmlTransient
+	private Collection<TypeRestriction> typeRestrictions = new HashSet<>();
+
 	/**
 	 * Add a variable to the internal list of variables.
 	 *
@@ -163,7 +171,8 @@ public class ExplorationEngineModel {
 	}
 
 	public void renderConfigurator()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		if (cm.isEmpty()) {
 			configurator = "";
 			return;
@@ -183,7 +192,12 @@ public class ExplorationEngineModel {
 		configurator = stream.toString();
 	}
 
-	private void validateConfigurator() throws UnsatisfiableConstraint, ConfiguratorRepresentationException {
-		cm.validateConfigurator();
+	private void validateConfigurator()
+			throws UnsatisfiableConstraint, ConfiguratorRepresentationException, UnsupportedFeatureException {
+		cm.validateConfigurator(typeRestrictions);
+	}
+
+	public void addTypeRestriction(String varName, ValuesModel values) {
+		typeRestrictions.add(new TypeRestriction(varName, values));
 	}
 }

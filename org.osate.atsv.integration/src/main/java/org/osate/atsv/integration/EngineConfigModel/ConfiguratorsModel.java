@@ -19,14 +19,17 @@
 package org.osate.atsv.integration.EngineConfigModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.osate.atsv.integration.ConfiguratorVerifier;
+import org.osate.atsv.integration.TypeRestriction;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 
 /**
  * Holds the list of configurators (basically constraints) in a particular choicepoint set
@@ -60,9 +63,10 @@ public class ConfiguratorsModel {
 		return configurators.isEmpty();
 	}
 
-	public void validateConfigurator() throws ConfiguratorRepresentationException, UnsatisfiableConstraint {
+	public void validateConfigurator(Collection<TypeRestriction> typeRestrictions)
+			throws ConfiguratorRepresentationException, UnsatisfiableConstraint, UnsupportedFeatureException {
 		if (!configurators.isEmpty()) {
-			ConfiguratorVerifier.validate(configurators);
+			ConfiguratorVerifier.validate(configurators, typeRestrictions);
 		}
 	}
 

@@ -21,6 +21,7 @@ package org.osate.atsv.integration.tests;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,6 +38,7 @@ import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
+import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 
 public class EngineConfigTests {
 
@@ -63,7 +65,8 @@ public class EngineConfigTests {
 	}
 
 	@Test
-	public void noVariables() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+	public void noVariables() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+	UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens/><outputTokens></outputTokens><variables/><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>"
 				+ ECF_SUFFIX;
@@ -72,7 +75,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorEquality()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;/Equal&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -84,7 +88,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorUniqueness()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Unique&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;/Unique&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -96,7 +101,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorRequires()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Requires&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;VariableValue&gt;A&lt;/VariableValue&gt;&lt;DependentVariable&gt;str2&lt;/DependentVariable&gt;&lt;DependentVariableValue&gt;C&lt;/DependentVariableValue&gt;&lt;/Requires&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -108,7 +114,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorForbids()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Forbids&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;VariableValue&gt;A&lt;/VariableValue&gt;&lt;DependentVariable&gt;str2&lt;/DependentVariable&gt;&lt;DependentVariableValue&gt;C&lt;/DependentVariableValue&gt;&lt;/Forbids&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -120,7 +127,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorMembership()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"D\" preference=\"0\"><values val3=\"D\" val2=\"C\" val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Membership&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;VariableValue&gt;A&lt;/VariableValue&gt;&lt;DependentVariable v0=\"C\" v1=\"D\"&gt;str2&lt;/DependentVariable&gt;&lt;/Membership&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -133,7 +141,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorExclusion()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"C\" preference=\"0\"><values val2=\"C\" val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"D\" preference=\"0\"><values val3=\"D\" val2=\"C\" val1=\"B\" val0=\"A\"/></varName1></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Exclusion&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;VariableValue&gt;A&lt;/VariableValue&gt;&lt;DependentVariable v0=\"C\" v1=\"D\"&gt;str2&lt;/DependentVariable&gt;&lt;/Exclusion&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -146,7 +155,8 @@ public class EngineConfigTests {
 
 	@Test
 	public void configuratorMultiple()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;Variable&gt;str3&lt;/Variable&gt;&lt;/Equal&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -159,8 +169,9 @@ public class EngineConfigTests {
 	}
 
 	@Test(expected = UnsatisfiableConstraint.class)
-	public void impossibleConfigurator()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+	public void impossibleSimpleConfigurator()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		ecf.addChoicePointDefinition("str1", ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addChoicePointDefinition("str2", ATSVVariableType.STRING, new ValuesModel("A", "B"));
 		ecf.addChoicePointDefinition("str3", ATSVVariableType.STRING, new ValuesModel("A", "B"));
@@ -172,9 +183,42 @@ public class EngineConfigTests {
 		ecf.getXML();
 	}
 
+	@Test(expected = UnsatisfiableConstraint.class)
+	public void impossibleImpliesConfigurator()
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
+		ecf.addChoicePointDefinition("str1", ATSVVariableType.STRING, new ValuesModel("A", "B", "C", "D"));
+		ecf.addChoicePointDefinition("str2", ATSVVariableType.STRING, new ValuesModel("A", "B", "C", "D"));
+		ecf.addChoicePointDefinition("str3", ATSVVariableType.STRING, new ValuesModel("A"));
+		ecf.addChoicePointDefinition("str4", ATSVVariableType.STRING, new ValuesModel("D"));
+		ecf.addRequiresConstraint("str1", "A", "str2", "C");
+		ecf.addEqualityConstraint("str1", "str3");
+		ecf.addEqualityConstraint("str2", "str4");
+
+		// This should throw the exception
+		ecf.getXML();
+	}
+
+	@Test(expected = UnsatisfiableConstraint.class)
+	public void impossibleMembershipConfigurator() throws JAXBException, UnsatisfiableConstraint,
+	ConfiguratorRepresentationException, UnsupportedFeatureException {
+		ecf.addChoicePointDefinition("str1", ATSVVariableType.STRING, new ValuesModel("A", "B", "C", "D", "E"));
+		ecf.addChoicePointDefinition("str2", ATSVVariableType.STRING,
+				new ValuesModel("A", "B", "C", "D", "E", "F", "G"));
+		ecf.addChoicePointDefinition("str3", ATSVVariableType.STRING, new ValuesModel("A"));
+		ecf.addChoicePointDefinition("str4", ATSVVariableType.STRING, new ValuesModel("G"));
+		ecf.addMembershipConstraint("str1", "A", "str2", Arrays.asList("C", "D", "E", "F"));
+		ecf.addEqualityConstraint("str1", "str3");
+		ecf.addEqualityConstraint("str2", "str4");
+
+		// This should throw the exception
+		ecf.getXML();
+	}
+
 	@Test
 	public void possibleConfigurator()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+			UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"str1\" token=\"\"/><var1 name=\"str2\" token=\"\"/><var2 name=\"str3\" token=\"\"/><var3 name=\"str4\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"str1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName0><varName1 title=\"str2\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName1><varName2 title=\"str3\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName2><varName3 title=\"str4\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>&lt;Configurator&gt;&lt;Equal&gt;&lt;Variable&gt;str1&lt;/Variable&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;/Equal&gt;&lt;Equal&gt;&lt;Variable&gt;str3&lt;/Variable&gt;&lt;Variable&gt;str4&lt;/Variable&gt;&lt;/Equal&gt;&lt;Unique&gt;&lt;Variable&gt;str2&lt;/Variable&gt;&lt;Variable&gt;str3&lt;/Variable&gt;&lt;/Unique&gt;&lt;/Configurator&gt;"
 				+ ECF_SUFFIX;
@@ -189,7 +233,8 @@ public class EngineConfigTests {
 	}
 
 	@Test
-	public void exampleVariables() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException {
+	public void exampleVariables() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+	UnsupportedFeatureException {
 		String expectedXML = ECF_PREFIX
 				+ "<inputTokens><var0 name=\"dv1\" token=\"\"/><var1 name=\"phideg\" token=\"\"/><var2 name=\"intTest\" token=\"\"/><var3 name=\"strTest\" token=\"\"/></inputTokens><outputTokens></outputTokens><variables><varName0 title=\"dv1\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"0\" value=\"0.0\" preference=\"0\"><distribution distType=\"uniform\" min=\"0.0\" max=\"2.0\"/></varName0><varName1 title=\"phideg\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"0\" value=\"-5.0\" preference=\"0\"><distribution distType=\"uniform\" min=\"-5.0\" max=\"5.0\"/></varName1><varName2 title=\"intTest\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"4\" value=\"20\" preference=\"0\"><values val8=\"20\" val7=\"19\" val6=\"18\" val5=\"17\" val4=\"16\" val3=\"15\" val2=\"14\" val1=\"13\" val0=\"12\"/></varName2><varName3 title=\"strTest\" capture=\"true\" sampled=\"false\" ioValue=\"0\" type=\"2\" value=\"B\" preference=\"0\"><values val1=\"B\" val0=\"A\"/></varName3><varName4 title=\"dv2\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/><varName5 title=\"dvTotal\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/><varName6 title=\"deltaT\" capture=\"true\" sampled=\"false\" ioValue=\"1\" type=\"0\" preference=\"0\"/></variables><excelMacro></excelMacro><sampleCount>25</sampleCount><updateATSVInterval>25</updateATSVInterval><Configurator>"
 				+ ECF_SUFFIX;

@@ -19,6 +19,7 @@
 package org.osate.atsv.integration.EngineConfigModel;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -82,12 +83,22 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 		return this.varName2;
 	}
 
+	@XmlTransient
 	public void setVarVal1(String varVal1) {
 		this.varVal1 = varVal1;
 	}
 
+	@XmlTransient
 	public void setVarVal2(String varVal2) {
 		this.varVal2 = varVal2;
+	}
+
+	public String getVarVal1() {
+		return varVal1;
+	}
+
+	public String getVarVal2() {
+		return varVal2;
 	}
 
 	public boolean isRequires() {
