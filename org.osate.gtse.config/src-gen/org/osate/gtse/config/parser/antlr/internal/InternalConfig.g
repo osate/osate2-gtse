@@ -612,9 +612,9 @@ ruleWith[EObject in_current]  returns [EObject current=in_current]
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_2='&'
 			{
-				newLeafNode(otherlv_2, grammarAccess.getWithAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_2, grammarAccess.getWithAccess().getAmpersandKeyword_2_0());
 			}
 			(
 				(
@@ -1262,11 +1262,24 @@ ruleConfigExpression returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getConfigExpressionRule());
 					}
-					newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_0_3());
+					newCompositeNode(grammarAccess.getConfigExpressionAccess().getWithParserRuleCall_0_3());
 				}
-				this_Assignments_3=ruleAssignments[$current]
+				this_With_3=ruleWith[$current]
 				{
-					$current = $this_Assignments_3.current;
+					$current = $this_With_3.current;
+					afterParserOrEnumRuleCall();
+				}
+			)?
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getConfigExpressionRule());
+					}
+					newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_0_4());
+				}
+				this_Assignments_4=ruleAssignments[$current]
+				{
+					$current = $this_Assignments_4.current;
 					afterParserOrEnumRuleCall();
 				}
 			)?
@@ -1285,7 +1298,7 @@ ruleConfigExpression returns [EObject current=null]
 					{
 						newCompositeNode(grammarAccess.getConfigExpressionAccess().getExpCPropertyExpressionParserRuleCall_1_1_0());
 					}
-					lv_exp_5_0=ruleCPropertyExpression
+					lv_exp_6_0=ruleCPropertyExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getConfigExpressionRule());
@@ -1293,7 +1306,7 @@ ruleConfigExpression returns [EObject current=null]
 						set(
 							$current,
 							"exp",
-							lv_exp_5_0,
+							lv_exp_6_0,
 							"org.osate.gtse.config.Config.CPropertyExpression");
 						afterParserOrEnumRuleCall();
 					}
@@ -1315,9 +1328,9 @@ ruleConfigExpression returns [EObject current=null]
 				}
 				newCompositeNode(grammarAccess.getConfigExpressionAccess().getAssignmentsParserRuleCall_2_1());
 			}
-			this_Assignments_7=ruleAssignments[$current]
+			this_Assignments_8=ruleAssignments[$current]
 			{
-				$current = $this_Assignments_7.current;
+				$current = $this_Assignments_8.current;
 				afterParserOrEnumRuleCall();
 			}
 		)

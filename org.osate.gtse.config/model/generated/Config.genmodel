@@ -71,6 +71,7 @@
     <genClasses ecoreClass="Config.ecore#//NamedElementRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/ref"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/combined"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/assignments"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//PropertyValue">

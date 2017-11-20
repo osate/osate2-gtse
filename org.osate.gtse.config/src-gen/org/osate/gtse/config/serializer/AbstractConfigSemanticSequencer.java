@@ -976,7 +976,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 				sequence_Limit(context, (Limit) semanticObject); 
 				return; 
 			case ConfigPackage.NAMED_ELEMENT_REF:
-				sequence_Arguments_Assignments_ConfigExpression(context, (NamedElementRef) semanticObject); 
+				sequence_Arguments_Assignments_ConfigExpression_With(context, (NamedElementRef) semanticObject); 
 				return; 
 			case ConfigPackage.NESTED_ASSIGNMENTS:
 				sequence_Assignments_ConfigExpression(context, (NestedAssignments) semanticObject); 
@@ -1036,9 +1036,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     ConfigExpression returns NamedElementRef
 	 *
 	 * Constraint:
-	 *     (ref=[NamedElement|CNAME] (arguments+=Argument arguments+=Argument*)? (assignments+=Assignment assignments+=Assignment*)?)
+	 *     (
+	 *         ref=[NamedElement|CNAME] 
+	 *         (arguments+=Argument arguments+=Argument*)? 
+	 *         (combined+=Combination combined+=Combination*)? 
+	 *         (assignments+=Assignment assignments+=Assignment*)?
+	 *     )
 	 */
-	protected void sequence_Arguments_Assignments_ConfigExpression(ISerializationContext context, NamedElementRef semanticObject) {
+	protected void sequence_Arguments_Assignments_ConfigExpression_With(ISerializationContext context, NamedElementRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

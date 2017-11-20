@@ -660,9 +660,19 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getNamedElementRef_Assignments()
+  public EReference getNamedElementRef_Combined()
   {
     return (EReference)namedElementRefEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNamedElementRef_Assignments()
+  {
+    return (EReference)namedElementRefEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -808,6 +818,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     namedElementRefEClass = createEClass(NAMED_ELEMENT_REF);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__REF);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ARGUMENTS);
+    createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__COMBINED);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ASSIGNMENTS);
 
     propertyValueEClass = createEClass(PROPERTY_VALUE);
@@ -917,6 +928,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEClass(namedElementRefEClass, NamedElementRef.class, "NamedElementRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNamedElementRef_Ref(), theAadl2Package.getNamedElement(), null, "ref", null, 0, 1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedElementRef_Arguments(), this.getArgument(), null, "arguments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNamedElementRef_Combined(), this.getCombination(), null, "combined", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedElementRef_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

@@ -20,6 +20,8 @@ package org.osate.gtse.config.generator
 
 import com.google.inject.Inject
 import java.util.ArrayList
+import java.util.HashMap
+import java.util.HashSet
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.Resource
@@ -44,8 +46,10 @@ import org.osate.aadl2.Property
 import org.osate.aadl2.ReferenceType
 import org.osate.aadl2.ReferenceValue
 import org.osate.aadl2.Subcomponent
+import org.osate.gtse.config.config.Argument
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.CandidateList
+import org.osate.gtse.config.config.Combination
 import org.osate.gtse.config.config.ConfigFactory
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
@@ -55,11 +59,10 @@ import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.NestedAssignments
 import org.osate.gtse.config.config.PropertyValue
+import org.osate.gtse.config.config.Relation
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
-import static extension org.osate.gtse.config.config.ConfigurationExt.*
-import org.osate.gtse.config.config.Relation
 
 /**
  * Generates code from your model files on save.
@@ -114,73 +117,15 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(Greeting)
-//				.map[name]
-//				.join(', '))
 		val package = resource.contents.head as ConfigPkg
 		val rootConfig = (resource.contents.head as ConfigPkg).root
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
-		val arguments = makeArgumentList(rootConfig)
-		val replacements = process(rootComp, lookup, arguments).toList
+		val arguments = makeArgumentList(rootConfig.combined, newHashMap)
+		val replacements = if(rootComp === null) #[] else process(rootComp, lookup, arguments).toList
 
-		fsa.generateFile('paths.txt', {
-			if (package.analyses.empty)
-				''
-			else
-				'Analyses=' + package.analyses.join(',')
-		} + '\n\n' + {
-			replacements.map [ r |
-				val tl = r.path.tail
-				val pathName = tl.map[name].join('.')
-				if (r.isSubcomponentMapping) {
-					if (tl.empty) {
-						'componentImplementationName=' + r.value.print + '\n'
-					} else {
-						'SubcompChoice-' + pathName + '=' + r.value.print
-					}
-				} else if (r.isPropertyMapping) {
-					// TODO: handle parameter as value
-					if (r.property.propertyType instanceof ReferenceType) {
-						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' +
-							serializer.serialize(r.value).trim // FIXME
-					} else if (r.property.propertyType instanceof ListType &&
-						(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
-						val pv = r.value as PropertyValue
-						val a = pv.getContainerOfType(Assignment)
-						var ref = a.ref
-						// reference value is relative to assignment's container
-						var refPath = pathName
-						while (ref !== null && refPath.endsWith(ref.element.name)) {
-							refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
-							ref = ref.prev
-						}
-						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
-							serializer.serialize((pv.exp as ReferenceValue).path).trim
-					} else {
-						'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) + '=' +
-							serializer.serialize(r.value).trim
-					}
-				}
-			].join('\n')
-		} + '\n\n' + {
-			if (package.outputs.empty)
-				''
-			else
-				package.outputs.map [ o |
-					val tn = o.type.toString
-					#['Output', o.name, Character.toUpperCase(tn.charAt(0)) + tn.substring(1)].join('-') + {
-						if (o.limit !== null) {
-							val bound = serializer.serialize(o.limit.bound).trim
-							val str = if (bound.startsWith("'")) bound.substring(1, bound.length - 1) else bound
-							'=' + o.limit.relation.print + '-' + str
-						} else
-							''
-					}
-				].join('\n')
-		})
+		val text = mkString(package, replacements)
+		fsa.generateFile('paths.txt', text)
 	}
 
 	static private def Iterable<Pair<ElementRef, Assignment>> makeLookup(Configuration cfg) {
@@ -204,9 +149,9 @@ class ConfigGenerator extends AbstractGenerator {
 	def Iterable<Mapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
 		Map<ConfigParameter, ConfigValue> arguments) {
 		val downAssignment = lookup.findFirst[key === null && !value.isProperty]?.value
-		val localResult = lookup.makePropertyMappings(ne) + {
+		val localResult = makePropertyMappings(ne, lookup) + {
 			if (ne instanceof Configuration)
-				ne.assignments.makeLocalPropertyMappings(ne)
+				makeLocalPropertyMappings(ne, ne.assignments)
 			else
 				#[]
 		}
@@ -214,11 +159,12 @@ class ConfigGenerator extends AbstractGenerator {
 			// no applicable entry found, continue
 			localResult + continueDown(ne, ne.classifier, lookup, arguments)
 		else {
-			val propertiesFromNested = switch value: downAssignment.value {
+			val nestedAssignments = switch value: downAssignment.value {
 				NamedElementRef: value.assignments
 				NestedAssignments: value.assignments
 				default: #[]
-			}.makeLocalPropertyMappings(ne)
+			}
+			val propertiesFromNested = makeLocalPropertyMappings(ne, nestedAssignments)
 			propertiesFromNested + localResult + handleAssignedValue(ne, downAssignment.value, lookup, arguments)
 		}
 	}
@@ -227,28 +173,45 @@ class ConfigGenerator extends AbstractGenerator {
 		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		switch value : cfgValue {
 			NamedElementRef: {
-				val localLookup = makeLookupList(value.assignments)
+				// lookups generated from assignments in '{' ... '}'
+				val localLookup = makeLocalLookupList(value.assignments)
 				switch obj: value.ref {
 					Classifier: {
+						val withLookup = makeLookupList(value.combined)
+						val args = makeArgumentList(value.combined, arguments)
 						val m = makeComponentMapping(ne, obj, cfgValue)
-						m + continueDown(ne, obj, localLookup + lookup, arguments)
+						val propertiesFromWith = makePropertyMappings(ne, value.combined)
+						m + propertiesFromWith + continueDown(ne, obj, localLookup + withLookup + lookup, args)
 					}
 					Configuration: {
-						val configLookup = makeLookupList(obj)
-						val propertiesFromConfiguration = obj.assignments.makeLocalPropertyMappings(ne)
-						val args = newHashMap
-						arguments.forEach[p, v|args.put(p, v)]
-						value.arguments.forEach[args.put(it.parameter, it.value)]
+						val withLookup = makeLookupList(obj, value.combined)
+						val args = makeArgumentList(value.arguments, value.combined, arguments)
 						val m = makeComponentMapping(ne, obj, cfgValue)
-						m + propertiesFromConfiguration +
-							continueDown(ne, obj.extended, localLookup + configLookup + lookup, args)
+						val propertiesFromConfiguration = makeLocalPropertyMappings(ne, obj.assignments)
+						val propertiesFromWith = makePropertyMappings(ne, obj, value.combined)
+						m + propertiesFromConfiguration + propertiesFromWith +
+							continueDown(ne, obj.extended, localLookup + withLookup + lookup, args)
 					}
 					ConfigParameter: {
-						val argValue = arguments.get(obj)
-						if (argValue !== null) {
-							handleAssignedValue(ne, argValue, localLookup + lookup, arguments)
-						} else {
-							#[new Mapping(#[ne], cfgValue)]
+						val withLookup = makeLookupList(value.combined)
+						val args = makeArgumentList(value.combined, arguments)
+						val propertiesFromWith = makePropertyMappings(ne, value.combined)
+						var argValue = arguments.get(obj)
+						while (argValue instanceof ConfigParameter) {
+							argValue = arguments.get(argValue)
+						}
+
+						if (argValue === null)
+							#[new Mapping(#[ne], cfgValue)] + propertiesFromWith +
+								continueDown(ne, obj.classifier, localLookup + withLookup + lookup, args)
+						else {
+							// TODO: test this branch
+							val c = switch argValue {
+								Classifier: argValue
+								Configuration: argValue.extended
+							}
+							propertiesFromWith +
+								handleAssignedValue(ne, argValue, localLookup + withLookup + lookup, args)
 						}
 					}
 					default:
@@ -257,7 +220,7 @@ class ConfigGenerator extends AbstractGenerator {
 				}
 			}
 			NestedAssignments: {
-				val localLookup = makeLookupList(value.assignments)
+				val localLookup = makeLocalLookupList(value.assignments)
 				continueDown(ne, ne.classifier, localLookup + lookup, arguments)
 			}
 			default:
@@ -280,16 +243,28 @@ class ConfigGenerator extends AbstractGenerator {
 		}
 	}
 
-	def private static makePropertyMappings(Iterable<Pair<ElementRef, Assignment>> lookup, NamedElement ne) {
+	def static makePropertyMappings(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup) {
 		lookup.filter[key === null && value.isProperty].map [
 			new Mapping(#[ne], value.property, value.value)
 		]
 	}
 
-	def private static makeLocalPropertyMappings(Iterable<Assignment> assignments, NamedElement ne) {
+	def static makeLocalPropertyMappings(NamedElement ne, Iterable<Assignment> assignments) {
 		assignments.filter[ref === null && isProperty].map [
 			new Mapping(#[ne], property, value)
 		]
+	}
+
+	def static makePropertyMappings(NamedElement ne, List<Combination> combs) {
+		if (combs === null)
+			#[]
+		else
+			linearize(combs.map[configuration]).map[makeLocalPropertyMappings(ne, assignments)].flatten
+	}
+
+	def static makePropertyMappings(NamedElement ne, Configuration cfg, List<Combination> combs) {
+		val cfgs = if(combs === null) #[cfg] else #[cfg] + combs.map[configuration]
+		linearize(cfgs).map[makeLocalPropertyMappings(ne, assignments)].flatten
 	}
 
 	def private static makeComponentMapping(NamedElement ne, Configuration cfg, ConfigValue cfgValue) {
@@ -301,10 +276,6 @@ class ConfigGenerator extends AbstractGenerator {
 			#[new Mapping(#[ne], cfgValue)]
 		else
 			#[]
-	}
-
-	def private static isStructured(NamedElement ne) {
-		ne instanceof Subcomponent || ne instanceof FeatureGroup
 	}
 
 	protected dispatch static def getClassifier(NamedElement ne) {
@@ -322,15 +293,42 @@ class ConfigGenerator extends AbstractGenerator {
 	/**
 	 * Create an assignment lookup list from the given configuration
 	 */
-	protected def List<Pair<ElementRef, Assignment>> makeLookupList(Configuration cfg) {
-		val result = newLinkedList
-		val cfgs = cfg.linearization
-		cfgs.forEach[result.addAll(makeLookupList(assignments))]
-		result
+	def Iterable<Pair<ElementRef, Assignment>> makeLookupList(Configuration cfg) {
+		linearize(cfg).map[makeLocalLookupList(assignments)].flatten
 	}
 
-	protected def List<Pair<ElementRef, Assignment>> makeLookupList(List<Assignment> lookup) {
-		lookup.map[mkPair]
+	def Iterable<Pair<ElementRef, Assignment>> makeLookupList(List<Combination> combs) {
+		if (combs === null)
+			#[]
+		else
+			linearize(combs.map[configuration]).map[makeLocalLookupList(assignments)].flatten
+	}
+
+	def Iterable<Pair<ElementRef, Assignment>> makeLookupList(Configuration cfg, List<Combination> combs) {
+		val cfgs = if(combs === null) #[cfg] else #[cfg] + combs.map[configuration]
+		linearize(cfgs).map[makeLocalLookupList(assignments)].flatten
+	}
+
+	def List<Configuration> linearize(Configuration cfg) {
+		val acc = newLinkedHashSet()
+		linHelper(cfg, acc)
+		acc.toList.reverseView
+	}
+
+	def static List<Configuration> linearize(Iterable<Configuration> cfgs) {
+		val acc = newLinkedHashSet()
+		cfgs?.forEach[linHelper(it, acc)]
+		acc.toList.reverseView
+	}
+
+	def static void linHelper(Configuration config, HashSet<Configuration> acc) {
+		val cfgs = config.combined.map[configuration]
+		cfgs.forEach[linHelper(it, acc)]
+		acc.add(config)
+	}
+
+	protected def Iterable<Pair<ElementRef, Assignment>> makeLocalLookupList(Iterable<Assignment> lookup) {
+		if(lookup === null) #[] else lookup.map[mkPair]
 	}
 
 	protected def mkPair(Assignment a) {
@@ -345,22 +343,27 @@ class ConfigGenerator extends AbstractGenerator {
 
 	/**
 	 * Create a parameter lookup list from the given configuration
+	 * Keep last argument found via DFS. Multiple arguments for the parameter are not allowed unless they are identical.
 	 */
-	protected def Map<ConfigParameter, ConfigValue> makeArgumentList(Configuration cfg) {
-		val args = newHashMap
-		argsHelper(cfg, cfg.linearization.tail, args)
+	def Map<ConfigParameter, ConfigValue> makeArgumentList(List<Argument>localArgs, List<Combination> combs,
+		Map<ConfigParameter, ConfigValue> arguments) {
+		val args = new HashMap(arguments)
+		localArgs.forEach[args.put(parameter, value)]
+		argsHelper(combs, args)
 		args
 	}
 
-	private def void argsHelper(Configuration cfg, Iterable<Configuration> lin,
-		Map<ConfigParameter, ConfigValue> args) {
-		cfg.combined.forEach [ c |
-			if (c.configuration == lin.head) {
-				c.arguments.forEach [ arg |
-					args.put(arg.parameter, arg.value)
-				]
-				argsHelper(c.configuration, lin.tail, args)
-			}
+	def Map<ConfigParameter, ConfigValue> makeArgumentList(List<Combination> combs,
+		Map<ConfigParameter, ConfigValue> arguments) {
+		val args = new HashMap(arguments)
+		argsHelper(combs, args)
+		args
+	}
+
+	private def void argsHelper(Iterable<Combination> combs, Map<ConfigParameter, ConfigValue> args) {
+		combs.forEach [ c |
+			c.arguments.forEach [args.put(parameter, value)]
+			argsHelper(c.configuration.combined, args)
 		]
 	}
 
@@ -428,6 +431,64 @@ class ConfigGenerator extends AbstractGenerator {
 
 	protected dispatch def Iterable<NamedElement> allNamedElements(Element e) {
 		#[]
+	}
+
+	def String mkString(ConfigPkg pkg, List<Mapping> replacements) {
+		{
+			if (pkg.analyses.empty)
+				''
+			else
+				'Analyses=' + pkg.analyses.join(',')
+		} + '\n\n' + {
+			replacements.map [ r |
+				val tl = r.path.tail
+				val pathName = tl.map[name].join('.')
+				if (r.isSubcomponentMapping) {
+					if (tl.empty) {
+						'componentImplementationName=' + r.value.print + '\n'
+					} else {
+						'SubcompChoice-' + pathName + '=' + r.value.print
+					}
+				} else if (r.isPropertyMapping) {
+					// TODO: handle parameter as value
+					if (r.property.propertyType instanceof ReferenceType) {
+						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' +
+							serializer.serialize(r.value).trim // FIXME
+					} else if (r.property.propertyType instanceof ListType &&
+						(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
+						val pv = r.value as PropertyValue
+						val a = pv.getContainerOfType(Assignment)
+						var ref = a.ref
+						// reference value is relative to assignment's container
+						var refPath = pathName
+						while (ref !== null && refPath.endsWith(ref.element.name)) {
+							refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
+							ref = ref.prev
+						}
+						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
+							serializer.serialize((pv.exp as ReferenceValue).path).trim
+					} else {
+						'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) + '=' +
+							serializer.serialize(r.value).trim
+					}
+				}
+			].join('\n')
+		} + '\n\n' + {
+			if (pkg.outputs.empty)
+				''
+			else
+				pkg.outputs.map [ o |
+					val tn = o.type.toString
+					#['Output', o.name, Character.toUpperCase(tn.charAt(0)) + tn.substring(1)].join('-') + {
+						if (o.limit !== null) {
+							val bound = serializer.serialize(o.limit.bound).trim
+							val str = if(bound.startsWith("'")) bound.substring(1, bound.length - 1) else bound
+							'=' + o.limit.relation.print + '-' + str
+						} else
+							''
+					}
+				].join('\n')
+		}
 	}
 
 	/**

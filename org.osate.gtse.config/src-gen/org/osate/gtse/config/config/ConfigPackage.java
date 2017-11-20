@@ -745,13 +745,22 @@ public interface ConfigPackage extends EPackage
   int NAMED_ELEMENT_REF__ARGUMENTS = CONFIG_VALUE_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Combined</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_ELEMENT_REF__COMBINED = CONFIG_VALUE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAMED_ELEMENT_REF__ASSIGNMENTS = CONFIG_VALUE_FEATURE_COUNT + 2;
+  int NAMED_ELEMENT_REF__ASSIGNMENTS = CONFIG_VALUE_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Named Element Ref</em>' class.
@@ -760,7 +769,7 @@ public interface ConfigPackage extends EPackage
    * @generated
    * @ordered
    */
-  int NAMED_ELEMENT_REF_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 3;
+  int NAMED_ELEMENT_REF_FEATURE_COUNT = CONFIG_VALUE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.PropertyValueImpl <em>Property Value</em>}' class.
@@ -1290,6 +1299,17 @@ public interface ConfigPackage extends EPackage
   EReference getNamedElementRef_Arguments();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.NamedElementRef#getCombined <em>Combined</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Combined</em>'.
+   * @see org.osate.gtse.config.config.NamedElementRef#getCombined()
+   * @see #getNamedElementRef()
+   * @generated
+   */
+  EReference getNamedElementRef_Combined();
+
+  /**
    * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.NamedElementRef#getAssignments <em>Assignments</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1744,6 +1764,14 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EReference NAMED_ELEMENT_REF__ARGUMENTS = eINSTANCE.getNamedElementRef_Arguments();
+
+    /**
+     * The meta object literal for the '<em><b>Combined</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference NAMED_ELEMENT_REF__COMBINED = eINSTANCE.getNamedElementRef_Combined();
 
     /**
      * The meta object literal for the '<em><b>Assignments</b></em>' containment reference list feature.

@@ -348,15 +348,15 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cCombinedAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cCombinedCombinationParserRuleCall_1_0 = (RuleCall)cCombinedAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cAmpersandKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cCombinedAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cCombinedCombinationParserRuleCall_2_1_0 = (RuleCall)cCombinedAssignment_2_1.eContents().get(0);
 		
 		//fragment With *:
-		//	'with' combined+=Combination (',' combined+=Combination)*;
+		//	'with' combined+=Combination ('&' combined+=Combination)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'with' combined+=Combination (',' combined+=Combination)*
+		//'with' combined+=Combination ('&' combined+=Combination)*
 		public Group getGroup() { return cGroup; }
 		
 		//'with'
@@ -368,11 +368,11 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//Combination
 		public RuleCall getCombinedCombinationParserRuleCall_1_0() { return cCombinedCombinationParserRuleCall_1_0; }
 		
-		//(',' combined+=Combination)*
+		//('&' combined+=Combination)*
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//','
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		//'&'
+		public Keyword getAmpersandKeyword_2_0() { return cAmpersandKeyword_2_0; }
 		
 		//combined+=Combination
 		public Assignment getCombinedAssignment_2_1() { return cCombinedAssignment_2_1; }
@@ -762,7 +762,8 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cRefNamedElementCrossReference_0_1_0 = (CrossReference)cRefAssignment_0_1.eContents().get(0);
 		private final RuleCall cRefNamedElementCNAMEParserRuleCall_0_1_0_1 = (RuleCall)cRefNamedElementCrossReference_0_1_0.eContents().get(1);
 		private final RuleCall cArgumentsParserRuleCall_0_2 = (RuleCall)cGroup_0.eContents().get(2);
-		private final RuleCall cAssignmentsParserRuleCall_0_3 = (RuleCall)cGroup_0.eContents().get(3);
+		private final RuleCall cWithParserRuleCall_0_3 = (RuleCall)cGroup_0.eContents().get(3);
+		private final RuleCall cAssignmentsParserRuleCall_0_4 = (RuleCall)cGroup_0.eContents().get(4);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Action cPropertyValueAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cExpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -776,16 +777,16 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		////	| '#' property=[aadl2::Property|PNAME]
 		////;
 		//ConfigExpression ConfigValue:
-		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
+		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments? // ambiguous: With? Assignments?
 		//	| {PropertyValue} exp=CPropertyExpression
 		//	| {NestedAssignments} Assignments;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
+		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments? // ambiguous: With? Assignments?
 		//| {PropertyValue} exp=CPropertyExpression | {NestedAssignments} Assignments
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments?
+		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments?
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{NamedElementRef}
@@ -803,8 +804,11 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//Arguments?
 		public RuleCall getArgumentsParserRuleCall_0_2() { return cArgumentsParserRuleCall_0_2; }
 		
+		//With?
+		public RuleCall getWithParserRuleCall_0_3() { return cWithParserRuleCall_0_3; }
+		
 		//Assignments?
-		public RuleCall getAssignmentsParserRuleCall_0_3() { return cAssignmentsParserRuleCall_0_3; }
+		public RuleCall getAssignmentsParserRuleCall_0_4() { return cAssignmentsParserRuleCall_0_4; }
 		
 		//{PropertyValue} exp=CPropertyExpression
 		public Group getGroup_1() { return cGroup_1; }
@@ -1412,7 +1416,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//fragment With *:
-	//	'with' combined+=Combination (',' combined+=Combination)*;
+	//	'with' combined+=Combination ('&' combined+=Combination)*;
 	public WithElements getWithAccess() {
 		return pWith;
 	}
@@ -1510,7 +1514,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	////	| '#' property=[aadl2::Property|PNAME]
 	////;
 	//ConfigExpression ConfigValue:
-	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
+	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments? // ambiguous: With? Assignments?
 	//	| {PropertyValue} exp=CPropertyExpression
 	//	| {NestedAssignments} Assignments;
 	public ConfigExpressionElements getConfigExpressionAccess() {

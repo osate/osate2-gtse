@@ -16,7 +16,7 @@ ConfigPkg:
 
 fragment Analyses*:
 	'analyses' '{' 
-		analyses+=STRING (',' analyses+=STRING)* 
+		analyses+=STRING (','  analyses+=STRING)* 
 	'}'
 ;
 
@@ -58,7 +58,7 @@ Configuration:
 ;
 
 fragment With*:
-	'with' combined+=Combination (',' combined+=Combination)*
+	'with' combined+=Combination ('&' combined+=Combination)*
 ;
 
 Combination:
@@ -108,7 +108,7 @@ Assignment:
 
 ConfigExpression returns ConfigValue:
 	// classifier, parameter, configuration
-	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? Assignments? // ambiguous: With? Assignments?
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments?
 	| {PropertyValue} exp=CPropertyExpression
 	| {NestedAssignments} Assignments
 ;

@@ -135,6 +135,7 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 						switch c : container.ref {
 							ComponentClassifier: c
 							Configuration: c.extended
+							ConfigParameter: c.classifier
 						}
 					}
 					NestedAssignments: {
