@@ -78,9 +78,10 @@ import static extension org.osate.gtse.config.config.AssignmentExt.*
 class ConfigGenerator extends AbstractGenerator {
 
 	@Inject
-	ISerializer serializer
+	static ISerializer serializer
 
 	static class Mapping {
+		
 		@Accessors
 		Iterable<NamedElement> path = #[]
 
@@ -114,20 +115,33 @@ class ConfigGenerator extends AbstractGenerator {
 			this
 		}
 
+		def pathName() {
+			path.tail.map[name].join('.')
+		}
+		
+		def propertyName() {
+			if (isPropertyMapping) property.name else ''
+		}
+		
+		def valueString() {
+			value.print
+		}
 	}
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
-		val rootConfig = (resource.contents.head as ConfigPkg).root
-		val rootComp = rootConfig.extended
-		val lookup = makeLookup(rootConfig)
-		val arguments = makeArgumentList(rootConfig.combined, newHashMap)
-		val replacements = if(rootComp === null) #[] else process(rootComp, lookup, arguments).toList
-
-		val text = mkString(package, replacements)
+		val text = mkString(package, makeMappings(package, package.root))
 		fsa.generateFile('paths.txt', text)
 	}
 
+	def makeMappings(ConfigPkg pkg, Configuration rootConfig) {
+		val rootComp = rootConfig.extended
+		val lookup = makeLookup(rootConfig)
+		val arguments = makeArgumentList(rootConfig.combined, newHashMap)
+		val replacements = if(rootComp === null) #[] else process(rootComp, lookup, arguments)
+		replacements
+	}
+	
 	static private def Iterable<Pair<ElementRef, Assignment>> makeLookup(Configuration cfg) {
 		val ner = ConfigFactory.eINSTANCE.createNamedElementRef
 		ner.ref = cfg
@@ -433,7 +447,7 @@ class ConfigGenerator extends AbstractGenerator {
 		#[]
 	}
 
-	def String mkString(ConfigPkg pkg, List<Mapping> replacements) {
+	def String mkString(ConfigPkg pkg, Iterable<Mapping> replacements) {
 		{
 			if (pkg.analyses.empty)
 				''
@@ -494,42 +508,42 @@ class ConfigGenerator extends AbstractGenerator {
 	/**
 	 * Print configuration value
 	 */
-	dispatch def String print(ConfigValue value) {
+	static dispatch def String print(ConfigValue value) {
 		'unhandled dispatch case print (' + value.class.name + ')'
 	}
 
-	dispatch def String print(CandidateList l) {
+	static dispatch def String print(CandidateList l) {
 		l.candidates.map[print].join(',')
 	}
 
-	dispatch def String print(NamedElementRef ner) {
+	static dispatch def String print(NamedElementRef ner) {
 		ner.ref.print
 	}
 
-	dispatch def String print(PropertyValue pv) {
-		"TODO: print property value"
+	static dispatch def String print(PropertyValue pv) {
+		serializer.serialize(pv)
 	}
 
 	/**
 	 * Print named element
 	 */
-	dispatch def String print(NamedElement ne) {
+	static dispatch def String print(NamedElement ne) {
 		ne.name
 	}
 
-	dispatch def String print(Classifier cl) {
+	static dispatch def String print(Classifier cl) {
 		cl.qualifiedName()
 	}
 
-	dispatch def String print(Configuration cfg) {
+	static dispatch def String print(Configuration cfg) {
 		cfg.extended.print
 	}
 
-	dispatch def String print(Property p) {
+	static dispatch def String print(Property p) {
 		p.qualifiedName().replaceAll(':', '\\\\:')
 	}
 
-	dispatch def String print(ConfigParameter p) {
+	static dispatch def String print(ConfigParameter p) {
 		val ch = p.choices
 		if (ch === null)
 			'#no choices given'
@@ -537,7 +551,7 @@ class ConfigGenerator extends AbstractGenerator {
 			ch.print
 	}
 
-	dispatch def String print(Relation r) {
+	static dispatch def String print(Relation r) {
 		switch r {
 			case EQ: 'eq'
 			case NEQ: 'neq'
