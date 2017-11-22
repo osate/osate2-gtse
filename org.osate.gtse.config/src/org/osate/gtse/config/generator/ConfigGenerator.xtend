@@ -219,11 +219,6 @@ class ConfigGenerator extends AbstractGenerator {
 							#[new Mapping(#[ne], cfgValue)] + propertiesFromWith +
 								continueDown(ne, obj.classifier, localLookup + withLookup + lookup, args)
 						else {
-							// TODO: test this branch
-							val c = switch argValue {
-								Classifier: argValue
-								Configuration: argValue.extended
-							}
 							propertiesFromWith +
 								handleAssignedValue(ne, argValue, localLookup + withLookup + lookup, args)
 						}
