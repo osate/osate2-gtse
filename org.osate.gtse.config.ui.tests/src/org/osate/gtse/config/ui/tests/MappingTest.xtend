@@ -21,8 +21,12 @@ import static org.hamcrest.Matchers.*
 @InjectWith(ConfigUiInjectorProvider)
 class MappingTest extends OsateTest {
 
+	/*
+	 * Use static variable to keep model across tests. Requires only a single workspace build.
+	 * Test 2, 3, ... are 1000 times as fast with this optimization. First test method still takes a couple of seconds.
+	 */
 	static ConfigPkg pkg
-
+	
 	static ConfigGenerator cg = new ConfigGenerator
 
 	static boolean once = true
@@ -39,17 +43,22 @@ class MappingTest extends OsateTest {
 	}
 
 	@Before
+	/**
+	 * All tests use the same model
+	 */
 	def void initWorkspace() {
+		val configFile = 'T.config'
+		val aadlFile = 'T.aadl'
+		val modelRoot = 'org.osate.gtse.config.ui.tests/models/'
+
 		if (once) {
 			once = false
 			createProject(projectName)
 			setResourceRoot("platform:/resource/" + projectName)
-			val configFile = 'T.config'
-			val configText = readFile('org.osate.gtse.config.ui.tests/models/T.config')
-			Assert.assertTrue('Could not read file T.config', configText.length > 1)
-			val aadlFile = 'T.aadl'
-			val aadlText = readFile('org.osate.gtse.config.ui.tests/models/T.aadl')
-			Assert.assertTrue('Could not read file T.aadl', aadlText.length > 1)
+			val configText = readFile(modelRoot + configFile)
+			Assert.assertTrue('Could not read file ' + configFile, configText.length > 1)
+			val aadlText = readFile(modelRoot + aadlFile)
+			Assert.assertTrue('Could not read file ' + aadlFile, aadlText.length > 1)
 			createFiles(configFile -> configText, aadlFile -> aadlText)
 			suppressSerialization
 			val result = testFile(configFile, aadlFile)
@@ -115,6 +124,14 @@ class MappingTest extends OsateTest {
 	def test12() {
 		testHelper('CWBS12', #[
 			'w' -> 'T::W1.i,T::W2.i',
+			'w.a' -> 'T::A.i1,T::A.i2'
+		])
+	}
+
+	@Test
+	def test13() {
+		testHelper('CWBS13', #[
+			'w' -> 'T::W1.i',
 			'w.a' -> 'T::A.i1,T::A.i2'
 		])
 	}
