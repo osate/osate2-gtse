@@ -78,7 +78,7 @@ import static extension org.osate.gtse.config.config.AssignmentExt.*
 class ConfigGenerator extends AbstractGenerator {
 
 	@Inject
-	static ISerializer serializer
+	ISerializer serializer
 
 	static class Mapping {
 		
@@ -516,7 +516,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	static dispatch def String print(PropertyValue pv) {
-		serializer.serialize(pv)
+		'PROPERTY VALUE'
 	}
 
 	/**
