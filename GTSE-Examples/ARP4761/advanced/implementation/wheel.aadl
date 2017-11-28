@@ -2,12 +2,48 @@ package impl::wheel
 
 public
 
-with impl::common;
-
+with impl::common, SEI;
 
 system wheel
 end wheel;
 
+system implementation wheel.i
+	subcomponents
+		tire : device tire;
+		brake : device brake;
+end wheel.i;
+
+device tire
+	
+end tire;
+
+device implementation tire.hi_quality
+	properties
+		SEI::Price => 1000.0;
+		SEI::NetWeight => 3.5 kg;
+end tire.hi_quality;
+
+device implementation tire.lo_quality
+	properties
+		SEI::Price => 300.0;
+		SEI::NetWeight => 2.5 kg;
+end tire.lo_quality;
+
+device brake
+	
+end brake;
+
+device implementation brake.hi_quality
+	properties
+		SEI::Price => 750.0;
+		SEI::NetWeight => 2.5 kg;
+end brake.hi_quality;
+
+device implementation brake.lo_quality
+	properties
+		SEI::Price => 350.0;
+		SEI::NetWeight => 3.5 kg;
+end brake.lo_quality;
 
 --
 --  This is an example of one wheel with one
@@ -15,11 +51,10 @@ end wheel;
 --  we rather abstract the two channels into a
 --  single one.
 --
-
-system wheel_one_input extends wheel
+	system wheel_one_input extends wheel
 features
 	input : requires bus access impl::common::pressure.i;
-annex EMV2 {**
+annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 	
@@ -32,11 +67,13 @@ annex EMV2 {**
 	component error behavior
 	transitions
 		t1 : Operational -[input{NoService}]-> Failed;
-	end component;
-**};
+	end component;**};
 end wheel_one_input;
 
-system implementation wheel_one_input.i
+system implementation wheel_one_input.i extends wheel.i
+	properties
+		SEI::Price => 350.00;
+		SEI::NetWeight => 2.0 kg;
 end wheel_one_input.i;
 
 
@@ -51,7 +88,7 @@ system wheel_two_inputs extends wheel_one_input
 features
 	green_input : requires bus access impl::common::pressure.i;
 	blue_input : requires bus access impl::common::pressure.i;
-annex EMV2 {**
+annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 	error propagations
@@ -66,11 +103,15 @@ annex EMV2 {**
 	transitions
 		t1 : Operational -[ green_input{NoService}]-> Failed;
 		t2 : Operational -[ blue_input{NoService}]-> Failed;
-	end component;
-**};
+	end component;**};
 end wheel_two_inputs;
 
-system implementation wheel_two_inputs.i
+system implementation wheel_two_inputs.i extends wheel.i
+	properties
+		SEI::Price => 500.0;
+		SEI::NetWeight => 2.5 kg;
 end wheel_two_inputs.i;
 
+
 end impl::wheel;
+

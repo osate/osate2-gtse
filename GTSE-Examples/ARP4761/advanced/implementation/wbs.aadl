@@ -40,7 +40,7 @@ subcomponents
 	selector   		: system impl::valves::selector;
 	bscu       		: system impl::bscu::bscu.generic;
 
-	wheel      		: system impl::wheel::wheel;
+	wheel      		: system impl::wheel::wheel.i;
 	
 	-- Annunciation device
 	annunciation 	: device impl::communication::annunciation.i;
