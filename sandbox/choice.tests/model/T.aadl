@@ -1,0 +1,63 @@
+package T
+public
+	system WBS
+	end WBS;
+	
+	system implementation WBS.i
+		subcomponents
+			w: system W;
+	end WBS.i;
+	
+	system W
+	end W;
+	
+	system implementation W.i
+		subcomponents
+			a: device A;
+	end W.i;
+	
+	system W1 extends W
+	end W1;
+	
+	system implementation W1.i extends W.i
+		subcomponents
+			b: device B;
+	end W1.i;
+
+	system W2 extends W
+	end W2;
+	
+	system implementation W2.i extends W.i
+		subcomponents
+			c: device C;
+	end W2.i;
+	
+	device A
+	end A;
+	
+	device implementation A.i1
+	end A.i1;
+	
+	device implementation A.i2
+	end A.i2;
+	
+	device B
+	end B;
+	
+	device implementation B.i1
+	end B.i1;
+
+	device implementation B.i2
+	end B.i2;
+
+	device C
+	end C;
+	
+	device implementation C.i1
+	end C.i1;
+
+	device implementation C.i2
+	end C.i2;
+
+end T;
+
