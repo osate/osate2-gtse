@@ -144,6 +144,31 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
         return createElementRefAdapter();
       }
       @Override
+      public Adapter caseConstraint(Constraint object)
+      {
+        return createConstraintAdapter();
+      }
+      @Override
+      public Adapter caseCondition(Condition object)
+      {
+        return createConditionAdapter();
+      }
+      @Override
+      public Adapter caseConditionExpression(ConditionExpression object)
+      {
+        return createConditionExpressionAdapter();
+      }
+      @Override
+      public Adapter caseConditionValue(ConditionValue object)
+      {
+        return createConditionValueAdapter();
+      }
+      @Override
+      public Adapter caseConfigElement(ConfigElement object)
+      {
+        return createConfigElementAdapter();
+      }
+      @Override
       public Adapter caseCandidateList(CandidateList object)
       {
         return createCandidateListAdapter();
@@ -341,6 +366,81 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createElementRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Constraint <em>Constraint</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.Constraint
+   * @generated
+   */
+  public Adapter createConstraintAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.Condition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.Condition
+   * @generated
+   */
+  public Adapter createConditionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.ConditionExpression <em>Condition Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.ConditionExpression
+   * @generated
+   */
+  public Adapter createConditionExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.ConditionValue <em>Condition Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.ConditionValue
+   * @generated
+   */
+  public Adapter createConditionValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.ConfigElement <em>Element</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.ConfigElement
+   * @generated
+   */
+  public Adapter createConfigElementAdapter()
   {
     return null;
   }

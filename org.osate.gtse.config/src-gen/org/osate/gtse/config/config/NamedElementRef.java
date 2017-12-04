@@ -35,13 +35,14 @@ import org.osate.aadl2.NamedElement;
  *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getCombined <em>Combined</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.NamedElementRef#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef()
  * @model
  * @generated
  */
-public interface NamedElementRef extends ConfigValue
+public interface NamedElementRef extends ConfigValue, ConditionValue
 {
   /**
    * Returns the value of the '<em><b>Ref</b></em>' reference.
@@ -116,5 +117,21 @@ public interface NamedElementRef extends ConfigValue
    * @generated
    */
   EList<Assignment> getAssignments();
+
+  /**
+   * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
+   * The list contents are of type {@link org.osate.gtse.config.config.Constraint}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Constraints</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Constraints</em>' containment reference list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef_Constraints()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Constraint> getConstraints();
 
 } // NamedElementRef

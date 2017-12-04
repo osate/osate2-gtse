@@ -38,6 +38,7 @@ import org.osate.aadl2.NamedElement;
  *   <li>{@link org.osate.gtse.config.config.Configuration#getExtended <em>Extended</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getCombined <em>Combined</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.Configuration#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.Configuration#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration()
@@ -119,5 +120,21 @@ public interface Configuration extends EObject, NamedElement
    * @generated
    */
   EList<Assignment> getAssignments();
+
+  /**
+   * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
+   * The list contents are of type {@link org.osate.gtse.config.config.Constraint}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Constraints</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Constraints</em>' containment reference list.
+   * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Constraints()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Constraint> getConstraints();
 
 } // Configuration

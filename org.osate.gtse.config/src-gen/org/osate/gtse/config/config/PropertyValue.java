@@ -36,7 +36,7 @@ import org.osate.aadl2.PropertyExpression;
  * @model
  * @generated
  */
-public interface PropertyValue extends ConfigValue
+public interface PropertyValue extends ConfigValue, ConditionValue
 {
   /**
    * Returns the value of the '<em><b>Exp</b></em>' containment reference.

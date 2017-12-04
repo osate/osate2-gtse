@@ -18,6 +18,10 @@
  */
 package org.osate.gtse.config.validation
 
+import org.eclipse.xtext.validation.Check
+import org.osate.gtse.config.config.Condition
+import org.osate.gtse.config.config.ConfigPackage
+import org.osate.gtse.config.config.Relation
 
 /**
  * This class contains custom validation rules. 
@@ -26,15 +30,20 @@ package org.osate.gtse.config.validation
  */
 class ConfigValidator extends AbstractConfigValidator {
 	
+	public static val INVALID_CONDITION_RELATION = 'invalidConditionRelation'
 //	public static val INVALID_NAME = 'invalidName'
 //
 //	@Check
 //	def checkGreetingStartsWithCapital(Greeting greeting) {
 //		if (!Character.isUpperCase(greeting.name.charAt(0))) {
 //			warning('Name should start with a capital', 
-//					ConfigPackage.Literals.GREETING__NAME,
 //					INVALID_NAME)
 //		}
 //	}
-	
+	@Check(FAST)
+	def checkConditionRelation(Condition cond) {
+		val rel = cond.relation
+		if (rel != Relation.EQ && rel != Relation.NEQ)
+			error('only == and != are allowed here', ConfigPackage.Literals.CONDITION__RELATION, INVALID_CONDITION_RELATION)
+	}
 }

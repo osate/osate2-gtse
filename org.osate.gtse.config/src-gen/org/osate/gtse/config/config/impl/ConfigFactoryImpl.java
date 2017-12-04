@@ -91,6 +91,11 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
       case ConfigPackage.ASSIGNMENT: return createAssignment();
       case ConfigPackage.ARGUMENT: return createArgument();
       case ConfigPackage.ELEMENT_REF: return createElementRef();
+      case ConfigPackage.CONSTRAINT: return createConstraint();
+      case ConfigPackage.CONDITION: return createCondition();
+      case ConfigPackage.CONDITION_EXPRESSION: return createConditionExpression();
+      case ConfigPackage.CONDITION_VALUE: return createConditionValue();
+      case ConfigPackage.CONFIG_ELEMENT: return createConfigElement();
       case ConfigPackage.CANDIDATE_LIST: return createCandidateList();
       case ConfigPackage.NAMED_ELEMENT_REF: return createNamedElementRef();
       case ConfigPackage.PROPERTY_VALUE: return createPropertyValue();
@@ -246,6 +251,61 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
   {
     ElementRefImpl elementRef = new ElementRefImpl();
     return elementRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Constraint createConstraint()
+  {
+    ConstraintImpl constraint = new ConstraintImpl();
+    return constraint;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Condition createCondition()
+  {
+    ConditionImpl condition = new ConditionImpl();
+    return condition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConditionExpression createConditionExpression()
+  {
+    ConditionExpressionImpl conditionExpression = new ConditionExpressionImpl();
+    return conditionExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConditionValue createConditionValue()
+  {
+    ConditionValueImpl conditionValue = new ConditionValueImpl();
+    return conditionValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConfigElement createConfigElement()
+  {
+    ConfigElementImpl configElement = new ConfigElementImpl();
+    return configElement;
   }
 
   /**

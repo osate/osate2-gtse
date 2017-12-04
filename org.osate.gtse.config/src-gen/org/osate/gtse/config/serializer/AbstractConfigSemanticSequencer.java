@@ -183,10 +183,13 @@ import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
 import org.osate.gtse.config.config.CandidateList;
 import org.osate.gtse.config.config.Combination;
+import org.osate.gtse.config.config.Condition;
+import org.osate.gtse.config.config.ConfigElement;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.ConfigPkg;
 import org.osate.gtse.config.config.Configuration;
+import org.osate.gtse.config.config.Constraint;
 import org.osate.gtse.config.config.ElementRef;
 import org.osate.gtse.config.config.Limit;
 import org.osate.gtse.config.config.NamedElementRef;
@@ -960,6 +963,12 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 			case ConfigPackage.COMBINATION:
 				sequence_Arguments_Combination(context, (Combination) semanticObject); 
 				return; 
+			case ConfigPackage.CONDITION:
+				sequence_Condition(context, (Condition) semanticObject); 
+				return; 
+			case ConfigPackage.CONFIG_ELEMENT:
+				sequence_ConfigElement(context, (ConfigElement) semanticObject); 
+				return; 
 			case ConfigPackage.CONFIG_PARAMETER:
 				sequence_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
 				return; 
@@ -969,6 +978,9 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 			case ConfigPackage.CONFIGURATION:
 				sequence_Assignments_Configuration_Parameters_With(context, (Configuration) semanticObject); 
 				return; 
+			case ConfigPackage.CONSTRAINT:
+				sequence_Constraint(context, (Constraint) semanticObject); 
+				return; 
 			case ConfigPackage.ELEMENT_REF:
 				sequence_ElementRef(context, (ElementRef) semanticObject); 
 				return; 
@@ -976,17 +988,33 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 				sequence_Limit(context, (Limit) semanticObject); 
 				return; 
 			case ConfigPackage.NAMED_ELEMENT_REF:
-				sequence_Arguments_Assignments_ConfigExpression_With(context, (NamedElementRef) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getConfigValueRule()) {
+					sequence_Arguments_Assignments_ConfigValue_With(context, (NamedElementRef) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getConditionExpressionRule()
+						|| rule == grammarAccess.getConditionValueRule()) {
+					sequence_ConditionValue(context, (NamedElementRef) semanticObject); 
+					return; 
+				}
+				else break;
 			case ConfigPackage.NESTED_ASSIGNMENTS:
-				sequence_Assignments_ConfigExpression(context, (NestedAssignments) semanticObject); 
+				sequence_Assignments_ConfigValue(context, (NestedAssignments) semanticObject); 
 				return; 
 			case ConfigPackage.OUTPUT_VARIABLE:
 				sequence_OutputVariable(context, (OutputVariable) semanticObject); 
 				return; 
 			case ConfigPackage.PROPERTY_VALUE:
-				sequence_ConfigExpression(context, (PropertyValue) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getConditionExpressionRule()
+						|| rule == grammarAccess.getConditionValueRule()) {
+					sequence_ConditionValue(context, (PropertyValue) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getConfigValueRule()) {
+					sequence_ConfigValue(context, (PropertyValue) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -1015,7 +1043,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     Argument returns Argument
 	 *
 	 * Constraint:
-	 *     (parameter=[ConfigParameter|ID] value=ConfigExpression)
+	 *     (parameter=[ConfigParameter|ID] value=ConfigValue)
 	 */
 	protected void sequence_Argument(ISerializationContext context, Argument semanticObject) {
 		if (errorAcceptor != null) {
@@ -1026,24 +1054,25 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getArgumentAccess().getParameterConfigParameterIDTerminalRuleCall_0_0_1(), semanticObject.eGet(ConfigPackage.Literals.ARGUMENT__PARAMETER, false));
-		feeder.accept(grammarAccess.getArgumentAccess().getValueConfigExpressionParserRuleCall_2_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getArgumentAccess().getValueConfigValueParserRuleCall_2_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     ConfigExpression returns NamedElementRef
+	 *     ConfigValue returns NamedElementRef
 	 *
 	 * Constraint:
 	 *     (
 	 *         ref=[NamedElement|CNAME] 
 	 *         (arguments+=Argument arguments+=Argument*)? 
 	 *         (combined+=Combination combined+=Combination*)? 
-	 *         (assignments+=Assignment assignments+=Assignment*)?
+	 *         (assignments+=Assignment assignments+=Assignment*)? 
+	 *         (constraints+=Constraint constraints+=Constraint*)?
 	 *     )
 	 */
-	protected void sequence_Arguments_Assignments_ConfigExpression_With(ISerializationContext context, NamedElementRef semanticObject) {
+	protected void sequence_Arguments_Assignments_ConfigValue_With(ISerializationContext context, NamedElementRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1065,7 +1094,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
-	 *     ((((wildcard?='*' | ref=ElementRef) property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigExpression)
+	 *     ((((wildcard?='*' | ref=ElementRef) property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigValue)
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1074,12 +1103,12 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	/**
 	 * Contexts:
-	 *     ConfigExpression returns NestedAssignments
+	 *     ConfigValue returns NestedAssignments
 	 *
 	 * Constraint:
-	 *     (assignments+=Assignment assignments+=Assignment*)?
+	 *     ((assignments+=Assignment assignments+=Assignment*)? (constraints+=Constraint constraints+=Constraint*)?)
 	 */
-	protected void sequence_Assignments_ConfigExpression(ISerializationContext context, NestedAssignments semanticObject) {
+	protected void sequence_Assignments_ConfigValue(ISerializationContext context, NestedAssignments semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1094,7 +1123,8 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *         name=ID 
 	 *         (parameters+=ConfigParameter parameters+=ConfigParameter*)? 
 	 *         (extended=[ComponentClassifier|CNAME] (combined+=Combination combined+=Combination*)?)? 
-	 *         (assignments+=Assignment assignments+=Assignment*)?
+	 *         (assignments+=Assignment assignments+=Assignment*)? 
+	 *         (constraints+=Constraint constraints+=Constraint*)?
 	 *     )
 	 */
 	protected void sequence_Assignments_Configuration_Parameters_With(ISerializationContext context, Configuration semanticObject) {
@@ -1107,7 +1137,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     Candidates returns CandidateList
 	 *
 	 * Constraint:
-	 *     (candidates+=ConfigExpression candidates+=ConfigExpression*)?
+	 *     (candidates+=ConfigValue candidates+=ConfigValue*)?
 	 */
 	protected void sequence_Candidates(ISerializationContext context, CandidateList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1116,19 +1146,76 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	/**
 	 * Contexts:
-	 *     ConfigExpression returns PropertyValue
+	 *     ConditionExpression returns NamedElementRef
+	 *     ConditionValue returns NamedElementRef
+	 *
+	 * Constraint:
+	 *     ref=[NamedElement|CNAME]
+	 */
+	protected void sequence_ConditionValue(ISerializationContext context, NamedElementRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConditionValueAccess().getRefNamedElementCNAMEParserRuleCall_0_1_0_1(), semanticObject.eGet(ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConditionExpression returns PropertyValue
+	 *     ConditionValue returns PropertyValue
 	 *
 	 * Constraint:
 	 *     exp=CPropertyExpression
 	 */
-	protected void sequence_ConfigExpression(ISerializationContext context, PropertyValue semanticObject) {
+	protected void sequence_ConditionValue(ISerializationContext context, PropertyValue semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConfigExpressionAccess().getExpCPropertyExpressionParserRuleCall_1_1_0(), semanticObject.getExp());
+		feeder.accept(grammarAccess.getConditionValueAccess().getExpCPropertyExpressionParserRuleCall_1_1_0(), semanticObject.getExp());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Condition returns Condition
+	 *
+	 * Constraint:
+	 *     (lhs=ConditionExpression relation=Relation rhs=ConditionExpression)
+	 */
+	protected void sequence_Condition(ISerializationContext context, Condition semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.CONDITION__LHS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.CONDITION__LHS));
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.CONDITION__RELATION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.CONDITION__RELATION));
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.CONDITION__RHS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.CONDITION__RHS));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConditionAccess().getLhsConditionExpressionParserRuleCall_0_0(), semanticObject.getLhs());
+		feeder.accept(grammarAccess.getConditionAccess().getRelationRelationEnumRuleCall_1_0(), semanticObject.getRelation());
+		feeder.accept(grammarAccess.getConditionAccess().getRhsConditionExpressionParserRuleCall_2_0(), semanticObject.getRhs());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConditionExpression returns ConfigElement
+	 *     ConfigElement returns ConfigElement
+	 *
+	 * Constraint:
+	 *     ((element=ElementRef property=[Property|PNAME]?) | property=[Property|PNAME])
+	 */
+	protected void sequence_ConfigElement(ISerializationContext context, ConfigElement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -1141,6 +1228,36 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     (name=ID ((category=ComponentCategory classifier=[ComponentClassifier|CNAME]) | propertyType=[Property|PNAME]) choices=Candidates?)
 	 */
 	protected void sequence_ConfigParameter_FClassifierType_FPropertyType(ISerializationContext context, ConfigParameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConfigValue returns PropertyValue
+	 *
+	 * Constraint:
+	 *     exp=CPropertyExpression
+	 */
+	protected void sequence_ConfigValue(ISerializationContext context, PropertyValue semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.PROPERTY_VALUE__EXP));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConfigValueAccess().getExpCPropertyExpressionParserRuleCall_1_1_0(), semanticObject.getExp());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Constraint returns Constraint
+	 *
+	 * Constraint:
+	 *     (condition=Condition (relation=Relation consequence=Condition)?)
+	 */
+	protected void sequence_Constraint(ISerializationContext context, Constraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

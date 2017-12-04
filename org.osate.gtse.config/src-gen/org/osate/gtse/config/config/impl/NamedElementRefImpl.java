@@ -40,6 +40,7 @@ import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
 import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
+import org.osate.gtse.config.config.Constraint;
 import org.osate.gtse.config.config.NamedElementRef;
 
 /**
@@ -54,6 +55,7 @@ import org.osate.gtse.config.config.NamedElementRef;
  *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getCombined <em>Combined</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.NamedElementRefImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -99,6 +101,16 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * @ordered
    */
   protected EList<Assignment> assignments;
+
+  /**
+   * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConstraints()
+   * @generated
+   * @ordered
+   */
+  protected EList<Constraint> constraints;
 
   /**
    * <!-- begin-user-doc -->
@@ -211,6 +223,20 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Constraint> getConstraints()
+  {
+    if (constraints == null)
+    {
+      constraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, ConfigPackage.NAMED_ELEMENT_REF__CONSTRAINTS);
+    }
+    return constraints;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -222,6 +248,8 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         return ((InternalEList<?>)getCombined()).basicRemove(otherEnd, msgs);
       case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
         return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
+      case ConfigPackage.NAMED_ELEMENT_REF__CONSTRAINTS:
+        return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -245,6 +273,8 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         return getCombined();
       case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
         return getAssignments();
+      case ConfigPackage.NAMED_ELEMENT_REF__CONSTRAINTS:
+        return getConstraints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -275,6 +305,10 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         getAssignments().clear();
         getAssignments().addAll((Collection<? extends Assignment>)newValue);
         return;
+      case ConfigPackage.NAMED_ELEMENT_REF__CONSTRAINTS:
+        getConstraints().clear();
+        getConstraints().addAll((Collection<? extends Constraint>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -301,6 +335,9 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
       case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
         getAssignments().clear();
         return;
+      case ConfigPackage.NAMED_ELEMENT_REF__CONSTRAINTS:
+        getConstraints().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -323,6 +360,8 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
         return combined != null && !combined.isEmpty();
       case ConfigPackage.NAMED_ELEMENT_REF__ASSIGNMENTS:
         return assignments != null && !assignments.isEmpty();
+      case ConfigPackage.NAMED_ELEMENT_REF__CONSTRAINTS:
+        return constraints != null && !constraints.isEmpty();
     }
     return super.eIsSet(featureID);
   }

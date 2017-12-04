@@ -169,6 +169,43 @@ public class ConfigSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case ConfigPackage.CONSTRAINT:
+      {
+        Constraint constraint = (Constraint)theEObject;
+        T result = caseConstraint(constraint);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.CONDITION:
+      {
+        Condition condition = (Condition)theEObject;
+        T result = caseCondition(condition);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.CONDITION_EXPRESSION:
+      {
+        ConditionExpression conditionExpression = (ConditionExpression)theEObject;
+        T result = caseConditionExpression(conditionExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.CONDITION_VALUE:
+      {
+        ConditionValue conditionValue = (ConditionValue)theEObject;
+        T result = caseConditionValue(conditionValue);
+        if (result == null) result = caseConditionExpression(conditionValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case ConfigPackage.CONFIG_ELEMENT:
+      {
+        ConfigElement configElement = (ConfigElement)theEObject;
+        T result = caseConfigElement(configElement);
+        if (result == null) result = caseConditionExpression(configElement);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case ConfigPackage.CANDIDATE_LIST:
       {
         CandidateList candidateList = (CandidateList)theEObject;
@@ -182,6 +219,8 @@ public class ConfigSwitch<T> extends Switch<T>
         NamedElementRef namedElementRef = (NamedElementRef)theEObject;
         T result = caseNamedElementRef(namedElementRef);
         if (result == null) result = caseConfigValue(namedElementRef);
+        if (result == null) result = caseConditionValue(namedElementRef);
+        if (result == null) result = caseConditionExpression(namedElementRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -190,6 +229,8 @@ public class ConfigSwitch<T> extends Switch<T>
         PropertyValue propertyValue = (PropertyValue)theEObject;
         T result = casePropertyValue(propertyValue);
         if (result == null) result = caseConfigValue(propertyValue);
+        if (result == null) result = caseConditionValue(propertyValue);
+        if (result == null) result = caseConditionExpression(propertyValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -361,6 +402,86 @@ public class ConfigSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseElementRef(ElementRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Constraint</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConstraint(Constraint object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Condition</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCondition(Condition object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Condition Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Condition Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConditionExpression(ConditionExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Condition Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Condition Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConditionValue(ConditionValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Element</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConfigElement(ConfigElement object)
   {
     return null;
   }

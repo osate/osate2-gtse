@@ -33,12 +33,17 @@ import org.osate.gtse.config.config.Argument;
 import org.osate.gtse.config.config.Assignment;
 import org.osate.gtse.config.config.CandidateList;
 import org.osate.gtse.config.config.Combination;
+import org.osate.gtse.config.config.Condition;
+import org.osate.gtse.config.config.ConditionExpression;
+import org.osate.gtse.config.config.ConditionValue;
+import org.osate.gtse.config.config.ConfigElement;
 import org.osate.gtse.config.config.ConfigFactory;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.ConfigPkg;
 import org.osate.gtse.config.config.ConfigValue;
 import org.osate.gtse.config.config.Configuration;
+import org.osate.gtse.config.config.Constraint;
 import org.osate.gtse.config.config.ElementRef;
 import org.osate.gtse.config.config.Limit;
 import org.osate.gtse.config.config.NamedElementRef;
@@ -125,6 +130,41 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * @generated
    */
   private EClass elementRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass constraintEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass configElementEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -400,6 +440,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getConfiguration_Constraints()
+  {
+    return (EReference)configurationEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getCombination()
   {
     return combinationEClass;
@@ -610,6 +660,136 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getConstraint()
+  {
+    return constraintEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstraint_Condition()
+  {
+    return (EReference)constraintEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConstraint_Relation()
+  {
+    return (EAttribute)constraintEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstraint_Consequence()
+  {
+    return (EReference)constraintEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCondition()
+  {
+    return conditionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCondition_Lhs()
+  {
+    return (EReference)conditionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCondition_Relation()
+  {
+    return (EAttribute)conditionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCondition_Rhs()
+  {
+    return (EReference)conditionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConditionExpression()
+  {
+    return conditionExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConditionValue()
+  {
+    return conditionValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConfigElement()
+  {
+    return configElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConfigElement_Element()
+  {
+    return (EReference)configElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConfigElement_Property()
+  {
+    return (EReference)configElementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getCandidateList()
   {
     return candidateListEClass;
@@ -680,6 +860,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getNamedElementRef_Constraints()
+  {
+    return (EReference)namedElementRefEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPropertyValue()
   {
     return propertyValueEClass;
@@ -713,6 +903,16 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   public EReference getNestedAssignments_Assignments()
   {
     return (EReference)nestedAssignmentsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getNestedAssignments_Constraints()
+  {
+    return (EReference)nestedAssignmentsEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -784,6 +984,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     createEReference(configurationEClass, CONFIGURATION__EXTENDED);
     createEReference(configurationEClass, CONFIGURATION__COMBINED);
     createEReference(configurationEClass, CONFIGURATION__ASSIGNMENTS);
+    createEReference(configurationEClass, CONFIGURATION__CONSTRAINTS);
 
     combinationEClass = createEClass(COMBINATION);
     createEAttribute(combinationEClass, COMBINATION__UNSAFE);
@@ -812,6 +1013,24 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     createEReference(elementRefEClass, ELEMENT_REF__ELEMENT);
     createEReference(elementRefEClass, ELEMENT_REF__PREV);
 
+    constraintEClass = createEClass(CONSTRAINT);
+    createEReference(constraintEClass, CONSTRAINT__CONDITION);
+    createEAttribute(constraintEClass, CONSTRAINT__RELATION);
+    createEReference(constraintEClass, CONSTRAINT__CONSEQUENCE);
+
+    conditionEClass = createEClass(CONDITION);
+    createEReference(conditionEClass, CONDITION__LHS);
+    createEAttribute(conditionEClass, CONDITION__RELATION);
+    createEReference(conditionEClass, CONDITION__RHS);
+
+    conditionExpressionEClass = createEClass(CONDITION_EXPRESSION);
+
+    conditionValueEClass = createEClass(CONDITION_VALUE);
+
+    configElementEClass = createEClass(CONFIG_ELEMENT);
+    createEReference(configElementEClass, CONFIG_ELEMENT__ELEMENT);
+    createEReference(configElementEClass, CONFIG_ELEMENT__PROPERTY);
+
     candidateListEClass = createEClass(CANDIDATE_LIST);
     createEReference(candidateListEClass, CANDIDATE_LIST__CANDIDATES);
 
@@ -820,12 +1039,14 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ARGUMENTS);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__COMBINED);
     createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__ASSIGNMENTS);
+    createEReference(namedElementRefEClass, NAMED_ELEMENT_REF__CONSTRAINTS);
 
     propertyValueEClass = createEClass(PROPERTY_VALUE);
     createEReference(propertyValueEClass, PROPERTY_VALUE__EXP);
 
     nestedAssignmentsEClass = createEClass(NESTED_ASSIGNMENTS);
     createEReference(nestedAssignmentsEClass, NESTED_ASSIGNMENTS__ASSIGNMENTS);
+    createEReference(nestedAssignmentsEClass, NESTED_ASSIGNMENTS__CONSTRAINTS);
 
     // Create enums
     typeEEnum = createEEnum(TYPE);
@@ -869,9 +1090,13 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     outputVariableEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configurationEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configParameterEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
+    conditionValueEClass.getESuperTypes().add(this.getConditionExpression());
+    configElementEClass.getESuperTypes().add(this.getConditionExpression());
     candidateListEClass.getESuperTypes().add(this.getConfigValue());
     namedElementRefEClass.getESuperTypes().add(this.getConfigValue());
+    namedElementRefEClass.getESuperTypes().add(this.getConditionValue());
     propertyValueEClass.getESuperTypes().add(this.getConfigValue());
+    propertyValueEClass.getESuperTypes().add(this.getConditionValue());
     nestedAssignmentsEClass.getESuperTypes().add(this.getConfigValue());
 
     // Initialize classes and features; add operations and parameters
@@ -894,6 +1119,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEReference(getConfiguration_Extended(), theAadl2Package.getComponentClassifier(), null, "extended", null, 0, 1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConfiguration_Combined(), this.getCombination(), null, "combined", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConfiguration_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConfiguration_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, Configuration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(combinationEClass, Combination.class, "Combination", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCombination_Unsafe(), theEcorePackage.getEBoolean(), "unsafe", null, 0, 1, Combination.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -922,6 +1148,24 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEReference(getElementRef_Element(), theAadl2Package.getNamedElement(), null, "element", null, 0, 1, ElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getElementRef_Prev(), this.getElementRef(), null, "prev", null, 0, 1, ElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(constraintEClass, Constraint.class, "Constraint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConstraint_Condition(), this.getCondition(), null, "condition", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstraint_Relation(), this.getRelation(), "relation", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstraint_Consequence(), this.getCondition(), null, "consequence", null, 0, 1, Constraint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCondition_Lhs(), this.getConditionExpression(), null, "lhs", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCondition_Relation(), this.getRelation(), "relation", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCondition_Rhs(), this.getConditionExpression(), null, "rhs", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conditionExpressionEClass, ConditionExpression.class, "ConditionExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(conditionValueEClass, ConditionValue.class, "ConditionValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(configElementEClass, ConfigElement.class, "ConfigElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConfigElement_Element(), this.getElementRef(), null, "element", null, 0, 1, ConfigElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConfigElement_Property(), theAadl2Package.getProperty(), null, "property", null, 0, 1, ConfigElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(candidateListEClass, CandidateList.class, "CandidateList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCandidateList_Candidates(), this.getConfigValue(), null, "candidates", null, 0, -1, CandidateList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -930,12 +1174,14 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     initEReference(getNamedElementRef_Arguments(), this.getArgument(), null, "arguments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedElementRef_Combined(), this.getCombination(), null, "combined", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedElementRef_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNamedElementRef_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, NamedElementRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPropertyValue_Exp(), theAadl2Package.getPropertyExpression(), null, "exp", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(nestedAssignmentsEClass, NestedAssignments.class, "NestedAssignments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getNestedAssignments_Assignments(), this.getAssignment(), null, "assignments", null, 0, -1, NestedAssignments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNestedAssignments_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1, NestedAssignments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(typeEEnum, Type.class, "Type");
@@ -950,6 +1196,8 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     addEEnumLiteral(relationEEnum, Relation.NEQ);
     addEEnumLiteral(relationEEnum, Relation.LT);
     addEEnumLiteral(relationEEnum, Relation.LTE);
+    addEEnumLiteral(relationEEnum, Relation.FB);
+    addEEnumLiteral(relationEEnum, Relation.RQ);
 
     // Create resource
     createResource(eNS_URI);

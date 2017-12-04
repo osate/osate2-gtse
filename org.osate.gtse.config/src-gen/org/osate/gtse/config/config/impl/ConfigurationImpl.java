@@ -43,6 +43,7 @@ import org.osate.gtse.config.config.Combination;
 import org.osate.gtse.config.config.ConfigPackage;
 import org.osate.gtse.config.config.ConfigParameter;
 import org.osate.gtse.config.config.Configuration;
+import org.osate.gtse.config.config.Constraint;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,6 +57,7 @@ import org.osate.gtse.config.config.Configuration;
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getExtended <em>Extended</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getCombined <em>Combined</em>}</li>
  *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.ConfigurationImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -101,6 +103,16 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * @ordered
    */
   protected EList<Assignment> assignments;
+
+  /**
+   * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConstraints()
+   * @generated
+   * @ordered
+   */
+  protected EList<Constraint> constraints;
 
   /**
    * <!-- begin-user-doc -->
@@ -213,6 +225,20 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Constraint> getConstraints()
+  {
+    if (constraints == null)
+    {
+      constraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, ConfigPackage.CONFIGURATION__CONSTRAINTS);
+    }
+    return constraints;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -224,6 +250,8 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         return ((InternalEList<?>)getCombined()).basicRemove(otherEnd, msgs);
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
+      case ConfigPackage.CONFIGURATION__CONSTRAINTS:
+        return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -247,6 +275,8 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         return getCombined();
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         return getAssignments();
+      case ConfigPackage.CONFIGURATION__CONSTRAINTS:
+        return getConstraints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -277,6 +307,10 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         getAssignments().clear();
         getAssignments().addAll((Collection<? extends Assignment>)newValue);
         return;
+      case ConfigPackage.CONFIGURATION__CONSTRAINTS:
+        getConstraints().clear();
+        getConstraints().addAll((Collection<? extends Constraint>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -303,6 +337,9 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         getAssignments().clear();
         return;
+      case ConfigPackage.CONFIGURATION__CONSTRAINTS:
+        getConstraints().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -325,6 +362,8 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
         return combined != null && !combined.isEmpty();
       case ConfigPackage.CONFIGURATION__ASSIGNMENTS:
         return assignments != null && !assignments.isEmpty();
+      case ConfigPackage.CONFIGURATION__CONSTRAINTS:
+        return constraints != null && !constraints.isEmpty();
     }
     return super.eIsSet(featureID);
   }

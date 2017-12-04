@@ -18,6 +18,8 @@
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/NEQ"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/LT"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/LTE"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/FB"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/RQ"/>
     </genEnums>
     <genClasses ecoreClass="Config.ecore#//ConfigPkg">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/root"/>
@@ -38,6 +40,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/extended"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/combined"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/assignments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Configuration/constraints"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//Combination">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//Combination/unsafe"/>
@@ -65,6 +68,22 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ElementRef/element"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ElementRef/prev"/>
     </genClasses>
+    <genClasses ecoreClass="Config.ecore#//Constraint">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Constraint/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//Constraint/relation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Constraint/consequence"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//Condition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Condition/lhs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Config.ecore#//Condition/relation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Condition/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="Config.ecore#//ConditionExpression"/>
+    <genClasses ecoreClass="Config.ecore#//ConditionValue"/>
+    <genClasses ecoreClass="Config.ecore#//ConfigElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigElement/element"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigElement/property"/>
+    </genClasses>
     <genClasses ecoreClass="Config.ecore#//CandidateList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//CandidateList/candidates"/>
     </genClasses>
@@ -73,12 +92,14 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/arguments"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/combined"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/assignments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NamedElementRef/constraints"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//PropertyValue">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//PropertyValue/exp"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//NestedAssignments">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NestedAssignments/assignments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//NestedAssignments/constraints"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

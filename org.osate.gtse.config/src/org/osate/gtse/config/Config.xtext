@@ -40,7 +40,7 @@ enum Type:
 ;
 
 enum Relation:
-	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<='
+	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires'
 ;
 
 Literal returns aadl2::PropertyExpression:
@@ -83,11 +83,16 @@ fragment FPropertyType*:
 ;
 
 Candidates returns ConfigValue:
-	{CandidateList} 'from' '(' (candidates+=ConfigExpression (',' candidates+=ConfigExpression)*)? ')'
+	{CandidateList} 'from' '(' (candidates+=ConfigValue (',' candidates+=ConfigValue)*)? ')'
 ;
 
 fragment Assignments*:
 	'{'	(assignments+=Assignment (',' assignments+=Assignment)*)? '}'
+	(
+		'constraints' '{'
+			(constraints+=Constraint (',' constraints+=Constraint)*)?
+		'}'
+	)?
 ;
 
 Assignment:
@@ -98,7 +103,7 @@ Assignment:
 		| '#' property=[aadl2::Property|PNAME]
 	)
 	'=>' 
-	value=ConfigExpression
+	value=ConfigValue
 ;
 
 //fragment LVal*:
@@ -106,7 +111,7 @@ Assignment:
 //	| '#' property=[aadl2::Property|PNAME]
 //;
 
-ConfigExpression returns ConfigValue:
+ConfigValue:
 	// classifier, parameter, configuration
 	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments?
 	| {PropertyValue} exp=CPropertyExpression
@@ -118,7 +123,7 @@ fragment Arguments*:
 ;
 
 Argument:
-	parameter=[ConfigParameter|ID] '=>' value=ConfigExpression
+	parameter=[ConfigParameter|ID] '=>' value=ConfigValue
 ;
 
 ElementRef:
@@ -136,6 +141,28 @@ CPropertyExpression returns aadl2::PropertyExpression:
 	| ComponentClassifierTerm
 	| ListTerm 
 //	| ComputedTerm
+;
+
+Constraint:
+	condition=Condition (relation=Relation consequence=Condition)?
+;
+
+Condition:
+	lhs=ConditionExpression relation=Relation rhs=ConditionExpression
+;
+
+ConditionExpression:
+	=>ConfigElement | ConditionValue
+;
+
+ConditionValue:
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] // classifier, configuration
+	| {PropertyValue} exp=CPropertyExpression // property value
+;
+
+ConfigElement:
+	element=ElementRef ('#' property=[aadl2::Property|PNAME])? 
+	| '#' property=[aadl2::Property|PNAME]
 ;
 
 NamedElement returns aadl2::NamedElement:

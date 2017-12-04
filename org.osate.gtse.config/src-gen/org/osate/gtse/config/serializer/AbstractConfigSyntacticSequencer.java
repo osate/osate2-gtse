@@ -37,11 +37,13 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 
 	protected ConfigGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q;
+	protected AbstractElementAlias match_Assignments___ConstraintsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (ConfigGrammarAccess) access;
 		match_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAadlPackageAccess().getPropertiesKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAadlPackageAccess().getNoneKeyword_3_1_1_0()), new TokenAlias(false, false, grammarAccess.getAadlPackageAccess().getSemicolonKeyword_3_1_1_1()));
+		match_Assignments___ConstraintsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAssignmentsAccess().getConstraintsKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getAssignmentsAccess().getLeftCurlyBracketKeyword_3_1()), new TokenAlias(false, false, grammarAccess.getAssignmentsAccess().getRightCurlyBracketKeyword_3_3()));
 	}
 	
 	@Override
@@ -601,6 +603,8 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if (match_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q.equals(syntax))
 				emit_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Assignments___ConstraintsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__q.equals(syntax))
+				emit_Assignments___ConstraintsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -614,6 +618,18 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	 *     ownedPublicSection=PublicPackageSection (ambiguity) 'end' PNAME ';' (rule end)
 	 */
 	protected void emit_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('constraints' '{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) '{' '}' (ambiguity) (rule start)
+	 *     assignments+=Assignment '}' (ambiguity) (rule end)
+	 */
+	protected void emit_Assignments___ConstraintsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

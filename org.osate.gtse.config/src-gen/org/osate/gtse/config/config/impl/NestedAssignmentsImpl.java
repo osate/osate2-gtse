@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.osate.gtse.config.config.Assignment;
 import org.osate.gtse.config.config.ConfigPackage;
+import org.osate.gtse.config.config.Constraint;
 import org.osate.gtse.config.config.NestedAssignments;
 
 /**
@@ -43,6 +44,7 @@ import org.osate.gtse.config.config.NestedAssignments;
  * </p>
  * <ul>
  *   <li>{@link org.osate.gtse.config.config.impl.NestedAssignmentsImpl#getAssignments <em>Assignments</em>}</li>
+ *   <li>{@link org.osate.gtse.config.config.impl.NestedAssignmentsImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
  * @generated
@@ -58,6 +60,16 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
    * @ordered
    */
   protected EList<Assignment> assignments;
+
+  /**
+   * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConstraints()
+   * @generated
+   * @ordered
+   */
+  protected EList<Constraint> constraints;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,6 +111,20 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Constraint> getConstraints()
+  {
+    if (constraints == null)
+    {
+      constraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, ConfigPackage.NESTED_ASSIGNMENTS__CONSTRAINTS);
+    }
+    return constraints;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -106,6 +132,8 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
     {
       case ConfigPackage.NESTED_ASSIGNMENTS__ASSIGNMENTS:
         return ((InternalEList<?>)getAssignments()).basicRemove(otherEnd, msgs);
+      case ConfigPackage.NESTED_ASSIGNMENTS__CONSTRAINTS:
+        return ((InternalEList<?>)getConstraints()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -122,6 +150,8 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
     {
       case ConfigPackage.NESTED_ASSIGNMENTS__ASSIGNMENTS:
         return getAssignments();
+      case ConfigPackage.NESTED_ASSIGNMENTS__CONSTRAINTS:
+        return getConstraints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -141,6 +171,10 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
         getAssignments().clear();
         getAssignments().addAll((Collection<? extends Assignment>)newValue);
         return;
+      case ConfigPackage.NESTED_ASSIGNMENTS__CONSTRAINTS:
+        getConstraints().clear();
+        getConstraints().addAll((Collection<? extends Constraint>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -158,6 +192,9 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
       case ConfigPackage.NESTED_ASSIGNMENTS__ASSIGNMENTS:
         getAssignments().clear();
         return;
+      case ConfigPackage.NESTED_ASSIGNMENTS__CONSTRAINTS:
+        getConstraints().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -174,6 +211,8 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
     {
       case ConfigPackage.NESTED_ASSIGNMENTS__ASSIGNMENTS:
         return assignments != null && !assignments.isEmpty();
+      case ConfigPackage.NESTED_ASSIGNMENTS__CONSTRAINTS:
+        return constraints != null && !constraints.isEmpty();
     }
     return super.eIsSet(featureID);
   }

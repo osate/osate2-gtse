@@ -97,7 +97,7 @@ Workflow {
 			}
 			validator = {
 				inheritImplementation = false
-				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 			}
 		}
 	}

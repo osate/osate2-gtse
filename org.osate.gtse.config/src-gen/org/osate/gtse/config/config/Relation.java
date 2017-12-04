@@ -93,7 +93,27 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  LTE(5, "LTE", "<=");
+  LTE(5, "LTE", "<="),
+
+  /**
+   * The '<em><b>FB</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #FB_VALUE
+   * @generated
+   * @ordered
+   */
+  FB(6, "FB", "forbids"),
+
+  /**
+   * The '<em><b>RQ</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #RQ_VALUE
+   * @generated
+   * @ordered
+   */
+  RQ(7, "RQ", "requires");
 
   /**
    * The '<em><b>GT</b></em>' literal value.
@@ -186,6 +206,36 @@ public enum Relation implements Enumerator
   public static final int LTE_VALUE = 5;
 
   /**
+   * The '<em><b>FB</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>FB</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #FB
+   * @model literal="forbids"
+   * @generated
+   * @ordered
+   */
+  public static final int FB_VALUE = 6;
+
+  /**
+   * The '<em><b>RQ</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>RQ</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #RQ
+   * @model literal="requires"
+   * @generated
+   * @ordered
+   */
+  public static final int RQ_VALUE = 7;
+
+  /**
    * An array of all the '<em><b>Relation</b></em>' enumerators.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -200,6 +250,8 @@ public enum Relation implements Enumerator
       NEQ,
       LT,
       LTE,
+      FB,
+      RQ,
     };
 
   /**
@@ -270,6 +322,8 @@ public enum Relation implements Enumerator
       case NEQ_VALUE: return NEQ;
       case LT_VALUE: return LT;
       case LTE_VALUE: return LTE;
+      case FB_VALUE: return FB;
+      case RQ_VALUE: return RQ;
     }
     return null;
   }

@@ -129,6 +129,51 @@ public interface ConfigFactory extends EFactory
   ElementRef createElementRef();
 
   /**
+   * Returns a new object of class '<em>Constraint</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Constraint</em>'.
+   * @generated
+   */
+  Constraint createConstraint();
+
+  /**
+   * Returns a new object of class '<em>Condition</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Condition</em>'.
+   * @generated
+   */
+  Condition createCondition();
+
+  /**
+   * Returns a new object of class '<em>Condition Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Condition Expression</em>'.
+   * @generated
+   */
+  ConditionExpression createConditionExpression();
+
+  /**
+   * Returns a new object of class '<em>Condition Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Condition Value</em>'.
+   * @generated
+   */
+  ConditionValue createConditionValue();
+
+  /**
+   * Returns a new object of class '<em>Element</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Element</em>'.
+   * @generated
+   */
+  ConfigElement createConfigElement();
+
+  /**
    * Returns a new object of class '<em>Candidate List</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
