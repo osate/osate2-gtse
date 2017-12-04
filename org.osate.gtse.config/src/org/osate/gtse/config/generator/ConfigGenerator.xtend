@@ -25,7 +25,6 @@ import java.util.HashSet
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
@@ -50,11 +49,13 @@ import org.osate.gtse.config.config.Argument
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.CandidateList
 import org.osate.gtse.config.config.Combination
+import org.osate.gtse.config.config.ConfigElement
 import org.osate.gtse.config.config.ConfigFactory
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.ConfigValue
 import org.osate.gtse.config.config.Configuration
+import org.osate.gtse.config.config.Constraint
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.NestedAssignments
@@ -80,54 +81,6 @@ class ConfigGenerator extends AbstractGenerator {
 	@Inject
 	ISerializer serializer
 
-	static class Mapping {
-		
-		@Accessors
-		Iterable<NamedElement> path = #[]
-
-		@Accessors
-		Property property
-
-		@Accessors
-		ConfigValue value
-
-		new(List<NamedElement> p, ConfigValue v) {
-			path = p
-			value = v
-		}
-
-		new(List<NamedElement> p, Property prop, ConfigValue v) {
-			path = p
-			property = prop
-			value = v
-		}
-
-		def isSubcomponentMapping() {
-			property === null
-		}
-
-		def isPropertyMapping() {
-			property !== null
-		}
-
-		def prepend(NamedElement element) {
-			path = #[element] + path
-			this
-		}
-
-		def pathName() {
-			path.tail.map[name].join('.')
-		}
-		
-		def propertyName() {
-			if (isPropertyMapping) property.name else ''
-		}
-		
-		def valueString() {
-			value.print
-		}
-	}
-
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
 		val text = mkString(package, makeMappings(package, package.root))
@@ -138,10 +91,10 @@ class ConfigGenerator extends AbstractGenerator {
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig.combined, newHashMap)
-		val replacements = if(rootComp === null) #[] else process(rootComp, lookup, arguments)
-		replacements
+		val mappings = if(rootComp === null) #[] else process(rootComp, lookup, arguments)
+		mappings
 	}
-	
+
 	static private def Iterable<Pair<ElementRef, Assignment>> makeLookup(Configuration cfg) {
 		val ner = ConfigFactory.eINSTANCE.createNamedElementRef
 		ner.ref = cfg
@@ -160,7 +113,7 @@ class ConfigGenerator extends AbstractGenerator {
 		}
 	}
 
-	def Iterable<Mapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
+	def Iterable<AbstractMapping> process(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup,
 		Map<ConfigParameter, ConfigValue> arguments) {
 		val downAssignment = lookup.findFirst[key === null && !value.isProperty]?.value
 		val localResult = makePropertyMappings(ne, lookup) + {
@@ -179,11 +132,18 @@ class ConfigGenerator extends AbstractGenerator {
 				default: #[]
 			}
 			val propertiesFromNested = makeLocalPropertyMappings(ne, nestedAssignments)
-			propertiesFromNested + localResult + handleAssignedValue(ne, downAssignment.value, lookup, arguments)
+			val nestedConstraints = switch value: downAssignment.value {
+				NamedElementRef: value.constraints
+				NestedAssignments: value.constraints
+				default: #[]
+			}
+			val constraintsFromNested = makeLocalConstraintMappings(ne, nestedConstraints)
+			propertiesFromNested + constraintsFromNested + localResult +
+				handleAssignedValue(ne, downAssignment.value, lookup, arguments)
 		}
 	}
 
-	def Iterable<Mapping> handleAssignedValue(NamedElement ne, ConfigValue cfgValue,
+	def Iterable<AbstractMapping> handleAssignedValue(NamedElement ne, ConfigValue cfgValue,
 		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		switch value : cfgValue {
 			NamedElementRef: {
@@ -195,31 +155,35 @@ class ConfigGenerator extends AbstractGenerator {
 						val args = makeArgumentList(value.combined, arguments)
 						val m = makeComponentMapping(ne, obj, cfgValue)
 						val propertiesFromWith = makePropertyMappings(ne, value.combined)
-						m + propertiesFromWith + continueDown(ne, obj, localLookup + withLookup + lookup, args)
+						val constraintsFromWith = makeConstraintMappings(ne, value.combined)
+						m + propertiesFromWith + constraintsFromWith +
+							continueDown(ne, obj, localLookup + withLookup + lookup, args)
 					}
 					Configuration: {
 						val withLookup = makeLookupList(obj, value.combined)
 						val args = makeArgumentList(value.arguments, value.combined, arguments)
 						val m = makeComponentMapping(ne, obj, cfgValue)
-						val propertiesFromConfiguration = makeLocalPropertyMappings(ne, obj.assignments)
-						val propertiesFromWith = makePropertyMappings(ne, obj, value.combined)
-						m + propertiesFromConfiguration + propertiesFromWith +
+						val propertiesFromConfiguration = makePropertyMappings(ne, obj, value.combined)
+						val constraintsFromConfiguration = makeConstraintMappings(ne, obj, value.combined)
+						m + propertiesFromConfiguration + constraintsFromConfiguration +
 							continueDown(ne, obj.extended, localLookup + withLookup + lookup, args)
 					}
 					ConfigParameter: {
 						val withLookup = makeLookupList(value.combined)
 						val args = makeArgumentList(value.combined, arguments)
 						val propertiesFromWith = makePropertyMappings(ne, value.combined)
+						val constraintsFromWith = makeConstraintMappings(ne, value.combined)
 						var argValue = arguments.get(obj)
 						while (argValue instanceof ConfigParameter) {
 							argValue = arguments.get(argValue)
 						}
 
 						if (argValue === null)
-							#[new Mapping(#[ne], cfgValue)] + propertiesFromWith +
+							#[new ComponentMapping(#[ne], cfgValue)] + propertiesFromWith + constraintsFromWith +
 								continueDown(ne, obj.classifier, localLookup + withLookup + lookup, args)
 						else {
-							propertiesFromWith +
+							// FIXME what if arg is config and there's a with clause
+							propertiesFromWith + constraintsFromWith +
 								handleAssignedValue(ne, argValue, localLookup + withLookup + lookup, args)
 						}
 					}
@@ -239,7 +203,7 @@ class ConfigGenerator extends AbstractGenerator {
 
 	}
 
-	def Iterable<Mapping> continueDown(NamedElement current, Classifier cl,
+	def Iterable<AbstractMapping> continueDown(NamedElement current, Classifier cl,
 		Iterable<Pair<ElementRef, Assignment>> lookup, Map<ConfigParameter, ConfigValue> arguments) {
 		if (cl === null)
 			#[]
@@ -254,13 +218,13 @@ class ConfigGenerator extends AbstractGenerator {
 
 	def static makePropertyMappings(NamedElement ne, Iterable<Pair<ElementRef, Assignment>> lookup) {
 		lookup.filter[key === null && value.isProperty].map [
-			new Mapping(#[ne], value.property, value.value)
+			new PropertyMapping(#[ne], value.property, value.value)
 		]
 	}
 
 	def static makeLocalPropertyMappings(NamedElement ne, Iterable<Assignment> assignments) {
 		assignments.filter[ref === null && isProperty].map [
-			new Mapping(#[ne], property, value)
+			new PropertyMapping(#[ne], property, value)
 		]
 	}
 
@@ -276,13 +240,31 @@ class ConfigGenerator extends AbstractGenerator {
 		linearize(cfgs).map[makeLocalPropertyMappings(ne, assignments)].flatten
 	}
 
+	def static makeLocalConstraintMappings(NamedElement ne, Iterable<Constraint> constraints) {
+		constraints.map [
+			new ConstraintMapping(#[ne], it)
+		]
+	}
+
+	def static makeConstraintMappings(NamedElement ne, List<Combination> combs) {
+		if (combs === null)
+			#[]
+		else
+			linearize(combs.map[configuration]).map[makeLocalConstraintMappings(ne, constraints)].flatten
+	}
+
+	def static makeConstraintMappings(NamedElement ne, Configuration cfg, List<Combination> combs) {
+		val cfgs = if(combs === null) #[cfg] else #[cfg] + combs.map[configuration]
+		linearize(cfgs).map[makeLocalConstraintMappings(ne, constraints)].flatten
+	}
+
 	def private static makeComponentMapping(NamedElement ne, Configuration cfg, ConfigValue cfgValue) {
 		makeComponentMapping(ne, cfg.extended, cfgValue)
 	}
 
 	def private static makeComponentMapping(NamedElement ne, Classifier cl, ConfigValue cfgValue) {
 		if (ne instanceof Classifier || ne.classifier != cl)
-			#[new Mapping(#[ne], cfgValue)]
+			#[new ComponentMapping(#[ne], cfgValue)]
 		else
 			#[]
 	}
@@ -354,7 +336,7 @@ class ConfigGenerator extends AbstractGenerator {
 	 * Create a parameter lookup list from the given configuration
 	 * Keep last argument found via DFS. Multiple arguments for the parameter are not allowed unless they are identical.
 	 */
-	def Map<ConfigParameter, ConfigValue> makeArgumentList(List<Argument>localArgs, List<Combination> combs,
+	def Map<ConfigParameter, ConfigValue> makeArgumentList(List<Argument> localArgs, List<Combination> combs,
 		Map<ConfigParameter, ConfigValue> arguments) {
 		val args = new HashMap(arguments)
 		localArgs.forEach[args.put(parameter, value)]
@@ -371,7 +353,7 @@ class ConfigGenerator extends AbstractGenerator {
 
 	private def void argsHelper(Iterable<Combination> combs, Map<ConfigParameter, ConfigValue> args) {
 		combs.forEach [ c |
-			c.arguments.forEach [args.put(parameter, value)]
+			c.arguments.forEach[args.put(parameter, value)]
 			argsHelper(c.configuration.combined, args)
 		]
 	}
@@ -442,46 +424,16 @@ class ConfigGenerator extends AbstractGenerator {
 		#[]
 	}
 
-	def String mkString(ConfigPkg pkg, Iterable<Mapping> replacements) {
+	def String mkString(ConfigPkg pkg, Iterable<AbstractMapping> mappings) {
 		{
 			if (pkg.analyses.empty)
 				''
 			else
 				'Analyses=' + pkg.analyses.join(',')
 		} + '\n\n' + {
-			replacements.map [ r |
-				val tl = r.path.tail
-				val pathName = tl.map[name].join('.')
-				if (r.isSubcomponentMapping) {
-					if (tl.empty) {
-						'componentImplementationName=' + r.value.print + '\n'
-					} else {
-						'SubcompChoice-' + pathName + '=' + r.value.print
-					}
-				} else if (r.isPropertyMapping) {
-					// TODO: handle parameter as value
-					if (r.property.propertyType instanceof ReferenceType) {
-						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' +
-							serializer.serialize(r.value).trim // FIXME
-					} else if (r.property.propertyType instanceof ListType &&
-						(r.property.propertyType as ListType).elementType instanceof ReferenceType) {
-						val pv = r.value as PropertyValue
-						val a = pv.getContainerOfType(Assignment)
-						var ref = a.ref
-						// reference value is relative to assignment's container
-						var refPath = pathName
-						while (ref !== null && refPath.endsWith(ref.element.name)) {
-							refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
-							ref = ref.prev
-						}
-						'RefPropertyValue-' + pathName + '-' + r.property.print + '=' + refPath + '.' +
-							serializer.serialize((pv.exp as ReferenceValue).path).trim
-					} else {
-						'LitPropertyValue-' + pathName + '-' + r.property.print + '-' + propertyType(r.property) + '=' +
-							serializer.serialize(r.value).trim
-					}
-				}
-			].join('\n')
+			mappings.filter(ComponentMapping).map[mkString].join('\n')
+		} + '\n\n' + {
+			mappings.filter(ConstraintMapping).map[mkString].join('\n')
 		} + '\n\n' + {
 			if (pkg.outputs.empty)
 				''
@@ -500,45 +452,99 @@ class ConfigGenerator extends AbstractGenerator {
 		}
 	}
 
+	dispatch def mkString(AbstractMapping m) {
+		''
+	}
+
+	dispatch def mkString(ComponentMapping m) {
+		val tl = m.path.tail
+		val pathName = tl.map[name].join('.')
+		if (tl.empty) {
+			'componentImplementationName=' + m.value.print + '\n'
+		} else {
+			'SubcompChoice-' + pathName + '=' + m.value.print
+		}
+	}
+
+	dispatch def mkString(ConstraintMapping m) {
+		val tl = m.path.tail
+		val pathName = tl.map[name].join('.')
+		if (m.constraint.consequence === null) {
+			val cond = m.constraint.condition
+			val r = cond.relation.print
+			val left = pathName + '.' + cond.lhs.print
+			val right = pathName + '.' + cond.rhs.print
+			r + 'Configurator-' + left + '=' + right
+		} else {
+			'#unprocessed constraint for ' + m.path.map[name].join('.')
+		}
+
+	}
+
+	dispatch def mkString(PropertyMapping m) {
+		val tl = m.path.tail
+		val pathName = tl.map[name].join('.')
+		// TODO: handle parameter as value
+		if (m.property.propertyType instanceof ReferenceType) {
+			'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + serializer.serialize(m.value).trim // FIXME
+		} else if (m.property.propertyType instanceof ListType &&
+			(m.property.propertyType as ListType).elementType instanceof ReferenceType) {
+			val pv = m.value as PropertyValue
+			val a = pv.getContainerOfType(Assignment)
+			var ref = a.ref
+			// reference value is relative to assignment's container
+			var refPath = pathName
+			while (ref !== null && refPath.endsWith(ref.element.name)) {
+				refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
+				ref = ref.prev
+			}
+			'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + refPath + '.' +
+				serializer.serialize((pv.exp as ReferenceValue).path).trim
+		} else {
+			'LitPropertyValue-' + pathName + '-' + m.property.print + '-' + propertyType(m.property) + '=' +
+				serializer.serialize(m.value).trim
+		}
+	}
+
 	/**
 	 * Print configuration value
 	 */
-	static dispatch def String print(ConfigValue value) {
+	dispatch def String print(ConfigValue value) {
 		'unhandled dispatch case print (' + value.class.name + ')'
 	}
 
-	static dispatch def String print(CandidateList l) {
+	dispatch def String print(CandidateList l) {
 		l.candidates.map[print].join(',')
 	}
 
-	static dispatch def String print(NamedElementRef ner) {
+	dispatch def String print(NamedElementRef ner) {
 		ner.ref.print
 	}
 
-	static dispatch def String print(PropertyValue pv) {
-		'PROPERTY VALUE'
+	dispatch def String print(PropertyValue pv) {
+		serializer.serialize(pv)
 	}
 
 	/**
 	 * Print named element
 	 */
-	static dispatch def String print(NamedElement ne) {
+	dispatch def String print(NamedElement ne) {
 		ne.name
 	}
 
-	static dispatch def String print(Classifier cl) {
+	dispatch def String print(Classifier cl) {
 		cl.qualifiedName()
 	}
 
-	static dispatch def String print(Configuration cfg) {
+	dispatch def String print(Configuration cfg) {
 		cfg.extended.print
 	}
 
-	static dispatch def String print(Property p) {
+	dispatch def String print(Property p) {
 		p.qualifiedName().replaceAll(':', '\\\\:')
 	}
 
-	static dispatch def String print(ConfigParameter p) {
+	dispatch def String print(ConfigParameter p) {
 		val ch = p.choices
 		if (ch === null)
 			'#no choices given'
@@ -546,14 +552,34 @@ class ConfigGenerator extends AbstractGenerator {
 			ch.print
 	}
 
-	static dispatch def String print(Relation r) {
+	dispatch def String print(Relation r) {
 		switch r {
-			case EQ: 'eq'
-			case NEQ: 'neq'
+			case EQ: 'Eq'
+			case NEQ: 'Neq'
 			case GT: 'gt'
 			case GTE: 'gte'
 			case LT: 'lt'
 			case LTE: 'lte'
+			case FB: 'forbids'
+			case RQ: 'requires'
 		}
+	}
+
+	dispatch def String print(ConfigElement e) {
+		e.element.print + {
+			if (e.property === null)
+				''
+			else
+				'-' + e.property.print
+		}
+	}
+
+	dispatch def String print(ElementRef r) {
+		if (r === null)
+			''
+		else if (r.prev === null)
+			r.element.name
+		else
+			r.prev.print + '.' + r.element.name
 	}
 }

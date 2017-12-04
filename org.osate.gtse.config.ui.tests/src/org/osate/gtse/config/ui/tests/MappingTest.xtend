@@ -12,8 +12,9 @@ import org.junit.rules.ErrorCollector
 import org.junit.runner.RunWith
 import org.osate.core.test.OsateTest
 import org.osate.gtse.config.config.ConfigPkg
+import org.osate.gtse.config.generator.AbstractMapping
+import org.osate.gtse.config.generator.ComponentMapping
 import org.osate.gtse.config.generator.ConfigGenerator
-import org.osate.gtse.config.generator.ConfigGenerator.Mapping
 
 import static org.hamcrest.Matchers.*
 
@@ -142,8 +143,8 @@ class MappingTest extends OsateTest {
 		assertMappings(ms, expected)
 	}
 
-	def void assertMappings(List<Mapping> ms, List<Pair<String, String>> ex) {
-		val strings = ms.map[pathName -> ConfigGenerator.print(value)]
+	def void assertMappings(List<AbstractMapping> ms, List<Pair<String, String>> ex) {
+		val strings = ms.filter(ComponentMapping).map[pathName -> (new ConfigGenerator).print(value)]
 		//ex.forEach[assertTrue('Missing mapping: ' + key + ' -> ' + value, strings.contains(it))]
 		ex.forEach[collector.checkThat('Missing mapping: ' + key + ' -> ' + value, strings, hasItem(it))]
 		//strings.forEach[assertTrue('Unexpected mapping: \'' + key + '\' -> \'' + value + '\'', ex.contains(it))]
