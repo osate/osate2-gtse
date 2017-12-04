@@ -40,6 +40,7 @@ import org.osate.aadl2.ReferenceValue
 import org.osate.aadl2.Subcomponent
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.Combination
+import org.osate.gtse.config.config.Condition
 import org.osate.gtse.config.config.ConfigParameter
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.Configuration
@@ -143,6 +144,27 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 						switch e : a.ref.element {
 							Subcomponent: e.allClassifier
 							FeatureGroup: e.allFeatureGroupType
+						}
+					}
+					Condition: {
+						val n = container.getContainerOfType(NamedElementRef)
+						if (n !== null) {
+							switch c : n.ref {
+								ComponentClassifier: c
+								Configuration: c.extended
+								ConfigParameter: c.classifier
+							}
+						} else {
+							val a = container.getContainerOfType(Assignment)
+							if (a !== null) {
+								switch e : a.ref.element {
+									Subcomponent: e.allClassifier
+									FeatureGroup: e.allFeatureGroupType
+								}
+							} else {
+								val config = context.getContainerOfType(Configuration)
+								config.extended
+							}
 						}
 					}
 					default: {
