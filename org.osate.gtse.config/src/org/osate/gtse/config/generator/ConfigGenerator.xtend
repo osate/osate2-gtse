@@ -45,6 +45,7 @@ import org.osate.aadl2.Property
 import org.osate.aadl2.ReferenceType
 import org.osate.aadl2.ReferenceValue
 import org.osate.aadl2.Subcomponent
+import org.osate.atsv.integration.EngineConfigGenerator
 import org.osate.gtse.config.config.Argument
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.CandidateList
@@ -64,6 +65,8 @@ import org.osate.gtse.config.config.Relation
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType
+import org.osate.atsv.integration.EngineConfigModel.ValuesModel
 
 /**
  * Generates code from your model files on save.
@@ -80,18 +83,49 @@ class ConfigGenerator extends AbstractGenerator {
 
 	@Inject
 	ISerializer serializer
-
+	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
-		val text = mkString(package, makeMappings(package, package.root))
-		fsa.generateFile('paths.txt', text)
+//		val text = mkString(package, makeMappings(package, package.root))
+		callApi(package.analyses, makeMappings(package, package.root))
+//		fsa.generateFile('paths.txt', text)
+	}
+	
+	private dispatch def callApi(ComponentMapping m, EngineConfigGenerator ecg) {
+		if(m.value instanceof NamedElementRef) {
+			val ne = (m.value as NamedElementRef).ref
+			if(ne instanceof ConfigParameter) {
+				val vm = new ValuesModel((ne.choices as CandidateList).candidates.map[print].toArray(#[]))
+				ecg.addChoicePointDefinition(m.path.tail.map[name].join('.'), ATSVVariableType.STRING, new ValuesModel())
+			}
+		}		
 	}
 
+	private dispatch def callApi(ConstraintMapping m, EngineConfigGenerator ecg) {
+		ecg.addEqualityConstraint("y", "n")
+	}
+
+	private dispatch def callApi(PropertyMapping m, EngineConfigGenerator ecg) {
+		ecg.addEqualityConstraint("y", "n")
+	}
+
+	private dispatch def callApi(AbstractMapping m, EngineConfigGenerator ecg) {
+		ecg.addEqualityConstraint("y", "n")
+	}
+	
+	private def callApi(List<String> analyses, Iterable<AbstractMapping> iter) {
+		val ecg = new EngineConfigGenerator()
+		iter.forEach[callApi(ecg)]
+	}
+	
 	def makeMappings(ConfigPkg pkg, Configuration rootConfig) {
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig.combined, newHashMap)
+		// TODO: start here -- write processing method that iterates over this list and
+		// at first just prints stuff out. but then it'll hit the api
 		val mappings = if(rootComp === null) #[] else process(rootComp, lookup, arguments)
+		val six = 7
 		mappings
 	}
 
