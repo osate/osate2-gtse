@@ -39,13 +39,22 @@ import org.osate.aadl2.ComponentType
 import org.osate.aadl2.Element
 import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupType
+import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.ListType
 import org.osate.aadl2.NamedElement
+import org.osate.aadl2.NumberValue
 import org.osate.aadl2.Property
+import org.osate.aadl2.RangeValue
+import org.osate.aadl2.RealLiteral
 import org.osate.aadl2.ReferenceType
 import org.osate.aadl2.ReferenceValue
+import org.osate.aadl2.StringLiteral
 import org.osate.aadl2.Subcomponent
+import org.osate.aadl2.instance.InstanceReferenceValue
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType
 import org.osate.atsv.integration.EngineConfigGenerator
+import org.osate.atsv.integration.EngineConfigModel.ValuesModel
+import org.osate.atsv.integration.network.Limit
 import org.osate.gtse.config.config.Argument
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.CandidateList
@@ -60,13 +69,12 @@ import org.osate.gtse.config.config.Constraint
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.NestedAssignments
+import org.osate.gtse.config.config.OutputVariable
 import org.osate.gtse.config.config.PropertyValue
 import org.osate.gtse.config.config.Relation
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
-import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType
-import org.osate.atsv.integration.EngineConfigModel.ValuesModel
 
 /**
  * Generates code from your model files on save.
@@ -83,22 +91,23 @@ class ConfigGenerator extends AbstractGenerator {
 
 	@Inject
 	ISerializer serializer
-	
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
-//		val text = mkString(package, makeMappings(package, package.root))
-		callApi(package.analyses, makeMappings(package, package.root))
+		val text = mkString(package, makeMappings(package, package.root))
+		callApi(makeMappings(package, package.root), package.outputs)
 //		fsa.generateFile('paths.txt', text)
 	}
-	
+
 	private dispatch def callApi(ComponentMapping m, EngineConfigGenerator ecg) {
-		if(m.value instanceof NamedElementRef) {
+		if (m.value instanceof NamedElementRef) {
 			val ne = (m.value as NamedElementRef).ref
-			if(ne instanceof ConfigParameter) {
+			if (ne instanceof ConfigParameter) {
 				val vm = new ValuesModel((ne.choices as CandidateList).candidates.map[print].toArray(#[]))
-				ecg.addChoicePointDefinition(m.path.tail.map[name].join('.'), ATSVVariableType.STRING, new ValuesModel())
+				ecg.addChoicePointDefinition(m.path.tail.map[name].join('.'), ATSVVariableType.STRING,
+					new ValuesModel())
 			}
-		}		
+		}
 	}
 
 	private dispatch def callApi(ConstraintMapping m, EngineConfigGenerator ecg) {
@@ -112,12 +121,31 @@ class ConfigGenerator extends AbstractGenerator {
 	private dispatch def callApi(AbstractMapping m, EngineConfigGenerator ecg) {
 		ecg.addEqualityConstraint("y", "n")
 	}
-	
-	private def callApi(List<String> analyses, Iterable<AbstractMapping> iter) {
+
+	private def callApiOutput(OutputVariable o, EngineConfigGenerator ecg) {
+		var type = ATSVVariableType.DISCRETE_FLOAT
+		if (o.limit.bound instanceof IntegerLiteral) {
+			type = ATSVVariableType.INTEGER
+		} else if (o.limit.bound instanceof RealLiteral) {
+			type = ATSVVariableType.FLOAT
+		} else if (o.limit.bound instanceof InstanceReferenceValue) {
+			type = ATSVVariableType.REFERENCE
+		} else if (o.limit.bound instanceof StringLiteral) {
+			type = ATSVVariableType.STRING
+		} else if (o.limit.bound instanceof RangeValue) {
+			type = ATSVVariableType.RANGE
+		} else {
+			// TODO: How does error handling work here?
+		}
+		ecg.addOutputVariable(o.name, type, new Limit(o.limit.relation.print, o.limit.bound.print));
+	}
+
+	private def callApi(Iterable<AbstractMapping> iter, List<OutputVariable> outputs) {
 		val ecg = new EngineConfigGenerator()
 		iter.forEach[callApi(ecg)]
+		outputs.forEach[callApiOutput(ecg)]
 	}
-	
+
 	def makeMappings(ConfigPkg pkg, Configuration rootConfig) {
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
