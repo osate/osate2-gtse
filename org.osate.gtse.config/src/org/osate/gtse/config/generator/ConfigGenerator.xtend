@@ -42,8 +42,8 @@ import org.osate.aadl2.FeatureGroupType
 import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.ListType
 import org.osate.aadl2.NamedElement
-import org.osate.aadl2.NumberValue
 import org.osate.aadl2.Property
+import org.osate.aadl2.PropertyExpression
 import org.osate.aadl2.RangeValue
 import org.osate.aadl2.RealLiteral
 import org.osate.aadl2.ReferenceType
@@ -75,6 +75,7 @@ import org.osate.gtse.config.config.Relation
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
+import org.osate.atsv.integration.exception.BadConfigurationException
 
 /**
  * Generates code from your model files on save.
@@ -103,26 +104,83 @@ class ConfigGenerator extends AbstractGenerator {
 		if (m.value instanceof NamedElementRef) {
 			val ne = (m.value as NamedElementRef).ref
 			if (ne instanceof ConfigParameter) {
+				if(ne.choices === null){
+					throw new BadConfigurationException(m.mkString)
+				}
 				val vm = new ValuesModel((ne.choices as CandidateList).candidates.map[print].toArray(#[]))
-				ecg.addChoicePointDefinition(m.path.tail.map[name].join('.'), ATSVVariableType.STRING,
-					new ValuesModel())
+				ecg.addChoicePointDefinition(m.path.tail.map[name].join('.'), ATSVVariableType.STRING, vm)
 			}
 		}
 	}
 
 	private dispatch def callApi(ConstraintMapping m, EngineConfigGenerator ecg) {
-		ecg.addEqualityConstraint("y", "n")
+		val cond = m.constraint.condition
+		val pathName = m.path.tail.map[name].join('.')
+		val condLHS = cond.lhs
+		val condRHS = cond.rhs
+		val condRelat = cond.relation
+		
+		val topRelat = m.constraint.relation
+		
+		if (topRelat == Relation.RQ || topRelat == Relation.FB){
+			val cons = m.constraint.consequence
+			val consLHS = pathName + '.' + cons.lhs
+			val consRHS = cons.rhs
+			if (topRelat == Relation.RQ) {
+				ecg.addRequiresConstraint(condLHS.print, condRHS.print, pathName + '.' + consLHS.print, consRHS.print)
+			} else if (topRelat == Relation.FB) {
+				ecg.addForbidsConstraint(condLHS.print, condRHS.print, pathName + '.' + consLHS.print, consRHS.print)
+			}
+		}
+		
+		if (condRelat == Relation.EQ){
+			ecg.addEqualityConstraint(pathName + '.' + condLHS.print, pathName + '.' + condRHS.print)
+		} else if (condRelat == Relation.NEQ) {
+			ecg.addUniquenessConstraint(pathName + '.' + condLHS.print, pathName + '.' + condRHS.print)
+		}
 	}
 
 	private dispatch def callApi(PropertyMapping m, EngineConfigGenerator ecg) {
-		ecg.addEqualityConstraint("y", "n")
+		val tl = m.path.tail
+		val pathName = tl.map[name].join('.')
+		// TODO: handle parameter as value
+		if (m.property.propertyType instanceof ReferenceType) {
+			val s = 'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + serializer.serialize(m.value).trim // FIXME
+			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
+		} else if (m.property.propertyType instanceof ListType &&
+			(m.property.propertyType as ListType).elementType instanceof ReferenceType) {
+			val pv = m.value as PropertyValue
+			val a = pv.getContainerOfType(Assignment)
+			var ref = a.ref
+			// reference value is relative to assignment's container
+			var refPath = pathName
+			while (ref !== null && refPath.endsWith(ref.element.name)) {
+				refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
+				ref = ref.prev
+			}
+			val s = 'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + refPath + '.' +
+				serializer.serialize((pv.exp as ReferenceValue).path).trim
+			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
+		} else {
+//			val s = 'LitPropertyValue-' + pathName + '-' + m.property.print + '-' + propertyType(m.property) + '=' +
+//				serializer.serialize(m.value).trim
+				ecg.addChoicePointDefinition(pathName, ATSVVariableType.getTypeByName(propertyType(m.property)),
+					new ValuesModel(serializer.serialize(m.value).trim.replaceAll("\\D*","").split(","))
+				)
+		}
 	}
 
 	private dispatch def callApi(AbstractMapping m, EngineConfigGenerator ecg) {
+		// TODO: Should throw an error
+		
+		// TODO: Remove this placeholder code.
 		ecg.addEqualityConstraint("y", "n")
 	}
 
 	private def callApiOutput(OutputVariable o, EngineConfigGenerator ecg) {
+		if(o.limit === null){
+			return
+		}
 		var type = ATSVVariableType.DISCRETE_FLOAT
 		if (o.limit.bound instanceof IntegerLiteral) {
 			type = ATSVVariableType.INTEGER
@@ -136,6 +194,7 @@ class ConfigGenerator extends AbstractGenerator {
 			type = ATSVVariableType.RANGE
 		} else {
 			// TODO: How does error handling work here?
+			type = ATSVVariableType.DISCRETE_FLOAT
 		}
 		ecg.addOutputVariable(o.name, type, new Limit(o.limit.relation.print, o.limit.bound.print));
 	}
@@ -581,6 +640,10 @@ class ConfigGenerator extends AbstractGenerator {
 
 	dispatch def String print(NamedElementRef ner) {
 		ner.ref.print
+	}
+	
+	dispatch def String print(PropertyExpression prex){
+		serializer.serialize(prex).trim
 	}
 
 	dispatch def String print(PropertyValue pv) {
