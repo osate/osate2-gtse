@@ -44,8 +44,8 @@ public class ConfiguratorsModel {
 	/**
 	 * Add a configurator to the internal list of variables.
 	 *
-	 * This is not designed to be called by clients, @see {@link org.osate.atsv.integration.EngineConfigGenerator#addEqualityConstraint(String, String)}
-	 * and @see {@link org.osate.atsv.integration.EngineConfigGenerator#addUniquenessConstraint(String, String)}
+	 * This is not designed to be called by clients, @see {@link org.osate.atsv.integration.preparser.EngineConfigGenerator#addEqualityConstraint(String, String)}
+	 * and @see {@link org.osate.atsv.integration.preparser.EngineConfigGenerator#addUniquenessConstraint(String, String)}
 	 * @param cm The configurator model to add
 	 */
 	public void addConfigurator(ConfiguratorModel cm) {

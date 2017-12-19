@@ -52,7 +52,7 @@ import org.osate.aadl2.StringLiteral
 import org.osate.aadl2.Subcomponent
 import org.osate.aadl2.instance.InstanceReferenceValue
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType
-import org.osate.atsv.integration.EngineConfigGenerator
+import org.osate.atsv.integration.preparser.EngineConfigGenerator
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel
 import org.osate.atsv.integration.network.Limit
 import org.osate.gtse.config.config.Argument
@@ -76,6 +76,7 @@ import org.osate.gtse.config.config.Relation
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
 import org.osate.atsv.integration.exception.BadConfigurationException
+import org.osate.gtse.config.config.Type
 
 /**
  * Generates code from your model files on save.
@@ -96,7 +97,7 @@ class ConfigGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
 		val text = mkString(package, makeMappings(package, package.root))
-		callApi(makeMappings(package, package.root), package.outputs)
+		callApi(package.root, makeMappings(package, package.root), package.outputs, package.analyses)
 //		fsa.generateFile('paths.txt', text)
 	}
 
@@ -178,31 +179,22 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	private def callApiOutput(OutputVariable o, EngineConfigGenerator ecg) {
-		if(o.limit === null){
-			return
-		}
-		var type = ATSVVariableType.DISCRETE_FLOAT
-		if (o.limit.bound instanceof IntegerLiteral) {
-			type = ATSVVariableType.INTEGER
-		} else if (o.limit.bound instanceof RealLiteral) {
-			type = ATSVVariableType.FLOAT
-		} else if (o.limit.bound instanceof InstanceReferenceValue) {
-			type = ATSVVariableType.REFERENCE
-		} else if (o.limit.bound instanceof StringLiteral) {
-			type = ATSVVariableType.STRING
-		} else if (o.limit.bound instanceof RangeValue) {
-			type = ATSVVariableType.RANGE
+		var type = ATSVVariableType.getTypeByName(o.type.print)
+		if(o.limit === null) {
+			ecg.addOutputVariable(o.name, type, null);
 		} else {
-			// TODO: How does error handling work here?
-			type = ATSVVariableType.DISCRETE_FLOAT
+			ecg.addOutputVariable(o.name, type, new Limit(o.limit.relation.print, o.limit.bound.print));
 		}
-		ecg.addOutputVariable(o.name, type, new Limit(o.limit.relation.print, o.limit.bound.print));
 	}
 
-	private def callApi(Iterable<AbstractMapping> iter, List<OutputVariable> outputs) {
+	private def callApi(Configuration rootConfig, Iterable<AbstractMapping> iter, List<OutputVariable> outputs, List<String> analyses) {
 		val ecg = new EngineConfigGenerator()
+		ecg.initializeFields
+		ecg.setPackageName(rootConfig.print)
 		iter.forEach[callApi(ecg)]
 		outputs.forEach[callApiOutput(ecg)]
+		ecg.addAnalyses(analyses.join(','))
+		ecg.execute(null)
 	}
 
 	def makeMappings(ConfigPkg pkg, Configuration rootConfig) {
@@ -212,7 +204,6 @@ class ConfigGenerator extends AbstractGenerator {
 		// TODO: start here -- write processing method that iterates over this list and
 		// at first just prints stuff out. but then it'll hit the api
 		val mappings = if(rootComp === null) #[] else process(rootComp, lookup, arguments)
-		val six = 7
 		mappings
 	}
 
@@ -675,6 +666,10 @@ class ConfigGenerator extends AbstractGenerator {
 			'#no choices given'
 		else
 			ch.print
+	}
+	
+	dispatch def String print(Type t){
+		t.getName()
 	}
 
 	dispatch def String print(Relation r) {
