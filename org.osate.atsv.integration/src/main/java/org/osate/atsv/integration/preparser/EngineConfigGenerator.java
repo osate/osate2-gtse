@@ -18,8 +18,8 @@
  *******************************************************************************/
 package org.osate.atsv.integration.preparser;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,45 +27,48 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.attribute.PosixFilePermission;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.SystemUtils;
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.osate.atsv.integration.Activator;
-import org.osate.atsv.integration.EngineConfigGenerator;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
-import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
+import org.osate.atsv.integration.EngineConfigModel.DistributionModel;
+import org.osate.atsv.integration.EngineConfigModel.ExplorationEngineModel;
+import org.osate.atsv.integration.EngineConfigModel.ImpliesConfiguratorModel;
+import org.osate.atsv.integration.EngineConfigModel.InputTokenAdapter;
+import org.osate.atsv.integration.EngineConfigModel.InputTokenModel;
+import org.osate.atsv.integration.EngineConfigModel.SetRestrictionConfiguratorModel;
+import org.osate.atsv.integration.EngineConfigModel.SimpleConfiguratorModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
-import org.osate.atsv.integration.exception.BadPathException;
+import org.osate.atsv.integration.EngineConfigModel.VariableModel;
+import org.osate.atsv.integration.EngineConfigModel.VariableModelAdapter;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 import org.osate.atsv.integration.network.Limit;
+import org.osate.atsv.standalone.ATSVVarCollection;
 import org.osgi.framework.Bundle;
 
-public class GenerateInputFilesHandler extends AbstractHandler {
-
-	/**
-	 * These are specified by the user, currently as a properties file but eventually as a custom
-	 * choicepoint DSL
-	 */
-	private Properties userProps = null;
+/**
+ * This is the main API for specifying ATSV engine configurations by adding variables and constraints.
+ * @author sam
+ *
+ */
+public final class EngineConfigGenerator {
 
 	/**
 	 * These are values needed by OSATE that shouldn't be encoded as ATSV properties, eg:
@@ -80,22 +83,171 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 	private Properties osateProps = null;
 
 	/**
-	 * The engine config spec that will get seralized to XML and then read in by ATSV
-	 */
-	private EngineConfigGenerator ecf;
-
-	/**
 	 * The directory all the generated files will go
 	 */
 	private String targetDirStr = Activator.getDefault().getPreferenceStore().getString(Activator.ATSV_FILES_DIRECTORY)
 			+ File.separator;
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		initializeFields();
-		initializeProperties();
+	private Marshaller marshal;
+	private JAXBElement<ExplorationEngineModel> cfg;
+	private ExplorationEngineModel eem;
+	private Map<String, Limit> limits = new HashMap<>();
+	private ATSVVarCollection startingInputs = new ATSVVarCollection();
+	private ATSVVarCollection startingOutputs = new ATSVVarCollection();
+
+	public EngineConfigGenerator() {
+		try {
+			JAXBContext context = JAXBContext.newInstance(ExplorationEngineModel.class, InputTokenModel.class,
+					VariableModel.class);
+			InputTokenAdapter inputAdapter = new InputTokenAdapter();
+			VariableModelAdapter variableAdapter = new VariableModelAdapter();
+
+			marshal = context.createMarshaller();
+			// ATSV actually cannot parse formatted output :(
+			marshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
+			marshal.setAdapter(inputAdapter);
+			marshal.setAdapter(variableAdapter);
+
+			eem = new ExplorationEngineModel();
+			cfg = new JAXBElement<ExplorationEngineModel>(new QName("ExplorationEngineModel"),
+					ExplorationEngineModel.class, eem);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public ATSVVarCollection getStartingInputs() {
+		return startingInputs;
+	}
+
+	public ATSVVarCollection getStartingOutputs() {
+		return startingOutputs;
+	}
+
+//	/**
+//	 * Add an input variable to the engine configuration.
+//	 *
+//	 * @param title The name of this variable
+//	 * @param sampled Whether or not this variable is sampled
+//	 * @param type The type of this variable
+//	 */
+//	public void addInputVariable(String title, boolean sampled, ATSVVariableType type) {
+//		String value = ATSVVariableType.getDefaultFromType(type);
+//		VariableModel vm = new VariableModel(title, sampled, true, type, value);
+//		eem.addVariable(vm);
+//	}
+
+	/**
+	 * Add an expected output variable to the engine configuration.
+	 *
+	 * @param title The name of this variable
+	 * @param type The type of this variable
+	 * @param limit A limit for this variable, or null if none
+	 */
+	public void addOutputVariable(String title, ATSVVariableType type, Limit limit) {
+		String value = ATSVVariableType.getDefaultFromType(type);
+		VariableModel vm = new VariableModel(title, false, false, type, value);
+		eem.addVariable(vm);
+		if (limit != null) {
+			limits.put(title, limit);
+		}
+		startingOutputs.addVar(title, type, value);
+	}
+
+	/**
+	 * Define a choicepoint.
+	 *
+	 * @param title The name of this choicepoint
+	 * @param type The type of this choicepoint
+	 * @param values The values this choicepoint can take
+	 */
+	public void addChoicePointDefinition(String title, ATSVVariableType type, ValuesModel values) {
+		String value = values.getDefault();
+		VariableModel vm = new VariableModel(title, false, true, type, value, values);
+		eem.addVariable(vm);
+		eem.addTypeRestriction(title, values);
+		startingInputs.addVar(title, type, values.getDefault());
+	}
+
+	/**
+	 * Define a choicepoint.
+	 *
+	 * @param title The name of this choicepoint
+	 * @param type The type of this choicepoint
+	 * @param distribution The distribution of this choicepoint's values
+	 */
+	public void addChoicePointDefinition(String title, ATSVVariableType type, DistributionModel distribution) {
+		String value = distribution.getDefault();
+		VariableModel vm = new VariableModel(title, false, true, type, value, distribution);
+		eem.addVariable(vm);
+		startingInputs.addVar(title, type, distribution.getDefault());
+	}
+
+	/**
+	 * Renders the engine configuration to an ATSV-compatible .ecf file
+	 * @return XML suitable for feeding into ATSV as an engine configuration
+	 * @throws JAXBException
+	 * @throws UnsatisfiableConstraint
+	 * @throws ConfiguratorRepresentationException
+	 * @throws UnsupportedFeatureException
+	 */
+	public String getXML() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+	UnsupportedFeatureException {
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		// The configurators have to be double-encoded, so we call that rendering here
+		eem.renderConfigurator();
+		// And here we render the entire specification
+		marshal.marshal(cfg, stream);
+		return stream.toString();
+	}
+
+	/**
+	 * Gets a mapping of variable names to their limits
+	 * @return
+	 */
+	public Map<String, Limit> getLimits() {
+		return limits;
+	}
+
+	/**
+	 * Add a requirement that two variables must always have equal values
+	 *
+	 * @param varName1
+	 * @param varName2
+	 */
+	public void addEqualityConstraint(String varName1, String varName2) {
+		eem.addConfigurator(new SimpleConfiguratorModel(varName1, varName2, true));
+	}
+
+	/**
+	 * Add a requirement that two variables must never have equal values
+	 *
+	 * @param varName1
+	 * @param varName2
+	 */
+	public void addUniquenessConstraint(String varName1, String varName2) {
+		eem.addConfigurator(new SimpleConfiguratorModel(varName1, varName2, false));
+	}
+
+	public void addRequiresConstraint(String varName1, String varVal1, String varName2, String varVal2) {
+		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, true));
+	}
+
+	public void addForbidsConstraint(String varName1, String varVal1, String varName2, String varVal2) {
+		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false));
+	}
+
+	public void addMembershipConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
+		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, true));
+	}
+
+	public void addExclusionConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
+		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false));
+	}
+
+	public void execute() {
 		initializeDirectory();
-		parseProperties();
 		generateEngineConfig();
 		generateInputFile();
 		generateOutputFile();
@@ -104,17 +256,14 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		generateRequestProperties();
 		copyJars();
 		setPermissions();
-		return null;
 	}
 
 	private void initializeDirectory() {
 		new File(targetDirStr).mkdirs();
 	}
 
-	private void initializeFields() {
-		userProps = null;
+	public void initializeFields() {
 		osateProps = new Properties();
-		ecf = new EngineConfigGenerator();
 	}
 
 	private void setPermissions() {
@@ -169,65 +318,12 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		}
 	}
 
-	private void addOutputVariables(String varStr, String limitStr) {
-		String[] varArr = varStr.split("-");
-		String varName = varArr[1];
-		ATSVVariableType type = ATSVVariableType.getTypeByName(varArr[2]);
-		Limit limit = null;
-		if (limitStr.length() > 0) {
-			String[] limitArr = limitStr.split("-");
-			limit = new Limit(limitArr[0], limitArr[1]);
-		}
-		ecf.addOutputVariable(varName, type, limit);
-	}
-
-	private Properties initializeProperties() {
-		// See / from: http://stackoverflow.com/a/6895220
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		IFile propFile = null;
-		if (window != null) {
-			IStructuredSelection selection = (IStructuredSelection) window.getSelectionService().getSelection();
-			Object firstElement = selection.getFirstElement();
-			if (firstElement instanceof IAdaptable) {
-				propFile = ((IFile) firstElement).getAdapter(IFile.class);
-			}
-		}
-
-		if (propFile == null) {
-			return null;
-		}
-
-		// Assume choicepoint definitions are named the same as the package they specify
-		userProps = new Properties();
-		IPath propFilePath = propFile.getRawLocation();
-		try {
-			userProps.load(new FileInputStream(propFilePath.toFile()));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		String compImplName = userProps.getProperty("componentImplementationName");
-		String packageName;
-		try {
-			if (compImplName.lastIndexOf("::") > 0) {
-				// Qualified packagename
-				packageName = compImplName.substring(0, compImplName.lastIndexOf("::"));
-			} else {
-				throw new BadPathException(
-						"The componentImplementationName must be qualified. Use the format 'PackageName::ComponentImplementationName'");
-			}
-			osateProps.setProperty("packageName", packageName);
-		} catch (BadPathException e) {
-			// TODO: Get this to the user
-			e.printStackTrace();
-		}
-
-		return userProps;
+	public void setPackageName(String packageName) {
+		osateProps.setProperty("packageName", packageName);
 	}
 
 	private void generateLimits() {
-		Map<String, Limit> limits = ecf.getLimits();
+		Map<String, Limit> limits = getLimits();
 		for (String varName : limits.keySet()) {
 			Limit limit = limits.get(varName);
 			osateProps.setProperty("Limit-" + varName, limit.getOpStr() + "-" + limit.getLimitStr());
@@ -236,7 +332,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void generateOutputFile() {
 		try {
-			ecf.getStartingOutputs().writeToFile(targetDirStr + "output.xml");
+			getStartingOutputs().writeToFile(targetDirStr + "output.xml");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -244,7 +340,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void generateInputFile() {
 		try {
-			ecf.getStartingInputs().writeToFile(targetDirStr + "input.xml");
+			getStartingInputs().writeToFile(targetDirStr + "input.xml");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -252,9 +348,9 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 
 	private void generateEngineConfig() {
 		try (PrintWriter out = new PrintWriter(targetDirStr + "ATSVConfig.ecf")) {
-			out.println(ecf.getXML());
-		} catch (JAXBException | FileNotFoundException | UnsatisfiableConstraint
-				| ConfiguratorRepresentationException | UnsupportedFeatureException e) {
+			out.println(getXML());
+		} catch (JAXBException | FileNotFoundException | UnsatisfiableConstraint | ConfiguratorRepresentationException
+				| UnsupportedFeatureException e) {
 			e.printStackTrace();
 		}
 	}
@@ -299,49 +395,7 @@ public class GenerateInputFilesHandler extends AbstractHandler {
 		}
 	}
 
-	private void parseProperties() {
-		for (String propName : userProps.stringPropertyNames()) {
-			String[] propNames = propName.split("-");
-			if (propNames[0].equalsIgnoreCase("Analyses")) {
-				osateProps.setProperty("pluginIds", userProps.getProperty(propName));
-			} else if (propNames[0].equalsIgnoreCase("SubcompChoice")) {
-				String[] options = userProps.getProperty(propName).split(",");
-				ecf.addChoicePointDefinition(propNames[1], ATSVVariableType.STRING, new ValuesModel(options));
-				// Pass the choicepoint definition through to the properties used to build the request...
-				osateProps.setProperty(propName, "(Key value is unused for subcomponent values)");
-			} else if (propNames[0].equalsIgnoreCase("PropertyValue")) {
-				handlePropValSpec(propName);
-			} else if (propNames[0].equalsIgnoreCase("Output")) {
-				addOutputVariables(propName, userProps.getProperty(propName));
-			} else if (propNames[0].equalsIgnoreCase("componentImplementationName")) {
-				// Just pass this straight through as-is
-				osateProps.setProperty(propName, userProps.getProperty(propName));
-			} else if (propNames[0].equalsIgnoreCase("EqConfigurator")) {
-				ecf.addEqualityConstraint(propName.substring("EqConfigurator-".length()),
-						userProps.getProperty(propName));
-			} else if (propNames[0].equalsIgnoreCase("NeqConfigurator")) {
-				ecf.addUniquenessConstraint(propName.substring("NeqConfigurator-".length()),
-						userProps.getProperty(propName));
-			}
-		}
-	}
-
-	private void handlePropValSpec(String propName) {
-		String[] propNames = propName.split("-");
-		String[] range = userProps.getProperty(propName).split(",");
-		ATSVVariableType type = ATSVVariableType.getTypeByName(propNames[3]);
-		if (type == ATSVVariableType.FLOAT) {
-			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], type,
-					new UniformDistributionModel(Float.valueOf(range[0]), Float.valueOf(range[1])));
-		} else if (type == ATSVVariableType.INTEGER) {
-			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], type,
-					new UniformDistributionModel(Integer.valueOf(range[0]), Integer.valueOf(range[1])));
-		} else if (type == ATSVVariableType.STRING) {
-			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], type, new ValuesModel(range));
-		} else if (type == null && propNames[3].equals("reference")) {
-			ecf.addChoicePointDefinition(propNames[1] + "-" + propNames[2], ATSVVariableType.STRING,
-					new ValuesModel(range));
-		}
-		osateProps.setProperty(propName, "(Key value is unused for property values)");
+	public void addAnalyses(String analysisIDs) {
+		osateProps.setProperty("pluginIds", analysisIDs);
 	}
 }
