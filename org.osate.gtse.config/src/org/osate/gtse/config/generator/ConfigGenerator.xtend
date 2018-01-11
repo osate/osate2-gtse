@@ -96,7 +96,7 @@ class ConfigGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
-		val text = mkString(package, makeMappings(package, package.root))
+//		val text = mkString(package, makeMappings(package, package.root))
 		callApi(package.root, makeMappings(package, package.root), package.outputs, package.analyses)
 //		fsa.generateFile('paths.txt', text)
 	}
@@ -146,10 +146,12 @@ class ConfigGenerator extends AbstractGenerator {
 		val pathName = tl.map[name].join('.')
 		// TODO: handle parameter as value
 		if (m.property.propertyType instanceof ReferenceType) {
+			// Hack, part 1, for reference property
 			val s = 'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + serializer.serialize(m.value).trim // FIXME
 			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
 		} else if (m.property.propertyType instanceof ListType &&
 			(m.property.propertyType as ListType).elementType instanceof ReferenceType) {
+			// Hack, part 2, for reference property
 			val pv = m.value as PropertyValue
 			val a = pv.getContainerOfType(Assignment)
 			var ref = a.ref
@@ -174,8 +176,6 @@ class ConfigGenerator extends AbstractGenerator {
 	private dispatch def callApi(AbstractMapping m, EngineConfigGenerator ecg) {
 		// TODO: Should throw an error
 		
-		// TODO: Remove this placeholder code.
-		ecg.addEqualityConstraint("y", "n")
 	}
 
 	private def callApiOutput(OutputVariable o, EngineConfigGenerator ecg) {
@@ -187,22 +187,20 @@ class ConfigGenerator extends AbstractGenerator {
 		}
 	}
 
-	private def callApi(Configuration rootConfig, Iterable<AbstractMapping> iter, List<OutputVariable> outputs, List<String> analyses) {
+	private def callApi(Configuration rootConfig, Iterable<AbstractMapping> choicepointIter, List<OutputVariable> outputs, List<String> analyses) {
 		val ecg = new EngineConfigGenerator()
 		ecg.initializeFields
 		ecg.setPackageName(rootConfig.print)
-		iter.forEach[callApi(ecg)]
+		choicepointIter.forEach[callApi(ecg)]
 		outputs.forEach[callApiOutput(ecg)]
 		ecg.addAnalyses(analyses.join(','))
-		ecg.execute(null)
+		ecg.execute()
 	}
 
 	def makeMappings(ConfigPkg pkg, Configuration rootConfig) {
 		val rootComp = rootConfig.extended
 		val lookup = makeLookup(rootConfig)
 		val arguments = makeArgumentList(rootConfig.combined, newHashMap)
-		// TODO: start here -- write processing method that iterates over this list and
-		// at first just prints stuff out. but then it'll hit the api
 		val mappings = if(rootComp === null) #[] else process(rootComp, lookup, arguments)
 		mappings
 	}

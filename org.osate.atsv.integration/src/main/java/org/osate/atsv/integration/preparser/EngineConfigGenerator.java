@@ -41,7 +41,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.SystemUtils;
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -247,8 +246,7 @@ public final class EngineConfigGenerator {
 		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false));
 	}
 
-//	@Override
-	public Object execute(ExecutionEvent event) {
+	public void execute() {
 		initializeDirectory();
 		generateEngineConfig();
 		generateInputFile();
@@ -258,7 +256,6 @@ public final class EngineConfigGenerator {
 		generateRequestProperties();
 		copyJars();
 		setPermissions();
-		return null;
 	}
 
 	private void initializeDirectory() {
