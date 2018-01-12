@@ -39,12 +39,22 @@ import org.osate.aadl2.ComponentType
 import org.osate.aadl2.Element
 import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupType
+import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.ListType
 import org.osate.aadl2.NamedElement
 import org.osate.aadl2.Property
+import org.osate.aadl2.PropertyExpression
+import org.osate.aadl2.RangeValue
+import org.osate.aadl2.RealLiteral
 import org.osate.aadl2.ReferenceType
 import org.osate.aadl2.ReferenceValue
+import org.osate.aadl2.StringLiteral
 import org.osate.aadl2.Subcomponent
+import org.osate.aadl2.instance.InstanceReferenceValue
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType
+import org.osate.atsv.integration.preparser.EngineConfigGenerator
+import org.osate.atsv.integration.EngineConfigModel.ValuesModel
+import org.osate.atsv.integration.network.Limit
 import org.osate.gtse.config.config.Argument
 import org.osate.gtse.config.config.Assignment
 import org.osate.gtse.config.config.CandidateList
@@ -59,11 +69,14 @@ import org.osate.gtse.config.config.Constraint
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.NestedAssignments
+import org.osate.gtse.config.config.OutputVariable
 import org.osate.gtse.config.config.PropertyValue
 import org.osate.gtse.config.config.Relation
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.*
+import org.osate.atsv.integration.exception.BadConfigurationException
+import org.osate.gtse.config.config.Type
 
 /**
  * Generates code from your model files on save.
@@ -83,8 +96,105 @@ class ConfigGenerator extends AbstractGenerator {
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val package = resource.contents.head as ConfigPkg
-		val text = mkString(package, makeMappings(package, package.root))
-		fsa.generateFile('paths.txt', text)
+//		val text = mkString(package, makeMappings(package, package.root))
+		callApi(package.root, makeMappings(package, package.root), package.outputs, package.analyses)
+//		fsa.generateFile('paths.txt', text)
+	}
+
+	private dispatch def callApi(ComponentMapping m, EngineConfigGenerator ecg) {
+		if (m.value instanceof NamedElementRef) {
+			val ne = (m.value as NamedElementRef).ref
+			if (ne instanceof ConfigParameter) {
+				if(ne.choices === null){
+					throw new BadConfigurationException(m.mkString)
+				}
+				val vm = new ValuesModel((ne.choices as CandidateList).candidates.map[print].toArray(#[]))
+				ecg.addChoicePointDefinition(m.path.tail.map[name].join('.'), ATSVVariableType.STRING, vm)
+			}
+		}
+	}
+
+	private dispatch def callApi(ConstraintMapping m, EngineConfigGenerator ecg) {
+		val cond = m.constraint.condition
+		val pathName = m.path.tail.map[name].join('.')
+		val condLHS = cond.lhs
+		val condRHS = cond.rhs
+		val condRelat = cond.relation
+		
+		val topRelat = m.constraint.relation
+		
+		if (topRelat == Relation.RQ || topRelat == Relation.FB){
+			val cons = m.constraint.consequence
+			val consLHS = pathName + '.' + cons.lhs
+			val consRHS = cons.rhs
+			if (topRelat == Relation.RQ) {
+				ecg.addRequiresConstraint(condLHS.print, condRHS.print, pathName + '.' + consLHS.print, consRHS.print)
+			} else if (topRelat == Relation.FB) {
+				ecg.addForbidsConstraint(condLHS.print, condRHS.print, pathName + '.' + consLHS.print, consRHS.print)
+			}
+		}
+		
+		if (condRelat == Relation.EQ){
+			ecg.addEqualityConstraint(pathName + '.' + condLHS.print, pathName + '.' + condRHS.print)
+		} else if (condRelat == Relation.NEQ) {
+			ecg.addUniquenessConstraint(pathName + '.' + condLHS.print, pathName + '.' + condRHS.print)
+		}
+	}
+
+	private dispatch def callApi(PropertyMapping m, EngineConfigGenerator ecg) {
+		val tl = m.path.tail
+		val pathName = tl.map[name].join('.')
+		// TODO: handle parameter as value
+		if (m.property.propertyType instanceof ReferenceType) {
+			// Hack, part 1, for reference property
+			val s = 'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + serializer.serialize(m.value).trim // FIXME
+			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
+		} else if (m.property.propertyType instanceof ListType &&
+			(m.property.propertyType as ListType).elementType instanceof ReferenceType) {
+			// Hack, part 2, for reference property
+			val pv = m.value as PropertyValue
+			val a = pv.getContainerOfType(Assignment)
+			var ref = a.ref
+			// reference value is relative to assignment's container
+			var refPath = pathName
+			while (ref !== null && refPath.endsWith(ref.element.name)) {
+				refPath = refPath.substring(0, refPath.length - ref.element.name.length - 1)
+				ref = ref.prev
+			}
+			val s = 'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + refPath + '.' +
+				serializer.serialize((pv.exp as ReferenceValue).path).trim
+			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
+		} else {
+//			val s = 'LitPropertyValue-' + pathName + '-' + m.property.print + '-' + propertyType(m.property) + '=' +
+//				serializer.serialize(m.value).trim
+				ecg.addChoicePointDefinition(pathName, ATSVVariableType.getTypeByName(propertyType(m.property)),
+					new ValuesModel(serializer.serialize(m.value).trim.replaceAll("\\D*","").split(","))
+				)
+		}
+	}
+
+	private dispatch def callApi(AbstractMapping m, EngineConfigGenerator ecg) {
+		// TODO: Should throw an error
+		
+	}
+
+	private def callApiOutput(OutputVariable o, EngineConfigGenerator ecg) {
+		var type = ATSVVariableType.getTypeByName(o.type.print)
+		if(o.limit === null) {
+			ecg.addOutputVariable(o.name, type, null);
+		} else {
+			ecg.addOutputVariable(o.name, type, new Limit(o.limit.relation.print, o.limit.bound.print));
+		}
+	}
+
+	private def callApi(Configuration rootConfig, Iterable<AbstractMapping> choicepointIter, List<OutputVariable> outputs, List<String> analyses) {
+		val ecg = new EngineConfigGenerator()
+		ecg.initializeFields
+		ecg.setPackageName(rootConfig.print)
+		choicepointIter.forEach[callApi(ecg)]
+		outputs.forEach[callApiOutput(ecg)]
+		ecg.addAnalyses(analyses.join(','))
+		ecg.execute()
 	}
 
 	def makeMappings(ConfigPkg pkg, Configuration rootConfig) {
@@ -520,6 +630,10 @@ class ConfigGenerator extends AbstractGenerator {
 	dispatch def String print(NamedElementRef ner) {
 		ner.ref.print
 	}
+	
+	dispatch def String print(PropertyExpression prex){
+		serializer.serialize(prex).trim
+	}
 
 	dispatch def String print(PropertyValue pv) {
 		serializer.serialize(pv)
@@ -550,6 +664,10 @@ class ConfigGenerator extends AbstractGenerator {
 			'#no choices given'
 		else
 			ch.print
+	}
+	
+	dispatch def String print(Type t){
+		t.getName()
 	}
 
 	dispatch def String print(Relation r) {

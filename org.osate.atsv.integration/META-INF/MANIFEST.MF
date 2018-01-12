@@ -19,10 +19,31 @@ Require-Bundle: org.eclipse.ui,
  org.sat4j.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.osate.atsv.integration,
+Export-Package: org.osate.atsv.integration;
+  uses:="org.osate.atsv.integration.network,
+   org.osgi.framework,
+   org.osate.atsv.integration.EngineConfigModel,
+   org.osate.aadl2.modelsupport.errorreporting,
+   org.eclipse.ui,
+   org.eclipse.core.runtime,
+   org.osate.aadl2.instance,
+   org.eclipse.jface.preference,
+   org.eclipse.ui.plugin",
  org.osate.atsv.integration.ChoicePointModel,
- org.osate.atsv.integration.EngineConfigModel,
+ org.osate.atsv.integration.EngineConfigModel;uses:="javax.xml.bind.annotation.adapters,org.osate.atsv.integration.ChoicePointModel,javax.xml.bind",
  org.osate.atsv.integration.exception,
- org.osate.atsv.integration.instantiator,
- org.osate.atsv.integration.network,
- org.osate.atsv.standalone
+ org.osate.atsv.integration.instantiator;
+  uses:="org.osate.aadl2,
+   org.osate.aadl2.modelsupport.errorreporting,
+   org.eclipse.core.runtime,
+   org.osate.aadl2.instance.util,
+   org.osate.aadl2.instantiation,
+   org.osate.aadl2.instance",
+ org.osate.atsv.integration.network;uses:="org.osate.atsv.integration.ChoicePointModel,org.osate.atsv.standalone",
+ org.osate.atsv.integration.preparser;
+  uses:="org.osate.atsv.integration.ChoicePointModel,
+   org.osate.atsv.integration.network,
+   org.osate.atsv.integration.EngineConfigModel,
+   org.eclipse.core.commands,
+   org.osate.atsv.standalone",
+ org.osate.atsv.standalone;uses:="org.osate.atsv.integration.ChoicePointModel,org.osate.atsv.integration.network,javax.xml.bind.annotation.adapters"

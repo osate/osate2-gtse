@@ -32,13 +32,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.osate.atsv.integration.Activator;
-import org.osate.atsv.integration.EngineConfigGenerator;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel;
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
+import org.osate.atsv.integration.preparser.EngineConfigGenerator;
 
 public class EngineConfigTests {
 

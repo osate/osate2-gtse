@@ -8,6 +8,10 @@ import org.osate.gtse.config.config.ConfigValue
 
 class PropertyMapping extends ComponentMapping {
 
+	/**
+	 * Note that this is on the LHS -- the path specifies the model element,
+	 * and then this is the property within the element
+	 */
 	@Accessors
 	Property property
 

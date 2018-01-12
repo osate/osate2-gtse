@@ -50,10 +50,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
-      <handler
-            class="org.osate.atsv.integration.preparser.GenerateInputFilesHandler"
-            commandId="org.osate.atsv.integration.commands.sampleCommand">
-      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">

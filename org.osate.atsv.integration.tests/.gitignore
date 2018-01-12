@@ -1,3 +1,10 @@
 /bin/
 /target/
 .settings/org.eclipse.jdt.ui.prefs
+/ATSVConfig.ecf
+/connector.jar
+/input.xml
+/output.xml
+/parser.jar
+/request.properties
+/run.sh
