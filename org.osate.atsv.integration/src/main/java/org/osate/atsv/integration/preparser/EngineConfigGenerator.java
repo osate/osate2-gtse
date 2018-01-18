@@ -168,6 +168,28 @@ public final class EngineConfigGenerator {
 		eem.addVariable(vm);
 		eem.addTypeRestriction(title, values);
 		startingInputs.addVar(title, type, values.getDefault());
+		addChoicepointToOsateProps(title, type);
+	}
+
+	private void addChoicepointToOsateProps(String title, ATSVVariableType type) {
+		String propName = null;
+		if(type == ATSVVariableType.STRING) {
+			propName = "SubcompChoice-" + title;
+		} else if (type == ATSVVariableType.FLOAT || type == ATSVVariableType.INTEGER) {
+			propName = "LitPropertyValue-" + title;
+		} else if (type == ATSVVariableType.REFERENCE) {
+			propName = "RefPropertyValue-" + title;
+		} else if (type == ATSVVariableType.LIST) {
+			//ListRefPropertyValue
+			//ListLitPropertyValue
+			try {
+				throw new UnsupportedFeatureException("List properties aren't implemented yet");
+			} catch (UnsupportedFeatureException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		osateProps.setProperty(propName, "(Key value is unused)");
 	}
 
 	/**
@@ -182,6 +204,7 @@ public final class EngineConfigGenerator {
 		VariableModel vm = new VariableModel(title, false, true, type, value, distribution);
 		eem.addVariable(vm);
 		startingInputs.addVar(title, type, distribution.getDefault());
+		addChoicepointToOsateProps(title, type);
 	}
 
 	/**
@@ -318,8 +341,17 @@ public final class EngineConfigGenerator {
 		}
 	}
 
-	public void setPackageName(String packageName) {
+	/**
+	 * Sets the package and component implementation (ie, root of the instantiation)
+	 *
+	 * @param qualifiedName The package-qualified name of the root component
+	 */
+	public void setPackageAndComponentName(String qualifiedName) {
+		int lastSep = qualifiedName.lastIndexOf("::");
+		String packageName = qualifiedName.substring(0, lastSep);
+		String compImplName = qualifiedName.substring(lastSep + 2);
 		osateProps.setProperty("packageName", packageName);
+		osateProps.setProperty("componentImplementationName", compImplName);
 	}
 
 	private void generateLimits() {

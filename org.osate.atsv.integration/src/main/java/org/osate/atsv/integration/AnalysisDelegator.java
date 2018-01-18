@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -153,7 +153,7 @@ public class AnalysisDelegator {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
-				.filter(sysImpl -> sysImpl.getQualifiedName().equals(implName)).findFirst().get();
+				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 
 		return CustomInstantiator.myBuildInstanceModelFile(impl, choicepoints);
 	}

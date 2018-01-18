@@ -164,6 +164,7 @@ class ConfigGenerator extends AbstractGenerator {
 			val s = 'RefPropertyValue-' + pathName + '-' + m.property.print + '=' + refPath + '.' +
 				serializer.serialize((pv.exp as ReferenceValue).path).trim
 			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
+			ecg.addChoicePointDefinition(pathName, ATSVVariableType.REFERENCE, new ValuesModel(serializer.serialize((pv.exp as ReferenceValue).path).trim))
 		} else {
 //			val s = 'LitPropertyValue-' + pathName + '-' + m.property.print + '-' + propertyType(m.property) + '=' +
 //				serializer.serialize(m.value).trim
@@ -190,7 +191,8 @@ class ConfigGenerator extends AbstractGenerator {
 	private def callApi(Configuration rootConfig, Iterable<AbstractMapping> choicepointIter, List<OutputVariable> outputs, List<String> analyses) {
 		val ecg = new EngineConfigGenerator()
 		ecg.initializeFields
-		ecg.setPackageName(rootConfig.print)
+		val s = rootConfig.print
+		ecg.setPackageAndComponentName(rootConfig.print)
 		choicepointIter.forEach[callApi(ecg)]
 		outputs.forEach[callApiOutput(ecg)]
 		ecg.addAnalyses(analyses.join(','))
