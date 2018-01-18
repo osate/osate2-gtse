@@ -3567,7 +3567,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	//AbstractFeature aadl2::AbstractFeature:
 	//	(name=ID ':' | refined=[aadl2::AbstractFeature|REFINEDNAME] ':' RefinedToKeywords) (in?='in' | out?='out')?
 	//	('prototype' featurePrototype=[aadl2::FeaturePrototype|QCREF] | 'feature'
-	//	abstractFeatureClassifier=[aadl2::FeatureClassifier|QCREF]?) arrayDimension+=ArrayDimension? ('{'
+	//	abstractFeatureClassifier=[aadl2::FeatureClassifier|QCREF] | 'feature') arrayDimension+=ArrayDimension? ('{'
 	//	ownedPropertyAssociation+=PropertyAssociation+ '}')? ';';
 	public Aadl2GrammarAccess.AbstractFeatureElements getAbstractFeatureAccess() {
 		return gaAadl2.getAbstractFeatureAccess();
