@@ -57,6 +57,7 @@ public class EngineConfigTests {
 	@Before
 	public void startUp() {
 		ecf = new EngineConfigGenerator();
+		ecf.initializeFields();
 	}
 
 	@After
