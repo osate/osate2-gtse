@@ -9,6 +9,7 @@ with error_library;
 with EMV2;
 with ARP4761;
 with SEI;
+with DemoProperties;
 
 -- This is the implementation of the BSCU of the system
 -- The BSCU contains two subsystems.
@@ -76,11 +77,13 @@ end command.i;
 
 process implementation command.i1 extends command.i
 	properties
+		DemoProperties::BrakingPower => 1.5;
 		SEI::Price => 500.00;
 end command.i1;
 
 process implementation command.i2 extends command.i
 	properties
+		DemoProperties::BrakingPower => 3.0;
 		SEI::Price => 1000.00;
 end command.i2;
 
