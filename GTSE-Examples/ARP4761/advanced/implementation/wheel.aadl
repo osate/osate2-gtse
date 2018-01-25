@@ -2,7 +2,7 @@ package impl::wheel
 
 public
 
-with impl::common, SEI;
+with impl::common, SEI, DemoProperties;
 
 system wheel
 end wheel;
@@ -21,12 +21,14 @@ device implementation tire.hi_quality
 	properties
 		SEI::Price => 1000.0;
 		SEI::NetWeight => 3.5 kg;
+		DemoProperties::BrakingPower => 10.0;
 end tire.hi_quality;
 
 device implementation tire.lo_quality
 	properties
 		SEI::Price => 300.0;
 		SEI::NetWeight => 2.5 kg;
+		DemoProperties::BrakingPower => 5.0;
 end tire.lo_quality;
 
 device brake
@@ -37,12 +39,14 @@ device implementation brake.hi_quality
 	properties
 		SEI::Price => 750.0;
 		SEI::NetWeight => 2.5 kg;
+		DemoProperties::BrakingPower => 10.0;
 end brake.hi_quality;
 
 device implementation brake.lo_quality
 	properties
 		SEI::Price => 350.0;
 		SEI::NetWeight => 3.5 kg;
+		DemoProperties::BrakingPower => 5.0;
 end brake.lo_quality;
 
 --
@@ -54,7 +58,7 @@ end brake.lo_quality;
 	system wheel_one_input extends wheel
 features
 	input : requires bus access impl::common::pressure.i;
-annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                
+annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 	
@@ -88,7 +92,7 @@ system wheel_two_inputs extends wheel_one_input
 features
 	green_input : requires bus access impl::common::pressure.i;
 	blue_input : requires bus access impl::common::pressure.i;
-annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::Twostate;
 	error propagations
@@ -111,6 +115,7 @@ system implementation wheel_two_inputs.i extends wheel.i
 		SEI::Price => 500.0;
 		SEI::NetWeight => 2.5 kg;
 end wheel_two_inputs.i;
+
 
 
 end impl::wheel;

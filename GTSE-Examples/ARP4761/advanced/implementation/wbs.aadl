@@ -11,8 +11,8 @@ with impl::power;
 with impl::pedals;
 with ARP4761;
 with EMV2;
-
-	with SEI;
+with SEI;
+with DemoProperties;
 
 
 --
@@ -52,7 +52,7 @@ connections
 	pedal2     : port pedals.signal2 -> bscu.pedal2;
 properties
 	SEI::WeightLimit => 50.0 kg;
-annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+annex EMV2 {**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 	-- The WBS system has the following error states:
 	-- Operational
 	-- AnnunciatedTotalBrakingLoss
@@ -147,6 +147,7 @@ system implementation wbs.ima extends wbs.detailed
 subcomponents
 	bscu : refined to system impl::bscu::bscu.ima;
 end wbs.ima;
+
 
 
 end impl::wbs;

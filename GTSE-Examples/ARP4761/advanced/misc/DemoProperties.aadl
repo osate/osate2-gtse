@@ -1,0 +1,3 @@
+property set DemoProperties is
+	BrakingPower : aadlreal applies to (all);
+end DemoProperties;

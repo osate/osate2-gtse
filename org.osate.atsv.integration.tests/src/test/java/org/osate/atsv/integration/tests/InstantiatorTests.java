@@ -85,7 +85,7 @@ public class InstantiatorTests extends OsateTest {
 			Set<ChoicePointSpecification> choicepoints) throws Exception {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
-				.filter(sysImpl -> sysImpl.getQualifiedName().equals(implName)).findFirst().get();
+				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 		return CustomInstantiator.myBuildInstanceModelFile(impl, getChoicePointMap(choicepoints));
 	}
 

@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -21,10 +21,11 @@ package org.osate.atsv.integration.tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.osate.gtse.config.ui.tests.MappingTest;
 
 @RunWith(Suite.class)
 @SuiteClasses({ IntegrationTests.class, EngineConfigTests.class, InstantiatorTests.class, IssueTests.class,
-		ParserTests.class })
+	ParserTests.class/*, MappingTest.class */})
 public class PluginTest {
 	/**
 	 * The name of the omnibus test package
@@ -34,5 +35,5 @@ public class PluginTest {
 	/**
 	 * The name of the top-level component in the omnibus test package
 	 */
-	public static final String COMPONENT_NAME = "SimpleComponentChoice::MySystem.Tier0";
+	public static final String COMPONENT_NAME = "MySystem.Tier0";
 }
