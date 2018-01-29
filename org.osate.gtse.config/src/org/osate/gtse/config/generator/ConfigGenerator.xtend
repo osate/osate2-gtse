@@ -78,6 +78,7 @@ import org.osate.gtse.config.config.Type
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 import static extension org.osate.gtse.config.config.AssignmentExt.isProperty
+
 /**
  * Generates code from your model files on save.
  * 
@@ -179,26 +180,43 @@ class ConfigGenerator extends AbstractGenerator {
 			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
 			ecg.addChoicePointDefinition(pathName, ATSVVariableType.REFERENCE,
 				new ValuesModel(serializer.serialize((pv.exp as ReferenceValue).path).trim))
-		} else if (m.value instanceof NamedElementRef && (m.value as NamedElementRef).ref instanceof ConfigParameter) {
-			val param = (m.value as NamedElementRef).ref as ConfigParameter
-			if (param.choices instanceof CandidateList && (param.choices as CandidateList).candidates.size == 1) {
-				val range = ((param.choices as CandidateList).candidates.head as PropertyValue).exp
-				if (range instanceof RangeValue) {
-					ecg.addChoicePointDefinition(
-						pathName,
-						ATSVVariableType.getTypeByName(propertyType(m.property)),
-						new UniformDistributionModel(range.minimumValue.toFloat, range.maximumValue.toFloat)
-					)
-				}
-			}
 		} else {
+			if (m.value instanceof NamedElementRef && (m.value as NamedElementRef).ref instanceof ConfigParameter) {
+				var done = false;
+				val param = (m.value as NamedElementRef).ref as ConfigParameter
+				if (param.choices instanceof CandidateList) {
+					if ((param.choices as CandidateList).candidates.size == 1) {
+						val range = ((param.choices as CandidateList).candidates.head as PropertyValue).exp
+						if (range instanceof RangeValue) {
+							ecg.addChoicePointDefinition(
+								pathName,
+								m.property.print,
+								ATSVVariableType.getTypeByName(propertyType(m.property)),
+								new UniformDistributionModel(range.minimumValue.toFloat, range.maximumValue.toFloat)
+							)
+							done = true;
+						}
+					}
+					if (!done) {
+						ecg.addChoicePointDefinition(
+							pathName,
+							m.property.print,
+							ATSVVariableType.getTypeByName(propertyType(m.property)),
+							new ValuesModel(param.choices.print.trim.replaceAll("[^0-9,]*", "").split(","))
+						)
+					}
+				}
+			} else {
+
 //			val s = 'LitPropertyValue-' + pathName + '-' + m.property.print + '-' + propertyType(m.property) + '=' +
 //				serializer.serialize(m.value).trim
-			ecg.addChoicePointDefinition(
-				pathName,
-				ATSVVariableType.getTypeByName(propertyType(m.property)),
-				new ValuesModel(serializer.serialize(m.value).trim.replaceAll("\\D*", "").split(","))
-			)
+				ecg.addChoicePointDefinition(
+					pathName,
+					m.property.print,
+					ATSVVariableType.getTypeByName(propertyType(m.property)),
+					new ValuesModel(serializer.serialize(m.value).trim.replaceAll("\\D*", "").split(","))
+				)
+			}
 		}
 	}
 
@@ -690,7 +708,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	dispatch def String print(Property p) {
-		p.qualifiedName().replaceAll(':', '\\\\:')
+		p.qualifiedName()
 	}
 
 	dispatch def String print(ConfigParameter p) {
