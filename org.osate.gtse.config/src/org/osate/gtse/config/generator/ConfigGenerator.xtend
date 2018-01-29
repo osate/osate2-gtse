@@ -525,10 +525,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	protected static def propertyApplies(Assignment a, NamedElement ne) {
-		!a.isProperty || {
-			val pv = a.value
-			pv instanceof PropertyValue && ne.acceptsProperty(a.property)
-		}
+		!a.isProperty || ne.acceptsProperty(a.property)
 	}
 
 	protected dispatch def Iterable<NamedElement> allNamedElements(ComponentType t) {
