@@ -165,13 +165,16 @@ public final class EngineConfigGenerator {
 	 */
 	public void addChoicePointDefinition(String modelElementName, String propertyName, ATSVVariableType type,
 			ValuesModel values) {
-		String name = modelElementName + "-" + propertyName;
+		String name = modelElementName;
+		if(propertyName != null) {
+			name += "-" + propertyName;
+		}
 		String value = values.getDefault();
-		VariableModel vm = new VariableModel(modelElementName, false, true, type, value, values);
+		VariableModel vm = new VariableModel(name, false, true, type, value, values);
 		eem.addVariable(vm);
-		eem.addTypeRestriction(modelElementName, values);
-		startingInputs.addVar(modelElementName, type, values.getDefault());
-		addChoicepointToOsateProps(modelElementName, type);
+		eem.addTypeRestriction(name, values);
+		startingInputs.addVar(name, type, values.getDefault());
+		addChoicepointToOsateProps(name, type);
 	}
 
 	/**
@@ -207,7 +210,10 @@ public final class EngineConfigGenerator {
 	 */
 	public void addChoicePointDefinition(String modelElementName, String propertyName, ATSVVariableType type,
 			DistributionModel distribution) {
-		String name = modelElementName + "-" + propertyName;
+		String name = modelElementName;
+		if (propertyName != null) {
+			name += "-" + propertyName;
+		}
 		String value = distribution.getDefault();
 		VariableModel vm = new VariableModel(name, false, true, type, value, distribution);
 		eem.addVariable(vm);
