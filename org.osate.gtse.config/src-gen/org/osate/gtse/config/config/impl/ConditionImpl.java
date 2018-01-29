@@ -67,7 +67,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * @generated
    * @ordered
    */
-  protected static final Relation RELATION_EDEFAULT = Relation.GT;
+  protected static final Relation RELATION_EDEFAULT = Relation.NONE;
 
   /**
    * The cached value of the '{@link #getRelation() <em>Relation</em>}' attribute.

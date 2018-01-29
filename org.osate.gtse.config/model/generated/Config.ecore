@@ -26,14 +26,16 @@
     <eLiterals name="STRING" value="2" literal="string"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Relation">
-    <eLiterals name="GT" literal=">"/>
-    <eLiterals name="GTE" value="1" literal=">="/>
-    <eLiterals name="EQ" value="2" literal="=="/>
-    <eLiterals name="NEQ" value="3" literal="!="/>
-    <eLiterals name="LT" value="4" literal="&lt;"/>
-    <eLiterals name="LTE" value="5" literal="&lt;="/>
-    <eLiterals name="FB" value="6" literal="forbids"/>
-    <eLiterals name="RQ" value="7" literal="requires"/>
+    <eLiterals name="NONE" literal="_"/>
+    <eLiterals name="GT" value="1" literal=">"/>
+    <eLiterals name="GTE" value="2" literal=">="/>
+    <eLiterals name="EQ" value="3" literal="=="/>
+    <eLiterals name="NEQ" value="4" literal="!="/>
+    <eLiterals name="LT" value="5" literal="&lt;"/>
+    <eLiterals name="LTE" value="6" literal="&lt;="/>
+    <eLiterals name="FB" value="7" literal="forbids"/>
+    <eLiterals name="RQ" value="8" literal="requires"/>
+    <eLiterals name="IN" value="9" literal="in"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Configuration" eSuperTypes="platform:/resource/org.osate.aadl2/model/aadl2.ecore#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
@@ -93,6 +95,10 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConditionExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SetValue" eSuperTypes="#//ConditionExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//ConditionValue" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConditionValue" eSuperTypes="#//ConditionExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="ConfigElement" eSuperTypes="#//ConditionExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ElementRef"

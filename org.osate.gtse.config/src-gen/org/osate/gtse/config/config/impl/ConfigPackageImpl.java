@@ -51,6 +51,7 @@ import org.osate.gtse.config.config.NestedAssignments;
 import org.osate.gtse.config.config.OutputVariable;
 import org.osate.gtse.config.config.PropertyValue;
 import org.osate.gtse.config.config.Relation;
+import org.osate.gtse.config.config.SetValue;
 import org.osate.gtse.config.config.Type;
 
 /**
@@ -151,6 +152,13 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * @generated
    */
   private EClass conditionExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass setValueEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -750,6 +758,26 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getSetValue()
+  {
+    return setValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSetValue_Elements()
+  {
+    return (EReference)setValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getConditionValue()
   {
     return conditionValueEClass;
@@ -1025,6 +1053,9 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     conditionExpressionEClass = createEClass(CONDITION_EXPRESSION);
 
+    setValueEClass = createEClass(SET_VALUE);
+    createEReference(setValueEClass, SET_VALUE__ELEMENTS);
+
     conditionValueEClass = createEClass(CONDITION_VALUE);
 
     configElementEClass = createEClass(CONFIG_ELEMENT);
@@ -1090,6 +1121,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     outputVariableEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configurationEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
     configParameterEClass.getESuperTypes().add(theAadl2Package.getNamedElement());
+    setValueEClass.getESuperTypes().add(this.getConditionExpression());
     conditionValueEClass.getESuperTypes().add(this.getConditionExpression());
     configElementEClass.getESuperTypes().add(this.getConditionExpression());
     candidateListEClass.getESuperTypes().add(this.getConfigValue());
@@ -1160,6 +1192,9 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
     initEClass(conditionExpressionEClass, ConditionExpression.class, "ConditionExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(setValueEClass, SetValue.class, "SetValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSetValue_Elements(), this.getConditionValue(), null, "elements", null, 0, -1, SetValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(conditionValueEClass, ConditionValue.class, "ConditionValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(configElementEClass, ConfigElement.class, "ConfigElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1190,6 +1225,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     addEEnumLiteral(typeEEnum, Type.STRING);
 
     initEEnum(relationEEnum, Relation.class, "Relation");
+    addEEnumLiteral(relationEEnum, Relation.NONE);
     addEEnumLiteral(relationEEnum, Relation.GT);
     addEEnumLiteral(relationEEnum, Relation.GTE);
     addEEnumLiteral(relationEEnum, Relation.EQ);
@@ -1198,6 +1234,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     addEEnumLiteral(relationEEnum, Relation.LTE);
     addEEnumLiteral(relationEEnum, Relation.FB);
     addEEnumLiteral(relationEEnum, Relation.RQ);
+    addEEnumLiteral(relationEEnum, Relation.IN);
 
     // Create resource
     createResource(eNS_URI);

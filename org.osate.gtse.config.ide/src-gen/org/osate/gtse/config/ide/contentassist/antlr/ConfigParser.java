@@ -491,6 +491,8 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstraintAccess().getGroup(), "rule__Constraint__Group__0");
 					put(grammarAccess.getConstraintAccess().getGroup_1(), "rule__Constraint__Group_1__0");
 					put(grammarAccess.getConditionAccess().getGroup(), "rule__Condition__Group__0");
+					put(grammarAccess.getSetValueAccess().getGroup(), "rule__SetValue__Group__0");
+					put(grammarAccess.getSetValueAccess().getGroup_2(), "rule__SetValue__Group_2__0");
 					put(grammarAccess.getConditionValueAccess().getGroup_0(), "rule__ConditionValue__Group_0__0");
 					put(grammarAccess.getConditionValueAccess().getGroup_1(), "rule__ConditionValue__Group_1__0");
 					put(grammarAccess.getConfigElementAccess().getGroup_0(), "rule__ConfigElement__Group_0__0");
@@ -1603,7 +1605,9 @@ public class ConfigParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConditionAccess().getLhsAssignment_0(), "rule__Condition__LhsAssignment_0");
 					put(grammarAccess.getConditionAccess().getRelationAssignment_1(), "rule__Condition__RelationAssignment_1");
 					put(grammarAccess.getConditionAccess().getRhsAssignment_2(), "rule__Condition__RhsAssignment_2");
-					put(grammarAccess.getConditionValueAccess().getRefAssignment_0_1(), "rule__ConditionValue__RefAssignment_0_1");
+					put(grammarAccess.getSetValueAccess().getElementsAssignment_1(), "rule__SetValue__ElementsAssignment_1");
+					put(grammarAccess.getSetValueAccess().getElementsAssignment_2_1(), "rule__SetValue__ElementsAssignment_2_1");
+					put(grammarAccess.getConditionValueAccess().getRefAssignment_0_2(), "rule__ConditionValue__RefAssignment_0_2");
 					put(grammarAccess.getConditionValueAccess().getExpAssignment_1_1(), "rule__ConditionValue__ExpAssignment_1_1");
 					put(grammarAccess.getConfigElementAccess().getElementAssignment_0_0(), "rule__ConfigElement__ElementAssignment_0_0");
 					put(grammarAccess.getConfigElementAccess().getPropertyAssignment_0_1_1(), "rule__ConfigElement__PropertyAssignment_0_1_1");

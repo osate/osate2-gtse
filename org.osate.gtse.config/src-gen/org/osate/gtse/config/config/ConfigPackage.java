@@ -809,6 +809,34 @@ public interface ConfigPackage extends EPackage
   int CONDITION_EXPRESSION_FEATURE_COUNT = 0;
 
   /**
+   * The meta object id for the '{@link org.osate.gtse.config.config.impl.SetValueImpl <em>Set Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.osate.gtse.config.config.impl.SetValueImpl
+   * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getSetValue()
+   * @generated
+   */
+  int SET_VALUE = 13;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SET_VALUE__ELEMENTS = CONDITION_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Set Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SET_VALUE_FEATURE_COUNT = CONDITION_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.osate.gtse.config.config.impl.ConditionValueImpl <em>Condition Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -816,7 +844,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getConditionValue()
    * @generated
    */
-  int CONDITION_VALUE = 13;
+  int CONDITION_VALUE = 14;
 
   /**
    * The number of structural features of the '<em>Condition Value</em>' class.
@@ -835,7 +863,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getConfigElement()
    * @generated
    */
-  int CONFIG_ELEMENT = 14;
+  int CONFIG_ELEMENT = 15;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference.
@@ -872,7 +900,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getCandidateList()
    * @generated
    */
-  int CANDIDATE_LIST = 15;
+  int CANDIDATE_LIST = 16;
 
   /**
    * The feature id for the '<em><b>Candidates</b></em>' containment reference list.
@@ -900,7 +928,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getNamedElementRef()
    * @generated
    */
-  int NAMED_ELEMENT_REF = 16;
+  int NAMED_ELEMENT_REF = 17;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -964,7 +992,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getPropertyValue()
    * @generated
    */
-  int PROPERTY_VALUE = 17;
+  int PROPERTY_VALUE = 18;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -992,7 +1020,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getNestedAssignments()
    * @generated
    */
-  int NESTED_ASSIGNMENTS = 18;
+  int NESTED_ASSIGNMENTS = 19;
 
   /**
    * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
@@ -1029,7 +1057,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getType()
    * @generated
    */
-  int TYPE = 19;
+  int TYPE = 20;
 
   /**
    * The meta object id for the '{@link org.osate.gtse.config.config.Relation <em>Relation</em>}' enum.
@@ -1039,7 +1067,7 @@ public interface ConfigPackage extends EPackage
    * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getRelation()
    * @generated
    */
-  int RELATION = 20;
+  int RELATION = 21;
 
 
   /**
@@ -1545,6 +1573,27 @@ public interface ConfigPackage extends EPackage
    * @generated
    */
   EClass getConditionExpression();
+
+  /**
+   * Returns the meta object for class '{@link org.osate.gtse.config.config.SetValue <em>Set Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Set Value</em>'.
+   * @see org.osate.gtse.config.config.SetValue
+   * @generated
+   */
+  EClass getSetValue();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.osate.gtse.config.config.SetValue#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Elements</em>'.
+   * @see org.osate.gtse.config.config.SetValue#getElements()
+   * @see #getSetValue()
+   * @generated
+   */
+  EReference getSetValue_Elements();
 
   /**
    * Returns the meta object for class '{@link org.osate.gtse.config.config.ConditionValue <em>Condition Value</em>}'.
@@ -2171,6 +2220,24 @@ public interface ConfigPackage extends EPackage
      * @generated
      */
     EClass CONDITION_EXPRESSION = eINSTANCE.getConditionExpression();
+
+    /**
+     * The meta object literal for the '{@link org.osate.gtse.config.config.impl.SetValueImpl <em>Set Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.osate.gtse.config.config.impl.SetValueImpl
+     * @see org.osate.gtse.config.config.impl.ConfigPackageImpl#getSetValue()
+     * @generated
+     */
+    EClass SET_VALUE = eINSTANCE.getSetValue();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SET_VALUE__ELEMENTS = eINSTANCE.getSetValue_Elements();
 
     /**
      * The meta object literal for the '{@link org.osate.gtse.config.config.impl.ConditionValueImpl <em>Condition Value</em>}' class.

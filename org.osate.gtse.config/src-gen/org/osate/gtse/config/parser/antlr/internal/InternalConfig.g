@@ -1879,6 +1879,86 @@ ruleConditionExpression returns [EObject current=null]
 			$current = $this_ConditionValue_1.current;
 			afterParserOrEnumRuleCall();
 		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getConditionExpressionAccess().getSetValueParserRuleCall_2());
+		}
+		this_SetValue_2=ruleSetValue
+		{
+			$current = $this_SetValue_2.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleSetValue
+entryRuleSetValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getSetValueRule()); }
+	iv_ruleSetValue=ruleSetValue
+	{ $current=$iv_ruleSetValue.current; }
+	EOF;
+
+// Rule SetValue
+ruleSetValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='{'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getSetValueAccess().getLeftCurlyBracketKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getSetValueAccess().getElementsConditionValueParserRuleCall_1_0());
+				}
+				lv_elements_1_0=ruleConditionValue
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getSetValueRule());
+					}
+					add(
+						$current,
+						"elements",
+						lv_elements_1_0,
+						"org.osate.gtse.config.Config.ConditionValue");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_2=','
+			{
+				newLeafNode(otherlv_2, grammarAccess.getSetValueAccess().getCommaKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getSetValueAccess().getElementsConditionValueParserRuleCall_2_1_0());
+					}
+					lv_elements_3_0=ruleConditionValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getSetValueRule());
+						}
+						add(
+							$current,
+							"elements",
+							lv_elements_3_0,
+							"org.osate.gtse.config.Config.ConditionValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		otherlv_4='}'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getSetValueAccess().getRightCurlyBracketKeyword_3());
+		}
 	)
 ;
 
@@ -1906,6 +1986,10 @@ ruleConditionValue returns [EObject current=null]
 						$current);
 				}
 			)
+			otherlv_1='!'
+			{
+				newLeafNode(otherlv_1, grammarAccess.getConditionValueAccess().getExclamationMarkKeyword_0_1());
+			}
 			(
 				(
 					{
@@ -1914,7 +1998,7 @@ ruleConditionValue returns [EObject current=null]
 						}
 					}
 					{
-						newCompositeNode(grammarAccess.getConditionValueAccess().getRefNamedElementCrossReference_0_1_0());
+						newCompositeNode(grammarAccess.getConditionValueAccess().getRefNamedElementCrossReference_0_2_0());
 					}
 					ruleCNAME
 					{
@@ -1937,7 +2021,7 @@ ruleConditionValue returns [EObject current=null]
 					{
 						newCompositeNode(grammarAccess.getConditionValueAccess().getExpCPropertyExpressionParserRuleCall_1_1_0());
 					}
-					lv_exp_3_0=ruleCPropertyExpression
+					lv_exp_4_0=ruleCPropertyExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getConditionValueRule());
@@ -1945,7 +2029,7 @@ ruleConditionValue returns [EObject current=null]
 						set(
 							$current,
 							"exp",
-							lv_exp_3_0,
+							lv_exp_4_0,
 							"org.osate.gtse.config.Config.CPropertyExpression");
 						afterParserOrEnumRuleCall();
 					}
@@ -43663,66 +43747,82 @@ ruleRelation returns [Enumerator current=null]
 }:
 	(
 		(
-			enumLiteral_0='>'
+			enumLiteral_0='_'
 			{
-				$current = grammarAccess.getRelationAccess().getGTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getRelationAccess().getGTEnumLiteralDeclaration_0());
+				$current = grammarAccess.getRelationAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getRelationAccess().getNONEEnumLiteralDeclaration_0());
 			}
 		)
 		    |
 		(
-			enumLiteral_1='>='
+			enumLiteral_1='>'
 			{
-				$current = grammarAccess.getRelationAccess().getGTEEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getRelationAccess().getGTEEnumLiteralDeclaration_1());
+				$current = grammarAccess.getRelationAccess().getGTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getRelationAccess().getGTEnumLiteralDeclaration_1());
 			}
 		)
 		    |
 		(
-			enumLiteral_2='=='
+			enumLiteral_2='>='
 			{
-				$current = grammarAccess.getRelationAccess().getEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getRelationAccess().getEQEnumLiteralDeclaration_2());
+				$current = grammarAccess.getRelationAccess().getGTEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getRelationAccess().getGTEEnumLiteralDeclaration_2());
 			}
 		)
 		    |
 		(
-			enumLiteral_3='!='
+			enumLiteral_3='=='
 			{
-				$current = grammarAccess.getRelationAccess().getNEQEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getRelationAccess().getNEQEnumLiteralDeclaration_3());
+				$current = grammarAccess.getRelationAccess().getEQEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getRelationAccess().getEQEnumLiteralDeclaration_3());
 			}
 		)
 		    |
 		(
-			enumLiteral_4='<'
+			enumLiteral_4='!='
 			{
-				$current = grammarAccess.getRelationAccess().getLTEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getRelationAccess().getLTEnumLiteralDeclaration_4());
+				$current = grammarAccess.getRelationAccess().getNEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getRelationAccess().getNEQEnumLiteralDeclaration_4());
 			}
 		)
 		    |
 		(
-			enumLiteral_5='<='
+			enumLiteral_5='<'
 			{
-				$current = grammarAccess.getRelationAccess().getLTEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_5, grammarAccess.getRelationAccess().getLTEEnumLiteralDeclaration_5());
+				$current = grammarAccess.getRelationAccess().getLTEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_5, grammarAccess.getRelationAccess().getLTEnumLiteralDeclaration_5());
 			}
 		)
 		    |
 		(
-			enumLiteral_6='forbids'
+			enumLiteral_6='<='
 			{
-				$current = grammarAccess.getRelationAccess().getFBEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_6, grammarAccess.getRelationAccess().getFBEnumLiteralDeclaration_6());
+				$current = grammarAccess.getRelationAccess().getLTEEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_6, grammarAccess.getRelationAccess().getLTEEnumLiteralDeclaration_6());
 			}
 		)
 		    |
 		(
-			enumLiteral_7='requires'
+			enumLiteral_7='forbids'
 			{
-				$current = grammarAccess.getRelationAccess().getRQEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_7, grammarAccess.getRelationAccess().getRQEnumLiteralDeclaration_7());
+				$current = grammarAccess.getRelationAccess().getFBEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_7, grammarAccess.getRelationAccess().getFBEnumLiteralDeclaration_7());
+			}
+		)
+		    |
+		(
+			enumLiteral_8='requires'
+			{
+				$current = grammarAccess.getRelationAccess().getRQEnumLiteralDeclaration_8().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_8, grammarAccess.getRelationAccess().getRQEnumLiteralDeclaration_8());
+			}
+		)
+		    |
+		(
+			enumLiteral_9='in'
+			{
+				$current = grammarAccess.getRelationAccess().getINEnumLiteralDeclaration_9().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_9, grammarAccess.getRelationAccess().getINEnumLiteralDeclaration_9());
 			}
 		)
 	)

@@ -21,7 +21,7 @@ package org.osate.atsv.integration.tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.osate.gtse.config.ui.tests.MappingTest;
+
 
 @RunWith(Suite.class)
 @SuiteClasses({ IntegrationTests.class, EngineConfigTests.class, InstantiatorTests.class, IssueTests.class,

@@ -12,6 +12,7 @@
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Type/STRING"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Config.ecore#//Relation">
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/NONE"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/GT"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/GTE"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/EQ"/>
@@ -20,6 +21,7 @@
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/LTE"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/FB"/>
       <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/RQ"/>
+      <genEnumLiterals ecoreEnumLiteral="Config.ecore#//Relation/IN"/>
     </genEnums>
     <genClasses ecoreClass="Config.ecore#//ConfigPkg">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigPkg/root"/>
@@ -79,6 +81,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//Condition/rhs"/>
     </genClasses>
     <genClasses ecoreClass="Config.ecore#//ConditionExpression"/>
+    <genClasses ecoreClass="Config.ecore#//SetValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//SetValue/elements"/>
+    </genClasses>
     <genClasses ecoreClass="Config.ecore#//ConditionValue"/>
     <genClasses ecoreClass="Config.ecore#//ConfigElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Config.ecore#//ConfigElement/element"/>

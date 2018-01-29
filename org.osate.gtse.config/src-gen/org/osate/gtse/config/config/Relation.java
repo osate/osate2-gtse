@@ -36,6 +36,16 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum Relation implements Enumerator
 {
   /**
+   * The '<em><b>NONE</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #NONE_VALUE
+   * @generated
+   * @ordered
+   */
+  NONE(0, "NONE", "_"),
+
+  /**
    * The '<em><b>GT</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -43,7 +53,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  GT(0, "GT", ">"),
+  GT(1, "GT", ">"),
 
   /**
    * The '<em><b>GTE</b></em>' literal object.
@@ -53,7 +63,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  GTE(1, "GTE", ">="),
+  GTE(2, "GTE", ">="),
 
   /**
    * The '<em><b>EQ</b></em>' literal object.
@@ -63,7 +73,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  EQ(2, "EQ", "=="),
+  EQ(3, "EQ", "=="),
 
   /**
    * The '<em><b>NEQ</b></em>' literal object.
@@ -73,7 +83,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  NEQ(3, "NEQ", "!="),
+  NEQ(4, "NEQ", "!="),
 
   /**
    * The '<em><b>LT</b></em>' literal object.
@@ -83,7 +93,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  LT(4, "LT", "<"),
+  LT(5, "LT", "<"),
 
   /**
    * The '<em><b>LTE</b></em>' literal object.
@@ -93,7 +103,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  LTE(5, "LTE", "<="),
+  LTE(6, "LTE", "<="),
 
   /**
    * The '<em><b>FB</b></em>' literal object.
@@ -103,7 +113,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  FB(6, "FB", "forbids"),
+  FB(7, "FB", "forbids"),
 
   /**
    * The '<em><b>RQ</b></em>' literal object.
@@ -113,7 +123,32 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  RQ(7, "RQ", "requires");
+  RQ(8, "RQ", "requires"),
+
+  /**
+   * The '<em><b>IN</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #IN_VALUE
+   * @generated
+   * @ordered
+   */
+  IN(9, "IN", "in");
+
+  /**
+   * The '<em><b>NONE</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>NONE</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #NONE
+   * @model literal="_"
+   * @generated
+   * @ordered
+   */
+  public static final int NONE_VALUE = 0;
 
   /**
    * The '<em><b>GT</b></em>' literal value.
@@ -128,7 +163,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int GT_VALUE = 0;
+  public static final int GT_VALUE = 1;
 
   /**
    * The '<em><b>GTE</b></em>' literal value.
@@ -143,7 +178,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int GTE_VALUE = 1;
+  public static final int GTE_VALUE = 2;
 
   /**
    * The '<em><b>EQ</b></em>' literal value.
@@ -158,7 +193,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int EQ_VALUE = 2;
+  public static final int EQ_VALUE = 3;
 
   /**
    * The '<em><b>NEQ</b></em>' literal value.
@@ -173,7 +208,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int NEQ_VALUE = 3;
+  public static final int NEQ_VALUE = 4;
 
   /**
    * The '<em><b>LT</b></em>' literal value.
@@ -188,7 +223,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int LT_VALUE = 4;
+  public static final int LT_VALUE = 5;
 
   /**
    * The '<em><b>LTE</b></em>' literal value.
@@ -203,7 +238,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int LTE_VALUE = 5;
+  public static final int LTE_VALUE = 6;
 
   /**
    * The '<em><b>FB</b></em>' literal value.
@@ -218,7 +253,7 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int FB_VALUE = 6;
+  public static final int FB_VALUE = 7;
 
   /**
    * The '<em><b>RQ</b></em>' literal value.
@@ -233,7 +268,22 @@ public enum Relation implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int RQ_VALUE = 7;
+  public static final int RQ_VALUE = 8;
+
+  /**
+   * The '<em><b>IN</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of '<em><b>IN</b></em>' literal object isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @see #IN
+   * @model literal="in"
+   * @generated
+   * @ordered
+   */
+  public static final int IN_VALUE = 9;
 
   /**
    * An array of all the '<em><b>Relation</b></em>' enumerators.
@@ -244,6 +294,7 @@ public enum Relation implements Enumerator
   private static final Relation[] VALUES_ARRAY =
     new Relation[]
     {
+      NONE,
       GT,
       GTE,
       EQ,
@@ -252,6 +303,7 @@ public enum Relation implements Enumerator
       LTE,
       FB,
       RQ,
+      IN,
     };
 
   /**
@@ -316,6 +368,7 @@ public enum Relation implements Enumerator
   {
     switch (value)
     {
+      case NONE_VALUE: return NONE;
       case GT_VALUE: return GT;
       case GTE_VALUE: return GTE;
       case EQ_VALUE: return EQ;
@@ -324,6 +377,7 @@ public enum Relation implements Enumerator
       case LTE_VALUE: return LTE;
       case FB_VALUE: return FB;
       case RQ_VALUE: return RQ;
+      case IN_VALUE: return IN;
     }
     return null;
   }

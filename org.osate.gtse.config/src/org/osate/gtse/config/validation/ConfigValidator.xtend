@@ -21,16 +21,22 @@ package org.osate.gtse.config.validation
 import org.eclipse.xtext.validation.Check
 import org.osate.gtse.config.config.Condition
 import org.osate.gtse.config.config.ConfigPackage
+import org.osate.gtse.config.config.Constraint
 import org.osate.gtse.config.config.Relation
+import org.osate.gtse.config.config.SetValue
+
+import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
 
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class ConfigValidator extends AbstractConfigValidator {
-	
+
 	public static val INVALID_CONDITION_RELATION = 'invalidConditionRelation'
+	public static val INVALID_CONSTRAINT_RELATION = 'invalidConstraintRelation'
+
 //	public static val INVALID_NAME = 'invalidName'
 //
 //	@Check
@@ -41,9 +47,40 @@ class ConfigValidator extends AbstractConfigValidator {
 //		}
 //	}
 	@Check(FAST)
-	def checkConditionRelation(Condition cond) {
-		val rel = cond.relation
-		if (rel != Relation.EQ && rel != Relation.NEQ)
-			error('only == and != are allowed here', ConfigPackage.Literals.CONDITION__RELATION, INVALID_CONDITION_RELATION)
+	def checkConstraintRelation(Constraint cons) {
+		val rel = cons.relation
+		if (!#{Relation.NONE, Relation.RQ, Relation.FB}.contains(rel))
+			error('Only \'requires\' and \'forbids\' are allowed here', ConfigPackage.Literals.CONSTRAINT__RELATION,
+				INVALID_CONSTRAINT_RELATION)
 	}
+
+	@Check(FAST)
+	def checkConditionRelation(Condition cond) {
+		val constraint = cond.getContainerOfType(Constraint)
+		val rel = cond.relation
+		if (constraint.relation == Relation.NONE) {
+			// simple comparison
+			if (!#{Relation.EQ, Relation.NEQ}.contains(rel))
+				error('Only == and != are allowed here', ConfigPackage.Literals.CONDITION__RELATION,
+					INVALID_CONDITION_RELATION)
+		} else {
+			// requires/forbids constraint
+			if (cond == constraint.condition) {
+				if (!#{Relation.EQ}.contains(rel))
+					error('Only == is allowed here', ConfigPackage.Literals.CONDITION__RELATION,
+						INVALID_CONDITION_RELATION)
+			} else {
+				if (cond.rhs instanceof SetValue) {
+					if (!#{Relation.IN}.contains(rel))
+						error('Only \'in\' is allowed here', ConfigPackage.Literals.CONDITION__RELATION,
+							INVALID_CONDITION_RELATION)
+				} else {
+					if (!#{Relation.EQ, Relation.NEQ}.contains(rel))
+						error('Only == and != are allowed here', ConfigPackage.Literals.CONDITION__RELATION,
+							INVALID_CONDITION_RELATION)
+				}
+			}
+		}
+	}
+
 }

@@ -1148,12 +1148,13 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cConfigElementParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cConditionValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSetValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//ConditionExpression:
-		//	=> ConfigElement | ConditionValue;
+		//	=> ConfigElement | ConditionValue | SetValue;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//=> ConfigElement | ConditionValue
+		//=> ConfigElement | ConditionValue | SetValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//=> ConfigElement
@@ -1161,42 +1162,92 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ConditionValue
 		public RuleCall getConditionValueParserRuleCall_1() { return cConditionValueParserRuleCall_1; }
+		
+		//SetValue
+		public RuleCall getSetValueParserRuleCall_2() { return cSetValueParserRuleCall_2; }
+	}
+	public class SetValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.SetValue");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cElementsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cElementsConditionValueParserRuleCall_1_0 = (RuleCall)cElementsAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cElementsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cElementsConditionValueParserRuleCall_2_1_0 = (RuleCall)cElementsAssignment_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//SetValue:
+		//	'{' elements+=ConditionValue (',' elements+=ConditionValue)* '}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'{' elements+=ConditionValue (',' elements+=ConditionValue)* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
+		
+		//elements+=ConditionValue
+		public Assignment getElementsAssignment_1() { return cElementsAssignment_1; }
+		
+		//ConditionValue
+		public RuleCall getElementsConditionValueParserRuleCall_1_0() { return cElementsConditionValueParserRuleCall_1_0; }
+		
+		//(',' elements+=ConditionValue)*
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		
+		//elements+=ConditionValue
+		public Assignment getElementsAssignment_2_1() { return cElementsAssignment_2_1; }
+		
+		//ConditionValue
+		public RuleCall getElementsConditionValueParserRuleCall_2_1_0() { return cElementsConditionValueParserRuleCall_2_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
 	}
 	public class ConditionValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.ConditionValue");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cNamedElementRefAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Assignment cRefAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final CrossReference cRefNamedElementCrossReference_0_1_0 = (CrossReference)cRefAssignment_0_1.eContents().get(0);
-		private final RuleCall cRefNamedElementCNAMEParserRuleCall_0_1_0_1 = (RuleCall)cRefNamedElementCrossReference_0_1_0.eContents().get(1);
+		private final Keyword cExclamationMarkKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cRefAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final CrossReference cRefNamedElementCrossReference_0_2_0 = (CrossReference)cRefAssignment_0_2.eContents().get(0);
+		private final RuleCall cRefNamedElementCNAMEParserRuleCall_0_2_0_1 = (RuleCall)cRefNamedElementCrossReference_0_2_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Action cPropertyValueAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cExpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cExpCPropertyExpressionParserRuleCall_1_1_0 = (RuleCall)cExpAssignment_1_1.eContents().get(0);
 		
 		//ConditionValue:
-		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression // property value
+		//	{NamedElementRef} '!' ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression // property value
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression
+		//{NamedElementRef} '!' ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME]
+		//{NamedElementRef} '!' ref=[aadl2::NamedElement|CNAME]
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{NamedElementRef}
 		public Action getNamedElementRefAction_0_0() { return cNamedElementRefAction_0_0; }
 		
+		//'!'
+		public Keyword getExclamationMarkKeyword_0_1() { return cExclamationMarkKeyword_0_1; }
+		
 		//ref=[aadl2::NamedElement|CNAME]
-		public Assignment getRefAssignment_0_1() { return cRefAssignment_0_1; }
+		public Assignment getRefAssignment_0_2() { return cRefAssignment_0_2; }
 		
 		//[aadl2::NamedElement|CNAME]
-		public CrossReference getRefNamedElementCrossReference_0_1_0() { return cRefNamedElementCrossReference_0_1_0; }
+		public CrossReference getRefNamedElementCrossReference_0_2_0() { return cRefNamedElementCrossReference_0_2_0; }
 		
 		//CNAME
-		public RuleCall getRefNamedElementCNAMEParserRuleCall_0_1_0_1() { return cRefNamedElementCNAMEParserRuleCall_0_1_0_1; }
+		public RuleCall getRefNamedElementCNAMEParserRuleCall_0_2_0_1() { return cRefNamedElementCNAMEParserRuleCall_0_2_0_1; }
 		
 		//{PropertyValue} exp=CPropertyExpression
 		public Group getGroup_1() { return cGroup_1; }
@@ -1410,77 +1461,93 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	public class RelationElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Relation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cGTGreaterThanSignKeyword_0_0 = (Keyword)cGTEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cGTEEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cGTEGreaterThanSignEqualsSignKeyword_1_0 = (Keyword)cGTEEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cEQEqualsSignEqualsSignKeyword_2_0 = (Keyword)cEQEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cNEQEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cNEQExclamationMarkEqualsSignKeyword_3_0 = (Keyword)cNEQEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cLTLessThanSignKeyword_4_0 = (Keyword)cLTEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cLTEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cLTELessThanSignEqualsSignKeyword_5_0 = (Keyword)cLTEEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cFBEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cFBForbidsKeyword_6_0 = (Keyword)cFBEnumLiteralDeclaration_6.eContents().get(0);
-		private final EnumLiteralDeclaration cRQEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
-		private final Keyword cRQRequiresKeyword_7_0 = (Keyword)cRQEnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cNONEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNONE_Keyword_0_0 = (Keyword)cNONEEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cGTGreaterThanSignKeyword_1_0 = (Keyword)cGTEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cGTEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cGTEGreaterThanSignEqualsSignKeyword_2_0 = (Keyword)cGTEEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cEQEqualsSignEqualsSignKeyword_3_0 = (Keyword)cEQEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cNEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cNEQExclamationMarkEqualsSignKeyword_4_0 = (Keyword)cNEQEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cLTLessThanSignKeyword_5_0 = (Keyword)cLTEnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cLTEEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cLTELessThanSignEqualsSignKeyword_6_0 = (Keyword)cLTEEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cFBEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cFBForbidsKeyword_7_0 = (Keyword)cFBEnumLiteralDeclaration_7.eContents().get(0);
+		private final EnumLiteralDeclaration cRQEnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
+		private final Keyword cRQRequiresKeyword_8_0 = (Keyword)cRQEnumLiteralDeclaration_8.eContents().get(0);
+		private final EnumLiteralDeclaration cINEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
+		private final Keyword cINInKeyword_9_0 = (Keyword)cINEnumLiteralDeclaration_9.eContents().get(0);
 		
 		//enum Relation:
-		//	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires';
+		//	NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in';
 		public EnumRule getRule() { return rule; }
 		
-		//GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires'
+		//NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
+		//NONE='_'
+		public EnumLiteralDeclaration getNONEEnumLiteralDeclaration_0() { return cNONEEnumLiteralDeclaration_0; }
+		
+		//'_'
+		public Keyword getNONE_Keyword_0_0() { return cNONE_Keyword_0_0; }
+		
 		//GT='>'
-		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_0() { return cGTEnumLiteralDeclaration_0; }
+		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_1() { return cGTEnumLiteralDeclaration_1; }
 		
 		//'>'
-		public Keyword getGTGreaterThanSignKeyword_0_0() { return cGTGreaterThanSignKeyword_0_0; }
+		public Keyword getGTGreaterThanSignKeyword_1_0() { return cGTGreaterThanSignKeyword_1_0; }
 		
 		//GTE='>='
-		public EnumLiteralDeclaration getGTEEnumLiteralDeclaration_1() { return cGTEEnumLiteralDeclaration_1; }
+		public EnumLiteralDeclaration getGTEEnumLiteralDeclaration_2() { return cGTEEnumLiteralDeclaration_2; }
 		
 		//'>='
-		public Keyword getGTEGreaterThanSignEqualsSignKeyword_1_0() { return cGTEGreaterThanSignEqualsSignKeyword_1_0; }
+		public Keyword getGTEGreaterThanSignEqualsSignKeyword_2_0() { return cGTEGreaterThanSignEqualsSignKeyword_2_0; }
 		
 		//EQ='=='
-		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_2() { return cEQEnumLiteralDeclaration_2; }
+		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_3() { return cEQEnumLiteralDeclaration_3; }
 		
 		//'=='
-		public Keyword getEQEqualsSignEqualsSignKeyword_2_0() { return cEQEqualsSignEqualsSignKeyword_2_0; }
+		public Keyword getEQEqualsSignEqualsSignKeyword_3_0() { return cEQEqualsSignEqualsSignKeyword_3_0; }
 		
 		//NEQ='!='
-		public EnumLiteralDeclaration getNEQEnumLiteralDeclaration_3() { return cNEQEnumLiteralDeclaration_3; }
+		public EnumLiteralDeclaration getNEQEnumLiteralDeclaration_4() { return cNEQEnumLiteralDeclaration_4; }
 		
 		//'!='
-		public Keyword getNEQExclamationMarkEqualsSignKeyword_3_0() { return cNEQExclamationMarkEqualsSignKeyword_3_0; }
+		public Keyword getNEQExclamationMarkEqualsSignKeyword_4_0() { return cNEQExclamationMarkEqualsSignKeyword_4_0; }
 		
 		//LT='<'
-		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_4() { return cLTEnumLiteralDeclaration_4; }
+		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_5() { return cLTEnumLiteralDeclaration_5; }
 		
 		//'<'
-		public Keyword getLTLessThanSignKeyword_4_0() { return cLTLessThanSignKeyword_4_0; }
+		public Keyword getLTLessThanSignKeyword_5_0() { return cLTLessThanSignKeyword_5_0; }
 		
 		//LTE='<='
-		public EnumLiteralDeclaration getLTEEnumLiteralDeclaration_5() { return cLTEEnumLiteralDeclaration_5; }
+		public EnumLiteralDeclaration getLTEEnumLiteralDeclaration_6() { return cLTEEnumLiteralDeclaration_6; }
 		
 		//'<='
-		public Keyword getLTELessThanSignEqualsSignKeyword_5_0() { return cLTELessThanSignEqualsSignKeyword_5_0; }
+		public Keyword getLTELessThanSignEqualsSignKeyword_6_0() { return cLTELessThanSignEqualsSignKeyword_6_0; }
 		
 		//FB='forbids'
-		public EnumLiteralDeclaration getFBEnumLiteralDeclaration_6() { return cFBEnumLiteralDeclaration_6; }
+		public EnumLiteralDeclaration getFBEnumLiteralDeclaration_7() { return cFBEnumLiteralDeclaration_7; }
 		
 		//'forbids'
-		public Keyword getFBForbidsKeyword_6_0() { return cFBForbidsKeyword_6_0; }
+		public Keyword getFBForbidsKeyword_7_0() { return cFBForbidsKeyword_7_0; }
 		
 		//RQ='requires'
-		public EnumLiteralDeclaration getRQEnumLiteralDeclaration_7() { return cRQEnumLiteralDeclaration_7; }
+		public EnumLiteralDeclaration getRQEnumLiteralDeclaration_8() { return cRQEnumLiteralDeclaration_8; }
 		
 		//'requires'
-		public Keyword getRQRequiresKeyword_7_0() { return cRQRequiresKeyword_7_0; }
+		public Keyword getRQRequiresKeyword_8_0() { return cRQRequiresKeyword_8_0; }
+		
+		//IN='in'
+		public EnumLiteralDeclaration getINEnumLiteralDeclaration_9() { return cINEnumLiteralDeclaration_9; }
+		
+		//'in'
+		public Keyword getINInKeyword_9_0() { return cINInKeyword_9_0; }
 	}
 	
 	private final ConfigPkgElements pConfigPkg;
@@ -1509,6 +1576,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	private final ConstraintElements pConstraint;
 	private final ConditionElements pCondition;
 	private final ConditionExpressionElements pConditionExpression;
+	private final SetValueElements pSetValue;
 	private final ConditionValueElements pConditionValue;
 	private final ConfigElementElements pConfigElement;
 	private final NamedElementElements pNamedElement;
@@ -1554,6 +1622,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		this.pConstraint = new ConstraintElements();
 		this.pCondition = new ConditionElements();
 		this.pConditionExpression = new ConditionExpressionElements();
+		this.pSetValue = new SetValueElements();
 		this.pConditionValue = new ConditionValueElements();
 		this.pConfigElement = new ConfigElementElements();
 		this.pNamedElement = new NamedElementElements();
@@ -1659,7 +1728,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum Relation:
-	//	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires';
+	//	NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in';
 	public RelationElements getRelationAccess() {
 		return eRelation;
 	}
@@ -1876,7 +1945,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ConditionExpression:
-	//	=> ConfigElement | ConditionValue;
+	//	=> ConfigElement | ConditionValue | SetValue;
 	public ConditionExpressionElements getConditionExpressionAccess() {
 		return pConditionExpression;
 	}
@@ -1885,8 +1954,18 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionExpressionAccess().getRule();
 	}
 	
+	//SetValue:
+	//	'{' elements+=ConditionValue (',' elements+=ConditionValue)* '}';
+	public SetValueElements getSetValueAccess() {
+		return pSetValue;
+	}
+	
+	public ParserRule getSetValueRule() {
+		return getSetValueAccess().getRule();
+	}
+	
 	//ConditionValue:
-	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression // property value
+	//	{NamedElementRef} '!' ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression // property value
 	//;
 	public ConditionValueElements getConditionValueAccess() {
 		return pConditionValue;

@@ -94,6 +94,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
       case ConfigPackage.CONSTRAINT: return createConstraint();
       case ConfigPackage.CONDITION: return createCondition();
       case ConfigPackage.CONDITION_EXPRESSION: return createConditionExpression();
+      case ConfigPackage.SET_VALUE: return createSetValue();
       case ConfigPackage.CONDITION_VALUE: return createConditionValue();
       case ConfigPackage.CONFIG_ELEMENT: return createConfigElement();
       case ConfigPackage.CANDIDATE_LIST: return createCandidateList();
@@ -284,6 +285,17 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
   {
     ConditionExpressionImpl conditionExpression = new ConditionExpressionImpl();
     return conditionExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SetValue createSetValue()
+  {
+    SetValueImpl setValue = new SetValueImpl();
+    return setValue;
   }
 
   /**

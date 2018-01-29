@@ -196,6 +196,7 @@ import org.osate.gtse.config.config.NamedElementRef;
 import org.osate.gtse.config.config.NestedAssignments;
 import org.osate.gtse.config.config.OutputVariable;
 import org.osate.gtse.config.config.PropertyValue;
+import org.osate.gtse.config.config.SetValue;
 import org.osate.gtse.config.services.ConfigGrammarAccess;
 import org.osate.xtext.aadl2.serializer.Aadl2SemanticSequencer;
 
@@ -1015,6 +1016,9 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 					return; 
 				}
 				else break;
+			case ConfigPackage.SET_VALUE:
+				sequence_SetValue(context, (SetValue) semanticObject); 
+				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
@@ -1158,7 +1162,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConditionValueAccess().getRefNamedElementCNAMEParserRuleCall_0_1_0_1(), semanticObject.eGet(ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, false));
+		feeder.accept(grammarAccess.getConditionValueAccess().getRefNamedElementCNAMEParserRuleCall_0_2_0_1(), semanticObject.eGet(ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, false));
 		feeder.finish();
 	}
 	
@@ -1305,6 +1309,19 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *     (name=ID type=Type? limit=Limit?)
 	 */
 	protected void sequence_OutputVariable(ISerializationContext context, OutputVariable semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConditionExpression returns SetValue
+	 *     SetValue returns SetValue
+	 *
+	 * Constraint:
+	 *     (elements+=ConditionValue elements+=ConditionValue*)
+	 */
+	protected void sequence_SetValue(ISerializationContext context, SetValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

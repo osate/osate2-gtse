@@ -156,6 +156,15 @@ public interface ConfigFactory extends EFactory
   ConditionExpression createConditionExpression();
 
   /**
+   * Returns a new object of class '<em>Set Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Set Value</em>'.
+   * @generated
+   */
+  SetValue createSetValue();
+
+  /**
    * Returns a new object of class '<em>Condition Value</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

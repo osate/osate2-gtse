@@ -40,7 +40,7 @@ enum Type:
 ;
 
 enum Relation:
-	GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires'
+	NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in'
 ;
 
 Literal returns aadl2::PropertyExpression:
@@ -152,11 +152,14 @@ Condition:
 ;
 
 ConditionExpression:
-	=>ConfigElement | ConditionValue
+	=>ConfigElement | ConditionValue | SetValue
 ;
 
+SetValue:
+	'{' elements+=ConditionValue (',' elements+=ConditionValue)* '}'
+;
 ConditionValue:
-	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] // classifier, configuration
+	{NamedElementRef} '!' ref=[aadl2::NamedElement|CNAME] // classifier, configuration
 	| {PropertyValue} exp=CPropertyExpression // property value
 ;
 

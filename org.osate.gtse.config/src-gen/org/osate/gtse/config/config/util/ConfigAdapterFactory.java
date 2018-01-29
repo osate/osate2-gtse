@@ -159,6 +159,11 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
         return createConditionExpressionAdapter();
       }
       @Override
+      public Adapter caseSetValue(SetValue object)
+      {
+        return createSetValueAdapter();
+      }
+      @Override
       public Adapter caseConditionValue(ConditionValue object)
       {
         return createConditionValueAdapter();
@@ -411,6 +416,21 @@ public class ConfigAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConditionExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.osate.gtse.config.config.SetValue <em>Set Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.osate.gtse.config.config.SetValue
+   * @generated
+   */
+  public Adapter createSetValueAdapter()
   {
     return null;
   }
