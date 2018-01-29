@@ -156,32 +156,76 @@ public final class EngineConfigGenerator {
 	}
 
 	/**
-	 * Define a choicepoint.
+	 * Define a choicepoint for a property.
 	 *
-	 * @param title The name of this choicepoint
+	 * @param modelElementName The name of this choicepoint
+	 * @param propertyName The name of the property, or null if this choicepoint doesn't involve a property
 	 * @param type The type of this choicepoint
 	 * @param values The values this choicepoint can take
 	 */
-	public void addChoicePointDefinition(String title, ATSVVariableType type, ValuesModel values) {
+	public void addChoicePointDefinition(String modelElementName, String propertyName, ATSVVariableType type,
+			ValuesModel values) {
+		String name = modelElementName + "-" + propertyName;
 		String value = values.getDefault();
-		VariableModel vm = new VariableModel(title, false, true, type, value, values);
+		VariableModel vm = new VariableModel(modelElementName, false, true, type, value, values);
 		eem.addVariable(vm);
-		eem.addTypeRestriction(title, values);
-		startingInputs.addVar(title, type, values.getDefault());
-		addChoicepointToOsateProps(title, type);
+		eem.addTypeRestriction(modelElementName, values);
+		startingInputs.addVar(modelElementName, type, values.getDefault());
+		addChoicepointToOsateProps(modelElementName, type);
+	}
+
+	/**
+	 * Define a choicepoint for a model element.
+	 *
+	 * @param modelElementName The name of this choicepoint
+	 * @param type The type of this choicepoint
+	 * @param values The values this choicepoint can take
+	 */
+	public void addChoicePointDefinition(String modelElementName, ATSVVariableType type, ValuesModel values) {
+		addChoicePointDefinition(modelElementName, null, type, values);
+	}
+
+	/**
+	 * Define a choicepoint for a model element.
+	 *
+	 * @param modelElementName The name of this choicepoint
+	 * @param type The type of this choicepoint
+	 * @param distribution The distribution of this choicepoint's values
+	 */
+	public void addChoicePointDefinition(String modelElementName, ATSVVariableType type,
+			DistributionModel distribution) {
+		addChoicePointDefinition(modelElementName, null, type, distribution);
+	}
+
+	/**
+	 * Define a choicepoint for a property.
+	 *
+	 * @param modelElementName The name of this choicepoint
+	 * @param propertyName The name of the property, or null if this choicepoint doesn't involve a property
+	 * @param type The type of this choicepoint
+	 * @param distribution The distribution of this choicepoint's values
+	 */
+	public void addChoicePointDefinition(String modelElementName, String propertyName, ATSVVariableType type,
+			DistributionModel distribution) {
+		String name = modelElementName + "-" + propertyName;
+		String value = distribution.getDefault();
+		VariableModel vm = new VariableModel(name, false, true, type, value, distribution);
+		eem.addVariable(vm);
+		startingInputs.addVar(name, type, distribution.getDefault());
+		addChoicepointToOsateProps(name, type);
 	}
 
 	private void addChoicepointToOsateProps(String title, ATSVVariableType type) {
 		String propName = null;
-		if(type == ATSVVariableType.STRING) {
+		if (type == ATSVVariableType.STRING) {
 			propName = "SubcompChoice-" + title;
 		} else if (type == ATSVVariableType.FLOAT || type == ATSVVariableType.INTEGER) {
 			propName = "LitPropertyValue-" + title;
 		} else if (type == ATSVVariableType.REFERENCE) {
 			propName = "RefPropertyValue-" + title;
 		} else if (type == ATSVVariableType.LIST) {
-			//ListRefPropertyValue
-			//ListLitPropertyValue
+			// ListRefPropertyValue
+			// ListLitPropertyValue
 			try {
 				throw new UnsupportedFeatureException("List properties aren't implemented yet");
 			} catch (UnsupportedFeatureException e) {
@@ -190,21 +234,6 @@ public final class EngineConfigGenerator {
 			}
 		}
 		osateProps.setProperty(propName, "(Key value is unused)");
-	}
-
-	/**
-	 * Define a choicepoint.
-	 *
-	 * @param title The name of this choicepoint
-	 * @param type The type of this choicepoint
-	 * @param distribution The distribution of this choicepoint's values
-	 */
-	public void addChoicePointDefinition(String title, ATSVVariableType type, DistributionModel distribution) {
-		String value = distribution.getDefault();
-		VariableModel vm = new VariableModel(title, false, true, type, value, distribution);
-		eem.addVariable(vm);
-		startingInputs.addVar(title, type, distribution.getDefault());
-		addChoicepointToOsateProps(title, type);
 	}
 
 	/**
