@@ -39,14 +39,19 @@ import org.osate.aadl2.ComponentType
 import org.osate.aadl2.Element
 import org.osate.aadl2.FeatureGroup
 import org.osate.aadl2.FeatureGroupType
+import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.ListType
 import org.osate.aadl2.NamedElement
+import org.osate.aadl2.NumberValue
 import org.osate.aadl2.Property
 import org.osate.aadl2.PropertyExpression
+import org.osate.aadl2.RangeValue
+import org.osate.aadl2.RealLiteral
 import org.osate.aadl2.ReferenceType
 import org.osate.aadl2.ReferenceValue
 import org.osate.aadl2.Subcomponent
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType
+import org.osate.atsv.integration.EngineConfigModel.UniformDistributionModel
 import org.osate.atsv.integration.EngineConfigModel.ValuesModel
 import org.osate.atsv.integration.exception.BadConfigurationException
 import org.osate.atsv.integration.network.Limit
@@ -72,8 +77,7 @@ import org.osate.gtse.config.config.SetValue
 import org.osate.gtse.config.config.Type
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
-import static extension org.osate.gtse.config.config.AssignmentExt.*
-
+import static extension org.osate.gtse.config.config.AssignmentExt.isProperty
 /**
  * Generates code from your model files on save.
  * 
@@ -175,6 +179,18 @@ class ConfigGenerator extends AbstractGenerator {
 			ecg.addChoicePointDefinition(pathName, ATSVVariableType.STRING, new ValuesModel)
 			ecg.addChoicePointDefinition(pathName, ATSVVariableType.REFERENCE,
 				new ValuesModel(serializer.serialize((pv.exp as ReferenceValue).path).trim))
+		} else if (m.value instanceof NamedElementRef && (m.value as NamedElementRef).ref instanceof ConfigParameter) {
+			val param = (m.value as NamedElementRef).ref as ConfigParameter
+			if (param.choices instanceof CandidateList && (param.choices as CandidateList).candidates.size == 1) {
+				val range = ((param.choices as CandidateList).candidates.head as PropertyValue).exp
+				if (range instanceof RangeValue) {
+					ecg.addChoicePointDefinition(
+						pathName,
+						ATSVVariableType.getTypeByName(propertyType(m.property)),
+						new UniformDistributionModel(range.minimumValue.toFloat, range.maximumValue.toFloat)
+					)
+				}
+			}
 		} else {
 //			val s = 'LitPropertyValue-' + pathName + '-' + m.property.print + '-' + propertyType(m.property) + '=' +
 //				serializer.serialize(m.value).trim
@@ -183,6 +199,14 @@ class ConfigGenerator extends AbstractGenerator {
 				ATSVVariableType.getTypeByName(propertyType(m.property)),
 				new ValuesModel(serializer.serialize(m.value).trim.replaceAll("\\D*", "").split(","))
 			)
+		}
+	}
+
+	private def float toFloat(NumberValue nv) {
+		switch nv {
+			IntegerLiteral: nv.value
+			RealLiteral: nv.value.floatValue
+			default: 0.0f
 		}
 	}
 
