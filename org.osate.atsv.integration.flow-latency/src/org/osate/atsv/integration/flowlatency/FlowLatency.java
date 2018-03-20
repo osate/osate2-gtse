@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -22,27 +22,27 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
-import org.osate.analysis.flows.handlers.CheckFlowLatency;
-import org.osate.analysis.flows.model.LatencyReport;
-import org.osate.analysis.flows.model.LatencyReportEntry;
+import org.osate.analysis.flows.FlowLatencyAnalysisSwitch;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
+import org.osate.result.RealValue;
+import org.osate.result.Result;
 
 public class FlowLatency extends AbstractAnalysis {
 
 	@Override
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
-		CheckFlowLatency checker = new CheckFlowLatency();
-		LatencyReport report = checker.invokeAndGetReport(progressMonitor, errMgr, instance, som);
-		populateVariables(report, resp);
+		FlowLatencyAnalysisSwitch flas = new FlowLatencyAnalysisSwitch(progressMonitor, instance);
+		Result result = flas.invokeAndGetResult(instance, som);
+		populateVariables(result, resp);
 	}
 
-	private void populateVariables(LatencyReport report, Response ret) {
-		for (LatencyReportEntry entry : report.getEntries()) {
-			ret.addVariable(entry.getRelatedEndToEndFlowName(), ATSVVariableType.FLOAT,
-					String.valueOf(entry.getActualLatency(true)));
+	private void populateVariables(Result result, Response ret) {
+		for (Result flowResult : result.getSubResults()) {
+			ret.addVariable(flowResult.getAnalysis(), ATSVVariableType.FLOAT,
+					Double.toString(((RealValue) flowResult.getValues().get(1)).getValue()));
 		}
 	}
 }

@@ -12,6 +12,7 @@
         <tycho.version>1.0.0</tycho.version>
         <eclipse-repo.url>http://download.eclipse.org/releases/oxygen/</eclipse-repo.url>
         <osate-repo.url>http://www.aadl.info/aadl/osate/testing/update-site/</osate-repo.url>
+        <elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.3.0/</elk-stable.url>
         <osate.version>[0.0.0,3.0.0)</osate.version>
         <aadl-translator.version>[0.0.0,2.0.0)</aadl-translator.version>
         <code-coverage.ratio>0.00</code-coverage.ratio>
@@ -84,6 +85,12 @@
             <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0/</url>
             <layout>p2</layout>
         </repository>
+        <repository>
+			<!-- The graphical editor uses this -->
+			<id>elk</id>
+			<url>${elk-stable.url}</url>
+			<layout>p2</layout>
+		</repository>
     </repositories>
     <build>
         <pluginManagement>

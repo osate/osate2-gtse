@@ -226,7 +226,7 @@ public final class EngineConfigGenerator {
 		if (type == ATSVVariableType.STRING) {
 			propName = "SubcompChoice-" + title;
 		} else if (type == ATSVVariableType.FLOAT || type == ATSVVariableType.INTEGER) {
-			propName = "LitPropertyValue-" + title;
+			propName = "LitPropertyValue-" + title + "-" + type.toString();
 		} else if (type == ATSVVariableType.REFERENCE) {
 			propName = "RefPropertyValue-" + title;
 		} else if (type == ATSVVariableType.LIST) {

@@ -130,9 +130,9 @@ public class ExplorationEngineModel {
 	 *
 	 * That is, it is an XML string (which will be re-xml encoded when the full model is serialized)
 	 * Its value is set by the {@link #renderConfigurator() renderConfigurator} method, which has to be called
-	 * after all the configurators have been added (typically right before the model is generated.
+	 * after all the configurators have been added (typically right before the model is generated).
 	 */
-	@XmlElement(name = "Configurator")
+	@XmlElement
 	private String configurator = null;
 	private ConfiguratorsModel cm = new ConfiguratorsModel();
 

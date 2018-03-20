@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -32,7 +32,7 @@ public class IssueTests extends IntegrationTestBase {
 	@Test
 	public void Issue0001Test() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.flow-latency", null, true, "",
-				Collections.singletonMap("exampleFlow", new VarDescriptor("15.0")),
+				Collections.singletonMap("scs.exampleFlow", new VarDescriptor("15.0")),
 				Collections.singleton(new SubcomponentChoice("scs.mdev", "SimpleComponentChoice::MidProcess1",
 						ATSVVariableType.STRING)));
 
@@ -43,7 +43,7 @@ public class IssueTests extends IntegrationTestBase {
 		testHelper("org.osate.atsv.integration.property-totals", null, true, "",
 				Stream.of(new Object[] { "Price", new VarDescriptor("1500.0") },
 						new Object[] { "Weight", new VarDescriptor("8.41") })
-						.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
+				.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
 				Collections.singleton(new SubcomponentChoice("scs.mdev", "SimpleComponentChoice::MidProcess1",
 						ATSVVariableType.STRING)));
 	}

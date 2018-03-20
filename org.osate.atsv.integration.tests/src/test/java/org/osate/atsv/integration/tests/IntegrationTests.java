@@ -38,7 +38,7 @@ public class IntegrationTests extends IntegrationTestBase {
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.flow-latency", null, true, "",
-				Collections.singletonMap("exampleFlow", new VarDescriptor("25.0")), Collections.emptySet());
+				Collections.singletonMap("scs.exampleFlow", new VarDescriptor("25.0")), Collections.emptySet());
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class IntegrationTests extends IntegrationTestBase {
 	@Test
 	public void unhandledFaultsTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.unhandled-faults", null, false,
-				"Unhandled Faults Analysis -- EPSU: Outgoing propagation  Supplier{ValueError} has error types not handled by incoming propagation Supplier{SequenceValueError};\nUnhandled Faults Analysis -- Outgoing propagation  Supplier{ValueError} has error types not handled by incoming propagation Supplier{SequenceValueError}",
+				"Unhandled Faults Analysis -- EPSU.Supplier -> Grid.Supplier: Outgoing propagation  Supplier{ValueError} has error types not handled by incoming propagation Supplier{SequenceValueError};\nUnhandled Faults Analysis -- Outgoing propagation  Supplier{ValueError} has error types not handled by incoming propagation Supplier{SequenceValueError}",
 				Collections.emptyMap(), Collections.emptySet());
 	}
 
