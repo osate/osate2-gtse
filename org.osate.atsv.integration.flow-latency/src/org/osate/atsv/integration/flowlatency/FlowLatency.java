@@ -42,7 +42,7 @@ public class FlowLatency extends AbstractAnalysis {
 	private void populateVariables(Result result, Response ret) {
 		for (Result flowResult : result.getSubResults()) {
 			ret.addVariable(flowResult.getAnalysis(), ATSVVariableType.FLOAT,
-					Double.toString(((RealValue) flowResult.getValues().get(1)).getValue()));
+					Double.toString(((RealValue) flowResult.getValues().get(2)).getValue()));
 		}
 	}
 }

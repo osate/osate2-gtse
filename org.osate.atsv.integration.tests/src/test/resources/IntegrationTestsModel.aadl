@@ -170,7 +170,7 @@ public
 	process MidProcess1 extends MidProcess
 		flows
 			variableTimeFlow: flow path input -> output {
-						Latency => 5 ms .. 5 ms;
+						Latency => 5 ms .. 50 ms;
 					};
 		properties
 			SEI::PowerBudget => 5.0 w applies to power;
@@ -189,7 +189,7 @@ public
 			};
 		flows
 			variableTimeFlow: flow path input -> output {
-						Latency => 15 ms .. 15 ms;
+						Latency => 15 ms .. 150 ms;
 					};
 		properties
 			SEI::PowerBudget => 10.0 w applies to power;
@@ -200,7 +200,7 @@ public
 	process MidProcess3 extends MidProcess
 		flows
 			variableTimeFlow: flow path input -> output {
-						Latency => 25 ms .. 25 ms;
+						Latency => 25 ms .. 250 ms;
 					};
 		properties
 			SEI::PowerBudget => 15.0 w applies to power;

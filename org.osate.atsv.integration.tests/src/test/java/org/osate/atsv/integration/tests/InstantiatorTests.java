@@ -111,7 +111,7 @@ public class InstantiatorTests extends OsateTest {
 				// The classifier doesn't get updated, even though the instantiated
 				// element does, so we can't rely on it for testing:
 				// assertEquals("MidProcess1", innerCI.getClassifier().getName());
-				assertEquals(5000, GetProperties.getLatencyinMicroSec(innerCI.getFlowSpecifications().get(0)), .0001);
+				assertEquals(50000, GetProperties.getLatencyinMicroSec(innerCI.getFlowSpecifications().get(0)), .0001);
 				return;
 			}
 		}

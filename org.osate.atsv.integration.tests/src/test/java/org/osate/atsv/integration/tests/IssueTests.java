@@ -32,7 +32,7 @@ public class IssueTests extends IntegrationTestBase {
 	@Test
 	public void Issue0001Test() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.flow-latency", null, true, "",
-				Collections.singletonMap("scs.exampleFlow", new VarDescriptor("15.0")),
+				Collections.singletonMap("scs.exampleFlow", new VarDescriptor("60.0")),
 				Collections.singleton(new SubcomponentChoice("scs.mdev", "SimpleComponentChoice::MidProcess1",
 						ATSVVariableType.STRING)));
 
