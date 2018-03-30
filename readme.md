@@ -1,6 +1,8 @@
-# Osate Guided Tradespace Exploration (GTSE)
+# Osate Guided Trade Space Exploration (GTSE)
 
-This plugin enables users to automatically explore the tradespace of a system by connecting [OSATE](http://osate.org/) to Penn State's [Trade Space Visualizer](http://www.atsv.psu.edu/) tool.
+[![Build Status](https://osate-build.sei.cmu.edu/jenkins/buildStatus/icon?job=OSATE-GTSE)](https://osate-build.sei.cmu.edu/jenkins/job/OSATE-GTSE/)
+
+This plugin enables users to automatically explore the trade space of a system by connecting [OSATE](http://osate.org/) to Penn State's [Trade Space Visualizer](http://www.atsv.psu.edu/) tool.
 
 If you're interested in a more diagrammatic, foundational understanding of how GTSE and ATSV work together, see the [Workflow documentation](docs/Workflow.md).
 
@@ -8,7 +10,7 @@ If you're interested in a more diagrammatic, foundational understanding of how G
 
 1. [Java 8+](https://www.java.com/en/download/manual.jsp)
 2. Osate 2.2.3+
-    * If you don't have OSATE you can [download it](http://aadl.info/aadl/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
+    * If you don't have OSATE you can [download it](https://osate-build.sei.cmu.edu/download/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
 
 ## Installing the GTSE Plugin
 
@@ -18,9 +20,9 @@ If you're interested in a more diagrammatic, foundational understanding of how G
     2. `Install New Software...`
     3. `Add...`
     4. Type `Osate Experimental` for the Name
-    5. Copy/Paste `http://aadl.info/aadl/osate/experimental/` for the Location
+    5. Copy/Paste `https://osate-build.sei.cmu.edu/download/osate/experimental/` for the Location
     6. Click `OK`
-3. Check the box next to `Guided Tradespace Exploration` to install both the GTSE Core and bundle of currently-available analyzers.
+3. Check the box next to `Guided Trade Space Exploration` to install both the GTSE Core and bundle of currently-available analyzers.
 4. Click `Next >`
 5. Click `Next >` again
 6. Accept the License. The full license for this software is in [license.txt](https://github.com/osate/osate2-gtse/blob/master/license.txt).
