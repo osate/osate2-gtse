@@ -26,8 +26,9 @@ import org.osate.analysis.flows.FlowLatencyAnalysisSwitch;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
-import org.osate.result.RealValue;
 import org.osate.result.AnalysisResult;
+import org.osate.result.RealValue;
+import org.osate.result.Result;
 
 public class FlowLatency extends AbstractAnalysis {
 
@@ -40,8 +41,8 @@ public class FlowLatency extends AbstractAnalysis {
 	}
 
 	private void populateVariables(AnalysisResult result, Response ret) {
-		for (AnalysisResult flowResult : result.getSubResults()) {
-			ret.addVariable(flowResult.getAnalysis(), ATSVVariableType.FLOAT,
+		for (Result flowResult : result.getContributors()) {
+			ret.addVariable(result.getAnalysis(), ATSVVariableType.FLOAT,
 					Double.toString(((RealValue) flowResult.getValues().get(2)).getValue()));
 		}
 	}
