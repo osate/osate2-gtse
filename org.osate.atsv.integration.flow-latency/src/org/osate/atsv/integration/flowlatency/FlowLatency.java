@@ -42,8 +42,10 @@ public class FlowLatency extends AbstractAnalysis {
 
 	private void populateVariables(AnalysisResult result, Response ret) {
 		for (Result flowResult : result.getResults()) {
-			ret.addVariable(result.getAnalysis(), ATSVVariableType.FLOAT,
-					Double.toString(((RealValue) flowResult.getValues().get(2)).getValue()));
+			String name = ((org.osate.aadl2.instance.InstanceObject) result.getResults().get(0).getSourceReference())
+					.getComponentInstancePath();
+			String value = Double.toString(((RealValue) flowResult.getValues().get(2)).getValue());
+			ret.addVariable(name, ATSVVariableType.FLOAT, value);
 		}
 	}
 }
