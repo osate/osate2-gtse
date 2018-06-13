@@ -10,11 +10,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ErrorCollector
 import org.junit.runner.RunWith
-import org.osate.core.test.OsateTest
 import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.generator.AbstractMapping
 import org.osate.gtse.config.generator.ComponentMapping
 import org.osate.gtse.config.generator.ConfigGenerator
+import org.osate.testsupport.OsateTest
 
 import static org.hamcrest.Matchers.*
 
