@@ -15,7 +15,7 @@ Require-Bundle: org.osate.gtse.config.ui,
  org.eclipse.ui.workbench;resolution:=optional,
  org.osate.gtse.config;bundle-version="1.0.0",
  org.osate.aadl2;bundle-version="1.0.0",
- org.osate.core.tests;bundle-version="1.0.0",
+ org.osate.testsupport;bundle-version="1.0.0",
  com.itemis.xtext.testing;bundle-version="0.2.0",
  org.osate.xtext.aadl2.ui;bundle-version="1.0.0",
  org.hamcrest.library;bundle-version="1.3.0"
