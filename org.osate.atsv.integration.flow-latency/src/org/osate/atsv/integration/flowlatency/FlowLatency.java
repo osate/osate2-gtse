@@ -36,7 +36,7 @@ public class FlowLatency extends AbstractAnalysis {
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
 		FlowLatencyAnalysisSwitch flas = new FlowLatencyAnalysisSwitch(progressMonitor, instance);
-		AnalysisResult result = flas.invokeAndGetResult(instance, som);
+		AnalysisResult result = flas.invoke(instance, som);
 		populateVariables(result, resp);
 	}
 

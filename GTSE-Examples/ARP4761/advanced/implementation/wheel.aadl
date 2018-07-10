@@ -19,8 +19,11 @@ end tire;
 
 device implementation tire.hi_quality
 	properties
+		-- Built-in properties supporting cost and weight analyses
 		SEI::Price => 1000.0;
 		SEI::NetWeight => 3.5 kg;
+		-- Custom property supporting domain-specific analysis,
+		--   potentially derived from other analysis / modeling tools
 		DemoProperties::BrakingPower => 10.0;
 end tire.hi_quality;
 

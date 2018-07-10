@@ -1,3 +1,4 @@
+Automatic-Module-Name: org.osate.atsv.integration.power-consumption
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Power-Consumption

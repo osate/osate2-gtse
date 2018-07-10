@@ -68,7 +68,7 @@ public class ConfiguratorVerifier {
 	private Map<String, BinaryExp> memoP = new HashMap<>();
 
 	/**
-	 * Set of variables used in the equality substitution algorithm
+	 * Set of variables used in the equality substitution algorithm.
 	 */
 	private List<List<Var>> P_A;
 
@@ -230,7 +230,6 @@ public class ConfiguratorVerifier {
 
 			// We advance the inner iterator until it's equal to the outer one
 			while (!inner.next().equals(outerStr)) {
-				; // noop
 			}
 			do {
 				bexp = new BinaryExp();
