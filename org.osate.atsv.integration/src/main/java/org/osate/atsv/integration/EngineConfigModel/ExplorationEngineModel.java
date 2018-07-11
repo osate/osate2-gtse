@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -146,6 +147,9 @@ public class ExplorationEngineModel {
 	@XmlTransient
 	private Collection<TypeRestriction> typeRestrictions = new HashSet<>();
 
+	@XmlTransient
+	private Set<ImpliesConfiguratorModel> configuratorsToConvert = new HashSet<>();
+
 	/**
 	 * Add a variable to the internal list of variables.
 	 *
@@ -208,5 +212,15 @@ public class ExplorationEngineModel {
 
 	public Map<String, String> getVarCaches() {
 		return variables.getVarCaches();
+	}
+
+	public void needsConversion(ImpliesConfiguratorModel configurator) {
+		configuratorsToConvert.add(configurator);
+	}
+
+	public void doConfiguratorConversions() {
+		for (ImpliesConfiguratorModel m : configuratorsToConvert) {
+			m.convertToSafeVal(this);
+		}
 	}
 }

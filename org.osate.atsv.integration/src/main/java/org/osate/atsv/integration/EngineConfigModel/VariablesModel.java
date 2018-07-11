@@ -27,6 +27,8 @@ import java.util.Map.Entry;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
+
 public class VariablesModel {
 
 	@XmlJavaTypeAdapter(VariableModelAdapter.class)
@@ -61,9 +63,14 @@ public class VariablesModel {
 		if (variableMap == null) {
 			variableMap = buildVariableMap();
 		}
-
+		if (!variableMap.containsKey(varName)) {
+			// TODO: Handle this error
+			System.err.println("Value used in configurator but not in choice.");
+		}
 		ValuesModel vals = variableMap.get(varName).getValues();
+		variableMap.get(varName).setType(ATSVVariableType.DISCRETE_FLOAT);
 		vals.cacheAndConvertToFloat();
+		variableMap.get(varName).setValue(Float.toString(vals.getIdFromCache(varVal)));
 		return vals.getIdFromCache(varVal);
 	}
 
@@ -79,10 +86,10 @@ public class VariablesModel {
 		Map<String, String> ret = new HashMap<>();
 		String header;
 		for (VariableModel vm : variableMap.values()) {
-			if (vm.getValues().isCached()) {
+			if (vm.getValues() != null && vm.getValues().isCached()) {
 				for (Entry<String, Float> e : vm.getValues().getCache().entrySet()) {
-					header = "ConfigCacheHack-"+vm.getTitle();
-					ret.put(header + e.getKey(), Float.toString(e.getValue()));
+					header = "ConfigCacheHack-" + vm.getTitle() + "-";
+					ret.put(header + Float.toString(e.getValue()), e.getKey());
 				}
 			}
 		}

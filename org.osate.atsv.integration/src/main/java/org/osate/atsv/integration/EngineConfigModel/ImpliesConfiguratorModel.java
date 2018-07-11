@@ -74,20 +74,22 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 			boolean isRequires, ExplorationEngineModel eem) {
 		super(varName1, varName2);
 		this.varVal1 = varVal1;
-		this.varVal2 = convertToSafeVal(varVal2, eem);
+		this.varVal2 = varVal2;
+		checkIfConversionNeeded(varVal2, eem);
 		this.isRequires = isRequires;
 	}
 
-	private String convertToSafeVal(String varVal2, ExplorationEngineModel eem) {
+	private void checkIfConversionNeeded(String varVal2, ExplorationEngineModel eem) {
 		try {
 			Float.parseFloat(varVal2);
 		} catch (NumberFormatException e) {
-
-			// TODO: Next step: Test this, make sure the numbers in the generated
-			// config file are consistent
-			return Float.toString(eem.convertToDiscreteFloat(varVal1, varVal2));
+			eem.needsConversion(this);
 		}
-		return varVal2;
+	}
+
+	public void convertToSafeVal(ExplorationEngineModel eem) {
+		varVal1 = Float.toString(eem.convertToDiscreteFloat(super.getVarName1(), varVal1));
+		varVal2 = Float.toString(eem.convertToDiscreteFloat(super.varName2, varVal2));
 	}
 
 	@Override

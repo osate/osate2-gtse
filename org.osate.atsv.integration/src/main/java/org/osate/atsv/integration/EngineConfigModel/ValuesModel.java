@@ -85,9 +85,9 @@ public class ValuesModel {
 	public void cacheAndConvertToFloat() {
 		float i = 0;
 		cache = new HashMap<String, Float>();
-		for (String v : values.values()) {
-			cache.put(v, i);
-			v = Float.toString(i++);
+		for (QName n : values.keySet()) {
+			cache.put(values.get(n), i);
+			values.put(n, Float.toString(i++));
 		}
 	}
 

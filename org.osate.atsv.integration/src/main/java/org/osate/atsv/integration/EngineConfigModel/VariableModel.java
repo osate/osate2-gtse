@@ -170,4 +170,20 @@ public class VariableModel {
 	public boolean isInput() {
 		return ioValue == 0;
 	}
+
+	/**
+	 * Setter for overriding the variable's type. Required by the hack to make string configurators work.
+	 * @param newType The new type
+	 */
+	public void setType(ATSVVariableType newType) {
+		type = newType.getATSVTypeVal();
+	}
+
+	/**
+	 * Setter for overriding the variable's value. Required by the hack to make string configurators work.
+	 * @param newValue
+	 */
+	public void setValue(String newValue) {
+		value = newValue;
+	}
 }
