@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -36,6 +38,7 @@ import javax.xml.namespace.QName;
 import org.apache.commons.lang3.SystemUtils;
 import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.TypeRestriction;
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
@@ -119,7 +122,7 @@ public class ExplorationEngineModel {
 	 */
 	@XmlElement
 	private final String sampleCount = Activator.getDefault().getPreferenceStore()
-	.getString(Activator.ATSV_SAMPLE_COUNT);
+			.getString(Activator.ATSV_SAMPLE_COUNT);
 
 	/**
 	 * I'm not sure what this does, but it seems safe to set it to the same value as the sample count
@@ -175,8 +178,7 @@ public class ExplorationEngineModel {
 		cm.addConfigurator(configuratorModel);
 	}
 
-	public void renderConfigurator()
-			throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
+	public void renderConfigurator() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
 			UnsupportedFeatureException {
 		if (cm.isEmpty()) {
 			configurator = "";
@@ -206,21 +208,31 @@ public class ExplorationEngineModel {
 		typeRestrictions.add(new TypeRestriction(varName, values));
 	}
 
+	@StringConfiguratorHack
 	public float convertToDiscreteFloat(String varName, String varVal) {
 		return variables.convertToDiscreteFloat(varName, varVal);
 	}
 
+	@StringConfiguratorHack
 	public Map<String, String> getVarCaches() {
 		return variables.getVarCaches();
 	}
 
+	@StringConfiguratorHack
 	public void needsConversion(ImpliesConfiguratorModel configurator) {
 		configuratorsToConvert.add(configurator);
 	}
 
+	@StringConfiguratorHack
 	public void doConfiguratorConversions() {
 		for (ImpliesConfiguratorModel m : configuratorsToConvert) {
 			m.convertToSafeVal(this);
 		}
+	}
+
+	@StringConfiguratorHack
+	public Set<String> getConvertedConfiguratorNames() {
+		return configuratorsToConvert.stream().flatMap(c -> Stream.of(c.getVarName1(), c.getVarName2()))
+				.collect(Collectors.toSet());
 	}
 }

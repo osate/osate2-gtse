@@ -60,6 +60,7 @@ import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 import org.osate.atsv.integration.network.Limit;
+import org.osate.atsv.standalone.ATSVVar;
 import org.osate.atsv.standalone.ATSVVarCollection;
 import org.osgi.framework.Bundle;
 
@@ -410,7 +411,14 @@ public final class EngineConfigGenerator {
 
 	private void generateInputFile() {
 		try {
-			getStartingInputs().writeToFile(targetDirStr + "input.xml");
+			ATSVVarCollection inputs = getStartingInputs();
+			Map<String, ATSVVar> inputVars = inputs.getVars();
+			Set<String> convertedVarNames = eem.getConvertedConfiguratorNames();
+			convertedVarNames.retainAll(inputVars.keySet());
+			for (String varName : convertedVarNames) {
+				inputs.addVar(varName, ATSVVariableType.DISCRETE_FLOAT, ATSVVariableType.getDefaultFromType(ATSVVariableType.DISCRETE_FLOAT));
+			}
+			inputs.writeToFile(targetDirStr + "input.xml");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

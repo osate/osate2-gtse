@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  * This class models the implication (requires and forbids) configurators.
  *
@@ -87,6 +89,7 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 		}
 	}
 
+	@StringConfiguratorHack
 	public void convertToSafeVal(ExplorationEngineModel eem) {
 		varVal1 = Float.toString(eem.convertToDiscreteFloat(super.getVarName1(), varVal1));
 		varVal2 = Float.toString(eem.convertToDiscreteFloat(super.varName2, varVal2));

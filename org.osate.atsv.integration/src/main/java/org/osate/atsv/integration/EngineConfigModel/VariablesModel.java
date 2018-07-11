@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 
 public class VariablesModel {
 
@@ -58,6 +59,7 @@ public class VariablesModel {
 		variableMap = null;
 	}
 
+	@StringConfiguratorHack
 	public float convertToDiscreteFloat(String varName, String varVal) {
 		// Assumes this is only called *after* all variables have been added
 		if (variableMap == null) {
@@ -74,6 +76,7 @@ public class VariablesModel {
 		return vals.getIdFromCache(varVal);
 	}
 
+	@StringConfiguratorHack
 	private Map<String, VariableModel> buildVariableMap() {
 		Map<String, VariableModel> ret = new HashMap<String, VariableModel>();
 		for(VariableModel v : variables) {
@@ -82,6 +85,7 @@ public class VariablesModel {
 		return ret;
 	}
 
+	@StringConfiguratorHack
 	public Map<String, String> getVarCaches() {
 		Map<String, String> ret = new HashMap<>();
 		String header;

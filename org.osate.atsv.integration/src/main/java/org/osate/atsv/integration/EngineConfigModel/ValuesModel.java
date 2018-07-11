@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  * This class enables the modeling of a list of explicit variable values. Note that types are tracked
  * elsewhere, so all values must be strings.
@@ -82,6 +84,7 @@ public class ValuesModel {
 		return values.values();
 	}
 
+	@StringConfiguratorHack
 	public void cacheAndConvertToFloat() {
 		float i = 0;
 		cache = new HashMap<String, Float>();
@@ -91,14 +94,17 @@ public class ValuesModel {
 		}
 	}
 
+	@StringConfiguratorHack
 	public float getIdFromCache(String val) {
 		return cache.get(val);
 	}
 
+	@StringConfiguratorHack
 	public Map<String, Float> getCache() {
 		return cache;
 	}
 
+	@StringConfiguratorHack
 	public boolean isCached() {
 		if (cache != null) {
 			return true;

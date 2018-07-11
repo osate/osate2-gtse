@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 
 public class VariableModel {
 
@@ -175,6 +176,7 @@ public class VariableModel {
 	 * Setter for overriding the variable's type. Required by the hack to make string configurators work.
 	 * @param newType The new type
 	 */
+	@StringConfiguratorHack
 	public void setType(ATSVVariableType newType) {
 		type = newType.getATSVTypeVal();
 	}
@@ -183,6 +185,7 @@ public class VariableModel {
 	 * Setter for overriding the variable's value. Required by the hack to make string configurators work.
 	 * @param newValue
 	 */
+	@StringConfiguratorHack
 	public void setValue(String newValue) {
 		value = newValue;
 	}
