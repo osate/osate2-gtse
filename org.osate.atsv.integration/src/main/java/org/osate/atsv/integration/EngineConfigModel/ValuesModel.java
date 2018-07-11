@@ -20,6 +20,7 @@ package org.osate.atsv.integration.EngineConfigModel;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
@@ -42,9 +43,11 @@ public class ValuesModel {
 
 	@XmlJavaTypeAdapter(VariableModelAdapter.class)
 	@XmlAnyAttribute
-	private Map<QName, String> values = new HashMap<>();
+	private Map<QName, String> values = new LinkedHashMap<>();
 
 	private int counter = 0;
+
+	private Map<String, Float> cache = null;
 
 	/**
 	 * Initialize the values model with the supplied list of values
@@ -77,5 +80,29 @@ public class ValuesModel {
 
 	public Collection<String> getValueSet() {
 		return values.values();
+	}
+
+	public void cacheAndConvertToFloat() {
+		float i = 0;
+		cache = new HashMap<String, Float>();
+		for (String v : values.values()) {
+			cache.put(v, i);
+			v = Float.toString(i++);
+		}
+	}
+
+	public float getIdFromCache(String val) {
+		return cache.get(val);
+	}
+
+	public Map<String, Float> getCache() {
+		return cache;
+	}
+
+	public boolean isCached() {
+		if (cache != null) {
+			return true;
+		}
+		return false;
 	}
 }

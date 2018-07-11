@@ -289,11 +289,11 @@ public final class EngineConfigGenerator {
 	}
 
 	public void addRequiresConstraint(String varName1, String varVal1, String varName2, String varVal2) {
-		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, true));
+		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, true, eem));
 	}
 
 	public void addForbidsConstraint(String varName1, String varVal1, String varName2, String varVal2) {
-		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false));
+		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false, eem));
 	}
 
 	public void addMembershipConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
@@ -346,6 +346,7 @@ public final class EngineConfigGenerator {
 
 	private void generateRequestProperties() {
 		try (FileOutputStream out = new FileOutputStream(targetDirStr + "request.properties")) {
+			osateProps.putAll(eem.getVarCaches());
 			osateProps.store(out,
 					"NO USER MODIFIABLE CONTENTS\n"
 							+ "#Auto-generated properties for the ATSV-OSATE connection (connector.jar)\n"

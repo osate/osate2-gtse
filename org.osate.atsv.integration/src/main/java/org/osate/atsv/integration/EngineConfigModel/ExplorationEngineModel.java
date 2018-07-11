@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -199,5 +200,13 @@ public class ExplorationEngineModel {
 
 	public void addTypeRestriction(String varName, ValuesModel values) {
 		typeRestrictions.add(new TypeRestriction(varName, values));
+	}
+
+	public float convertToDiscreteFloat(String varName, String varVal) {
+		return variables.convertToDiscreteFloat(varName, varVal);
+	}
+
+	public Map<String, String> getVarCaches() {
+		return variables.getVarCaches();
 	}
 }

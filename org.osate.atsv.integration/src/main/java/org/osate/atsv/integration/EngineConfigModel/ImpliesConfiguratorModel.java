@@ -66,15 +66,28 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 	 * @param varName1 Name of the variable on the left hand side of the restriction
 	 * @param varVal1 The value on the left hand side -- ie the value that triggers the configurator
 	 * @param varName2 Name of the variable on the right hand side of the restriction
-	 * @param varVals2 The value that the second (RHS) variable is required / forbidden to take
+	 * @param varVal2 The value that the second (RHS) variable is required / forbidden to take
+	 * @param eem
 	 * @param isMembership True for a requires configurator, false for forbids
 	 */
 	public ImpliesConfiguratorModel(String varName1, String varVal1, String varName2, String varVal2,
-			boolean isRequires) {
+			boolean isRequires, ExplorationEngineModel eem) {
 		super(varName1, varName2);
 		this.varVal1 = varVal1;
-		this.varVal2 = varVal2;
+		this.varVal2 = convertToSafeVal(varVal2, eem);
 		this.isRequires = isRequires;
+	}
+
+	private String convertToSafeVal(String varVal2, ExplorationEngineModel eem) {
+		try {
+			Float.parseFloat(varVal2);
+		} catch (NumberFormatException e) {
+
+			// TODO: Next step: Test this, make sure the numbers in the generated
+			// config file are consistent
+			return Float.toString(eem.convertToDiscreteFloat(varVal1, varVal2));
+		}
+		return varVal2;
 	}
 
 	@Override
