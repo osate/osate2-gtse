@@ -215,7 +215,7 @@ public class ExplorationEngineModel {
 
 	@StringConfiguratorHack
 	public Map<String, String> getVarCaches() {
-		return variables.getVarCaches();
+		return variables.getVarCacheStrs();
 	}
 
 	@StringConfiguratorHack

@@ -84,12 +84,12 @@ public class SetRestrictionConfiguratorModel extends ConfiguratorModel {
 		var2.convertToDiscreteFloats(super.varName2, eem);
 	}
 
-	@Override
-	@XmlTransient
 	/**
 	 * This is unused and removed from serialization because the name of the second variable is stored in the
 	 * SetRestrictionDependentVariableModel
 	 */
+	@Override
+	@XmlTransient
 	public String getVarName2() {
 		// TODO Auto-generated method stub
 		return null;

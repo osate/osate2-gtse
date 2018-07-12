@@ -55,6 +55,13 @@ public abstract class ConfiguratorModel {
 		return id2;
 	}
 
+	/**
+	 * Converts the configurator to something safe for ATSV. Depending on the type of configurator,
+	 * this may do nothing or convert string values to floats. If conversion occurs, it will be undone
+	 * before the strings are used by OSATE.
+	 *
+	 * @param eem The top level engine configuration
+	 */
 	@StringConfiguratorHack
 	public abstract void convertToSafeVal(ExplorationEngineModel eem);
 }

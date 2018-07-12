@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
@@ -47,8 +48,14 @@ public class ValuesModel {
 	@XmlAnyAttribute
 	private Map<QName, String> values = new LinkedHashMap<>();
 
+	@XmlTransient
 	private int counter = 0;
 
+	/**
+	 * Maps values to their float representation
+	 */
+	@XmlTransient
+	@StringConfiguratorHack
 	private Map<String, Float> cache = null;
 
 	/**
@@ -84,6 +91,9 @@ public class ValuesModel {
 		return values.values();
 	}
 
+	/**
+	 * Converts all the values in this model and caches them
+	 */
 	@StringConfiguratorHack
 	public void cacheAndConvertToFloat() {
 		float i = 0;
@@ -94,16 +104,29 @@ public class ValuesModel {
 		}
 	}
 
+	/**
+	 * Gets the float version of a cached value
+	 * @param val The value to get the float version of
+	 * @return The float representation of the value
+	 */
 	@StringConfiguratorHack
 	public float getIdFromCache(String val) {
 		return cache.get(val);
 	}
 
+	/**
+	 * Gets the entire cache
+	 * @return
+	 */
 	@StringConfiguratorHack
 	public Map<String, Float> getCache() {
 		return cache;
 	}
 
+	/**
+	 * True if the cache has already been created for this model, false otherwise
+	 * @return
+	 */
 	@StringConfiguratorHack
 	public boolean isCached() {
 		if (cache != null) {

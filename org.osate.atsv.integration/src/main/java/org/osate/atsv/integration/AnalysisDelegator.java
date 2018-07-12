@@ -83,6 +83,11 @@ public class AnalysisDelegator {
 			this.limits = req.getLimits();
 		}
 
+		/**
+		 * This undoes the conversion of string values to floats required by the {@link StringConfiguratorHack}.
+		 *
+		 * @param configuratorCache The cache, which was loaded from the request.properties file
+		 */
 		@StringConfiguratorHack
 		private void unCacheChoicepoints(Map<String, Map<Float, String>> configuratorCache) {
 			for (ChoicePointSpecification cps : choicepoints) {
