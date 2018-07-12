@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -20,10 +20,12 @@ package org.osate.atsv.integration.ChoicePointModel;
 
 import java.io.Serializable;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 public class ChoicePointSpecification implements Serializable {
 
 	/**
-	 * Default serial version 
+	 * Default serial version
 	 */
 	private static final long serialVersionUID = 1L;
 	protected String componentPath;
@@ -67,5 +69,11 @@ public class ChoicePointSpecification implements Serializable {
 
 	public boolean isProperty() {
 		return this instanceof PropertyValue;
+	}
+
+	@StringConfiguratorHack
+	public void setValue(String val) {
+		value = val;
+		type = ATSVVariableType.STRING;
 	}
 }

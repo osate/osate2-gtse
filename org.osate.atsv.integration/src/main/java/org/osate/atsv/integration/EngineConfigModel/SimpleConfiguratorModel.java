@@ -20,6 +20,8 @@ package org.osate.atsv.integration.EngineConfigModel;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  * This class models the basic (equal and unique) configurators.
  *
@@ -70,5 +72,11 @@ public class SimpleConfiguratorModel extends ConfiguratorModel {
 	@XmlElement(name = "Variable")
 	public String getVarName2() {
 		return this.varName2;
+	}
+
+	@Override
+	@StringConfiguratorHack
+	public void convertToSafeVal(ExplorationEngineModel eem) {
+		// SimpleConfigurators are always safe, so no conversion is needed
 	}
 }

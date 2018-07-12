@@ -38,6 +38,7 @@ import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.Limit;
@@ -78,7 +79,24 @@ public class AnalysisDelegator {
 			this.implName = req.getComponentImplementationName();
 			this.modeName = req.getOperationModeName();
 			this.choicepoints = req.getChoicepoints();
+			unCacheChoicepoints(req.getConfiguratorCache());
 			this.limits = req.getLimits();
+		}
+
+		/**
+		 * This undoes the conversion of string values to floats required by the {@link StringConfiguratorHack}.
+		 *
+		 * @param configuratorCache The cache, which was loaded from the request.properties file
+		 */
+		@StringConfiguratorHack
+		private void unCacheChoicepoints(Map<String, Map<Float, String>> configuratorCache) {
+			for (ChoicePointSpecification cps : choicepoints) {
+				if (configuratorCache.containsKey(cps.getComponentPath())) {
+					Map<Float, String> cache = configuratorCache.get(cps.getComponentPath());
+					float cacheKey = Float.valueOf(cps.getValueAsString());
+					cps.setValue(cache.get(cacheKey));
+				}
+			}
 		}
 
 		private Set<IExtension> resolveExtensions(Collection<String> pluginIds) throws AnalysisPluginException {

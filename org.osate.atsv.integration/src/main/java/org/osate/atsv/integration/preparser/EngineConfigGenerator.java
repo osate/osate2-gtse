@@ -60,6 +60,7 @@ import org.osate.atsv.integration.exception.ConfiguratorRepresentationException;
 import org.osate.atsv.integration.exception.UnsatisfiableConstraint;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
 import org.osate.atsv.integration.network.Limit;
+import org.osate.atsv.standalone.ATSVVar;
 import org.osate.atsv.standalone.ATSVVarCollection;
 import org.osgi.framework.Bundle;
 
@@ -253,6 +254,8 @@ public final class EngineConfigGenerator {
 	public String getXML() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
 	UnsupportedFeatureException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		// Some configurators can't be supported by ATSV, so we convert them here
+		eem.doConfiguratorConversions();
 		// The configurators have to be double-encoded, so we call that rendering here
 		eem.renderConfigurator();
 		// And here we render the entire specification
@@ -289,19 +292,19 @@ public final class EngineConfigGenerator {
 	}
 
 	public void addRequiresConstraint(String varName1, String varVal1, String varName2, String varVal2) {
-		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, true));
+		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, true, eem));
 	}
 
 	public void addForbidsConstraint(String varName1, String varVal1, String varName2, String varVal2) {
-		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false));
+		eem.addConfigurator(new ImpliesConfiguratorModel(varName1, varVal1, varName2, varVal2, false, eem));
 	}
 
 	public void addMembershipConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
-		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, true));
+		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, true, eem));
 	}
 
 	public void addExclusionConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
-		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false));
+		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false, eem));
 	}
 
 	public void execute() {
@@ -346,6 +349,7 @@ public final class EngineConfigGenerator {
 
 	private void generateRequestProperties() {
 		try (FileOutputStream out = new FileOutputStream(targetDirStr + "request.properties")) {
+			osateProps.putAll(eem.getVarCaches());
 			osateProps.store(out,
 					"NO USER MODIFIABLE CONTENTS\n"
 							+ "#Auto-generated properties for the ATSV-OSATE connection (connector.jar)\n"
@@ -407,7 +411,14 @@ public final class EngineConfigGenerator {
 
 	private void generateInputFile() {
 		try {
-			getStartingInputs().writeToFile(targetDirStr + "input.xml");
+			ATSVVarCollection inputs = getStartingInputs();
+			Map<String, ATSVVar> inputVars = inputs.getVars();
+			Set<String> convertedVarNames = eem.getConvertedConfiguratorNames();
+			convertedVarNames.retainAll(inputVars.keySet());
+			for (String varName : convertedVarNames) {
+				inputs.addVar(varName, ATSVVariableType.DISCRETE_FLOAT, ATSVVariableType.getDefaultFromType(ATSVVariableType.DISCRETE_FLOAT));
+			}
+			inputs.writeToFile(targetDirStr + "input.xml");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

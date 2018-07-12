@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -27,11 +27,12 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 
 public class Request implements Serializable {
 
 	/**
-	 * Default serial version 
+	 * Default serial version
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -64,6 +65,17 @@ public class Request implements Serializable {
 	 * This maps variable names to their user-specified limit/threshold
 	 */
 	private Map<String, Limit> limits = new HashMap<>();
+
+	/**
+	 * Maps choicepoint name to a map of subbed values to original (string) values.
+	 *
+	 * Ex:
+	 *
+	 * my.component -> <1.0 -> "component.option1">
+	 * my.component -> <2.0 -> "component.option2">
+	 */
+	@StringConfiguratorHack
+	private Map<String, Map<Float, String>> configuratorCache = new HashMap<>();
 
 	public Collection<String> getPluginIds() {
 		return pluginIds;
@@ -119,5 +131,18 @@ public class Request implements Serializable {
 
 	public Map<String, Limit> getLimits() {
 		return limits;
+	}
+
+	@StringConfiguratorHack
+	public Map<String, Map<Float, String>> getConfiguratorCache() {
+		return configuratorCache;
+	}
+
+	@StringConfiguratorHack
+	public void addConfiguratorCacheEntry(String choicepointName, Float subbedVal, String origVal) {
+		if (!configuratorCache.containsKey(choicepointName)) {
+			configuratorCache.put(choicepointName, new HashMap<>());
+		}
+		configuratorCache.get(choicepointName).put(subbedVal, origVal);
 	}
 }

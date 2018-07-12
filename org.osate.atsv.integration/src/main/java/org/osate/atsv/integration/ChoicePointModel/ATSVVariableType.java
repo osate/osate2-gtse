@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -33,9 +33,9 @@ public enum ATSVVariableType {
 
 	/**
 	 * This gets the ATSV-compatible type value. That is, any non-atsv
-	 * compatible types (reference, list, range, etc.) will return the 
+	 * compatible types (reference, list, range, etc.) will return the
 	 * type value for strings.
-	 * 
+	 *
 	 * @return The ordinal for the type
 	 */
 	public int getATSVTypeVal() {
@@ -47,8 +47,8 @@ public enum ATSVVariableType {
 	}
 
 	/**
-	 * This gets the OSATE-compatible / "true" type value. 
-	 * 
+	 * This gets the OSATE-compatible / "true" type value.
+	 *
 	 * @return The ordinal for the type
 	 */
 	public int getRawTypeVal() {
@@ -71,7 +71,7 @@ public enum ATSVVariableType {
 	public static String getDefaultFromType(ATSVVariableType type) {
 		if (type == ATSVVariableType.STRING) {
 			return "UNSET_STRING";
-		} else if (type == ATSVVariableType.FLOAT) {
+		} else if (type == ATSVVariableType.FLOAT || type == ATSVVariableType.DISCRETE_FLOAT) {
 			return String.valueOf((float) 0);
 		} else if (type == ATSVVariableType.INTEGER) {
 			return String.valueOf(0);

@@ -20,11 +20,15 @@ package org.osate.atsv.integration.EngineConfigModel;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
+
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 
 /**
  * This class enables the modeling of a list of explicit variable values. Note that types are tracked
@@ -40,11 +44,23 @@ import javax.xml.namespace.QName;
  */
 public class ValuesModel {
 
+	/**
+	 * Maps names to string representations of values. Ordering must be preserved for the configurator
+	 * caching hack, see {@link StringConfiguratorHack}
+	 */
 	@XmlJavaTypeAdapter(VariableModelAdapter.class)
 	@XmlAnyAttribute
-	private Map<QName, String> values = new HashMap<>();
+	private Map<QName, String> values = new LinkedHashMap<>();
 
+	@XmlTransient
 	private int counter = 0;
+
+	/**
+	 * Maps values to their float representation
+	 */
+	@XmlTransient
+	@StringConfiguratorHack
+	private Map<String, Float> cache = null;
 
 	/**
 	 * Initialize the values model with the supplied list of values
@@ -77,5 +93,49 @@ public class ValuesModel {
 
 	public Collection<String> getValueSet() {
 		return values.values();
+	}
+
+	/**
+	 * Converts all the values in this model and caches them
+	 */
+	@StringConfiguratorHack
+	public void cacheAndConvertToFloat() {
+		float i = 0;
+		cache = new HashMap<String, Float>();
+		for (QName n : values.keySet()) {
+			cache.put(values.get(n), i);
+			values.put(n, Float.toString(i++));
+		}
+	}
+
+	/**
+	 * Gets the float version of a cached value
+	 * @param val The value to get the float version of
+	 * @return The float representation of the value
+	 */
+	@StringConfiguratorHack
+	public float getIdFromCache(String val) {
+		return cache.get(val);
+	}
+
+	/**
+	 * Gets the entire cache
+	 * @return
+	 */
+	@StringConfiguratorHack
+	public Map<String, Float> getCache() {
+		return cache;
+	}
+
+	/**
+	 * True if the cache has already been created for this model, false otherwise
+	 * @return
+	 */
+	@StringConfiguratorHack
+	public boolean isCached() {
+		if (cache != null) {
+			return true;
+		}
+		return false;
 	}
 }

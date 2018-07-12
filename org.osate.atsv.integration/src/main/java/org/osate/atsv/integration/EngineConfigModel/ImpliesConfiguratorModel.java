@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  * This class models the implication (requires and forbids) configurators.
  *
@@ -66,15 +68,33 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 	 * @param varName1 Name of the variable on the left hand side of the restriction
 	 * @param varVal1 The value on the left hand side -- ie the value that triggers the configurator
 	 * @param varName2 Name of the variable on the right hand side of the restriction
-	 * @param varVals2 The value that the second (RHS) variable is required / forbidden to take
+	 * @param varVal2 The value that the second (RHS) variable is required / forbidden to take
+	 * @param eem
 	 * @param isMembership True for a requires configurator, false for forbids
 	 */
 	public ImpliesConfiguratorModel(String varName1, String varVal1, String varName2, String varVal2,
-			boolean isRequires) {
+			boolean isRequires, ExplorationEngineModel eem) {
 		super(varName1, varName2);
 		this.varVal1 = varVal1;
 		this.varVal2 = varVal2;
+		checkIfConversionNeeded(varVal2, eem);
 		this.isRequires = isRequires;
+	}
+
+	@StringConfiguratorHack
+	private void checkIfConversionNeeded(String varVal2, ExplorationEngineModel eem) {
+		try {
+			Float.parseFloat(varVal2);
+		} catch (NumberFormatException e) {
+			eem.needsConversion(this);
+		}
+	}
+
+	@Override
+	@StringConfiguratorHack
+	public void convertToSafeVal(ExplorationEngineModel eem) {
+		varVal1 = Float.toString(eem.convertToDiscreteFloat(super.getVarName1(), varVal1));
+		varVal2 = Float.toString(eem.convertToDiscreteFloat(super.varName2, varVal2));
 	}
 
 	@Override

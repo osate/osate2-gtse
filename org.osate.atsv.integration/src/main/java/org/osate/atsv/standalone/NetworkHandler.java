@@ -120,6 +120,8 @@ public class NetworkHandler {
 			} else if (propNames[0].equalsIgnoreCase("Limit")) {
 				String[] limitArr = prop.getProperty(propName).split("-");
 				r.addLimit(propNames[1], limitArr[0], limitArr[1]);
+			} else if (propNames[0].equalsIgnoreCase("ConfigCacheHack")) {
+				r.addConfiguratorCacheEntry(propNames[1], Float.valueOf(propNames[2]), prop.getProperty(propName));
 			}
 		}
 		return r;
