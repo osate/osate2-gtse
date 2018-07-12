@@ -160,6 +160,7 @@ public class VariableModel {
 	 * Getter for the values of the variable
 	 * @return The possible values the variable can take
 	 */
+	@StringConfiguratorHack
 	public ValuesModel getValues() {
 		return values;
 	}

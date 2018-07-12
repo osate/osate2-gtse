@@ -150,7 +150,12 @@ public class ExplorationEngineModel {
 	@XmlTransient
 	private Collection<TypeRestriction> typeRestrictions = new HashSet<>();
 
+	/**
+	 * The set of configurators that need conversion from string values to float values so that
+	 * they work properly (see {@link StringConfiguratorHack}
+	 */
 	@XmlTransient
+	@StringConfiguratorHack
 	private Set<ConfiguratorModel> configuratorsToConvert = new HashSet<>();
 
 	/**

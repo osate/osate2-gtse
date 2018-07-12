@@ -44,6 +44,10 @@ import org.osate.atsv.integration.annotation.StringConfiguratorHack;
  */
 public class ValuesModel {
 
+	/**
+	 * Maps names to string representations of values. Ordering must be preserved for the configurator
+	 * caching hack, see {@link StringConfiguratorHack}
+	 */
 	@XmlJavaTypeAdapter(VariableModelAdapter.class)
 	@XmlAnyAttribute
 	private Map<QName, String> values = new LinkedHashMap<>();
