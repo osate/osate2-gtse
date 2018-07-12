@@ -170,6 +170,8 @@ public class AnalysisDelegator {
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
 		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 
+//		AadlPackage pkg = Aadl2GlobalScopeUtil.get(null, Aadl2Package.eINSTANCE.getAadlPackage(), packageName);
+
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 

@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.osate.aadl2.Aadl2Package;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.ComponentType;
@@ -47,11 +48,11 @@ import org.osate.aadl2.modelsupport.AadlConstants;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
+import org.osate.aadl2.modelsupport.scoping.Aadl2GlobalScopeUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
 import org.osate.atsv.integration.exception.UnsupportedFeatureException;
-import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class CustomInstantiator extends InstantiateModel {
 
@@ -83,7 +84,7 @@ public class CustomInstantiator extends InstantiateModel {
 	}
 
 	/**
-	 * Copied (!) from org.osate.aadl2.instantiation.InstantiateModel#buildInstanceModelFile(), since you can't 
+	 * Copied (!) from org.osate.aadl2.instantiation.InstantiateModel#buildInstanceModelFile(), since you can't
 	 * override static methods in java.
 	 */
 	public static SystemInstance myBuildInstanceModelFile(final ComponentImplementation ci,
@@ -142,7 +143,7 @@ public class CustomInstantiator extends InstantiateModel {
 
 	/**
 	 * Copied from {@link org.osate.aadl2.instance.util.InstanceUtil.getInstantiatedClassifier(InstanceObject, int, HashMap<InstanceObject, InstantiatedClassifier>)}
-	 * 
+	 *
 	 * @param iobj The instance object we're trying to resolve
 	 * @param classifierCache The current cache of objects
 	 * @return The instantiated classifier
@@ -167,7 +168,8 @@ public class CustomInstantiator extends InstantiateModel {
 				Subcomponent sub = ((ComponentInstance) iobj).getSubcomponent();
 				originalClassifiers.put(iobj.getComponentInstancePath(), sub.getClassifier());
 				ChoicePointSpecification cps = choicepoints.get(iobj.getComponentInstancePath());
-				classifier = EMFIndexRetrieval.getClassifierInWorkspace(iobj, cps.getValueAsString());
+				classifier = Aadl2GlobalScopeUtil.get(iobj, Aadl2Package.eINSTANCE.getClassifier(),
+						cps.getValueAsString());
 				prototypeBindings = sub.getOwnedPrototypeBindings();
 			} else if (iobj instanceof FeatureInstance) {
 				throw new UnsupportedFeatureException("Swapping features is not implemented");

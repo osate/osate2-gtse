@@ -31,3 +31,4 @@ Export-Package: org.osate.gtse.config.scoping,
  org.osate.gtse.config.config,
  org.osate.gtse.config.config.impl
 Import-Package: org.apache.log4j
+Automatic-Module-Name: org.osate.gtse.config

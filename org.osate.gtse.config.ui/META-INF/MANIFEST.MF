@@ -26,3 +26,4 @@ Export-Package: org.osate.gtse.config.ui.internal,
  org.osate.gtse.config.ui.contentassist,
  org.osate.gtse.config.ui.internal
 Bundle-Activator: org.osate.gtse.config.ui.internal.ConfigActivator
+Automatic-Module-Name: org.osate.gtse.config.ui

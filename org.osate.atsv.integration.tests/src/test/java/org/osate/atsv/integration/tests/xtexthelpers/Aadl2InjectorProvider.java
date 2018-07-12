@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -21,10 +21,10 @@
 */
 package org.osate.atsv.integration.tests.xtexthelpers;
 
-import org.eclipse.xtext.junit4.GlobalRegistries;
-import org.eclipse.xtext.junit4.GlobalRegistries.GlobalStateMemento;
-import org.eclipse.xtext.junit4.IInjectorProvider;
-import org.eclipse.xtext.junit4.IRegistryConfigurator;
+import org.eclipse.xtext.testing.GlobalRegistries;
+import org.eclipse.xtext.testing.GlobalRegistries.GlobalStateMemento;
+import org.eclipse.xtext.testing.IInjectorProvider;
+import org.eclipse.xtext.testing.IRegistryConfigurator;
 import org.osate.xtext.aadl2.Aadl2StandaloneSetup;
 
 import com.google.inject.Injector;
@@ -39,6 +39,7 @@ public class Aadl2InjectorProvider implements IInjectorProvider, IRegistryConfig
 		GlobalRegistries.initializeDefaults();
 	}
 
+	@Override
 	public Injector getInjector() {
 		if (injector == null) {
 			stateBeforeInjectorCreation = GlobalRegistries.makeCopyOfGlobalState();
@@ -52,10 +53,12 @@ public class Aadl2InjectorProvider implements IInjectorProvider, IRegistryConfig
 		return new Aadl2StandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 
+	@Override
 	public void restoreRegistry() {
 		stateBeforeInjectorCreation.restoreGlobalState();
 	}
 
+	@Override
 	public void setupRegistry() {
 		getInjector();
 		stateAfterInjectorCreation.restoreGlobalState();
