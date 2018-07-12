@@ -81,6 +81,7 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 		this.isRequires = isRequires;
 	}
 
+	@StringConfiguratorHack
 	private void checkIfConversionNeeded(String varVal2, ExplorationEngineModel eem) {
 		try {
 			Float.parseFloat(varVal2);
@@ -89,6 +90,7 @@ public class ImpliesConfiguratorModel extends ConfiguratorModel {
 		}
 	}
 
+	@Override
 	@StringConfiguratorHack
 	public void convertToSafeVal(ExplorationEngineModel eem) {
 		varVal1 = Float.toString(eem.convertToDiscreteFloat(super.getVarName1(), varVal1));

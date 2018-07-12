@@ -300,11 +300,11 @@ public final class EngineConfigGenerator {
 	}
 
 	public void addMembershipConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
-		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, true));
+		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, true, eem));
 	}
 
 	public void addExclusionConstraint(String varName1, String varVal1, String varName2, Collection<String> varVals2) {
-		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false));
+		eem.addConfigurator(new SetRestrictionConfiguratorModel(varName1, varVal1, varName2, varVals2, false, eem));
 	}
 
 	public void execute() {

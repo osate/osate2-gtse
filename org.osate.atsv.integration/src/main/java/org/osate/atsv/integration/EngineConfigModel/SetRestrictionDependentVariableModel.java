@@ -9,6 +9,8 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  * This encodes the "DependentVariable" element of the set restriction configurators.
  * We have to use a class here because there are two parts to the element:
@@ -54,6 +56,25 @@ public class SetRestrictionDependentVariableModel {
 	 */
 	public void add(String s) {
 		values.put(new QName("v" + counter++), s);
+	}
+
+	@StringConfiguratorHack
+	public void checkIfConversionNeeded(SetRestrictionConfiguratorModel srcm, ExplorationEngineModel eem) {
+		try {
+			for (String s : values.values()) {
+				Float.parseFloat(s);
+			}
+		} catch (NumberFormatException e) {
+			eem.needsConversion(srcm);
+		}
+	}
+
+	@StringConfiguratorHack
+	public void convertToDiscreteFloats(String varName, ExplorationEngineModel eem) {
+		Float.toString(eem.convertToDiscreteFloat(varName, values.get(new QName("v0"))));
+//		for (QName n : values.keySet()) {
+//			values.put(n, Float.toString(eem.convertToDiscreteFloat(varName, values.get(n))));
+//		}
 	}
 
 }

@@ -151,7 +151,7 @@ public class ExplorationEngineModel {
 	private Collection<TypeRestriction> typeRestrictions = new HashSet<>();
 
 	@XmlTransient
-	private Set<ImpliesConfiguratorModel> configuratorsToConvert = new HashSet<>();
+	private Set<ConfiguratorModel> configuratorsToConvert = new HashSet<>();
 
 	/**
 	 * Add a variable to the internal list of variables.
@@ -219,13 +219,13 @@ public class ExplorationEngineModel {
 	}
 
 	@StringConfiguratorHack
-	public void needsConversion(ImpliesConfiguratorModel configurator) {
+	public void needsConversion(ConfiguratorModel configurator) {
 		configuratorsToConvert.add(configurator);
 	}
 
 	@StringConfiguratorHack
 	public void doConfiguratorConversions() {
-		for (ImpliesConfiguratorModel m : configuratorsToConvert) {
+		for (ConfiguratorModel m : configuratorsToConvert) {
 			m.convertToSafeVal(this);
 		}
 	}

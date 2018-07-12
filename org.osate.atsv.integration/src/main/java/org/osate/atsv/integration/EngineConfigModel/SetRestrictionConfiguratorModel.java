@@ -5,6 +5,8 @@ import java.util.Collection;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  * This class models the set restriction (membership and exclusion) configurators.
  *
@@ -55,10 +57,11 @@ public class SetRestrictionConfiguratorModel extends ConfiguratorModel {
 	 * @param isMembership True for a membership configurator, false for exclusion
 	 */
 	public SetRestrictionConfiguratorModel(String varName1, String varVal1, String varName2, Collection<String> varVals2,
-			boolean isMembership) {
+			boolean isMembership, ExplorationEngineModel eem) {
 		super(varName1, varName2);
 		this.varVal1 = varVal1;
 		var2 = new SetRestrictionDependentVariableModel(varName2, varVals2);
+		var2.checkIfConversionNeeded(this, eem);
 		this.isMembership = isMembership;
 	}
 
@@ -72,6 +75,13 @@ public class SetRestrictionConfiguratorModel extends ConfiguratorModel {
 
 	public SetRestrictionDependentVariableModel getDependentVariable() {
 		return this.var2;
+	}
+
+	@Override
+	@StringConfiguratorHack
+	public void convertToSafeVal(ExplorationEngineModel eem) {
+		varVal1 = Float.toString(eem.convertToDiscreteFloat(super.getVarName1(), varVal1));
+		var2.convertToDiscreteFloats(super.varName2, eem);
 	}
 
 	@Override

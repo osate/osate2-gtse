@@ -3,6 +3,8 @@ package org.osate.atsv.integration.EngineConfigModel;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.osate.atsv.integration.annotation.StringConfiguratorHack;
+
 /**
  *
  * Configurators restrict the values of the values that ATSV chooses based on other selected
@@ -53,4 +55,6 @@ public abstract class ConfiguratorModel {
 		return id2;
 	}
 
+	@StringConfiguratorHack
+	public abstract void convertToSafeVal(ExplorationEngineModel eem);
 }
