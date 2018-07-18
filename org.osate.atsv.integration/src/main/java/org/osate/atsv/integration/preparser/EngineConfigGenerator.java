@@ -254,11 +254,13 @@ public final class EngineConfigGenerator {
 	public String getXML() throws JAXBException, UnsatisfiableConstraint, ConfiguratorRepresentationException,
 	UnsupportedFeatureException {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		// Some configurators can't be supported by ATSV, so we convert them here
+		// First, we validate the configurators before anything else
+		eem.validateConfigurator();
+		// Second, some configurators can't be supported by ATSV, so we convert them here
 		eem.doConfiguratorConversions();
-		// The configurators have to be double-encoded, so we call that rendering here
+		// Third, configurators have to be double-encoded, so we call that rendering here
 		eem.renderConfigurator();
-		// And here we render the entire specification
+		// Finally, we can render the entire specification
 		marshal.marshal(cfg, stream);
 		return stream.toString();
 	}

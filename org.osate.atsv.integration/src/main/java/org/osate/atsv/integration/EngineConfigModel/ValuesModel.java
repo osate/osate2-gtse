@@ -100,6 +100,9 @@ public class ValuesModel {
 	 */
 	@StringConfiguratorHack
 	public void cacheAndConvertToFloat() {
+		if (cache != null) {
+			return; // Don't recreate the cache if we already have one
+		}
 		float i = 0;
 		cache = new HashMap<String, Float>();
 		for (QName n : values.keySet()) {

@@ -189,7 +189,6 @@ public class ExplorationEngineModel {
 			configurator = "";
 			return;
 		}
-		validateConfigurator();
 		JAXBContext context = JAXBContext.newInstance(ConfiguratorsModel.class, SimpleConfiguratorModel.class,
 				ImpliesConfiguratorModel.class, SetRestrictionConfiguratorModel.class);
 		ConfiguratorModelAdapter configuratorAdapter = new ConfiguratorModelAdapter();
@@ -204,8 +203,11 @@ public class ExplorationEngineModel {
 		configurator = stream.toString();
 	}
 
-	private void validateConfigurator()
+	public void validateConfigurator()
 			throws UnsatisfiableConstraint, ConfiguratorRepresentationException, UnsupportedFeatureException {
+		if(cm.isEmpty()) {
+			return;
+		}
 		cm.validateConfigurator(typeRestrictions);
 	}
 

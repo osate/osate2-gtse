@@ -19,6 +19,7 @@
 package org.osate.atsv.integration.EngineConfigModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +107,10 @@ public class VariablesModel {
 	 */
 	@StringConfiguratorHack
 	public Map<String, String> getVarCacheStrs() {
+		if (variableMap == null) {
+			// Nothing cached, so we don't need to serialize anything
+			return Collections.EMPTY_MAP;
+		}
 		Map<String, String> ret = new HashMap<>();
 		String header;
 		for (VariableModel vm : variableMap.values()) {

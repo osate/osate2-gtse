@@ -106,7 +106,7 @@ public class ConfiguratorVerifier {
 		ISolver solver = SolverFactory.newLight();
 		GateTranslator gt = new GateTranslator(solver);
 		try {
-			// Phase 6: Require the whole expression to be true and check its satisifability
+			// Phase 6: Require the whole expression to be true and check its satisfiability
 			gt.gateTrue(top.getCNFVar(gt).id);
 			if (!solver.isSatisfiable()) {
 				throw new UnsatisfiableConstraint("The specified configurators are unsatisfiable");
