@@ -48,11 +48,11 @@ public class IntegrationTests extends IntegrationTestBase {
 				Collections.emptyMap(), Collections.emptySet());
 	}
 
-//	@Test
-//	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
-//		testHelper("org.osate.atsv.integration.power-consumption", null, true, "",
-//				Collections.singletonMap("Grid", new VarDescriptor("19.0")), Collections.emptySet());
-//	}
+	@Test
+	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
+		testHelper("org.osate.atsv.integration.power-consumption", null, true, "",
+				Collections.singletonMap("Grid", new VarDescriptor("19.0")), Collections.emptySet());
+	}
 
 	@Test
 	public void unhandledFaultsTest() throws IOException, ClassNotFoundException {
