@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class IntegrationTests extends IntegrationTestBase {
@@ -48,6 +49,7 @@ public class IntegrationTests extends IntegrationTestBase {
 				Collections.emptyMap(), Collections.emptySet());
 	}
 
+	@Ignore("Never terminates")
 	@Test
 	public void powerConsumptionTest() throws IOException, ClassNotFoundException {
 		testHelper("org.osate.atsv.integration.power-consumption", null, true, "",

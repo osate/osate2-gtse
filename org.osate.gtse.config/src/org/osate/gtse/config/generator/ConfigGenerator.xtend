@@ -118,8 +118,8 @@ class ConfigGenerator extends AbstractGenerator {
 	private dispatch def callApi(ConstraintMapping m, EngineConfigGenerator ecg) {
 		val cond = m.constraint.condition
 		val pathName = m.path.tail.map[name].join('.')
-		val condLHS = cond.lhs
-		val condRHS = cond.rhs
+		val condLHS = prepend(pathName, cond.lhs.print)
+		val condRHS = cond.rhs.print
 		val condRelat = cond.relation
 
 		val topRelat = m.constraint.relation
@@ -130,21 +130,21 @@ class ConfigGenerator extends AbstractGenerator {
 			val consRHS = cons.rhs
 			if (consRHS instanceof SetValue) {
 				if (topRelat == Relation.RQ) {
-					ecg.addMembershipConstraint(condLHS.print, condRHS.print, consLHSstr, consRHS.elements.map[print])
+					ecg.addMembershipConstraint(condLHS, condRHS, consLHSstr, consRHS.elements.map[print])
 				} else if (topRelat == Relation.FB) {
-					ecg.addExclusionConstraint(condLHS.print, condRHS.print, consLHSstr, consRHS.elements.map[print])
+					ecg.addExclusionConstraint(condLHS, condRHS, consLHSstr, consRHS.elements.map[print])
 				}
 			} else {
 				if (topRelat == Relation.RQ) {
-					ecg.addRequiresConstraint(condLHS.print, condRHS.print, consLHSstr, consRHS.print)
+					ecg.addRequiresConstraint(condLHS, condRHS, consLHSstr, consRHS.print)
 				} else if (topRelat == Relation.FB) {
-					ecg.addForbidsConstraint(condLHS.print, condRHS.print, consLHSstr, consRHS.print)
+					ecg.addForbidsConstraint(condLHS, condRHS, consLHSstr, consRHS.print)
 				}
 			}
 		} else if (condRelat == Relation.EQ) {
-			ecg.addEqualityConstraint(prepend(pathName, condLHS.print), prepend(pathName, condRHS.print))
+			ecg.addEqualityConstraint(condLHS, condRHS)
 		} else if (condRelat == Relation.NEQ) {
-			ecg.addUniquenessConstraint(prepend(pathName, condLHS.print), prepend(pathName, condRHS.print))
+			ecg.addUniquenessConstraint(condLHS, condRHS)
 		}
 	}
 
