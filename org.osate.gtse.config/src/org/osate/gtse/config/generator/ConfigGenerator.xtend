@@ -142,9 +142,9 @@ class ConfigGenerator extends AbstractGenerator {
 				}
 			}
 		} else if (condRelat == Relation.EQ) {
-			ecg.addEqualityConstraint(condLHS, condRHS)
+			ecg.addEqualityConstraint(condLHS, prepend(pathName, cond.rhs.print))
 		} else if (condRelat == Relation.NEQ) {
-			ecg.addUniquenessConstraint(condLHS, condRHS)
+			ecg.addUniquenessConstraint(condLHS, prepend(pathName, cond.rhs.print))
 		}
 	}
 
