@@ -1,0 +1,21 @@
+package functional::Status
+public
+	with functional::GenericFunctions;
+	
+	system Status extends functional::GenericFunctions::Generic
+		
+	end Status;
+	
+	system implementation Status.basic extends functional::GenericFunctions::Generic.basic
+		
+	end status.basic;
+	
+	system implementation Status.hi_quality extends Status.basic
+		
+	end Status.hi_quality;
+	
+	system implementation Status.lo_quality extends Status.basic
+		
+	end Status.lo_quality;
+	
+end functional::Status;
