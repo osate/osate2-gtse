@@ -43,7 +43,7 @@ subcomponents
 	wheel      		: system impl::wheel::wheel.i;
 	
 	-- Annunciation device
-	annunciation 	: device impl::communication::annunciation.i;
+--	annunciation 	: device impl::communication::annunciation.i;
 connections
     accu_to_sel: bus access selector.accumulator_input <-> accumulator.pressure_output;
 	power1     : bus access bscu.pwr1 <-> power.line1;
@@ -63,15 +63,15 @@ annex EMV2 {**
 	use types WBSImplementationErrorLib;
 	use behavior WBSImplementationErrorLib::TwostateWBS;
 
-	composite error behavior
-	states
-		[bscu.Failed and accumulator.Failed and annunciation.Failed]-> Failed{TotalWBLossUnanunciated};
-		[blue_pump.Failed and green_pump.Failed and accumulator.Failed and annunciation.Failed]-> Failed{TotalWBLossUnanunciated};
-		[bscu.Failed and accumulator.Failed and annunciation.Failed]-> Failed{TotalWBLossUnanunciated};
-		
-		[bscu.Failed and accumulator.Failed and annunciation.Operational]-> Failed{TotalWBLossAnunciated};
-		[blue_pump.Failed and green_pump.Failed and accumulator.Failed and annunciation.Operational]-> Failed{TotalWBLossAnunciated};
-		[bscu.Failed and accumulator.Failed and annunciation.Operational]-> Failed{TotalWBLossAnunciated};	end composite;**};
+--	composite error behavior
+--	states
+--		[bscu.Failed and accumulator.Failed and annunciation.Failed]-> Failed{TotalWBLossUnanunciated};
+--		[blue_pump.Failed and green_pump.Failed and accumulator.Failed and annunciation.Failed]-> Failed{TotalWBLossUnanunciated};
+--		[bscu.Failed and accumulator.Failed and annunciation.Failed]-> Failed{TotalWBLossUnanunciated};
+--		
+--		[bscu.Failed and accumulator.Failed and annunciation.Operational]-> Failed{TotalWBLossAnunciated};
+--		[blue_pump.Failed and green_pump.Failed and accumulator.Failed and annunciation.Operational]-> Failed{TotalWBLossAnunciated};
+--		[bscu.Failed and accumulator.Failed and annunciation.Operational]-> Failed{TotalWBLossAnunciated};	end composite;**};
 end wbs.generic;
  
 
