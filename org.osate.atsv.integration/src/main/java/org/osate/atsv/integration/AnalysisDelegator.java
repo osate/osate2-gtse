@@ -22,6 +22,7 @@ import static java.util.function.Function.identity;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -157,8 +158,20 @@ public class AnalysisDelegator {
 		}
 
 		private Map<String, ChoicePointSpecification> mappifyChoicePoints() {
-			return Collections.unmodifiableMap(choicepoints.stream()
+			// This method got hacked a little bit because name conflicts would mean that
+			// you can't have two choicepoints with the same path, even if one is a property.
+			// We don't actually use key values for non-property-choicepoints, though, so
+			// this method keeps the paths for non-properties, and gives properties random keys.
+			Map<String, ChoicePointSpecification> ret = new HashMap<>();
+			Map<String, ChoicePointSpecification> noProps = Collections.unmodifiableMap(choicepoints.stream()
+					.filter(c -> !c.isProperty())
 					.collect(Collectors.toMap(ChoicePointSpecification::getComponentPath, identity())));
+			Map<String, ChoicePointSpecification> props = Collections.unmodifiableMap(choicepoints.stream()
+					.filter(c -> c.isProperty())
+					.collect(Collectors.toMap(c -> java.util.UUID.randomUUID().toString(), identity())));
+			ret.putAll(noProps);
+			ret.putAll(props);
+			return ret;
 		}
 
 		public Response getResponse() {
