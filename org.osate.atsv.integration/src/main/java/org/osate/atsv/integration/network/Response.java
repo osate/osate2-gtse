@@ -93,7 +93,7 @@ public class Response implements Serializable {
 		}
 		addVariable("ValidModel", ATSVVariableType.FLOAT, "0.0");
 		String existingReasons = "";
-		if (!innerMap.get("InvalidReason").getVal().equals("(none)")) {
+		if (!innerMap.get("InvalidReason").getVal().equals("(None)")) {
 			existingReasons = innerMap.get("InvalidReason").getVal() + ";\n";
 		}
 		addVariable("InvalidReason", ATSVVariableType.STRING, existingReasons + reason);
