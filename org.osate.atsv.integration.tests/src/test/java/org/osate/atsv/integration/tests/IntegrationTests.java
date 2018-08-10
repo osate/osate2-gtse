@@ -38,7 +38,7 @@ public class IntegrationTests extends IntegrationTestBase {
 
 	@Test
 	public void flowLatencyTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.flow-latency", null, true, "",
+		testHelper("org.osate.atsv.integration.flow-latency", null, true, "(None)",
 				Collections.singletonMap("scs.exampleFlow", new VarDescriptor("160.0")), Collections.emptySet());
 	}
 
@@ -65,7 +65,7 @@ public class IntegrationTests extends IntegrationTestBase {
 
 	@Test
 	public void priceAndWeightTest() throws IOException, ClassNotFoundException {
-		testHelper("org.osate.atsv.integration.property-totals", null, true, "",
+		testHelper("org.osate.atsv.integration.property-totals", null, true, "(None)",
 				Stream.of(new Object[] { "Price", new VarDescriptor("1750.63") },
 						new Object[] { "Weight", new VarDescriptor("8.41") })
 				.collect(Collectors.toMap(s -> (String) s[0], s -> (VarDescriptor) s[1])),
