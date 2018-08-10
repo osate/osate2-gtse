@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -28,7 +28,7 @@ import org.osate.atsv.standalone.ATSVVarCollection;
 public class Response implements Serializable {
 
 	/**
-	 * Default serial version 
+	 * Default serial version
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -43,9 +43,9 @@ public class Response implements Serializable {
 	private Exception exception = null;
 
 	/**
-	 * This is marked as false if either 
+	 * This is marked as false if either
 	 * 1. An "all or nothing" analysis finds a problem with instance
-	 * model created by the request (ie, it's unschedulable, or has 
+	 * model created by the request (ie, it's unschedulable, or has
 	 * inconsistent connections), or
 	 * 2. Instantiating / analyzing it generates an exception
 	 */
@@ -59,7 +59,7 @@ public class Response implements Serializable {
 
 	public Response() {
 		addVariable("ValidModel", ATSVVariableType.FLOAT, "1.0");
-		addVariable("InvalidReason", ATSVVariableType.STRING, "");
+		addVariable("InvalidReason", ATSVVariableType.STRING, "(None)");
 	}
 
 	public void setException(Exception e) {
@@ -93,7 +93,7 @@ public class Response implements Serializable {
 		}
 		addVariable("ValidModel", ATSVVariableType.FLOAT, "0.0");
 		String existingReasons = "";
-		if (innerMap.get("InvalidReason").getVal().length() > 0) {
+		if (!innerMap.get("InvalidReason").getVal().equals("(none)")) {
 			existingReasons = innerMap.get("InvalidReason").getVal() + ";\n";
 		}
 		addVariable("InvalidReason", ATSVVariableType.STRING, existingReasons + reason);
