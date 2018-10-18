@@ -71,14 +71,14 @@ import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
-import org.osate.testsupport.Aadl2InjectorProvider;
+import org.osate.testsupport.Aadl2UiInjectorProvider;
 import org.osate.testsupport.OsateTest;
 import org.osate.xtext.aadl2.properties.util.GetProperties;
 
 import com.google.inject.Inject;
 
 @RunWith(XtextRunner.class)
-@InjectWith(Aadl2InjectorProvider.class)
+@InjectWith(Aadl2UiInjectorProvider.class)
 public class InstantiatorTests extends OsateTest {
 
 	@Inject
