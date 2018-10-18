@@ -33,11 +33,17 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.core.runtime.SafeRunner;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.osate.aadl2.Aadl2Factory;
+import org.osate.aadl2.Aadl2Package;
 import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
+import org.osate.aadl2.modelsupport.scoping.Aadl2GlobalScopeUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
@@ -45,7 +51,6 @@ import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.Limit;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
-import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
 
 public class AnalysisDelegator {
 
@@ -181,9 +186,14 @@ public class AnalysisDelegator {
 
 	private SystemInstance instantiateClassifier(String packageName, String implName,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
-		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
+//		AadlPackage pkg_old = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 
-//		AadlPackage pkg = Aadl2GlobalScopeUtil.get(null, Aadl2Package.eINSTANCE.getAadlPackage(), packageName);
+		// Hack to get a package without an eobject
+		ResourceSet rs = OsateResourceUtil.createResourceSet();
+		Resource dummy = rs.createResource(URI.createFileURI("DUMMY.aadl"));
+		AadlPackage dummyPkg = Aadl2Factory.eINSTANCE.createAadlPackage();
+		dummy.getContents().add(dummyPkg);
+		AadlPackage pkg = Aadl2GlobalScopeUtil.get(dummyPkg, Aadl2Package.eINSTANCE.getAadlPackage(), packageName);
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
