@@ -34,16 +34,20 @@ import org.eclipse.core.runtime.ISafeRunnable;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.osate.aadl2.Aadl2Factory;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 import org.osate.aadl2.Aadl2Package;
 import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
-import org.osate.aadl2.modelsupport.scoping.Aadl2GlobalScopeUtil;
+import org.osate.aadl2.util.Aadl2Util;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.annotation.StringConfiguratorHack;
 import org.osate.atsv.integration.exception.AnalysisPluginException;
@@ -52,7 +56,13 @@ import org.osate.atsv.integration.network.Limit;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
 public class AnalysisDelegator {
+
+	@Inject
+	private ResourceDescriptionsProvider rdp;
 
 	private final String EXTENSION_POINT_ID = "org.osate.atsv.integration";
 
@@ -67,6 +77,12 @@ public class AnalysisDelegator {
 		}
 		SafeRunner.run(runnable);
 		return runnable.getResponse();
+	}
+
+	public AnalysisDelegator() {
+		Injector injector = IResourceServiceProvider.Registry.INSTANCE
+				.getResourceServiceProvider(URI.createFileURI("dummy.aadl")).get(Injector.class);
+		injector.injectMembers(this);
 	}
 
 	private class AnalysisRunner implements ISafeRunnable {
@@ -186,14 +202,8 @@ public class AnalysisDelegator {
 
 	private SystemInstance instantiateClassifier(String packageName, String implName,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
-//		AadlPackage pkg_old = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 
-		// Hack to get a package without an eobject
-		ResourceSet rs = OsateResourceUtil.createResourceSet();
-		Resource dummy = rs.createResource(URI.createFileURI("DUMMY.aadl"));
-		AadlPackage dummyPkg = Aadl2Factory.eINSTANCE.createAadlPackage();
-		dummy.getContents().add(dummyPkg);
-		AadlPackage pkg = Aadl2GlobalScopeUtil.get(dummyPkg, Aadl2Package.eINSTANCE.getAadlPackage(), packageName);
+		AadlPackage pkg = getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
@@ -213,5 +223,27 @@ public class AnalysisDelegator {
 					.filter(mode -> mode.getName().equals(modeName)).findFirst().get();
 			return som;
 		}
+	}
+
+	/**
+	* get package in workspace by looking it up in EMF index
+	* @param pname String package name
+	* @param resoruceSet the resource in which the models are expected
+	* @return AADL package
+	*/
+	private AadlPackage getPackageInWorkspace(String pname, ResourceSet resourceSet) {
+		IResourceDescriptions rds = rdp.getResourceDescriptions(resourceSet);
+		Iterable<IEObjectDescription> packagedlist = rds
+				.getExportedObjectsByType(Aadl2Package.eINSTANCE.getAadlPackage());
+		for (IEObjectDescription eod : packagedlist) {
+			if (eod.getName().toString("::").equalsIgnoreCase(pname)) {
+				EObject res = eod.getEObjectOrProxy();
+				res = EcoreUtil.resolve(res, resourceSet);
+				if (!Aadl2Util.isNull(res)) {
+					return (AadlPackage) res;
+				}
+			}
+		}
+		return null;
 	}
 }

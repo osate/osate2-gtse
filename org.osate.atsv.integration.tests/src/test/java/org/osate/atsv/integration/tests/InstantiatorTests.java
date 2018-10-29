@@ -101,15 +101,7 @@ public class InstantiatorTests extends OsateTest {
 
 	private SystemInstance getComponentInstance(String packageName, String implName,
 			Set<ChoicePointSpecification> choicepoints) throws Exception {
-//		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
 		AadlPackage pkg = getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
-
-//		// Hack to get a package without an eobject
-//		ResourceSet rs = OsateResourceUtil.createResourceSet();
-//		Resource dummy = rs.createResource(URI.createFileURI("DUMMY.aadl"));
-//		AadlPackage dummyPkg = Aadl2Factory.eINSTANCE.createAadlPackage();
-//		dummy.getContents().add(dummyPkg);
-//		AadlPackage pkg = Aadl2GlobalScopeUtil.get(dummyPkg, Aadl2Package.eINSTANCE.getAadlPackage(), packageName);
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
