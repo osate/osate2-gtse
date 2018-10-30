@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
-import org.osate.analysis.flows.FlowLatencyAnalysisSwitch;
+import org.osate.analysis.flows.LatencyAnalysisService;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
@@ -35,14 +35,14 @@ public class FlowLatency extends AbstractAnalysis {
 	@Override
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
-		FlowLatencyAnalysisSwitch flas = new FlowLatencyAnalysisSwitch(progressMonitor, instance);
+		LatencyAnalysisService flas = new LatencyAnalysisService();
 		AnalysisResult result = flas.invoke(instance, som);
 		populateVariables(result, resp);
 	}
 
 	private void populateVariables(AnalysisResult result, Response ret) {
 		for (Result flowResult : result.getResults()) {
-			String name = ((org.osate.aadl2.instance.InstanceObject) result.getResults().get(0).getSourceReference())
+			String name = ((org.osate.aadl2.instance.InstanceObject) result.getResults().get(0).getModelElement())
 					.getComponentInstancePath();
 			String value = Double.toString(((RealValue) flowResult.getValues().get(2)).getValue());
 			ret.addVariable(name, ATSVVariableType.FLOAT, value);
