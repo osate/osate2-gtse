@@ -36,10 +36,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
+import org.eclipse.xtext.testing.InjectWith;
+import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.osate.aadl2.Aadl2Package;
 import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.IntegerLiteral;
@@ -52,6 +62,7 @@ import org.osate.aadl2.instance.FeatureInstance;
 import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
+import org.osate.aadl2.util.Aadl2Util;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.ChoicePointModel.ListPropertyValue;
@@ -60,11 +71,18 @@ import org.osate.atsv.integration.ChoicePointModel.PropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
 import org.osate.atsv.integration.ChoicePointModel.SubcomponentChoice;
 import org.osate.atsv.integration.instantiator.CustomInstantiator;
-import org.osate.atsv.integration.tests.xtexthelpers.OsateTest;
-import org.osate.xtext.aadl2.properties.util.EMFIndexRetrieval;
+import org.osate.testsupport.Aadl2UiInjectorProvider;
+import org.osate.testsupport.OsateTest;
 import org.osate.xtext.aadl2.properties.util.GetProperties;
 
+import com.google.inject.Inject;
+
+@RunWith(XtextRunner.class)
+@InjectWith(Aadl2UiInjectorProvider.class)
 public class InstantiatorTests extends OsateTest {
+
+	@Inject
+	private ResourceDescriptionsProvider rdp;
 
 	private static String pkgText;
 
@@ -83,7 +101,8 @@ public class InstantiatorTests extends OsateTest {
 
 	private SystemInstance getComponentInstance(String packageName, String implName,
 			Set<ChoicePointSpecification> choicepoints) throws Exception {
-		AadlPackage pkg = EMFIndexRetrieval.getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
+		AadlPackage pkg = getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
+
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();
 		return CustomInstantiator.myBuildInstanceModelFile(impl, getChoicePointMap(choicepoints));
@@ -271,5 +290,27 @@ public class InstantiatorTests extends OsateTest {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	* get package in workspace by looking it up in EMF index
+	* @param pname String package name
+	* @param resoruceSet the resource in which the models are expected
+	* @return AADL package
+	*/
+	private AadlPackage getPackageInWorkspace(String pname, ResourceSet resourceSet) {
+		IResourceDescriptions rds = rdp.getResourceDescriptions(resourceSet);
+		Iterable<IEObjectDescription> packagedlist = rds
+				.getExportedObjectsByType(Aadl2Package.eINSTANCE.getAadlPackage());
+		for (IEObjectDescription eod : packagedlist) {
+			if (eod.getName().toString("::").equalsIgnoreCase(pname)) {
+				EObject res = eod.getEObjectOrProxy();
+				res = EcoreUtil.resolve(res, resourceSet);
+				if (!Aadl2Util.isNull(res)) {
+					return (AadlPackage) res;
+				}
+			}
+		}
+		return null;
 	}
 }
