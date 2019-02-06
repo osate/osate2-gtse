@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
-import org.osate.analysis.flows.LatencyAnalysisService;
+import org.osate.analysis.flows.FlowLatencyAnalysisSwitch;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
@@ -35,8 +35,8 @@ public class FlowLatency extends AbstractAnalysis {
 	@Override
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
-		LatencyAnalysisService flas = new LatencyAnalysisService();
-		AnalysisResult result = flas.invoke(instance, som);
+		FlowLatencyAnalysisSwitch flas = new FlowLatencyAnalysisSwitch();
+		AnalysisResult result = flas.invoke(instance, som, true, true, true, true);
 		populateVariables(result, resp);
 	}
 
