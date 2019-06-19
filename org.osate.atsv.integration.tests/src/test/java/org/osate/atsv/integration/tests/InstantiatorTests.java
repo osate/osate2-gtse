@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -61,7 +62,6 @@ import org.osate.aadl2.instance.ComponentInstance;
 import org.osate.aadl2.instance.FeatureInstance;
 import org.osate.aadl2.instance.InstanceReferenceValue;
 import org.osate.aadl2.instance.SystemInstance;
-import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.aadl2.util.Aadl2Util;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
@@ -101,7 +101,7 @@ public class InstantiatorTests extends OsateTest {
 
 	private SystemInstance getComponentInstance(String packageName, String implName,
 			Set<ChoicePointSpecification> choicepoints) throws Exception {
-		AadlPackage pkg = getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
+		AadlPackage pkg = getPackageInWorkspace(packageName, new ResourceSetImpl());
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();

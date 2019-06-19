@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
@@ -46,7 +47,6 @@ import org.osate.aadl2.AadlPackage;
 import org.osate.aadl2.ComponentImplementation;
 import org.osate.aadl2.instance.SystemInstance;
 import org.osate.aadl2.instance.SystemOperationMode;
-import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.aadl2.util.Aadl2Util;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.annotation.StringConfiguratorHack;
@@ -203,7 +203,7 @@ public class AnalysisDelegator {
 	private SystemInstance instantiateClassifier(String packageName, String implName,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
 
-		AadlPackage pkg = getPackageInWorkspace(packageName, OsateResourceUtil.createResourceSet());
+		AadlPackage pkg = getPackageInWorkspace(packageName, new ResourceSetImpl());
 
 		ComponentImplementation impl = (ComponentImplementation) pkg.getPublicSection().getOwnedClassifiers().stream()
 				.filter(sysImpl -> sysImpl.getName().equals(implName)).findFirst().get();

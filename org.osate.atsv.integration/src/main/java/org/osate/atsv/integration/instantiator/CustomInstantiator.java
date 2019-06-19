@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.osate.aadl2.Aadl2Package;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentImplementation;
@@ -47,7 +48,6 @@ import org.osate.aadl2.instantiation.InstantiateModel;
 import org.osate.aadl2.modelsupport.AadlConstants;
 import org.osate.aadl2.modelsupport.errorreporting.AnalysisErrorReporterManager;
 import org.osate.aadl2.modelsupport.errorreporting.MarkerAnalysisErrorReporter;
-import org.osate.aadl2.modelsupport.resources.OsateResourceUtil;
 import org.osate.aadl2.modelsupport.scoping.Aadl2GlobalScopeUtil;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.ChoicePointModel.ReferencePropertyValue;
@@ -89,8 +89,8 @@ public class CustomInstantiator extends InstantiateModel {
 	 */
 	public static SystemInstance myBuildInstanceModelFile(final ComponentImplementation ci,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
-		URI instanceURI = OsateResourceUtil.getInstanceModelURI(ci);
-		Resource aadlResource = OsateResourceUtil.getEmptyAaxl2Resource(instanceURI);
+		URI instanceURI = InstantiateModel.getInstanceModelURI(ci);
+		Resource aadlResource = new ResourceSetImpl().createResource(instanceURI);
 
 		final InstantiateModel instantiateModel = new CustomInstantiator(new NullProgressMonitor(),
 				new AnalysisErrorReporterManager(

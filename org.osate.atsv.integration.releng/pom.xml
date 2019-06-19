@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tycho.version>1.0.0</tycho.version>
-        <eclipse-repo.url>http://download.eclipse.org/releases/oxygen/</eclipse-repo.url>
+        <tycho.version>1.4.0</tycho.version>
+        <eclipse-repo.url>http://download.eclipse.org/releases/2019-03/</eclipse-repo.url>
         <osate-repo.url>http://www.aadl.info/aadl/osate/testing/update-site/</osate-repo.url>
-        <elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.3.0/</elk-stable.url>
+        <elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.5.0/</elk-stable.url>
         <osate.version>[0.0.0,3.0.0)</osate.version>
         <aadl-translator.version>[0.0.0,2.0.0)</aadl-translator.version>
         <code-coverage.ratio>0.00</code-coverage.ratio>
@@ -57,7 +57,8 @@
         <module>../org.osate.atsv.integration.feature.base</module>
         <module>../org.osate.atsv.integration.feature.analyses</module>
         <module>../org.osate.atsv.integration.updatesite</module>
-        <module>../org.osate.atsv.integration.tests</module>
+        <!-- Disabled since org.osate.testsupport isn't exposed in any public p2 repos -->
+        <!-- module>../org.osate.atsv.integration.tests</module -->
     </modules>
     <repositories>
         <repository>
@@ -77,12 +78,12 @@
         </repository>
         <repository>
             <id>xtext-tmf</id>
-            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.12.0/</url>
+            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.17.0/</url>
             <layout>p2</layout>
         </repository>
         <repository>
             <id>xtext-emft</id>
-            <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0/</url>
+            <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.10.0/</url>
             <layout>p2</layout>
         </repository>
         <repository>
@@ -118,17 +119,7 @@
                         <environment>
                             <os>linux</os>
                             <ws>gtk</ws>
-                            <arch>x86</arch>
-                        </environment>
-                        <environment>
-                            <os>linux</os>
-                            <ws>gtk</ws>
                             <arch>x86_64</arch>
-                        </environment>
-                        <environment>
-                            <os>win32</os>
-                            <ws>win32</ws>
-                            <arch>x86</arch>
                         </environment>
                         <environment>
                             <os>win32</os>
