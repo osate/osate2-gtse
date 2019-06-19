@@ -60,34 +60,5 @@
             sequence="M1+6">
       </key>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="org.osate.atsv.integration.menus.sampleMenu"
-               label="Sample Menu"
-               mnemonic="M">
-            <command
-                  commandId="org.osate.atsv.integration.commands.sampleCommand"
-                  id="org.osate.atsv.integration.menus.sampleCommand"
-                  label="Build ATSV-Jar"
-                  mnemonic="S">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="org.osate.atsv.integration.toolbars.sampleToolbar">
-            <command
-                  commandId="org.osate.atsv.integration.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  id="org.osate.atsv.integration.toolbars.sampleCommand"
-                  tooltip="Say hello world">
-            </command>
-         </toolbar>
-      </menuContribution>
-   </extension>
 
 </plugin>
