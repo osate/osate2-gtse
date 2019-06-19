@@ -9,7 +9,7 @@ If you're interested in a more diagrammatic, foundational understanding of how G
 ## Prerequisites
 
 1. [Java 8+](https://www.java.com/en/download/manual.jsp)
-2. Osate 2.2.3+
+2. Osate 2.5.0+
     * If you don't have OSATE you can [download it](https://osate-build.sei.cmu.edu/download/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
 
 ## Installing the GTSE Plugin
@@ -34,6 +34,8 @@ If you're interested in a more diagrammatic, foundational understanding of how G
 
 ## Installing ATSV
 
+Note: Some features of GATSE (eg, sophisticated constraints) require version 10.0.8.32bit of ATSV.
+
 1. [Download ATSV](http://www.atsv.psu.edu/download.html) and extract it.
 
 ## Generating the ATSV Pre-requisites
@@ -47,9 +49,8 @@ If you're interested in a more diagrammatic, foundational understanding of how G
     6. If you made any changes, restart OSATE.
 2. Create, or import, an GTSE-compatible project.
     * Example projects are available in the GTSE-Examples directory of this repository.
-3. Select the *PackageName*.property file, where *PackageName* is the name of a package in this project.
-    * In the GTSE-Examples project, you can select `SimpleComponentChoice.properties`, which contains choicepoint information for the `SimpleComponentChoice` package in `SimpleComponentChoice.aadl`.
-4. Select `Sample Menu`, then select `Generate Input Files`.
+3. If you've imported a project, open the associated .config file.
+4. Saving .config files triggers the generation of pre-requisite files -- so add a newline, space, or comment and save the file.
 5. [Optional] Verify that the following files have been created in the directory you specified as part of step 1.4:
     * `ATSVConfig.ecf`
     * `connector.jar`
