@@ -1,0 +1,92 @@
+package Sample
+public
+
+system Complete
+	
+end Complete;
+
+system implementation Complete.PBA_spd_ctrl
+  subcomponents
+    spd_snsr: device snsr.spd;
+    throttle: device actuator.spd;
+    spd_ctrl: process ctrl.spd;
+    RT_1GHz: processor Real_Time.one_GHz;
+    std_marine_bus: bus Marine.std;
+    std_mem: memory RAM.std;
+  connections
+    DC1: port spd_snsr.snsr_dat -> spd_ctrl.snsr_dat;
+    DC2: port spd_ctrl.cmd -> throttle.cmd;
+    BAC1: bus access std_marine_bus <-> spd_snsr.BA1;
+    BAC2: bus access std_marine_bus <-> RT_1GHz.BA1;
+  properties
+    Allowed_Processor_Binding => (reference(RT_1GHz)) applies to spd_ctrl;
+    Allowed_Memory_Binding => (reference(std_mem)) applies to spd_ctrl;
+    Data_Rate => 5 KBytesps applies to DC1;
+end Complete.PBA_spd_ctrl;
+
+device snsr
+	features
+		snsr_dat : out event port;
+		BA1 : requires bus access Marine.std;
+end snsr;
+
+device implementation snsr.spd
+	
+end snsr.spd;
+
+device implementation snsr.spd_cheap extends snsr.spd
+	
+end snsr.spd_cheap;
+
+device implementation snsr.spd_mid extends snsr.spd
+	
+end snsr.spd_mid;
+
+device implementation snsr.spd_quality extends snsr.spd
+	
+end snsr.spd_quality;
+
+device actuator
+	features
+		cmd : in data port;
+end actuator;
+
+device implementation actuator.spd
+	
+end actuator.spd;
+
+process ctrl
+	features
+		snsr_dat : in event port;
+		cmd : out data port;
+end ctrl;
+
+process implementation ctrl.spd
+	
+end ctrl.spd;
+
+processor Real_Time
+	features
+		BA1 : requires bus access Marine.std;
+end Real_Time;
+
+processor implementation Real_Time.one_GHz
+		
+end Real_Time.one_GHz;
+
+bus Marine
+	
+end Marine;
+
+bus implementation Marine.std
+	
+end Marine.std;
+
+memory RAM
+	
+end RAM;
+
+memory implementation RAM.std
+	
+end RAM.std;
+end Sample;
