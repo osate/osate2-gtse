@@ -13,6 +13,4 @@ Explaining the Wheel Braking System is beyond the scope of this readme, but inte
 
 ### Running the Example
 
-1. OSATE, ATSV, and GATSE should be downloaded / installed per [the instructions](../readme.md) in this project's root
-2. Import the "GTSE-Examples" project into the GATSE-enabled OSATE. The wheel brake system is in the "ARP4761" directory.
-3. Continue following [the instructions](../readme.md), using the file `arp4761.config`.
+OSATE, ATSV, and GATSE should be downloaded / installed per [the instructions](../readme.md) in this project's root. In step 2 of "Generating the ATSV Pre-requisites," use the GTSE-Examples project. The wheel brake system is in the "ARP4761" directory, and the .config file is `arp4761.config`.
