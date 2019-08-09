@@ -13,6 +13,7 @@
         <eclipse-repo.url>http://download.eclipse.org/releases/2019-03/</eclipse-repo.url>
         <osate-repo.url>http://osate-build.sei.cmu.edu/download/osate/testing/updates/</osate-repo.url>
         <elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.5.0/</elk-stable.url>
+        <xtext.version>2.17.0</xtext.version>
         <osate.version>[0.0.0,3.0.0)</osate.version>
         <aadl-translator.version>[0.0.0,2.0.0)</aadl-translator.version>
         <code-coverage.ratio>0.00</code-coverage.ratio>
@@ -138,6 +139,45 @@
                     </environments>
                 </configuration>
             </plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>xtend-gen</directory>
+							<excludes>
+								<exclude>.gitignore</exclude>
+							</excludes>
+						</fileset>
+						<fileset>
+							<directory>xsemantics-gen</directory>
+							<excludes>
+								<exclude>**/.gitignore</exclude>
+							</excludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+						<configuration>
+							<xtendAsPrimaryDebugSource>true</xtendAsPrimaryDebugSource>
+							<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
