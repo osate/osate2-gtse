@@ -19,7 +19,7 @@
  -->
 <feature
       id="org.osate.atsv.integration.feature.base"
-      label="Guided Tradsepace Explorer: ATSV Integration (Core)"
+      label="Guided Tradespace Explorer: ATSV Integration (Core)"
       version="1.0.0.qualifier"
       provider-name="Software Engineering Institute">
 

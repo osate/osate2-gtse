@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.osate.gtse.config.feature"
-      label="Config Feature"
-      version="1.0.0.qualifier">
+      label="Guided Tradespace Explorer: Configuration language"
+      version="1.0.0.qualifier"
+      provider-name="Software Engineering Institute">
 
    <plugin
          id="org.osate.gtse.config"

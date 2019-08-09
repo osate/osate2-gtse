@@ -19,7 +19,7 @@
  -->
 <feature
       id="org.osate.atsv.integration.feature.analyses"
-      label="AnalysesFeature"
+      label="Guided Tradespace Explorer: Analyses"
       version="1.0.0.qualifier">
 
    <description>

@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <tycho.version>1.4.0</tycho.version>
         <eclipse-repo.url>http://download.eclipse.org/releases/2019-03/</eclipse-repo.url>
-        <osate-repo.url>http://www.aadl.info/aadl/osate/testing/update-site/</osate-repo.url>
+        <osate-repo.url>http://osate-build.sei.cmu.edu/download/osate/testing/updates/</osate-repo.url>
         <elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.5.0/</elk-stable.url>
         <osate.version>[0.0.0,3.0.0)</osate.version>
         <aadl-translator.version>[0.0.0,2.0.0)</aadl-translator.version>
@@ -59,6 +59,10 @@
         <module>../org.osate.atsv.integration.updatesite</module>
         <!-- Disabled since org.osate.testsupport isn't exposed in any public p2 repos -->
         <!-- module>../org.osate.atsv.integration.tests</module -->
+        <module>../org.osate.gtse.config</module>
+        <module>../org.osate.gtse.config.feature</module>
+        <module>../org.osate.gtse.config.ide</module>
+        <module>../org.osate.gtse.config.ui</module>
     </modules>
     <repositories>
         <repository>
