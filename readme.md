@@ -8,7 +8,7 @@ If you're interested in a more diagrammatic, foundational understanding of how G
 
 ## Prerequisites
 
-1. [Java 8+](https://www.java.com/en/download/manual.jsp)
+1. [Java 8](https://www.java.com/en/download/manual.jsp)
 2. Osate 2.5.0+
     * If you don't have OSATE you can [download it](https://osate-build.sei.cmu.edu/download/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
 
