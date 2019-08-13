@@ -23,9 +23,13 @@ Configuration specifications are stared as text files using the file extension `
 The first element in a config file is the name of the top level configuration that will be instantiated. This configuration must
 be defined in the same file.
 
-###
+### Configuration Definitions
+
+### Constraint Definitions
+
+### Analysis Defintions
 
 ## Limitations
 
-All configuration definitions for an instance model must be defined in the same config file. There is no means implemented to
-import definitions from other files.
+All the definitions for an instance model must be defined in the same config file. It is currently not possible to import
+or reference definitions from other files.
