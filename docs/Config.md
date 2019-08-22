@@ -114,7 +114,8 @@ configuration CFExt extends C.i with CF {
 ```
 
 The assignments in `CFExt` can either be new assignments or override assignments provided by
-configuration `CF`. If there are no assignments in `CFExt` it is identical to `CF`. In general the extended configuration must be a configuration for either `C.i` or a classifier that is extended by `C.i` (an _ancestor_ of `C.i`).
+configuration `CF`. If there are no assignments in `CFExt` it is identical to `CF`. In general the extended configuration must be a configuration for
+either `C.i` or a classifier that is extended by `C.i` (an _ancestor_ of `C.i`).
 
 #### Combining Multiple Configurations
 
@@ -216,9 +217,9 @@ cannot be chosen independent of each other. The language supports the following 
  * `p1 == p2` - the two parameters must have the same value
  * `p1 != p2` - the two parameters must have different values
  * `p1 == X requires p2 == Y ` - if p1 is X, p2 must be Y
- * `p1 == X forbids  p2 == Y ` - if p1 is X, p2 must be Y
- * `p1 == X requires p2 in {Y, Z} ` - if p1 is X, p2 must be Y
- * `p1 == X forbids  p2 in {Y, Z} ` - if p1 is X, p2 must be Y
+ * `p1 == X forbids  p2 == Y ` - if p1 is X, p2 must not be Y
+ * `p1 == X requires p2 in {Y, Z} ` - if p1 is X, p2 must be in the given set, here Y or Z
+ * `p1 == X forbids  p2 in {Y, Z} ` - if p1 is X, p2 must not be in the given set
 
 The constraints are written as a comma separated list after a configuration:
 
@@ -228,6 +229,8 @@ The constraints are written as a comma separated list after a configuration:
 ')'
 
 ```
+
+If a constraint refers to a classifier its name must be preceded by `!`. This is only necessary to disambiguate the grammar.
 
 ### Analysis Definitions
 
