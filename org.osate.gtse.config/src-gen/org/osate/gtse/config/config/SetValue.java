@@ -42,10 +42,6 @@ public interface SetValue extends ConditionExpression
    * Returns the value of the '<em><b>Elements</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.ConditionValue}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Elements</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getSetValue_Elements()

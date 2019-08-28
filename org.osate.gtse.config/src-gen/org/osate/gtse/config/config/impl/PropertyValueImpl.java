@@ -82,6 +82,7 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertyExpression getExp()
   {
     return exp;
@@ -109,6 +110,7 @@ public class PropertyValueImpl extends ConfigValueImpl implements PropertyValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setExp(PropertyExpression newExp)
   {
     if (newExp != exp)

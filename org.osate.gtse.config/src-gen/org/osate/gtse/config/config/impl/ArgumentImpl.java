@@ -94,6 +94,7 @@ public class ArgumentImpl extends MinimalEObjectImpl.Container implements Argume
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigParameter getParameter()
   {
     if (parameter != null && parameter.eIsProxy())
@@ -124,6 +125,7 @@ public class ArgumentImpl extends MinimalEObjectImpl.Container implements Argume
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setParameter(ConfigParameter newParameter)
   {
     ConfigParameter oldParameter = parameter;
@@ -137,6 +139,7 @@ public class ArgumentImpl extends MinimalEObjectImpl.Container implements Argume
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigValue getValue()
   {
     return value;
@@ -164,6 +167,7 @@ public class ArgumentImpl extends MinimalEObjectImpl.Container implements Argume
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setValue(ConfigValue newValue)
   {
     if (newValue != value)

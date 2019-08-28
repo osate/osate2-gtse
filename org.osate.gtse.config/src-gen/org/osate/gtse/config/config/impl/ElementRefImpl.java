@@ -95,6 +95,7 @@ public class ElementRefImpl extends MinimalEObjectImpl.Container implements Elem
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NamedElement getElement()
   {
     if (element != null && ((EObject)element).eIsProxy())
@@ -125,6 +126,7 @@ public class ElementRefImpl extends MinimalEObjectImpl.Container implements Elem
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setElement(NamedElement newElement)
   {
     NamedElement oldElement = element;
@@ -138,6 +140,7 @@ public class ElementRefImpl extends MinimalEObjectImpl.Container implements Elem
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ElementRef getPrev()
   {
     return prev;
@@ -165,6 +168,7 @@ public class ElementRefImpl extends MinimalEObjectImpl.Container implements Elem
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPrev(ElementRef newPrev)
   {
     if (newPrev != prev)

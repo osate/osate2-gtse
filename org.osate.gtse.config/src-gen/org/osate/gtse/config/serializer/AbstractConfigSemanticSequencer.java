@@ -974,7 +974,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 				sequence_ConfigParameter_FClassifierType_FPropertyType(context, (ConfigParameter) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIG_PKG:
-				sequence_Analyses_ConfigPkg_Outputs(context, (ConfigPkg) semanticObject); 
+				sequence_Analyses_ConfigPkg_Outputs_Root(context, (ConfigPkg) semanticObject); 
 				return; 
 			case ConfigPackage.CONFIGURATION:
 				sequence_Assignments_Configuration_Parameters_With(context, (Configuration) semanticObject); 
@@ -1031,13 +1031,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *
 	 * Constraint:
 	 *     (
-	 *         root=[Configuration|ID] 
+	 *         root=[Configuration|ID]? 
 	 *         configurations+=Configuration* 
 	 *         (analyses+=STRING analyses+=STRING*)? 
 	 *         (outputs+=OutputVariable outputs+=OutputVariable*)?
 	 *     )
 	 */
-	protected void sequence_Analyses_ConfigPkg_Outputs(ISerializationContext context, ConfigPkg semanticObject) {
+	protected void sequence_Analyses_ConfigPkg_Outputs_Root(ISerializationContext context, ConfigPkg semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

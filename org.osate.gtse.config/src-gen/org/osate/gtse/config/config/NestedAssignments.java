@@ -43,10 +43,6 @@ public interface NestedAssignments extends ConfigValue
    * Returns the value of the '<em><b>Assignments</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Assignment}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Assignments</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Assignments</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getNestedAssignments_Assignments()
@@ -59,10 +55,6 @@ public interface NestedAssignments extends ConfigValue
    * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Constraint}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Constraints</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Constraints</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getNestedAssignments_Constraints()

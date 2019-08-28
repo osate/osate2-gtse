@@ -46,36 +46,31 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	public class ConfigPkgElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.ConfigPkg");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRootKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cRootAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cRootConfigurationCrossReference_1_0 = (CrossReference)cRootAssignment_1.eContents().get(0);
-		private final RuleCall cRootConfigurationIDTerminalRuleCall_1_0_1 = (RuleCall)cRootConfigurationCrossReference_1_0.eContents().get(1);
+		private final Action cConfigPkgAction_0 = (Action)cGroup.eContents().get(0);
+		private final RuleCall cRootParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		private final Assignment cConfigurationsAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cConfigurationsConfigurationParserRuleCall_2_0 = (RuleCall)cConfigurationsAssignment_2.eContents().get(0);
 		private final RuleCall cAnalysesParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
 		private final RuleCall cOutputsParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
-		//ConfigPkg: //	'package' name=PNAME
-		//	'root' root=[Configuration] configurations+=Configuration* Analyses? Outputs? //	'end'
+		//ConfigPkg:
+		//	{ConfigPkg} Root?
+		//	configurations+=Configuration*
+		//	Analyses?
+		//	Outputs?
+		//	//	'end'
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		////	'package' name=PNAME
-		//'root' root=[Configuration] configurations+=Configuration* Analyses? Outputs?
+		//{ConfigPkg} Root? configurations+=Configuration* Analyses? Outputs?
 		public Group getGroup() { return cGroup; }
 		
+		//{ConfigPkg}
+		public Action getConfigPkgAction_0() { return cConfigPkgAction_0; }
+		
 		////	'package' name=PNAME
-		//'root'
-		public Keyword getRootKeyword_0() { return cRootKeyword_0; }
-		
-		//root=[Configuration]
-		public Assignment getRootAssignment_1() { return cRootAssignment_1; }
-		
-		//[Configuration]
-		public CrossReference getRootConfigurationCrossReference_1_0() { return cRootConfigurationCrossReference_1_0; }
-		
-		//ID
-		public RuleCall getRootConfigurationIDTerminalRuleCall_1_0_1() { return cRootConfigurationIDTerminalRuleCall_1_0_1; }
+		//Root?
+		public RuleCall getRootParserRuleCall_1() { return cRootParserRuleCall_1; }
 		
 		//configurations+=Configuration*
 		public Assignment getConfigurationsAssignment_2() { return cConfigurationsAssignment_2; }
@@ -88,6 +83,33 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Outputs?
 		public RuleCall getOutputsParserRuleCall_4() { return cOutputsParserRuleCall_4; }
+	}
+	public class RootElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Root");
+		private final Group cGroup = (Group)rule.eContents().get(0);
+		private final Keyword cRootKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cRootAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cRootConfigurationCrossReference_1_0 = (CrossReference)cRootAssignment_1.eContents().get(0);
+		private final RuleCall cRootConfigurationIDTerminalRuleCall_1_0_1 = (RuleCall)cRootConfigurationCrossReference_1_0.eContents().get(1);
+		
+		//fragment Root *:
+		//	'root' root=[Configuration];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'root' root=[Configuration]
+		public Group getGroup() { return cGroup; }
+		
+		//'root'
+		public Keyword getRootKeyword_0() { return cRootKeyword_0; }
+		
+		//root=[Configuration]
+		public Assignment getRootAssignment_1() { return cRootAssignment_1; }
+		
+		//[Configuration]
+		public CrossReference getRootConfigurationCrossReference_1_0() { return cRootConfigurationCrossReference_1_0; }
+		
+		//ID
+		public RuleCall getRootConfigurationIDTerminalRuleCall_1_0_1() { return cRootConfigurationIDTerminalRuleCall_1_0_1; }
 	}
 	public class AnalysesElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Analyses");
@@ -1551,6 +1573,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	private final ConfigPkgElements pConfigPkg;
+	private final RootElements pRoot;
 	private final AnalysesElements pAnalyses;
 	private final OutputsElements pOutputs;
 	private final OutputVariableElements pOutputVariable;
@@ -1597,6 +1620,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaAadl2 = gaAadl2;
 		this.gaProperties = gaProperties;
 		this.pConfigPkg = new ConfigPkgElements();
+		this.pRoot = new RootElements();
 		this.pAnalyses = new AnalysesElements();
 		this.pOutputs = new OutputsElements();
 		this.pOutputVariable = new OutputVariableElements();
@@ -1661,8 +1685,12 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//ConfigPkg: //	'package' name=PNAME
-	//	'root' root=[Configuration] configurations+=Configuration* Analyses? Outputs? //	'end'
+	//ConfigPkg:
+	//	{ConfigPkg} Root?
+	//	configurations+=Configuration*
+	//	Analyses?
+	//	Outputs?
+	//	//	'end'
 	//;
 	public ConfigPkgElements getConfigPkgAccess() {
 		return pConfigPkg;
@@ -1670,6 +1698,16 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getConfigPkgRule() {
 		return getConfigPkgAccess().getRule();
+	}
+	
+	//fragment Root *:
+	//	'root' root=[Configuration];
+	public RootElements getRootAccess() {
+		return pRoot;
+	}
+	
+	public ParserRule getRootRule() {
+		return getRootAccess().getRule();
 	}
 	
 	//fragment Analyses *:

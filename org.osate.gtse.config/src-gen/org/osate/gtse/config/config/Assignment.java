@@ -46,10 +46,6 @@ public interface Assignment extends EObject
   /**
    * Returns the value of the '<em><b>Wildcard</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Wildcard</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Wildcard</em>' attribute.
    * @see #setWildcard(boolean)
@@ -72,10 +68,6 @@ public interface Assignment extends EObject
   /**
    * Returns the value of the '<em><b>Ref</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Ref</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Ref</em>' containment reference.
    * @see #setRef(ElementRef)
@@ -98,10 +90,6 @@ public interface Assignment extends EObject
   /**
    * Returns the value of the '<em><b>Property</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Property</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Property</em>' reference.
    * @see #setProperty(Property)
@@ -124,10 +112,6 @@ public interface Assignment extends EObject
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Value</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
    * @see #setValue(ConfigValue)

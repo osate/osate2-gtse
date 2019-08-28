@@ -41,10 +41,6 @@ public interface PropertyValue extends ConfigValue, ConditionValue
   /**
    * Returns the value of the '<em><b>Exp</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Exp</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Exp</em>' containment reference.
    * @see #setExp(PropertyExpression)

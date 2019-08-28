@@ -92,23 +92,26 @@ ruleConfigPkg returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='root'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getConfigPkgAccess().getRootKeyword_0());
-		}
 		(
-			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getConfigPkgRule());
-					}
-				}
-				otherlv_1=RULE_ID
-				{
-					newLeafNode(otherlv_1, grammarAccess.getConfigPkgAccess().getRootConfigurationCrossReference_1_0());
-				}
-			)
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getConfigPkgAccess().getConfigPkgAction_0(),
+					$current);
+			}
 		)
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getConfigPkgRule());
+				}
+				newCompositeNode(grammarAccess.getConfigPkgAccess().getRootParserRuleCall_1());
+			}
+			this_Root_1=ruleRoot[$current]
+			{
+				$current = $this_Root_1.current;
+				afterParserOrEnumRuleCall();
+			}
+		)?
 		(
 			(
 				{
@@ -154,6 +157,36 @@ ruleConfigPkg returns [EObject current=null]
 				afterParserOrEnumRuleCall();
 			}
 		)?
+	)
+;
+
+
+// Rule Root
+ruleRoot[EObject in_current]  returns [EObject current=in_current]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='root'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getRootAccess().getRootKeyword_0());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getRootRule());
+					}
+				}
+				otherlv_1=RULE_ID
+				{
+					newLeafNode(otherlv_1, grammarAccess.getRootAccess().getRootConfigurationCrossReference_1_0());
+				}
+			)
+		)
 	)
 ;
 

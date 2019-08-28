@@ -105,6 +105,7 @@ public class LimitImpl extends MinimalEObjectImpl.Container implements Limit
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Relation getRelation()
   {
     return relation;
@@ -115,6 +116,7 @@ public class LimitImpl extends MinimalEObjectImpl.Container implements Limit
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRelation(Relation newRelation)
   {
     Relation oldRelation = relation;
@@ -128,6 +130,7 @@ public class LimitImpl extends MinimalEObjectImpl.Container implements Limit
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertyExpression getBound()
   {
     return bound;
@@ -155,6 +158,7 @@ public class LimitImpl extends MinimalEObjectImpl.Container implements Limit
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBound(PropertyExpression newBound)
   {
     if (newBound != bound)
@@ -273,7 +277,7 @@ public class LimitImpl extends MinimalEObjectImpl.Container implements Limit
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (relation: ");
     result.append(relation);
     result.append(')');

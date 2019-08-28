@@ -43,10 +43,6 @@ public interface Condition extends EObject
   /**
    * Returns the value of the '<em><b>Lhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Lhs</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Lhs</em>' containment reference.
    * @see #setLhs(ConditionExpression)
@@ -70,10 +66,6 @@ public interface Condition extends EObject
    * Returns the value of the '<em><b>Relation</b></em>' attribute.
    * The literals are from the enumeration {@link org.osate.gtse.config.config.Relation}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Relation</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Relation</em>' attribute.
    * @see org.osate.gtse.config.config.Relation
@@ -98,10 +90,6 @@ public interface Condition extends EObject
   /**
    * Returns the value of the '<em><b>Rhs</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Rhs</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Rhs</em>' containment reference.
    * @see #setRhs(ConditionExpression)
