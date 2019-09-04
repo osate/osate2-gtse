@@ -64,6 +64,8 @@ class ConfigValidator extends AbstractConfigValidator {
 	 * Check for with cycles.
 	 * Error for arrayable elements, prototypes.
 	 * Unique assignment. Unique prefix.
+	 * Left-side Constraints refer to parameters.
+	 * Equals is type safe.
 	 * 
 	 * Low priority:
 	 * Property type checking (don't worry about reference for now).
