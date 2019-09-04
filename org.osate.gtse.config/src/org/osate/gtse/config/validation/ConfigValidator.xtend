@@ -55,6 +55,20 @@ import org.osate.aadl2.Classifier
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class ConfigValidator extends AbstractConfigValidator {
+	/*
+	 * TODO
+	 * 
+	 * High priority:
+	 * Parameter choices (from) match parameter type.
+	 * Parameter actuals match parameter type and optional choices.
+	 * Check for with cycles.
+	 * Error for arrayable elements, prototypes.
+	 * Unique assignment. Unique prefix.
+	 * 
+	 * Low priority:
+	 * Property type checking (don't worry about reference for now).
+	 * Overriding is consistent with other configurations.
+	 */
 
 	public static val ARGUMENTS_NOT_ALLOWED = 'argumentsNotAllowed'
 	public static val CLASSIFIER_MISMATCH = 'classifierMismatch'
