@@ -56,6 +56,7 @@ import org.osate.aadl2.Classifier
  */
 class ConfigValidator extends AbstractConfigValidator {
 
+	public static val ARGUMENTS_NOT_ALLOWED = 'argumentsNotAllowed'
 	public static val CLASSIFIER_MISMATCH = 'classifierMismatch'
 	public static val INCONSISTENT_COMBINATION = 'inconsistentCombination'
 	public static val INVALID_BOUND_TYPE = 'invalidBoundType'
@@ -171,9 +172,39 @@ class ConfigValidator extends AbstractConfigValidator {
 		if (cl !== null && !cl.eIsProxy) {
 			if (!comb.unsafe && !comb.configuration.eIsProxy) {
 				if (!AadlUtil.isSameOrExtends(comb.configuration.extended, cl)) {
-					error('Configuration ' + comb.configuration.name + ' is for a classifier which is not an ancestor of ' + cl.getQualifiedName(),
+					error(
+						'Configuration ' + comb.configuration.name +
+							' is for a classifier which is not an ancestor of ' + cl.getQualifiedName(),
 						ConfigPackage.Literals.COMBINATION__CONFIGURATION, INCONSISTENT_COMBINATION)
 				}
+			}
+		}
+	}
+
+	@Check
+	def checkNamedElementRefArguments(NamedElementRef ne) {
+		// TODO check arg types, list length
+		val ref = ne.ref
+		if (!ne.arguments.empty && !ref.eIsProxy) {
+			if (ref instanceof Configuration) {
+				if (ref.parameters.empty) {
+					error('Configuration does not have parameters', ConfigPackage.Literals.NAMED_ELEMENT_REF__ARGUMENTS,
+						ARGUMENTS_NOT_ALLOWED)
+				}
+			} else {
+				error('Arguments are allowed for configurations only',
+					ConfigPackage.Literals.NAMED_ELEMENT_REF__ARGUMENTS, ARGUMENTS_NOT_ALLOWED)
+			}
+		}
+	}
+
+	@Check
+	def checkCombinationArguments(Combination comb) {
+		// TODO check arg types, list length
+		if (!comb.arguments.empty && !comb.configuration.eIsProxy) {
+			if (comb.configuration.parameters.empty) {
+				error('Configuration does not have parameters', ConfigPackage.Literals.COMBINATION__ARGUMENTS,
+					ARGUMENTS_NOT_ALLOWED)
 			}
 		}
 	}

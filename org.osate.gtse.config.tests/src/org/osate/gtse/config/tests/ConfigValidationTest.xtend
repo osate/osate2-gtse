@@ -178,15 +178,70 @@ class ConfigValidationTest {
 	}
 	
 	@Test
-	def void inconsistentCombination() {
+	def inconsistentCombination() {
 		val result = '''
 			root C0
 			configuration C0 extends T::WBS.i
 			configuration C1 extends T::WBS.i1
 			configuration C2 extends T::WBS.i with C0 & C1
 		'''.parse(rs)
-		result.assertError(ConfigPackage.eINSTANCE.configuration, ConfigValidator.INCONSISTENT_COMBINATION)
+		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.INCONSISTENT_COMBINATION)
 	}
+	
+	@Test
+	def void addedArguments1() {
+		val result = '''
+			root CWBS00
+			configuration CWBS00 extends T::WBS.i {
+				w => T::A.i1(p => v)
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.ARGUMENTS_NOT_ALLOWED)
+	} 
+	
+	@Test
+	def void addedArguments2() {
+		val result = '''
+			root CWBS00
+			configuration CWBS00 extends T::WBS.i
+			configuration CWBS01 extends T::WBS.i {
+				w => CWBS00(p => v)
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.ARGUMENTS_NOT_ALLOWED)
+	} 
+	
+	@Test
+	def void addedArguments3() {
+		val result = '''
+			root CWBS00
+			configuration CWBS01 extends T::WBS.i {
+				w => CWBS00(p => v)
+			}
+		'''.parse(rs)
+		// CWBS00 unresolved
+		result.assertNoError(ConfigValidator.ARGUMENTS_NOT_ALLOWED)
+	} 
+	
+	@Test
+	def void addedArguments4() {
+		val result = '''
+			root C0
+			configuration C0 extends T::WBS.i
+			configuration C1 extends T::WBS.i with C0(p => v)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.ARGUMENTS_NOT_ALLOWED)
+	} 
+	
+	@Test
+	def void addedArguments5() {
+		val result = '''
+			root C0
+			configuration C1 extends T::WBS.i with C0(p => v)
+		'''.parse(rs)
+		// C0 unresolved
+		result.assertNoError(ConfigValidator.ARGUMENTS_NOT_ALLOWED)
+	} 
 	
 	// validation of constraints
 
