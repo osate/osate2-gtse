@@ -18,8 +18,9 @@
  */
 package org.osate.gtse.config.validation
 
-import java.util.List
 import org.eclipse.xtext.validation.Check
+import org.osate.aadl2.Classifier
+import org.osate.aadl2.ComponentCategory
 import org.osate.aadl2.ComponentClassifier
 import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.NamedElement
@@ -47,31 +48,24 @@ import org.osate.gtse.config.config.SetValue
 import org.osate.gtse.config.config.Type
 
 import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
-import org.osate.aadl2.Classifier
 
-/**
- * This class contains custom validation rules. 
+/*
+ * TODO
  * 
- * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
+ * High priority:
+ * Parameter choices (from) match parameter type.
+ * Parameter actuals match parameter type and optional choices.
+ * Check for with cycles.
+ * Error for arrayable elements, prototypes.
+ * Unique assignment. Unique prefix.
+ * Left-side Constraints refer to parameters.
+ * Equals is type safe.
+ * 
+ * Low priority:
+ * Property type checking (don't worry about reference for now).
+ * Overriding is consistent with other configurations.
  */
 class ConfigValidator extends AbstractConfigValidator {
-	/*
-	 * TODO
-	 * 
-	 * High priority:
-	 * Parameter choices (from) match parameter type.
-	 * Parameter actuals match parameter type and optional choices.
-	 * Check for with cycles.
-	 * Error for arrayable elements, prototypes.
-	 * Unique assignment. Unique prefix.
-	 * Left-side Constraints refer to parameters.
-	 * Equals is type safe.
-	 * 
-	 * Low priority:
-	 * Property type checking (don't worry about reference for now).
-	 * Overriding is consistent with other configurations.
-	 */
-
 	public static val ARGUMENTS_NOT_ALLOWED = 'argumentsNotAllowed'
 	public static val CLASSIFIER_MISMATCH = 'classifierMismatch'
 	public static val INCONSISTENT_COMBINATION = 'inconsistentCombination'
@@ -84,16 +78,8 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val NOT_PROPERTY_VALUE = 'notAPropertyValue'
 	public static val NOT_SUBCOMPONENT = 'notASubcomponent'
 	public static val PROPERTY_DOES_NOT_APPLY = 'propertyDoesNotApply'
+	public static val CATEGORY_MISMATCH = 'categoryMismatch'
 
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					INVALID_NAME)
-//		}
-//	}
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
 		if (pkg.root === null)
@@ -113,7 +99,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	}
 
 	// assigning a value to a property
-	def checkPropertyAssignment(NamedElement element, Property property, ConfigValue value) {
+	def protected checkPropertyAssignment(NamedElement element, Property property, ConfigValue value) {
 		if (element !== null) {
 			checkPropertyApplies(element, property)
 		}
@@ -123,7 +109,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	}
 
 	// does property apply to named element
-	def checkPropertyApplies(NamedElement element, Property property) {
+	def protected checkPropertyApplies(NamedElement element, Property property) {
 		if (!element.acceptsProperty(property)) {
 			error('Property ' + property.getQualifiedName() + ' does not apply to ' + element.name,
 				ConfigPackage.Literals.ASSIGNMENT__PROPERTY, PROPERTY_DOES_NOT_APPLY);
@@ -131,13 +117,13 @@ class ConfigValidator extends AbstractConfigValidator {
 	}
 
 	// is value an element of the property type
-	def checkPropertyValueType(PropertyType type, ConfigValue value) {
+	def protected checkPropertyValueType(PropertyType type, ConfigValue value) {
 		if (!(value instanceof PropertyValue)) {
 			error('Not a property value', ConfigPackage.Literals.ASSIGNMENT__VALUE, NOT_PROPERTY_VALUE)
 		}
 	}
 
-	def checkSubcomponentAssignment(NamedElement element, ConfigValue value) {
+	def protected checkSubcomponentAssignment(NamedElement element, ConfigValue value) {
 		val classifier = value.classifier
 		if (classifier === null) {
 			error('Expecting a classifier value', ConfigPackage.Literals.ASSIGNMENT__VALUE, NOT_CLASSIFIER)
@@ -152,14 +138,14 @@ class ConfigValidator extends AbstractConfigValidator {
 		}
 	}
 
-	def getClassifier(ConfigValue value) {
+	def protected getClassifier(ConfigValue value) {
 		if (value instanceof NamedElementRef)
 			value.classifier
 		else
 			null
 	}
 
-	def getClassifier(NamedElementRef neRef) {
+	def protected getClassifier(NamedElementRef neRef) {
 		val ref = neRef.ref
 		val cls = switch ref {
 			ComponentClassifier: ref
@@ -184,7 +170,7 @@ class ConfigValidator extends AbstractConfigValidator {
 		checkCombination(cls, combination)
 	}
 
-	def checkCombination(Classifier cl, Combination comb) {
+	def protected checkCombination(Classifier cl, Combination comb) {
 		if (cl !== null && !cl.eIsProxy) {
 			if (!comb.unsafe && !comb.configuration.eIsProxy) {
 				if (!AadlUtil.isSameOrExtends(comb.configuration.extended, cl)) {
@@ -225,7 +211,7 @@ class ConfigValidator extends AbstractConfigValidator {
 		}
 	}
 
-	@Check(FAST)
+	@Check
 	def checkConstraintRelation(Constraint cons) {
 		val rel = cons.relation
 		if (!#{Relation.NONE, Relation.RQ, Relation.FB}.contains(rel))
@@ -233,7 +219,7 @@ class ConfigValidator extends AbstractConfigValidator {
 				INVALID_CONSTRAINT_RELATION)
 	}
 
-	@Check(FAST)
+	@Check
 	def checkConditionRelation(Condition cond) {
 		val constraint = cond.getContainerOfType(Constraint)
 		val rel = cond.relation
@@ -262,7 +248,7 @@ class ConfigValidator extends AbstractConfigValidator {
 		}
 	}
 
-	@Check(FAST)
+	@Check
 	def checkOutputs(OutputVariable output) {
 		if (output.limit !== null) {
 			val bound = output.limit.bound
@@ -288,7 +274,7 @@ class ConfigValidator extends AbstractConfigValidator {
 		}
 	}
 
-	@Check(FAST)
+	@Check
 	def checkLimitRelation(Limit limit) {
 		val rel = limit.relation
 		if (!#{Relation.EQ, Relation.NEQ, Relation.GT, Relation.GTE, Relation.LT, Relation.LTE}.contains(rel))
@@ -296,4 +282,13 @@ class ConfigValidator extends AbstractConfigValidator {
 				INVALID_LIMIT_RELATION)
 	}
 
+	@Check
+	def void checkParameterCategory(ConfigParameter parameter) {
+		val classifier = parameter.classifier
+		if (classifier !== null && !classifier.eIsProxy && classifier.category != ComponentCategory.ABSTRACT &&
+			parameter.category != classifier.category) {
+			error('''The category of «classifier.category» «classifier.getQualifiedName» is not «parameter.category»''',
+				ConfigPackage.Literals.CONFIG_PARAMETER__CLASSIFIER, CATEGORY_MISMATCH)
+		}
+	}
 }

@@ -29,7 +29,6 @@ import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.eclipse.xtext.util.StringInputStream
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -295,6 +294,15 @@ class ConfigValidationTest {
 				v1: int == 'string'
 			}
 		'''.parse.assertError(ConfigPackage.eINSTANCE.outputVariable, ConfigValidator.INVALID_BOUND_TYPE)
+	}
+	
+	@Test
+	def void testCheckParameterCategory() {
+		val result = '''
+			root C0
+			configuration C0(p: device T::W)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.configParameter, ConfigValidator.CATEGORY_MISMATCH)
 	}
 
 
