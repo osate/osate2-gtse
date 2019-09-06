@@ -88,7 +88,12 @@ fragment FPropertyType*:
 ;
 
 Candidates returns ConfigValue:
-	{CandidateList} 'from' '(' (candidates+=ConfigValue (',' candidates+=ConfigValue)*)? ')'
+	{CandidateList} 'from' '(' (candidates+=CandidateValue (',' candidates+=CandidateValue)*)? ')'
+;
+
+CandidateValue returns ConfigValue:
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] |
+	{PropertyValue} exp=CPropertyExpression
 ;
 
 fragment Assignments*:

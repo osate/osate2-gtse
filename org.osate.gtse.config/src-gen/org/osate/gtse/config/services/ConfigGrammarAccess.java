@@ -586,18 +586,18 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Assignment cCandidatesAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final RuleCall cCandidatesConfigValueParserRuleCall_3_0_0 = (RuleCall)cCandidatesAssignment_3_0.eContents().get(0);
+		private final RuleCall cCandidatesCandidateValueParserRuleCall_3_0_0 = (RuleCall)cCandidatesAssignment_3_0.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
 		private final Keyword cCommaKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
 		private final Assignment cCandidatesAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
-		private final RuleCall cCandidatesConfigValueParserRuleCall_3_1_1_0 = (RuleCall)cCandidatesAssignment_3_1_1.eContents().get(0);
+		private final RuleCall cCandidatesCandidateValueParserRuleCall_3_1_1_0 = (RuleCall)cCandidatesAssignment_3_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Candidates ConfigValue:
-		//	{CandidateList} 'from' '(' (candidates+=ConfigValue (',' candidates+=ConfigValue)*)? ')';
+		//	{CandidateList} 'from' '(' (candidates+=CandidateValue (',' candidates+=CandidateValue)*)? ')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{CandidateList} 'from' '(' (candidates+=ConfigValue (',' candidates+=ConfigValue)*)? ')'
+		//{CandidateList} 'from' '(' (candidates+=CandidateValue (',' candidates+=CandidateValue)*)? ')'
 		public Group getGroup() { return cGroup; }
 		
 		//{CandidateList}
@@ -609,29 +609,76 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 		
-		//(candidates+=ConfigValue (',' candidates+=ConfigValue)*)?
+		//(candidates+=CandidateValue (',' candidates+=CandidateValue)*)?
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//candidates+=ConfigValue
+		//candidates+=CandidateValue
 		public Assignment getCandidatesAssignment_3_0() { return cCandidatesAssignment_3_0; }
 		
-		//ConfigValue
-		public RuleCall getCandidatesConfigValueParserRuleCall_3_0_0() { return cCandidatesConfigValueParserRuleCall_3_0_0; }
+		//CandidateValue
+		public RuleCall getCandidatesCandidateValueParserRuleCall_3_0_0() { return cCandidatesCandidateValueParserRuleCall_3_0_0; }
 		
-		//(',' candidates+=ConfigValue)*
+		//(',' candidates+=CandidateValue)*
 		public Group getGroup_3_1() { return cGroup_3_1; }
 		
 		//','
 		public Keyword getCommaKeyword_3_1_0() { return cCommaKeyword_3_1_0; }
 		
-		//candidates+=ConfigValue
+		//candidates+=CandidateValue
 		public Assignment getCandidatesAssignment_3_1_1() { return cCandidatesAssignment_3_1_1; }
 		
-		//ConfigValue
-		public RuleCall getCandidatesConfigValueParserRuleCall_3_1_1_0() { return cCandidatesConfigValueParserRuleCall_3_1_1_0; }
+		//CandidateValue
+		public RuleCall getCandidatesCandidateValueParserRuleCall_3_1_1_0() { return cCandidatesCandidateValueParserRuleCall_3_1_1_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class CandidateValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.CandidateValue");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cNamedElementRefAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cRefAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final CrossReference cRefNamedElementCrossReference_0_1_0 = (CrossReference)cRefAssignment_0_1.eContents().get(0);
+		private final RuleCall cRefNamedElementCNAMEParserRuleCall_0_1_0_1 = (RuleCall)cRefNamedElementCrossReference_0_1_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cPropertyValueAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cExpAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cExpCPropertyExpressionParserRuleCall_1_1_0 = (RuleCall)cExpAssignment_1_1.eContents().get(0);
+		
+		//CandidateValue ConfigValue:
+		//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{NamedElementRef} ref=[aadl2::NamedElement|CNAME]
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{NamedElementRef}
+		public Action getNamedElementRefAction_0_0() { return cNamedElementRefAction_0_0; }
+		
+		//ref=[aadl2::NamedElement|CNAME]
+		public Assignment getRefAssignment_0_1() { return cRefAssignment_0_1; }
+		
+		//[aadl2::NamedElement|CNAME]
+		public CrossReference getRefNamedElementCrossReference_0_1_0() { return cRefNamedElementCrossReference_0_1_0; }
+		
+		//CNAME
+		public RuleCall getRefNamedElementCNAMEParserRuleCall_0_1_0_1() { return cRefNamedElementCNAMEParserRuleCall_0_1_0_1; }
+		
+		//{PropertyValue} exp=CPropertyExpression
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{PropertyValue}
+		public Action getPropertyValueAction_1_0() { return cPropertyValueAction_1_0; }
+		
+		//exp=CPropertyExpression
+		public Assignment getExpAssignment_1_1() { return cExpAssignment_1_1; }
+		
+		//CPropertyExpression
+		public RuleCall getExpCPropertyExpressionParserRuleCall_1_1_0() { return cExpCPropertyExpressionParserRuleCall_1_1_0; }
 	}
 	public class AssignmentsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.osate.gtse.config.Config.Assignments");
@@ -1589,6 +1636,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	private final FClassifierTypeElements pFClassifierType;
 	private final FPropertyTypeElements pFPropertyType;
 	private final CandidatesElements pCandidates;
+	private final CandidateValueElements pCandidateValue;
 	private final AssignmentsElements pAssignments;
 	private final AssignmentElements pAssignment;
 	private final ConfigValueElements pConfigValue;
@@ -1636,6 +1684,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		this.pFClassifierType = new FClassifierTypeElements();
 		this.pFPropertyType = new FPropertyTypeElements();
 		this.pCandidates = new CandidatesElements();
+		this.pCandidateValue = new CandidateValueElements();
 		this.pAssignments = new AssignmentsElements();
 		this.pAssignment = new AssignmentElements();
 		this.pConfigValue = new ConfigValueElements();
@@ -1862,13 +1911,23 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Candidates ConfigValue:
-	//	{CandidateList} 'from' '(' (candidates+=ConfigValue (',' candidates+=ConfigValue)*)? ')';
+	//	{CandidateList} 'from' '(' (candidates+=CandidateValue (',' candidates+=CandidateValue)*)? ')';
 	public CandidatesElements getCandidatesAccess() {
 		return pCandidates;
 	}
 	
 	public ParserRule getCandidatesRule() {
 		return getCandidatesAccess().getRule();
+	}
+	
+	//CandidateValue ConfigValue:
+	//	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] | {PropertyValue} exp=CPropertyExpression;
+	public CandidateValueElements getCandidateValueAccess() {
+		return pCandidateValue;
+	}
+	
+	public ParserRule getCandidateValueRule() {
+		return getCandidateValueAccess().getRule();
 	}
 	
 	//fragment Assignments *:

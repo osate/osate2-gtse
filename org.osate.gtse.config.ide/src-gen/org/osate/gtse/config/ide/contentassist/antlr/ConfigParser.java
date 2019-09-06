@@ -36,6 +36,7 @@ public class ConfigParser extends AbstractContentAssistParser {
 			private static void doInit(ImmutableMap.Builder<AbstractElement, String> builder, ConfigGrammarAccess grammarAccess) {
 				builder.put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 				builder.put(grammarAccess.getConfigParameterAccess().getAlternatives_2(), "rule__ConfigParameter__Alternatives_2");
+				builder.put(grammarAccess.getCandidateValueAccess().getAlternatives(), "rule__CandidateValue__Alternatives");
 				builder.put(grammarAccess.getAssignmentAccess().getAlternatives_0(), "rule__Assignment__Alternatives_0");
 				builder.put(grammarAccess.getAssignmentAccess().getAlternatives_0_0_0(), "rule__Assignment__Alternatives_0_0_0");
 				builder.put(grammarAccess.getConfigValueAccess().getAlternatives(), "rule__ConfigValue__Alternatives");
@@ -457,6 +458,8 @@ public class ConfigParser extends AbstractContentAssistParser {
 				builder.put(grammarAccess.getCandidatesAccess().getGroup(), "rule__Candidates__Group__0");
 				builder.put(grammarAccess.getCandidatesAccess().getGroup_3(), "rule__Candidates__Group_3__0");
 				builder.put(grammarAccess.getCandidatesAccess().getGroup_3_1(), "rule__Candidates__Group_3_1__0");
+				builder.put(grammarAccess.getCandidateValueAccess().getGroup_0(), "rule__CandidateValue__Group_0__0");
+				builder.put(grammarAccess.getCandidateValueAccess().getGroup_1(), "rule__CandidateValue__Group_1__0");
 				builder.put(grammarAccess.getAssignmentsAccess().getGroup(), "rule__Assignments__Group__0");
 				builder.put(grammarAccess.getAssignmentsAccess().getGroup_1(), "rule__Assignments__Group_1__0");
 				builder.put(grammarAccess.getAssignmentsAccess().getGroup_1_1(), "rule__Assignments__Group_1_1__0");
@@ -1571,6 +1574,8 @@ public class ConfigParser extends AbstractContentAssistParser {
 				builder.put(grammarAccess.getFPropertyTypeAccess().getPropertyTypeAssignment(), "rule__FPropertyType__PropertyTypeAssignment");
 				builder.put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_3_0(), "rule__Candidates__CandidatesAssignment_3_0");
 				builder.put(grammarAccess.getCandidatesAccess().getCandidatesAssignment_3_1_1(), "rule__Candidates__CandidatesAssignment_3_1_1");
+				builder.put(grammarAccess.getCandidateValueAccess().getRefAssignment_0_1(), "rule__CandidateValue__RefAssignment_0_1");
+				builder.put(grammarAccess.getCandidateValueAccess().getExpAssignment_1_1(), "rule__CandidateValue__ExpAssignment_1_1");
 				builder.put(grammarAccess.getAssignmentsAccess().getAssignmentsAssignment_1_0(), "rule__Assignments__AssignmentsAssignment_1_0");
 				builder.put(grammarAccess.getAssignmentsAccess().getAssignmentsAssignment_1_1_1(), "rule__Assignments__AssignmentsAssignment_1_1_1");
 				builder.put(grammarAccess.getAssignmentsAccess().getConstraintsAssignment_3_2_0(), "rule__Assignments__ConstraintsAssignment_3_2_0");
@@ -2529,16 +2534,16 @@ public class ConfigParser extends AbstractContentAssistParser {
 				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getArrayDimensionAssignment_3_0(), "rule__ThreadGroupSubcomponent__ArrayDimensionAssignment_3_0");
 				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getImplementationReferenceAssignment_3_1_1(), "rule__ThreadGroupSubcomponent__ImplementationReferenceAssignment_3_1_1");
 				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getImplementationReferenceAssignment_3_1_2_1(), "rule__ThreadGroupSubcomponent__ImplementationReferenceAssignment_3_1_2_1");
-				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getOwnedPropertyAssociationAssignment_4_1(), "rule__ThreadGroupSubcomponent__OwnedPropertyAssociationAssignment_4_1");
-				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getOwnedModeBindingAssignment_5_2_0(), "rule__ThreadGroupSubcomponent__OwnedModeBindingAssignment_5_2_0");
-				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getOwnedModeBindingAssignment_5_2_1_1(), "rule__ThreadGroupSubcomponent__OwnedModeBindingAssignment_5_2_1_1");
-				builder.put(grammarAccess.getThreadSubcomponentAccess().getNameAssignment_0_0_0(), "rule__ThreadSubcomponent__NameAssignment_0_0_0");
-				builder.put(grammarAccess.getThreadSubcomponentAccess().getRefinedAssignment_0_1_0(), "rule__ThreadSubcomponent__RefinedAssignment_0_1_0");
 			}
 		}
 		
 		private static final class Init1 {
 			private static void doInit(ImmutableMap.Builder<AbstractElement, String> builder, ConfigGrammarAccess grammarAccess) {
+				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getOwnedPropertyAssociationAssignment_4_1(), "rule__ThreadGroupSubcomponent__OwnedPropertyAssociationAssignment_4_1");
+				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getOwnedModeBindingAssignment_5_2_0(), "rule__ThreadGroupSubcomponent__OwnedModeBindingAssignment_5_2_0");
+				builder.put(grammarAccess.getThreadGroupSubcomponentAccess().getOwnedModeBindingAssignment_5_2_1_1(), "rule__ThreadGroupSubcomponent__OwnedModeBindingAssignment_5_2_1_1");
+				builder.put(grammarAccess.getThreadSubcomponentAccess().getNameAssignment_0_0_0(), "rule__ThreadSubcomponent__NameAssignment_0_0_0");
+				builder.put(grammarAccess.getThreadSubcomponentAccess().getRefinedAssignment_0_1_0(), "rule__ThreadSubcomponent__RefinedAssignment_0_1_0");
 				builder.put(grammarAccess.getThreadSubcomponentAccess().getThreadSubcomponentTypeAssignment_2_0(), "rule__ThreadSubcomponent__ThreadSubcomponentTypeAssignment_2_0");
 				builder.put(grammarAccess.getThreadSubcomponentAccess().getOwnedPrototypeBindingAssignment_2_1_1(), "rule__ThreadSubcomponent__OwnedPrototypeBindingAssignment_2_1_1");
 				builder.put(grammarAccess.getThreadSubcomponentAccess().getOwnedPrototypeBindingAssignment_2_1_2_1(), "rule__ThreadSubcomponent__OwnedPrototypeBindingAssignment_2_1_2_1");
