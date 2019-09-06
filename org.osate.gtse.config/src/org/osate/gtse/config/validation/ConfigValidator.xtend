@@ -22,6 +22,8 @@ import org.eclipse.xtext.validation.Check
 import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentCategory
 import org.osate.aadl2.ComponentClassifier
+import org.osate.aadl2.ComponentImplementation
+import org.osate.aadl2.ComponentType
 import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.NamedElement
 import org.osate.aadl2.Property
@@ -31,6 +33,7 @@ import org.osate.aadl2.StringLiteral
 import org.osate.aadl2.Subcomponent
 import org.osate.aadl2.modelsupport.util.AadlUtil
 import org.osate.gtse.config.config.Assignment
+import org.osate.gtse.config.config.CandidateList
 import org.osate.gtse.config.config.Combination
 import org.osate.gtse.config.config.Condition
 import org.osate.gtse.config.config.ConfigPackage
@@ -53,7 +56,6 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
  * TODO
  * 
  * High priority:
- * Parameter choices (from) match parameter type.
  * Parameter actuals match parameter type and optional choices.
  * Check for with cycles.
  * Error for arrayable elements, prototypes.
@@ -79,6 +81,8 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val NOT_SUBCOMPONENT = 'notASubcomponent'
 	public static val PROPERTY_DOES_NOT_APPLY = 'propertyDoesNotApply'
 	public static val CATEGORY_MISMATCH = 'categoryMismatch'
+	public static val NOT_EXTENSION = 'notExtension'
+	public static val NOT_IMPLEMENTATION = 'notImplementation'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -290,5 +294,50 @@ class ConfigValidator extends AbstractConfigValidator {
 			error('''The category of «classifier.category» «classifier.getQualifiedName» is not «parameter.category»''',
 				ConfigPackage.Literals.CONFIG_PARAMETER__CLASSIFIER, CATEGORY_MISMATCH)
 		}
+	}
+
+	@Check
+	def void checkChoicesMatchType(ConfigParameter parameter) {
+		val choices = parameter.choices
+		if (choices instanceof CandidateList) {
+			if (parameter.classifier !== null && !parameter.classifier.eIsProxy) {
+				checkChoicesMatchClassifier(choices, parameter.classifier)
+			} else if (parameter.propertyType !== null && !parameter.propertyType.eIsProxy) {
+				// TODO Check that the property types match
+				checkChoicesArePropertyValues(choices)
+			}
+		}
+	}
+
+	def protected void checkChoicesMatchClassifier(CandidateList choices, ComponentClassifier classifier) {
+		choices.candidates.forEach [ candidate |
+			if (candidate instanceof NamedElementRef) {
+				val candidateRef = candidate.ref
+				if (!candidateRef.eIsProxy) {
+					if (candidateRef instanceof ComponentImplementation) {
+						switch classifier {
+							ComponentType case !AadlUtil.isSameOrExtends(classifier, candidateRef.type): {
+								error('''The type of «candidateRef.getQualifiedName» is not an extension of «classifier.getQualifiedName»''',
+									candidate, null, NOT_EXTENSION)
+							}
+							ComponentImplementation case !AadlUtil.isSameOrExtends(classifier, candidateRef): {
+								error(candidateRef.getQualifiedName + " is not an extension of " +
+									classifier.getQualifiedName, candidate, null, NOT_EXTENSION)
+							}
+						}
+					} else {
+						error("Choice must be a component implementation", candidate, null, NOT_IMPLEMENTATION)
+					}
+				}
+			} else {
+				error("Choice must be a component implementation", candidate, null, NOT_IMPLEMENTATION)
+			}
+		]
+	}
+
+	def protected void checkChoicesArePropertyValues(CandidateList choices) {
+		choices.candidates.filter[!(it instanceof PropertyValue)].forEach [ candidate |
+			error("Choice must be a property value", candidate, null, NOT_PROPERTY_VALUE)
+		]
 	}
 }

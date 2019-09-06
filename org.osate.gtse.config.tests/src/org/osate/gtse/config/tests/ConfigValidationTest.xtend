@@ -304,8 +304,51 @@ class ConfigValidationTest {
 		'''.parse(rs)
 		result.assertError(ConfigPackage.eINSTANCE.configParameter, ConfigValidator.CATEGORY_MISMATCH)
 	}
-
-
+	
+	@Test
+	def void testCheckChoiceExtendsParameterType() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from (T::WBS.i))
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testCheckChoiceExtendsParameterImpl() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W.i from (T::WBS.i))
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testCheckChoiceIsImpl() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from (T::W))
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_IMPLEMENTATION)
+	}
+	
+	@Test
+	def void testCheckChoiceIsNamedElementRef() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from ("property value"))
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.propertyValue, ConfigValidator.NOT_IMPLEMENTATION)
+	}
+	
+	@Test
+	def void testCheckChoiceIsPropertyValue() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p from (T::W))
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_PROPERTY_VALUE)
+	}
 
 	val aadlPropertySet = '''
 		property set PS is
