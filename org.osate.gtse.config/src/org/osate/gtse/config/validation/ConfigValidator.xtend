@@ -83,6 +83,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val CATEGORY_MISMATCH = 'categoryMismatch'
 	public static val NOT_EXTENSION = 'notExtension'
 	public static val NOT_IMPLEMENTATION = 'notImplementation'
+	public static val UNSAFE = 'unsafe'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -339,5 +340,12 @@ class ConfigValidator extends AbstractConfigValidator {
 		choices.candidates.filter[!(it instanceof PropertyValue)].forEach [ candidate |
 			error("Choice must be a property value", candidate, null, NOT_PROPERTY_VALUE)
 		]
+	}
+	
+	@Check
+	def void checkUnsafe(Combination combination) {
+		if (combination.unsafe) {
+			warning("'unsafe' not supported", ConfigPackage.Literals.COMBINATION__UNSAFE, UNSAFE)
+		}
 	}
 }

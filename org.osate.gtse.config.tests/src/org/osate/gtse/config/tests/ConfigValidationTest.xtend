@@ -349,6 +349,16 @@ class ConfigValidationTest {
 		'''.parse(rs)
 		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_PROPERTY_VALUE)
 	}
+	
+	@Test
+	def void testCheckUnsafe() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W
+			configuration C1 extends T::W with unsafe C0
+		'''.parse(rs)
+		result.assertWarning(ConfigPackage.eINSTANCE.combination, ConfigValidator.UNSAFE)
+	}
 
 	val aadlPropertySet = '''
 		property set PS is
