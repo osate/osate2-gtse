@@ -1606,9 +1606,9 @@ ruleArgument returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getArgumentAccess().getValueConfigValueParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getArgumentAccess().getValueArgumentValueParserRuleCall_2_0());
 				}
-				lv_value_2_0=ruleConfigValue
+				lv_value_2_0=ruleArgumentValue
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getArgumentRule());
@@ -1617,9 +1617,121 @@ ruleArgument returns [EObject current=null]
 						$current,
 						"value",
 						lv_value_2_0,
-						"org.osate.gtse.config.Config.ConfigValue");
+						"org.osate.gtse.config.Config.ArgumentValue");
 					afterParserOrEnumRuleCall();
 				}
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleArgumentValue
+entryRuleArgumentValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getArgumentValueRule()); }
+	iv_ruleArgumentValue=ruleArgumentValue
+	{ $current=$iv_ruleArgumentValue.current; }
+	EOF;
+
+// Rule ArgumentValue
+ruleArgumentValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getArgumentValueAccess().getNamedElementRefAction_0_0(),
+						$current);
+				}
+			)
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getArgumentValueRule());
+						}
+					}
+					{
+						newCompositeNode(grammarAccess.getArgumentValueAccess().getRefNamedElementCrossReference_0_1_0());
+					}
+					ruleCNAME
+					{
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getArgumentValueRule());
+					}
+					newCompositeNode(grammarAccess.getArgumentValueAccess().getArgumentsParserRuleCall_0_2());
+				}
+				this_Arguments_2=ruleArguments[$current]
+				{
+					$current = $this_Arguments_2.current;
+					afterParserOrEnumRuleCall();
+				}
+			)?
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getArgumentValueRule());
+					}
+					newCompositeNode(grammarAccess.getArgumentValueAccess().getWithParserRuleCall_0_3());
+				}
+				this_With_3=ruleWith[$current]
+				{
+					$current = $this_With_3.current;
+					afterParserOrEnumRuleCall();
+				}
+			)?
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getArgumentValueRule());
+					}
+					newCompositeNode(grammarAccess.getArgumentValueAccess().getAssignmentsParserRuleCall_0_4());
+				}
+				this_Assignments_4=ruleAssignments[$current]
+				{
+					$current = $this_Assignments_4.current;
+					afterParserOrEnumRuleCall();
+				}
+			)?
+		)
+		    |
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getArgumentValueAccess().getPropertyValueAction_1_0(),
+						$current);
+				}
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getArgumentValueAccess().getExpCPropertyExpressionParserRuleCall_1_1_0());
+					}
+					lv_exp_6_0=ruleCPropertyExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getArgumentValueRule());
+						}
+						set(
+							$current,
+							"exp",
+							lv_exp_6_0,
+							"org.osate.gtse.config.Config.CPropertyExpression");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
 		)
 	)

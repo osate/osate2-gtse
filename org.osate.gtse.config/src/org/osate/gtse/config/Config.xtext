@@ -133,7 +133,13 @@ fragment Arguments*:
 ;
 
 Argument:
-	parameter=[ConfigParameter|ID] '=>' value=ConfigValue
+	parameter=[ConfigParameter|ID] '=>' value=ArgumentValue
+;
+
+ArgumentValue returns ConfigValue:
+	// classifier, parameter, configuration
+	{NamedElementRef} ref=[aadl2::NamedElement|CNAME] Arguments? With? Assignments? |
+	{PropertyValue} exp=CPropertyExpression
 ;
 
 ElementRef:
