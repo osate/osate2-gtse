@@ -359,7 +359,221 @@ class ConfigValidationTest {
 		'''.parse(rs)
 		result.assertWarning(ConfigPackage.eINSTANCE.combination, ConfigValidator.UNSAFE)
 	}
-
+	
+	@Test
+	def void testArgumentTypeNotChoice() {
+		val result = '''
+			root c0
+			configuration C0(p: system T::W from (T::W)) extends T::W
+			configuration C1 extends T::W with C0(p => T::WBS)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.ARGUMENT_NOT_CHOICE)
+	}
+	
+	@Test
+	def void testParameterNotClassifierForType() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p) extends T::W
+			configuration C1 extends T::W with C0(p => T::W)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.PARAMETER_NOT_CLASSIFIER)
+	}
+	
+	@Test
+	def void testTypeNotAncestor() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1 extends T::W with C0(p => T::WBS)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testArgumentImplNotChoice() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from (T::W.i)) extends T::W
+			configuration C1 extends T::W with C0(p => T::WBS.i)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.ARGUMENT_NOT_CHOICE)
+	}
+	
+	@Test
+	def void testParameterNotClassifierForImpl() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p) extends T::W
+			configuration C1 extends T::W with C0(p => T::W.i)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.PARAMETER_NOT_CLASSIFIER)
+	}
+	
+	@Test
+	def void testImplNotAncestor() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W.i) extends T::W
+			configuration C1 extends T::W with C0(p => T::WBS.i)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testTypeImplNotAncestor() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1 extends T::W with C0(p => T::WBS.i)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testParameterNotClassifierForConfig() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p) extends T::W
+			configuration C1 extends T::W with C0(p => C2)
+			configuration C2
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.PARAMETER_NOT_CLASSIFIER)
+	}
+	
+	@Test
+	def void testNotExtension() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1 extends T::W with C0(p => C2)
+			configuration C2
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testTypeImplNotExtension() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1 extends T::W with C0(p => C2)
+			configuration C2 extends T::WBS.i
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testTypeTypeNotExtension() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1 extends T::W with C0(p => C2)
+			configuration C2 extends T::WBS
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testParameterChoicesNotInChoices() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from (T::W.i) extends T::W
+			configuration C1(arg: system T::WBS) extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testParameterChoicesNotExtension() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1(arg: system T::WBS from (T::WBS.i) extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testParameterClassifierNotInChoices() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from (T::W1.i)) extends T::W
+			configuration C1(arg: system T::W.i) extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testParameterClassifierNotExtension() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1(arg: system T::WBS) extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.NOT_EXTENSION)
+	}
+	
+	@Test
+	def void testArgumentChoicesNotSubsetOfParameterChoices() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p from ("property value 1")) extends T::W
+			configuration C1(arg: PS::p from ("property value 2") extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.ARGUMENT_NOT_CHOICE)
+	}
+	
+	@Test
+	def void testParameterNotPropertyForParameterArgumentWithChoices() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1(arg: PS::p from ("property value 1") extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.PARAMETER_NOT_PROPERTY)
+	}
+	
+	@Test
+	def void testParameterHasChoicesAndArgumentDoesNot() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p from ("property value")) extends T::W
+			configuration C1(arg: PS::p) extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.ARGUMENT_NOT_CHOICE)
+	}
+	
+	@Test
+	def void testParameterNotPropertyForParameterArgument() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1(arg: PS::p) extends T::W with C0(p => arg)
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.PARAMETER_NOT_PROPERTY)
+	}
+	
+	@Test
+	def void testArgumentPropertyNotChoice() {
+		val result = '''
+			root C0
+			configuration C0(p: PS::p from ("property value 1")) extends T::W
+			configuration C1 extends T::W with C0(p => "property value 2")
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.propertyValue, ConfigValidator.ARGUMENT_NOT_CHOICE)
+	}
+	
+	@Test
+	def void testParameterNotProperty() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W) extends T::W
+			configuration C1 extends T::W with C0(p => "property value")
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.propertyValue, ConfigValidator.PARAMETER_NOT_PROPERTY)
+	}
+	
 	val aadlPropertySet = '''
 		property set PS is
 			p: aadlstring applies to (system implementation);
