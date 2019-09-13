@@ -24,7 +24,6 @@ import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentCategory
 import org.osate.aadl2.ComponentClassifier
 import org.osate.aadl2.ComponentImplementation
-import org.osate.aadl2.ComponentType
 import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.NamedElement
 import org.osate.aadl2.Property
@@ -321,15 +320,9 @@ class ConfigValidator extends AbstractConfigValidator {
 				val candidateRef = candidate.ref
 				if (!candidateRef.eIsProxy) {
 					if (candidateRef instanceof ComponentImplementation) {
-						switch classifier {
-							ComponentType case !AadlUtil.isSameOrExtends(classifier, candidateRef.type): {
-								error('''The type of «candidateRef.getQualifiedName» is not an extension of «classifier.getQualifiedName»''',
-									candidate, null, NOT_EXTENSION)
-							}
-							ComponentImplementation case !AadlUtil.isSameOrExtends(classifier, candidateRef): {
-								error(candidateRef.getQualifiedName + " is not an extension of " +
-									classifier.getQualifiedName, candidate, null, NOT_EXTENSION)
-							}
+						if (!AadlUtil.isSubClassifier(classifier, candidateRef)) {
+							error(candidateRef.getQualifiedName + " is not an extension of " +
+								classifier.getQualifiedName, candidate, null, NOT_EXTENSION)
 						}
 					} else {
 						error("Choice must be a component implementation", candidate, null, NOT_IMPLEMENTATION)
