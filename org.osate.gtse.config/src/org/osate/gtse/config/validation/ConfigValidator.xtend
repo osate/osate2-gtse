@@ -18,6 +18,7 @@
  */
 package org.osate.gtse.config.validation
 
+import java.util.List
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.validation.Check
 import org.osate.aadl2.Classifier
@@ -57,7 +58,6 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
  * TODO
  * 
  * High priority:
- * Parameter actuals match parameter type and optional choices.
  * Check for with cycles.
  * Error for arrayable elements, prototypes.
  * Unique assignment. Unique prefix.
@@ -86,8 +86,6 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val NOT_IMPLEMENTATION = 'notImplementation'
 	public static val UNSAFE = 'unsafe'
 	public static val ARGUMENT_NOT_CHOICE = 'argumentNotChoice'
-	public static val PARAMETER_NOT_CLASSIFIER = 'parameterNotClassifier'
-	public static val PARAMETER_NOT_PROPERTY = 'parameterNotProperty'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -339,148 +337,150 @@ class ConfigValidator extends AbstractConfigValidator {
 			error("Choice must be a property value", candidate, null, NOT_PROPERTY_VALUE)
 		]
 	}
-	
+
 	@Check
 	def void checkUnsafe(Combination combination) {
 		if (combination.unsafe) {
 			warning("'unsafe' not supported", ConfigPackage.Literals.COMBINATION__UNSAFE, UNSAFE)
 		}
 	}
-	
-	/*
-	 * TODO Refactor this method
-	 * 
-	 * This method is ugly, unformatted, and poorly structured. It first looks at the type of the argument and then
-	 * checks if the parameter is the right type. The check should be the other way around as well as the error
-	 * messages. This is being committed in order to have a working commit to revert to as I refactor.
-	 */
+
 	@Check
 	def void typeCheckArgument(Argument argument) {
 		val parameter = argument.parameter
-		if (parameter !== null && !parameter.eIsProxy && (parameter.classifier === null || !parameter.classifier.eIsProxy)) {
-			val value = argument.value
-			if (value instanceof NamedElementRef) {
-				val ref = value.ref
-				if (!ref.eIsProxy) {
-					if (ref instanceof ComponentClassifier) {
-						val choices = parameter.choices
-						if (choices instanceof CandidateList) {
-							val valid = choices.candidates.filter(NamedElementRef).map[it.ref].filter(Classifier).exists[candidate |
-								AadlUtil.isSubClassifier(candidate, ref)
+		if (parameter !== null && !parameter.eIsProxy) {
+			if (parameter.classifier !== null && !parameter.classifier.eIsProxy) {
+				switch value : argument.value {
+					NamedElementRef case !value.ref.eIsProxy: {
+						switch ref : value.ref {
+							Classifier: typeCheckClassifierArgument(parameter, ref, value)
+							Configuration: typeCheckClassifierArgument(parameter, ref, value)
+							ConfigParameter: typeCheckClassifierArgument(parameter, ref, value)
+						}
+					}
+					PropertyValue:
+						error("Argument must be a classifier or configuration", value, null, NOT_CLASSIFIER)
+				}
+			} else if (parameter.propertyType !== null && !parameter.propertyType.eIsProxy) {
+				typeCheckPropertyArgument(parameter, argument.value)
+			}
+		}
+	}
+
+	def protected void typeCheckClassifierArgument(ConfigParameter parameter, Classifier argument,
+		NamedElementRef namedElementRef) {
+		if (AadlUtil.isSubClassifier(parameter.classifier, argument)) {
+			val choices = parameter.candidates.filter(NamedElementRef).map[it.ref].filter(Classifier).toList
+			if (!choices.empty && !choices.exists[AadlUtil.isSubClassifier(it, argument)]) {
+				error("Argument is not one of the choices for " + parameter.name, namedElementRef,
+					ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, ARGUMENT_NOT_CHOICE)
+			}
+		} else {
+			error(argument.getQualifiedName + " does not extend from " + parameter.classifier.getQualifiedName,
+				namedElementRef, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
+		}
+	}
+
+	def protected void typeCheckClassifierArgument(ConfigParameter parameter, Configuration argument,
+		NamedElementRef namedElementRef) {
+		if (argument.extended === null) {
+			error(argument.name + " does not extend from " + parameter.classifier.getQualifiedName, namedElementRef,
+				ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
+		} else if (!argument.extended.eIsProxy) {
+			if (AadlUtil.isSubClassifier(parameter.classifier, argument.extended)) {
+				val choices = parameter.candidates.filter(NamedElementRef).map[it.ref].filter(Classifier)
+				if (!choices.empty && !choices.exists[AadlUtil.isSubClassifier(it, argument.extended)]) {
+					error("Argument is not one of the choices for " + parameter.name, namedElementRef,
+						ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, ARGUMENT_NOT_CHOICE)
+				}
+			} else {
+				error(argument.name + " does not extend from " + parameter.classifier.getQualifiedName, namedElementRef,
+					ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
+			}
+		}
+	}
+
+	def protected void typeCheckClassifierArgument(ConfigParameter parameter, ConfigParameter argument,
+		NamedElementRef namedElementRef) {
+		if (argument.classifier !== null && !argument.classifier.eIsProxy) {
+			if (AadlUtil.isSubClassifier(parameter.classifier, argument.classifier)) {
+				val paramChoices = parameter.candidates.filter(NamedElementRef).map[it.ref].filter(Classifier).toList
+				if (!paramChoices.empty) {
+					if (paramChoices.exists[AadlUtil.isSubClassifier(it, argument.classifier)]) {
+						val choicesValid = argument.candidates.forall [ argCandidate |
+							if (argCandidate instanceof NamedElementRef) {
+								switch argCandidateRef : argCandidate.ref {
+									case argCandidateRef.eIsProxy: true
+									Classifier: paramChoices.exists[AadlUtil.isSubClassifier(it, argCandidateRef)]
+									default: false
+								}
+							} else {
+								false
+							}
+						]
+						if (!choicesValid) {
+							error('''Not all choices of «argument.name» extend from any choices of «parameter.name»''',
+								namedElementRef, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
+						}
+					} else {
+						error(argument.classifier.getQualifiedName + " does not extend from any choices of " +
+							parameter.name, namedElementRef, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF,
+							NOT_EXTENSION)
+					}
+				}
+			} else {
+				error(argument.classifier.getQualifiedName + " does not extend from " +
+					parameter.classifier.getQualifiedName, namedElementRef,
+					ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
+			}
+		} else if (argument.propertyType !== null && !argument.propertyType.eIsProxy) {
+			error("Argument must be a classifier or configuration", namedElementRef, null, NOT_CLASSIFIER)
+		}
+	}
+
+	// TODO Check that the property types match
+	def protected void typeCheckPropertyArgument(ConfigParameter parameter, ConfigValue argument) {
+		val paramChoices = parameter.candidates.filter(PropertyValue).map[it.exp].toList
+		if (argument instanceof NamedElementRef) {
+			val ref = argument.ref
+			if (!ref.eIsProxy) {
+				if (ref instanceof ConfigParameter) {
+					if (ref.classifier !== null && !ref.classifier.eIsProxy) {
+						error("Argument must be a property value", argument, null, NOT_PROPERTY_VALUE)
+					} else if (ref.propertyType !== null && !ref.propertyType.eIsProxy && !paramChoices.empty) {
+						val refChoices = ref.candidates
+						if (refChoices.empty) {
+							error('''«parameter.name» has choices, but «ref.name» does not''', argument,
+								ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, ARGUMENT_NOT_CHOICE)
+						} else {
+							val valid = refChoices.forall [ refCandidate |
+								switch refCandidate {
+									PropertyValue case paramChoices.exists[EcoreUtil.equals(it, refCandidate.exp)]: true
+									default: false
+								}
 							]
 							if (!valid) {
-								error("Argument is not one of the choices for " + parameter.name, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, ARGUMENT_NOT_CHOICE)
-							}
-						} else if (parameter.classifier === null) {
-							error(parameter.name + " is not a classifier parameter", value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, PARAMETER_NOT_CLASSIFIER)
-						} else if (!AadlUtil.isSubClassifier(parameter.classifier, ref)) {
-							error(ref.getQualifiedName + " does not extend from " + parameter.classifier.getQualifiedName, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
-						}
-					} else if (ref instanceof Configuration) {
-						if (parameter.classifier === null) {
-							error(parameter.name + " is not a classifier parameter", value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, PARAMETER_NOT_CLASSIFIER)
-						} else if (ref.extended === null || !AadlUtil.isSubClassifier(parameter.classifier, ref.extended)) {
-							error(ref.name + " does not extend from " + parameter.classifier.getQualifiedName, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
-						}
-					} else if (ref instanceof ConfigParameter) {
-						if (ref.classifier !== null && !ref.classifier.eIsProxy) {
-							val refChoices = ref.choices
-							if (refChoices instanceof CandidateList) {
-								val paramChoices = parameter.choices
-								if (paramChoices instanceof CandidateList) {
-									val valid = refChoices.candidates.forall[argCandidate |
-										if (argCandidate instanceof NamedElementRef) {
-											val argCandidateRef = argCandidate.ref
-											if (argCandidateRef.eIsProxy) {
-												true
-											} else if (argCandidateRef instanceof Classifier) {
-												paramChoices.candidates.filter(NamedElementRef).map[it.ref].filter(Classifier).exists[paramCandidate | AadlUtil.isSubClassifier(paramCandidate, argCandidateRef)]
-											} else {
-												false
-											}
-										} else {
-											false
-										}
-									]
-									if (!valid) {
-										error("Not all of the choices of " + ref.name + " extend from any choices of " + parameter.name, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
-									}
-								} else {
-									val valid = refChoices.candidates.forall[argCandidate |
-										if (argCandidate instanceof NamedElementRef) {
-											val argCandidateRef = argCandidate.ref
-											if (argCandidateRef.eIsProxy) {
-												true
-											} else if (argCandidateRef instanceof Classifier) {
-												AadlUtil.isSubClassifier(parameter.classifier, argCandidateRef)
-											} else {
-												false
-											}
-										} else {
-											false
-										}
-									]
-									if (!valid) {
-										error("Not all of the choices of " + ref.name + " extend from " + parameter.classifier.getQualifiedName, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
-									}
-								}
-							} else {
-								val paramChoices = parameter.choices
-								if (paramChoices instanceof CandidateList) {
-									val valid = paramChoices.candidates.filter(NamedElementRef).map[it.ref].filter(Classifier).exists[candidate | AadlUtil.isSubClassifier(candidate, ref.classifier)]
-									if (!valid) {
-										error(ref.classifier.getQualifiedName + " does not extend from any choices of " + parameter.name, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
-									}
-								} else {
-									if (!AadlUtil.isSubClassifier(parameter.classifier, ref.classifier)) {
-										error(ref.classifier.getQualifiedName + " does not extend from " + parameter.classifier.getQualifiedName, value, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, NOT_EXTENSION)
-									}
-								}
-							}
-						} else if (ref.propertyType !== null) {
-							val refChoices = ref.choices
-							if (refChoices instanceof CandidateList) {
-								val paramChoices = parameter.choices
-								if (paramChoices instanceof CandidateList) {
-									val valid = refChoices.candidates.forall[refCandidate |
-										if (refCandidate instanceof PropertyValue) {
-											paramChoices.candidates.filter(PropertyValue).exists[paramCandidate | EcoreUtil.equals(paramCandidate.exp, refCandidate.exp)]
-										} else {
-											false
-										}
-									]
-									if (!valid) {
-										error("The choices from " + ref.name + " is not a subset of the choices from " + parameter.name, value, null, ARGUMENT_NOT_CHOICE)
-									}
-								} else {
-									if (parameter.propertyType === null) {
-										error(parameter.name + " is not a property parameter", value, null, PARAMETER_NOT_PROPERTY)
-									}
-								}
-							} else {
-								val paramChoices = parameter.choices
-								if (paramChoices instanceof CandidateList) {
-									error(parameter.name + " has choices, but " + ref.name + " does not", value, null, ARGUMENT_NOT_CHOICE)
-								} else {
-									if (parameter.propertyType === null) {
-										error(parameter.name + " is not a property parameter", value, null, PARAMETER_NOT_PROPERTY)
-									}
-								}
+								error("The choices from " + ref.name + " is not a subset of the choices from " +
+									parameter.name, argument, ConfigPackage.Literals.NAMED_ELEMENT_REF__REF,
+									ARGUMENT_NOT_CHOICE)
 							}
 						}
 					}
-				}
-			} else if (value instanceof PropertyValue) {
-				val choices = parameter.choices
-				if (choices instanceof CandidateList) {
-					if (!choices.candidates.filter(PropertyValue).exists[candidate | EcoreUtil.equals(candidate.exp, value.exp)]) {
-						error("Argument is not one of the choices for " + parameter.name, value, null, ARGUMENT_NOT_CHOICE)
-					}
-				} else if (parameter.propertyType === null) {
-					// TODO Check that the property types match
-					error(parameter.name + " is not a property parameter", value, null, PARAMETER_NOT_PROPERTY)
+				} else {
+					error("Argument must be a property value", argument, null, NOT_PROPERTY_VALUE)
 				}
 			}
+		} else if (argument instanceof PropertyValue) {
+			if (!paramChoices.empty && !paramChoices.exists[EcoreUtil.equals(it, argument.exp)]) {
+				error("Argument is not one of the choices for " + parameter.name, argument, null, ARGUMENT_NOT_CHOICE)
+			}
+		}
+	}
+
+	def protected List<ConfigValue> getCandidates(ConfigParameter parameter) {
+		switch choices : parameter.choices {
+			CandidateList: choices.candidates
+			default: emptyList
 		}
 	}
 }
