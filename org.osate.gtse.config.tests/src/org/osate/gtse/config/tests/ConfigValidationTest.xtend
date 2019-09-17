@@ -513,6 +513,26 @@ class ConfigValidationTest {
 		result.assertError(ConfigPackage.eINSTANCE.propertyValue, ConfigValidator.ARGUMENT_NOT_CHOICE)
 	}
 	
+	@Test
+	def void testDirectWithCycle() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W with C0
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.configuration, ConfigValidator.WITH_CYCLES)
+	}
+	
+	@Test
+	def void testIndirectWithCycle() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W with C2
+			configuration C1 extends T::W with C0
+			configuration C2 extends T::W with C1
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.configuration, ConfigValidator.WITH_CYCLES)
+	}
+	
 	val aadlPropertySet = '''
 		property set PS is
 			p: aadlstring applies to (system implementation);

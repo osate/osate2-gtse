@@ -18,9 +18,12 @@
  */
 package org.osate.gtse.config.validation
 
+import java.util.ArrayDeque
+import java.util.Deque
 import java.util.List
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.validation.Check
+import org.osate.aadl2.Aadl2Package
 import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentCategory
 import org.osate.aadl2.ComponentClassifier
@@ -58,7 +61,6 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
  * TODO
  * 
  * High priority:
- * Check for with cycles.
  * Error for arrayable elements, prototypes.
  * Unique assignment. Unique prefix.
  * Left-side Constraints refer to parameters.
@@ -86,6 +88,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val NOT_IMPLEMENTATION = 'notImplementation'
 	public static val UNSAFE = 'unsafe'
 	public static val ARGUMENT_NOT_CHOICE = 'argumentNotChoice'
+	public static val WITH_CYCLES = 'withCycles'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -482,5 +485,26 @@ class ConfigValidator extends AbstractConfigValidator {
 			CandidateList: choices.candidates
 			default: emptyList
 		}
+	}
+	
+	@Check
+	def void checkWithCycles(Configuration configuration) {
+		val visited = new ArrayDeque
+		visited.push(configuration)
+		if (cycleExists(configuration, visited)) {
+			error("The with hierarchy of " + configuration.name + " contains cycles", configuration,
+				Aadl2Package.eINSTANCE.namedElement_Name, WITH_CYCLES)
+		}
+	}
+	
+	def protected boolean cycleExists(Configuration configuration, Deque<Configuration> visited) {
+		configuration.combined.map[it.configuration].exists[next |
+			visited.contains(next) || {
+				visited.push(next)
+				val nextHasCycle = cycleExists(next, visited)
+				visited.pop
+				nextHasCycle
+			}
+		]
 	}
 }
