@@ -4,15 +4,22 @@
 
 This plugin enables users to automatically explore the trade space of a system by connecting [OSATE](http://osate.org/) to Penn State's [Trade Space Visualizer](http://www.atsv.psu.edu/) tool.
 
-If you're interested in a more diagrammatic, foundational understanding of how GTSE and ATSV work together, see the [Workflow documentation](docs/Workflow.md).
+## Documentation
 
-## Prerequisites
+* For a **short, high-level description**, see either [this short video](https://www.youtube.com/watch?v=M8hcVB6tmaw) or this [slightly longer video](https://www.youtube.com/watch?v=adClevsQUm4)
+* For a slightly-longer, **general-audience description**, you can view [this video](https://www.youtube.com/watch?v=_Kkkj8P31OM)
+* For a **diagrammatic explanation** of how GTSE and ATSV work together, see the [Workflow documentation](docs/Workflow.md).
+* For a more complete **academic publication** on GTSE, see the [MODELS19 paper](https://dx.doi.org/10.1109/MODELS.2019.000-9) (a [preprint](https://samprocter.com/wp-content/uploads/2019/07/models19-gatse.pdf) is also available)
+
+## Installation
+
+### Prerequisites
 
 1. [Java 8](https://www.java.com/en/download/manual.jsp)
 2. Osate 2.5.0+
     * If you don't have OSATE you can [download it](https://osate-build.sei.cmu.edu/download/osate/stable/latest/products/), and install it according to the [online instructions](http://osate.org/download-and-install.html).
 
-## Installing the GTSE Plugin
+### Installing the GTSE Plugin
 
 1. Launch OSATE
 2. Add the OSATE experimental update site by selecting:
@@ -38,7 +45,7 @@ Note: Some features of GATSE (eg, sophisticated constraints) require version 10.
 
 1. [Download ATSV](http://www.atsv.psu.edu/download.html) and extract it.
 
-## Generating the ATSV Pre-requisites
+### Generating the ATSV Pre-requisites
 
 1. Configure the GTSE Plugin.
     1. Open Eclipse's preferences (`Window`, `Preferences` on Linux/Windows, or `OSATE2`, `Preferences` on Mac OS X).
@@ -61,7 +68,7 @@ Note: Some features of GATSE (eg, sophisticated constraints) require version 10.
     * `run.sh` (Linux and Mac) or `run.bat` (Windows)
     * `runATSV.bat` (Windows only)
 
-## Running ATSV
+### Running ATSV
 
 1. Launch OSATE.
 2. Open the project containing the GTSE-compatible packages.
