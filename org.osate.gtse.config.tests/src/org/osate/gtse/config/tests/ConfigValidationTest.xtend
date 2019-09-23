@@ -519,7 +519,7 @@ class ConfigValidationTest {
 			root C0
 			configuration C0 extends T::W with C0
 		'''.parse(rs)
-		result.assertError(ConfigPackage.eINSTANCE.configuration, ConfigValidator.WITH_CYCLES)
+		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.WITH_CYCLES)
 	}
 	
 	@Test
@@ -530,7 +530,28 @@ class ConfigValidationTest {
 			configuration C1 extends T::W with C0
 			configuration C2 extends T::W with C1
 		'''.parse(rs)
-		result.assertError(ConfigPackage.eINSTANCE.configuration, ConfigValidator.WITH_CYCLES)
+		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.WITH_CYCLES)
+	}
+	
+	@Test
+	def void testArgumentWithCycle() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W with C1(p => T::W with C0)
+			configuration C1(p: system T::W) extends T::W
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.WITH_CYCLES)
+	}
+	
+	@Test
+	def void testAssignmentWithCycle() {
+		val result = '''
+			root C0
+			configuration C0 extends T::X.i {
+				x => T::X.i with C0
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.WITH_CYCLES)
 	}
 	
 	val aadlPropertySet = '''
@@ -578,6 +599,14 @@ class ConfigValidationTest {
 				subcomponents
 					c: device C;
 			end W2.i;
+			
+			system X
+			end X;
+			
+			system implementation X.i
+				subcomponents
+					x: system X;
+			end X.i;
 			
 			device A
 			end A;

@@ -23,7 +23,6 @@ import java.util.Deque
 import java.util.List
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.validation.Check
-import org.osate.aadl2.Aadl2Package
 import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentCategory
 import org.osate.aadl2.ComponentClassifier
@@ -489,16 +488,20 @@ class ConfigValidator extends AbstractConfigValidator {
 	
 	@Check
 	def void checkWithCycles(Configuration configuration) {
-		val visited = new ArrayDeque
-		visited.push(configuration)
-		if (cycleExists(configuration, visited)) {
-			error("The with hierarchy of " + configuration.name + " contains cycles", configuration,
-				Aadl2Package.eINSTANCE.namedElement_Name, WITH_CYCLES)
-		}
+		configuration.eAllContents.filter(Combination).filter[!it.configuration.eIsProxy].forEach[combination |
+			val next = combination.configuration
+			val visited = new ArrayDeque
+			visited.push(configuration)
+			visited.push(next)
+			if (cycleExists(next, visited)) {
+				error("The with hierarchy of " + next.name + " contains cycles", combination,
+					ConfigPackage.Literals.COMBINATION__CONFIGURATION, WITH_CYCLES)
+			}
+		]
 	}
-	
+
 	def protected boolean cycleExists(Configuration configuration, Deque<Configuration> visited) {
-		configuration.combined.map[it.configuration].exists[next |
+		configuration.eAllContents.filter(Combination).map[it.configuration].filter[!it.eIsProxy].exists[next |
 			visited.contains(next) || {
 				visited.push(next)
 				val nextHasCycle = cycleExists(next, visited)
