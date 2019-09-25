@@ -616,6 +616,17 @@ class ConfigValidationTest {
 		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
 	}
 	
+	@Test
+	def void testReferenceToSubcomponentArray() {
+		val result = '''
+			root C0
+			configuration C0 extends T::Z.i {
+				z => T::W
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.elementRef, ConfigValidator.SUBCOMPONENT_ARRAY)
+	}
+	
 	val aadlPropertySet = '''
 		property set PS is
 			p: aadlstring applies to (system implementation);
@@ -672,6 +683,14 @@ class ConfigValidationTest {
 			
 			system implementation X.i2 extends X.i
 			end X.i2;
+			
+			system Z
+			end Z;
+			
+			system implementation Z.i
+				subcomponents
+					z: system[];
+			end Z.i;
 			
 			device A
 			end A;

@@ -46,6 +46,7 @@ import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.config.ConfigValue
 import org.osate.gtse.config.config.Configuration
 import org.osate.gtse.config.config.Constraint
+import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.Limit
 import org.osate.gtse.config.config.NamedElementRef
 import org.osate.gtse.config.config.OutputVariable
@@ -89,6 +90,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val ARGUMENT_NOT_CHOICE = 'argumentNotChoice'
 	public static val WITH_CYCLES = 'withCycles'
 	public static val CLASSIFIER_CYCLES = 'classifierCycles'
+	public static val SUBCOMPONENT_ARRAY = 'subcomponentArray'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -553,6 +555,15 @@ class ConfigValidator extends AbstractConfigValidator {
 				error("Value cannot extend from " + classifier.getQualifiedName, value,
 					ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, CLASSIFIER_CYCLES)
 			]
+		}
+	}
+
+	@Check
+	def void checkReferenceToSubcomponentArray(ElementRef ref) {
+		val element = ref.element
+		if (!element.eIsProxy && element instanceof Subcomponent && !(element as Subcomponent).arrayDimensions.empty) {
+			error("Cannot refer to subcomponent array", ref, ConfigPackage.Literals.ELEMENT_REF__ELEMENT,
+				SUBCOMPONENT_ARRAY)
 		}
 	}
 }
