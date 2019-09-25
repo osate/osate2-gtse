@@ -513,7 +513,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	}
 
 	@Check
-	def void checkClassifierCyclesInParameters(Configuration configuration) {
+	def void checkClassifierCycles(Configuration configuration) {
 		val classifier = configuration.extended
 		if (classifier !== null && !classifier.eIsProxy) {
 			configuration.parameters.forEach [ parameter |
@@ -537,6 +537,21 @@ class ConfigValidator extends AbstractConfigValidator {
 						]
 					}
 				}
+			]
+
+			val assignments = configuration.eAllContents.filter(Assignment)
+			val arguments = configuration.eAllContents.filter(Argument)
+			val values = assignments.map[it.value] + arguments.map[it.value]
+			val invalidValues = values.filter(NamedElementRef).filter [ value |
+				val refClassifier = switch ref : value.ref {
+					Classifier: ref
+					Configuration: ref.extended
+				}
+				refClassifier !== null && !refClassifier.eIsProxy && AadlUtil.isSubClassifier(classifier, refClassifier)
+			]
+			invalidValues.forEach [ value |
+				error("Value cannot extend from " + classifier.getQualifiedName, value,
+					ConfigPackage.Literals.NAMED_ELEMENT_REF__REF, CLASSIFIER_CYCLES)
 			]
 		}
 	}

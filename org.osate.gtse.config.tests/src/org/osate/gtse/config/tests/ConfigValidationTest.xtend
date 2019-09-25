@@ -572,6 +572,50 @@ class ConfigValidationTest {
 		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
 	}
 	
+	@Test
+	def void testClassifierCycleInAssignment() {
+		val result = '''
+			root C0
+			configuration C0 extends T::X.i {
+				x => T::X.i2
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
+	}
+	
+	@Test
+	def void testClassifierCycleInAssignmentByConfiguration() {
+		val result = '''
+			root C0
+			configuration C0 extends T::X.i {
+				x => C1
+			}
+			configuration C1 extends T::X.i2
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
+	}
+	
+	@Test
+	def void testClassifierCycleInArgument() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W.i with C1(p => T::W1.i)
+			configuration C1(p: system T::W) extends T::W.i
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
+	}
+	
+	@Test
+	def void testClassifierCycleInArgumentByConfiguration() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W.i with C1(p => C2)
+			configuration C1(p: system T::W) extends T::W.i
+			configuration C2 extends T::W1.i
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
+	}
+	
 	val aadlPropertySet = '''
 		property set PS is
 			p: aadlstring applies to (system implementation);
@@ -625,6 +669,9 @@ class ConfigValidationTest {
 				subcomponents
 					x: system X;
 			end X.i;
+			
+			system implementation X.i2 extends X.i
+			end X.i2;
 			
 			device A
 			end A;
