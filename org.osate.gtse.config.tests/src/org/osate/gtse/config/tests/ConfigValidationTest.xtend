@@ -554,6 +554,24 @@ class ConfigValidationTest {
 		result.assertError(ConfigPackage.eINSTANCE.combination, ConfigValidator.WITH_CYCLES)
 	}
 	
+	@Test
+	def void testClassifierCycleInParameterType() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W.i) extends T::W
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.configParameter, ConfigValidator.CLASSIFIER_CYCLES)
+	}
+	
+	@Test
+	def void testClassifierCycleInParameterChoice() {
+		val result = '''
+			root C0
+			configuration C0(p: system T::W from (T::W1.i)) extends T::W.i
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.namedElementRef, ConfigValidator.CLASSIFIER_CYCLES)
+	}
+	
 	val aadlPropertySet = '''
 		property set PS is
 			p: aadlstring applies to (system implementation);

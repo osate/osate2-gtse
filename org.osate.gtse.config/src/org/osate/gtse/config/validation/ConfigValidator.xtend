@@ -88,6 +88,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val UNSAFE = 'unsafe'
 	public static val ARGUMENT_NOT_CHOICE = 'argumentNotChoice'
 	public static val WITH_CYCLES = 'withCycles'
+	public static val CLASSIFIER_CYCLES = 'classifierCycles'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -485,10 +486,10 @@ class ConfigValidator extends AbstractConfigValidator {
 			default: emptyList
 		}
 	}
-	
+
 	@Check
 	def void checkWithCycles(Configuration configuration) {
-		configuration.eAllContents.filter(Combination).filter[!it.configuration.eIsProxy].forEach[combination |
+		configuration.eAllContents.filter(Combination).filter[!it.configuration.eIsProxy].forEach [ combination |
 			val next = combination.configuration
 			val visited = new ArrayDeque
 			visited.push(configuration)
@@ -501,7 +502,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	}
 
 	def protected boolean cycleExists(Configuration configuration, Deque<Configuration> visited) {
-		configuration.eAllContents.filter(Combination).map[it.configuration].filter[!it.eIsProxy].exists[next |
+		configuration.eAllContents.filter(Combination).map[it.configuration].filter[!it.eIsProxy].exists [ next |
 			visited.contains(next) || {
 				visited.push(next)
 				val nextHasCycle = cycleExists(next, visited)
@@ -509,5 +510,34 @@ class ConfigValidator extends AbstractConfigValidator {
 				nextHasCycle
 			}
 		]
+	}
+
+	@Check
+	def void checkClassifierCyclesInParameters(Configuration configuration) {
+		val classifier = configuration.extended
+		if (classifier !== null && !classifier.eIsProxy) {
+			configuration.parameters.forEach [ parameter |
+				val paramType = parameter.classifier
+				if (paramType !== null && !paramType.eIsProxy) {
+					if (AadlUtil.isSubClassifier(classifier, paramType)) {
+						error("Parameter type cannot extend from " + classifier.getQualifiedName, parameter,
+							ConfigPackage.Literals.CONFIG_PARAMETER__CLASSIFIER, CLASSIFIER_CYCLES)
+					} else {
+						val invalidChoices = parameter.candidates.filter(NamedElementRef).filter [ choice |
+							val ref = choice.ref
+							if (ref instanceof ComponentImplementation) {
+								!ref.eIsProxy && AadlUtil.isSubClassifier(classifier, ref)
+							} else {
+								false
+							}
+						]
+						invalidChoices.forEach [ choice |
+							error("Parameter choice cannot extend from " + classifier.getQualifiedName, choice, null,
+								CLASSIFIER_CYCLES)
+						]
+					}
+				}
+			]
+		}
 	}
 }
