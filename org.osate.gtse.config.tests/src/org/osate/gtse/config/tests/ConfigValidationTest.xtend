@@ -627,6 +627,58 @@ class ConfigValidationTest {
 		result.assertError(ConfigPackage.eINSTANCE.elementRef, ConfigValidator.SUBCOMPONENT_ARRAY)
 	}
 	
+	@Test
+	def void testDuplicatePropertyAssignmentInConfiguration() {
+		val result = '''
+			root C0
+			configuration C0 {
+				#PS::p => "property value 1",
+				#PS::p => "property value 2"
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.assignment, ConfigValidator.DUPLICATE_ASSIGNMENT)
+	}
+	
+	@Test
+	def void testDuplicateRefAssignmentInConfiguration() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W.i {
+				a => T::A,
+				a => T::A
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.elementRef, ConfigValidator.DUPLICATE_ASSIGNMENT)
+	}
+	
+	@Test
+	def void testDuplicatePropertyAssignmentInNamedElementRef() {
+		val result = '''
+			root C0
+			configuration C0 extends T::W.i {
+				a => T::A {
+					#PS::p => "property value 1",
+					#PS::p => "property value 2"
+				}
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.assignment, ConfigValidator.DUPLICATE_ASSIGNMENT)
+	}
+	
+	@Test
+	def void testDuplicateRefAssignmentInNamedElementRef() {
+		val result = '''
+			root C0
+			configuration C0 extends T::chain.impl {
+				first => T::first.impl {
+					second => T::W,
+					second => T::W
+				}
+			}
+		'''.parse(rs)
+		result.assertError(ConfigPackage.eINSTANCE.elementRef, ConfigValidator.DUPLICATE_ASSIGNMENT)
+	}
+	
 	val aadlPropertySet = '''
 		property set PS is
 			p: aadlstring applies to (system implementation);
@@ -691,6 +743,22 @@ class ConfigValidationTest {
 				subcomponents
 					z: system[];
 			end Z.i;
+			
+			system chain
+			end chain;
+			
+			system implementation chain.impl
+				subcomponents
+					first: system first.impl;
+			end chain.impl;
+			
+			system first
+			end first;
+			
+			system implementation first.impl
+				subcomponents
+					second: system;
+			end first.impl;
 			
 			device A
 			end A;

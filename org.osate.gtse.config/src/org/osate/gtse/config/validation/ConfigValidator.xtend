@@ -61,8 +61,6 @@ import static extension org.eclipse.xtext.EcoreUtil2.getContainerOfType
  * TODO
  * 
  * High priority:
- * Error for arrayable elements, prototypes.
- * Unique assignment. Unique prefix.
  * Left-side Constraints refer to parameters.
  * Equals is type safe.
  * 
@@ -91,6 +89,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val WITH_CYCLES = 'withCycles'
 	public static val CLASSIFIER_CYCLES = 'classifierCycles'
 	public static val SUBCOMPONENT_ARRAY = 'subcomponentArray'
+	public static val DUPLICATE_ASSIGNMENT = 'duplicateAssignment'
 
 	@Check(NORMAL)
 	def checkRoot(ConfigPkg pkg) {
@@ -565,5 +564,36 @@ class ConfigValidator extends AbstractConfigValidator {
 			error("Cannot refer to subcomponent array", ref, ConfigPackage.Literals.ELEMENT_REF__ELEMENT,
 				SUBCOMPONENT_ARRAY)
 		}
+	}
+	
+	@Check
+	def void checkUniqueAssignment(Configuration configuration) {
+		checkUniqueAssignment(configuration.assignments)
+	}
+	
+	@Check
+	def void checkUniqueAssignment(NamedElementRef namedElementRef) {
+		checkUniqueAssignment(namedElementRef.assignments)
+	}
+	
+	@Check
+	def void checkUniqueAssignment(List<Assignment> assignments) {
+		val propertyAssignments = assignments.filter[!it.wildcard && it.property !== null && !it.property.eIsProxy]
+		propertyAssignments.groupBy[it.property].values.filter[it.size > 1].flatten.forEach[assignment |
+			error("Duplicate assignment for " + assignment.property.getQualifiedName, assignment, ConfigPackage.Literals.ASSIGNMENT__PROPERTY, DUPLICATE_ASSIGNMENT)
+		]
+		
+		val refAssignments = assignments.filter[!it.wildcard && it.ref !== null]
+		val firstRefs = refAssignments.map[assignment |
+			var current = assignment.ref
+			while (current.prev !== null) {
+				current = current.prev
+			}
+			current
+		]
+		val groupedRefs = firstRefs.filter[!it.element.eIsProxy].groupBy[it.element]
+		groupedRefs.values.filter[it.size > 1].flatten.forEach[elementRef |
+			error("Duplicate assignment for " + elementRef.element.name, elementRef, null, DUPLICATE_ASSIGNMENT)
+		]
 	}
 }
