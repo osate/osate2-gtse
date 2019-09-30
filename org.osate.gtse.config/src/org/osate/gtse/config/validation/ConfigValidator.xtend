@@ -49,6 +49,7 @@ import org.osate.gtse.config.config.Constraint
 import org.osate.gtse.config.config.ElementRef
 import org.osate.gtse.config.config.Limit
 import org.osate.gtse.config.config.NamedElementRef
+import org.osate.gtse.config.config.NestedAssignments
 import org.osate.gtse.config.config.OutputVariable
 import org.osate.gtse.config.config.PropertyValue
 import org.osate.gtse.config.config.Relation
@@ -129,8 +130,10 @@ class ConfigValidator extends AbstractConfigValidator {
 
 	// is value an element of the property type
 	def protected checkPropertyValueType(PropertyType type, ConfigValue value) {
-		if (!(value instanceof PropertyValue)) {
-			error('Not a property value', ConfigPackage.Literals.ASSIGNMENT__VALUE, NOT_PROPERTY_VALUE)
+		switch value {
+			NamedElementRef case !value.ref.eIsProxy && !(value.ref instanceof ConfigParameter),
+			NestedAssignments: error('Not a property value', ConfigPackage.Literals.ASSIGNMENT__VALUE,
+				NOT_PROPERTY_VALUE)
 		}
 	}
 
