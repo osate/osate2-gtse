@@ -565,26 +565,29 @@ class ConfigValidator extends AbstractConfigValidator {
 				SUBCOMPONENT_ARRAY)
 		}
 	}
-	
+
 	@Check
 	def void checkUniqueAssignment(Configuration configuration) {
 		checkUniqueAssignment(configuration.assignments)
 	}
-	
+
 	@Check
 	def void checkUniqueAssignment(NamedElementRef namedElementRef) {
 		checkUniqueAssignment(namedElementRef.assignments)
 	}
-	
+
 	@Check
 	def void checkUniqueAssignment(List<Assignment> assignments) {
-		val propertyAssignments = assignments.filter[!it.wildcard && it.property !== null && !it.property.eIsProxy]
-		propertyAssignments.groupBy[it.property].values.filter[it.size > 1].flatten.forEach[assignment |
-			error("Duplicate assignment for " + assignment.property.getQualifiedName, assignment, ConfigPackage.Literals.ASSIGNMENT__PROPERTY, DUPLICATE_ASSIGNMENT)
+		val propertyAssignments = assignments.filter [
+			!it.wildcard && it.ref === null && it.property !== null && !it.property.eIsProxy
 		]
-		
+		propertyAssignments.groupBy[it.property].values.filter[it.size > 1].flatten.forEach [ assignment |
+			error("Duplicate assignment for " + assignment.property.getQualifiedName, assignment,
+				ConfigPackage.Literals.ASSIGNMENT__PROPERTY, DUPLICATE_ASSIGNMENT)
+		]
+
 		val refAssignments = assignments.filter[!it.wildcard && it.ref !== null]
-		val firstRefs = refAssignments.map[assignment |
+		val firstRefs = refAssignments.map [ assignment |
 			var current = assignment.ref
 			while (current.prev !== null) {
 				current = current.prev
@@ -592,7 +595,7 @@ class ConfigValidator extends AbstractConfigValidator {
 			current
 		]
 		val groupedRefs = firstRefs.filter[!it.element.eIsProxy].groupBy[it.element]
-		groupedRefs.values.filter[it.size > 1].flatten.forEach[elementRef |
+		groupedRefs.values.filter[it.size > 1].flatten.forEach [ elementRef |
 			error("Duplicate assignment for " + elementRef.element.name, elementRef, null, DUPLICATE_ASSIGNMENT)
 		]
 	}
