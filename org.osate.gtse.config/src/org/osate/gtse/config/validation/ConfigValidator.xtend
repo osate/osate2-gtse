@@ -184,7 +184,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	def protected checkCombination(Classifier cl, Combination comb) {
 		if (cl !== null && !cl.eIsProxy) {
 			if (!comb.unsafe && !comb.configuration.eIsProxy) {
-				if (!AadlUtil.isSameOrExtends(comb.configuration.extended, cl)) {
+				if (!AadlUtil.isSubClassifier(comb.configuration.extended, cl)) {
 					error(
 						'Configuration ' + comb.configuration.name +
 							' is for a classifier which is not an ancestor of ' + cl.getQualifiedName(),
