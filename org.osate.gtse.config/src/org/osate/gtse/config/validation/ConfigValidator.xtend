@@ -27,6 +27,7 @@ import org.osate.aadl2.Classifier
 import org.osate.aadl2.ComponentCategory
 import org.osate.aadl2.ComponentClassifier
 import org.osate.aadl2.ComponentImplementation
+import org.osate.aadl2.Feature
 import org.osate.aadl2.IntegerLiteral
 import org.osate.aadl2.NamedElement
 import org.osate.aadl2.Property
@@ -80,7 +81,7 @@ class ConfigValidator extends AbstractConfigValidator {
 	public static val NO_ROOT = 'noRoot'
 	public static val NOT_CLASSIFIER = 'notAClassifier'
 	public static val NOT_PROPERTY_VALUE = 'notAPropertyValue'
-	public static val NOT_SUBCOMPONENT = 'notASubcomponent'
+	public static val NOT_SUBCOMPONENT_OR_FEATURE = 'notASubcomponentOrFeature'
 	public static val PROPERTY_DOES_NOT_APPLY = 'propertyDoesNotApply'
 	public static val CATEGORY_MISMATCH = 'categoryMismatch'
 	public static val NOT_EXTENSION = 'notExtension'
@@ -106,7 +107,7 @@ class ConfigValidator extends AbstractConfigValidator {
 		if (property !== null) {
 			checkPropertyAssignment(element, property, value)
 		} else if (element !== null) {
-			checkSubcomponentAssignment(element, value)
+			checkClassifierAssignment(element, value)
 		}
 	}
 
@@ -132,12 +133,12 @@ class ConfigValidator extends AbstractConfigValidator {
 	def protected checkPropertyValueType(PropertyType type, ConfigValue value) {
 		switch value {
 			NamedElementRef case !value.ref.eIsProxy && !(value.ref instanceof ConfigParameter),
-			NestedAssignments: error('Not a property value', ConfigPackage.Literals.ASSIGNMENT__VALUE,
-				NOT_PROPERTY_VALUE)
+			NestedAssignments:
+				error('Not a property value', ConfigPackage.Literals.ASSIGNMENT__VALUE, NOT_PROPERTY_VALUE)
 		}
 	}
 
-	def protected checkSubcomponentAssignment(NamedElement element, ConfigValue value) {
+	def protected checkClassifierAssignment(NamedElement element, ConfigValue value) {
 		val classifier = value.classifier
 		if (classifier === null) {
 			error('Expecting a classifier value', ConfigPackage.Literals.ASSIGNMENT__VALUE, NOT_CLASSIFIER)
@@ -147,8 +148,14 @@ class ConfigValidator extends AbstractConfigValidator {
 				error('Assigned classifier does not match subcomponent classifier',
 					ConfigPackage.Literals.ASSIGNMENT__VALUE, CLASSIFIER_MISMATCH)
 			}
+		} else if (element instanceof Feature) {
+			if (!AadlUtil.isokClassifierSubstitutionTypeExtension(element.allClassifier, classifier)) {
+				error("Assigned classifier does not match feature classifier", ConfigPackage.Literals.ASSIGNMENT__VALUE,
+					CLASSIFIER_MISMATCH)
+			}
 		} else {
-			error('Can only assign to a subcomponent', ConfigPackage.Literals.ASSIGNMENT__VALUE, NOT_SUBCOMPONENT)
+			error('Can only assign to a subcomponent or feature', ConfigPackage.Literals.ASSIGNMENT__VALUE,
+				NOT_SUBCOMPONENT_OR_FEATURE)
 		}
 	}
 
