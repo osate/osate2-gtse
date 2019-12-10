@@ -261,7 +261,7 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 
 	}
 
-	def private static getClassifierForPreviousContainmentPathElement(ContainmentPathElement previousCpe) {
+	def protected static getClassifierForPreviousContainmentPathElement(ContainmentPathElement previousCpe) {
 		switch previousElement : previousCpe.namedElement {
 			case null,
 			case previousElement.eIsProxy:
