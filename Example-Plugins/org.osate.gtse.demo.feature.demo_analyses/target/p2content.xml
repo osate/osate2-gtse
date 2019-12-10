@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='org.osate.gtse.demo.feature.demo_analyses.feature.group' version='1.0.0.201912102231' singleton='false'>
+    <update id='org.osate.gtse.demo.feature.demo_analyses.feature.group' range='[0.0.0,1.0.0.201912102231)' severity='0'/>
+    <properties size='6'>
+      <property name='org.eclipse.equinox.p2.name' value='Demo_analyses'/>
+      <property name='org.eclipse.equinox.p2.description' value='This is a feature that includes analyses used in the MODELS19 publication.'/>
+      <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+      <property name='maven-groupId' value='org.osate'/>
+      <property name='maven-artifactId' value='org.osate.gtse.demo.feature.demo_analyses'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.osate.gtse.demo.feature.demo_analyses.feature.group' version='1.0.0.201912102231'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.osate.gtse.demo.braking-power' range='[1.0.0.201912102231,1.0.0.201912102231]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='org.osate.gtse.demo.feature.demo_analyses.feature.jar' range='[1.0.0.201912102231,1.0.0.201912102231]'>
+        <filter>
+          (org.eclipse.update.install.features=true)
+        </filter>
+      </required>
+    </requires>
+    <touchpoint id='null' version='0.0.0'/>
+    <licenses size='1'>
+      <license uri='' url=''>
+        Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact permission@sei.cmu.edu for full terms.
+      </license>
+    </licenses>
+    <copyright>
+      Copyright 2019 Carnegie Mellon University. All Rights Reserved.
+    </copyright>
+  </unit>
+  <unit id='org.osate.gtse.demo.feature.demo_analyses.feature.jar' version='1.0.0.201912102231'>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='Demo_analyses'/>
+      <property name='org.eclipse.equinox.p2.description' value='This is a feature that includes analyses used in the MODELS19 publication.'/>
+      <property name='maven-groupId' value='org.osate'/>
+      <property name='maven-artifactId' value='org.osate.gtse.demo.feature.demo_analyses'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.osate.gtse.demo.feature.demo_analyses.feature.jar' version='1.0.0.201912102231'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+      <provided namespace='org.eclipse.update.feature' name='org.osate.gtse.demo.feature.demo_analyses' version='1.0.0.201912102231'/>
+    </provides>
+    <filter>
+      (org.eclipse.update.install.features=true)
+    </filter>
+    <artifacts size='1'>
+      <artifact classifier='org.eclipse.update.feature' id='org.osate.gtse.demo.feature.demo_analyses' version='1.0.0.201912102231'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='zipped'>
+          true
+        </instruction>
+      </instructions>
+    </touchpointData>
+    <licenses size='1'>
+      <license uri='' url=''>
+        Released under an Eclipse Public License - v1.0-style license, please see license.txt or contact permission@sei.cmu.edu for full terms.
+      </license>
+    </licenses>
+    <copyright>
+      Copyright 2019 Carnegie Mellon University. All Rights Reserved.
+    </copyright>
+  </unit>
+</units>
