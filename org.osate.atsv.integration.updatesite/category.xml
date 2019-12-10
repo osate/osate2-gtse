@@ -9,6 +9,9 @@
    <feature url="features/org.osate.gtse.config.feature_1.0.0.qualifier.jar" id="org.osate.gtse.config.feature" version="1.0.0.qualifier">
       <category name="org.osate.atsv.integration.updatesite"/>
    </feature>
+   <feature id="org.osate.gtse.demo.feature.demo_analyses">
+      <category name="org.osate.atsv.integration.updatesite"/>
+   </feature>
    <category-def name="org.osate.atsv.integration.updatesite" label="Guided Tradespace Exploration">
       <description>
          Eclipse and ATSV Integration
