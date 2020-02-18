@@ -26,7 +26,7 @@ import org.osate.analysis.flows.reporting.model.Line;
 import org.osate.analysis.flows.reporting.model.Report;
 import org.osate.analysis.flows.reporting.model.ReportedCell;
 import org.osate.analysis.flows.reporting.model.Section;
-import org.osate.analysis.resource.budgets.handlers.DoPowerAnalysis;
+import org.osate.analysis.resource.budgets.handlers.PowerAnalysisHandler;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
@@ -36,7 +36,7 @@ public class PowerConsumption extends AbstractAnalysis {
 	@Override
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
-		DoPowerAnalysis checker = new DoPowerAnalysis();
+		PowerAnalysisHandler checker = new PowerAnalysisHandler();
 		Report report = checker.invokeAndGetReport(progressMonitor, instance);
 		populateVariables(report, resp);
 	}
