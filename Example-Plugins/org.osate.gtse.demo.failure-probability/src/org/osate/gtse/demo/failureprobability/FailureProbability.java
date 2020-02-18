@@ -1,5 +1,7 @@
 package org.osate.gtse.demo.failureprobability;
 
+import java.text.DecimalFormat;
+
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.optim.MaxEval;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
@@ -38,6 +40,30 @@ public class FailureProbability extends AbstractAnalysis {
 	}
 
 	/**
+	 * Test-driver / figure generation method.
+	 * @param args empty
+	 */
+	public static void main(String[] args) {
+		FailureProbability me = new FailureProbability();
+		DecimalFormat formatter = new DecimalFormat("#0.0000000000000");
+
+		double x = .1;
+		double a = .5;
+		int min = 0;
+		int max = 10000000;
+
+		System.out.println(min + " " + formatter.format(me.worstCasePfdAndP_0n(min, x, .0005, a)));
+		for (int scaleFactor = min + 1; scaleFactor < max; scaleFactor *= 10) {
+			for (int i = 1; i < 10; i++) {
+				System.out.println(String.valueOf(i * scaleFactor) + " "
+						+ formatter.format(me.worstCasePfdAndP_0n(i * scaleFactor, x, .0005, a)));
+			}
+		}
+		System.out.println(max + " " + formatter.format(me.worstCasePfdAndP_0n(max, x, .0005, a)));
+
+	}
+
+	/**
 	 * Calculates the conservative posterior mean of a component's probability
 	 * of failure on demand and conservative probability that the system is
 	 * perfect
@@ -47,7 +73,7 @@ public class FailureProbability extends AbstractAnalysis {
 	 * @param y The system's estimated probability of failure on a given demand
 	 * @param alpha The estimated probability that the system is perfect
 	 */
-	private void worstCasePfdAndP_0n(int n, double x, double y, double alpha) {
+	private double worstCasePfdAndP_0n(int n, double x, double y, double alpha) {
 		BrentOptimizer bop = new BrentOptimizer(2 * FastMath.ulp(1d), Double.MIN_VALUE);
 		UnivariateObjectiveFunction uof = new UnivariateObjectiveFunction(new PosteriorMeanFunc(n, x, y, alpha));
 		SearchInterval si = new SearchInterval(0.0, 1.0);
@@ -55,6 +81,7 @@ public class FailureProbability extends AbstractAnalysis {
 
 		double mean = 1 - result.getValue();
 		double p_On = conservativePosteriorProbWithConfidence(n, x, y, alpha, result.getPoint());
+		return mean;
 	}
 
 	/**
