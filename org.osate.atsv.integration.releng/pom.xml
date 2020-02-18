@@ -10,7 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <tycho.version>1.5.1</tycho.version>
-        <eclipse-repo.url>http://download.eclipse.org/releases/2019-09/</eclipse-repo.url>
+        <eclipse-repo.url>http://download.eclipse.org/releases/2019-12/</eclipse-repo.url>
         <osate-repo.url>http://osate-build.sei.cmu.edu/download/osate/testing/updates/</osate-repo.url>
         <elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.5.0/</elk-stable.url>
         <xtext.version>2.19.0</xtext.version>
@@ -85,12 +85,12 @@
         </repository>
         <repository>
             <id>xtext-tmf</id>
-            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.19.0/</url>
+            <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.20.0/</url>
             <layout>p2</layout>
         </repository>
         <repository>
             <id>xtext-emft</id>
-            <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.11.0/</url>
+            <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.11.1/</url>
             <layout>p2</layout>
         </repository>
         <repository>

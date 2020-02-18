@@ -43,8 +43,6 @@
       xsi:type="setup.p2:P2Task">
     <requirement
         name="org.apache.commons.math3"/>
-    <repository
-        url="http://download.eclipse.org/tools/orbit/downloads/latest-R"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -125,9 +123,9 @@
             url="http://download.eclipse.org/releases/juno"/>
       </repositoryList>
       <repositoryList
-          name="2019-09">
+          name="2019-12">
         <repository
-            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/latest-R"/>
       </repositoryList>
     </targlet>
   </setupTask>
