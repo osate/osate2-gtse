@@ -28,7 +28,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'abstract' 'implementation'
 	 * ;
 	 */
-	override def protected String getAbstractImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getAbstractImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -41,7 +41,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'applies' 'to'
 	 * ;
 	 */
-	override def protected String getAppliesToKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getAppliesToKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -53,7 +53,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'bus' 'access'
 	 * ;
 	 */
-	override def protected String getBusAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getBusAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -65,7 +65,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'bus' 'implementation'
 	 * ;
 	 */
-	override def protected String getBusImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getBusImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -78,7 +78,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'data' 'access'
 	 * ;
 	 */
-	override def protected String getDataAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getDataAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -90,7 +90,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'data' 'implementation'
 	 * ;
 	 */
-	override def protected String getDataImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getDataImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -103,7 +103,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'data' 'port'
 	 * ;
 	 */
-	override def protected String getDataPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getDataPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -115,7 +115,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'device' 'implementation'
 	 * ;
 	 */
-	override def protected String getDeviceImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getDeviceImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -128,7 +128,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'end' 'to' 'end' 'flow'
 	 * ;
 	 */
-	override def protected String getEndToEndFlowKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getEndToEndFlowKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -140,7 +140,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'event' 'data'
 	 * ;
 	 */
-	override def protected String getEventDataKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getEventDataKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -152,7 +152,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'event' 'data' 'port'
 	 * ;
 	 */
-	override def protected String getEventDataPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getEventDataPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -164,7 +164,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'event' 'port'
 	 * ;
 	 */
-	override def protected String getEventPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getEventPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -176,7 +176,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'feature' 'group'
 	 * ;
 	 */
-	override def protected String getFeatureGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getFeatureGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -188,7 +188,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'in' 'binding'
 	 * ;
 	 */
-	override def protected String getInBindingKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getInBindingKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -200,7 +200,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'in' 'modes'
 	 * ;
 	 */
-	override def protected String getInModesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getInModesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -212,7 +212,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'internal' 'features'
 	 * ;
 	 */
-	override def protected String getInternalFeaturesKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getInternalFeaturesKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -225,7 +225,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'inverse' 'of'
 	 * ;
 	 */
-	override def protected String getInverseOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getInverseOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -237,7 +237,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'list' 'of'
 	 * ;
 	 */
-	override def protected String getListOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getListOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -249,7 +249,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'memory' 'implementation'
 	 * ;
 	 */
-	override def protected String getMemoryImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getMemoryImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -262,7 +262,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'process' 'implementation'
 	 * ;
 	 */
-	override def protected String getProcessImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getProcessImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -275,7 +275,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'processor' 'features'
 	 * ;
 	 */
-	override def protected String getProcessorFeaturesKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getProcessorFeaturesKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -288,7 +288,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'processor' 'implementation'
 	 * ;
 	 */
-	override def protected String getProcessorImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getProcessorImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -301,7 +301,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'range' 'of'
 	 * ;
 	 */
-	override def protected String getRangeOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getRangeOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -313,7 +313,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'refined' 'to'
 	 * ;
 	 */
-	override def protected String getRefinedToKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getRefinedToKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -325,7 +325,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'requires' 'modes'
 	 * ;
 	 */
-	override def protected String getRequiresModesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getRequiresModesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -337,7 +337,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'subprogram' 'access'
 	 * ;
 	 */
-	override def protected String getSubprogramAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getSubprogramAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -350,7 +350,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'subprogram' 'group' 'access'
 	 * ;
 	 */
-	override def protected String getSubprogramGroupAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getSubprogramGroupAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -363,7 +363,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'subprogram' 'group' 'implementation'
 	 * ;
 	 */
-	override def protected String getSubprogramGroupImplementationKeywordsToken(EObject semanticObject,
+	override protected String getSubprogramGroupImplementationKeywordsToken(EObject semanticObject,
 		RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -376,7 +376,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'subprogram' 'group'
 	 * ;
 	 */
-	override def protected String getSubprogramGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getSubprogramGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -389,7 +389,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'subprogram' 'implementation'
 	 * ;
 	 */
-	override def protected String getSubprogramImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getSubprogramImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -402,7 +402,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'system' 'implementation'
 	 * ;
 	 */
-	override def protected String getSystemImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getSystemImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -415,7 +415,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'thread' 'group' 'implementation'
 	 * ;
 	 */
-	override def protected String getThreadGroupImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getThreadGroupImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -428,7 +428,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'thread' 'group'
 	 * ;
 	 */
-	override def protected String getThreadGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getThreadGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -440,7 +440,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'thread' 'implementation'
 	 * ;
 	 */
-	override def protected String getThreadImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getThreadImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -453,7 +453,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'virtual' 'bus' 'implementation'
 	 * ;
 	 */
-	override def protected String getVirtualBusImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getVirtualBusImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -466,7 +466,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'virtual' 'bus'
 	 * ;
 	 */
-	override def protected String getVirtualBusKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	override protected String getVirtualBusKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
 		else
@@ -478,7 +478,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'virtual' 'processor' 'implementation'
 	 * ;
 	 */
-	override def protected String getVirtualProcessorImplementationKeywordsToken(EObject semanticObject,
+	override protected String getVirtualProcessorImplementationKeywordsToken(EObject semanticObject,
 		RuleCall ruleCall, INode node) {
 		if (node !== null)
 			getTokenText(node)
@@ -491,7 +491,7 @@ class ConfigSyntacticSequencer extends AbstractConfigSyntacticSequencer {
 	 * 	'virtual' 'processor'
 	 * ;
 	 */
-	override def protected String getVirtualProcessorKeywordsToken(EObject semanticObject, RuleCall ruleCall,
+	override protected String getVirtualProcessorKeywordsToken(EObject semanticObject, RuleCall ruleCall,
 		INode node) {
 		if (node !== null)
 			getTokenText(node)

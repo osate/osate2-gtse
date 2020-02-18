@@ -14,11 +14,11 @@ class ConfigValueConverters extends DefaultTerminalConverters {
 	def IValueConverter<ComponentCategory> ComponentCategory() {
 		new AbstractNullSafeConverter<ComponentCategory>() {
 
-			override public ComponentCategory internalToValue(String string, INode node) {
+			override ComponentCategory internalToValue(String string, INode node) {
 				ComponentCategory::get(string.toLowerCase());
 			}
 
-			override public String internalToString(ComponentCategory value) {
+			override String internalToString(ComponentCategory value) {
 				return value.getName();
 			}
 

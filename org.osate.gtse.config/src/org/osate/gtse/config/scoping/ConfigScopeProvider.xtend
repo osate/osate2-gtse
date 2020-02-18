@@ -198,7 +198,7 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 	}
 
 	// Reference is from ContainmentPathElement in Properties.xtext
-	override def scope_ContainmentPathElement_namedElement(Element context, EReference reference) {
+	override scope_ContainmentPathElement_namedElement(Element context, EReference reference) {
 		val container = context.eContainer
 		val Classifier namespace = switch container {
 			ReferenceValue: {
