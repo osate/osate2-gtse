@@ -18,9 +18,8 @@
  */
 package org.osate.gtse.config.services;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import java.util.List;
+
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
@@ -34,11 +33,13 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
 import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.osate.xtext.aadl2.properties.services.PropertiesGrammarAccess;
 import org.osate.xtext.aadl2.services.Aadl2GrammarAccess;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 @Singleton
 public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
@@ -1435,6 +1436,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//enum Type:
 		//	INT='int' | FLOAT='float' | STRING='string';
+		@Override
 		public EnumRule getRule() { return rule; }
 		
 		//INT='int' | FLOAT='float' | STRING='string'
@@ -1484,6 +1486,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//enum Relation:
 		//	NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in';
+		@Override
 		public EnumRule getRule() { return rule; }
 		
 		//NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in'
