@@ -57,6 +57,7 @@
 		<module>../org.osate.atsv.integration.property-totals</module>
 		<module>../org.osate.atsv.integration.unhandled-faults</module>
 		<module>../Example-Plugins/org.osate.gtse.demo.braking-power</module>
+		<module>../Example-Plugins/org.osate.gtse.demo.failure-probability</module>
 		<module>../Example-Plugins/org.osate.gtse.demo.feature.demo_analyses</module>
 		<module>../org.osate.atsv.integration.feature.base</module>
 		<module>../org.osate.atsv.integration.feature.analyses</module>

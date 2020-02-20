@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.osate.atsv.integration.fta"
+         point="org.osate.atsv.integration">
+      <Analysis
+            AnalyzerClass="org.osate.gtse.demo.failureprobability.FailureProbability">
+      </Analysis>
+   </extension>
+
+</plugin>

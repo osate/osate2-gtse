@@ -1,9 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Failure-probability
-Bundle-SymbolicName: org.osate.gtse.demo.failure-probability
+Bundle-SymbolicName: org.osate.gtse.demo.failure-probability;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Fragment-Host: org.osate.atsv.integration;bundle-version="1.0.0"
 Automatic-Module-Name: org.osate.gtse.demo.failure-probability
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.apache.commons.math3
+Require-Bundle: org.apache.commons.math3,
+ org.osate.aadl2.errormodel.faulttree,
+ org.osate.aadl2.errormodel.propagationgraph,
+ org.osate.results,
+ org.osate.aadl2.modelsupport,
+ org.osate.atsv.integration
+Export-Package: org.osate.gtse.demo.failureprobability
