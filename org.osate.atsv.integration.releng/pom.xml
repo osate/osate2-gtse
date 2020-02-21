@@ -103,7 +103,7 @@
 		</repository>
 		<repository>
 			<id>orion</id>
-			<url>https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository</url>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
