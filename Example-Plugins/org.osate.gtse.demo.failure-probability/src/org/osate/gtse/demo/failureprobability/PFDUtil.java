@@ -25,6 +25,7 @@ package org.osate.gtse.demo.failureprobability;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.text.DecimalFormat;
 
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.optim.MaxEval;
@@ -102,8 +103,9 @@ class PFDUtil {
 		SearchInterval si = new SearchInterval(0.0, 1.0);
 		UnivariatePointValuePair result = bop.optimize(uof, MaxEval.unlimited(), si, GoalType.MINIMIZE);
 
+		double mean = 1 - result.getValue();
 		double p_On = conservativePosteriorProbWithConfidence(n, x, y, alpha, result.getPoint());
-		return p_On;
+		return mean;
 	}
 
 	/**
@@ -196,6 +198,29 @@ class PFDUtil {
 		public double value(double z) {
 			return posteriorMean(z, n, x, y, alpha);
 		}
+	}
+
+	/**
+	 * Test-driver / figure generation method.
+	 * @param args empty
+	 */
+	public static void main(String[] args) {
+		DecimalFormat formatter = new DecimalFormat("#0.0000000000000");
+
+		double x = .1;
+		double a = .5;
+		int min = 0;
+		int max = 10000000;
+
+		System.out.println(min + " " + formatter.format(worstCasePfdAndP_0n(min, x, .0005, a)));
+		for (int scaleFactor = min + 1; scaleFactor < max; scaleFactor *= 10) {
+			for (int i = 1; i < 10; i++) {
+				System.out.println(String.valueOf(i * scaleFactor) + " "
+						+ formatter.format(worstCasePfdAndP_0n(i * scaleFactor, x, .0005, a)));
+			}
+		}
+		System.out.println(max + " " + formatter.format(worstCasePfdAndP_0n(max, x, .0005, a)));
+
 	}
 
 }
