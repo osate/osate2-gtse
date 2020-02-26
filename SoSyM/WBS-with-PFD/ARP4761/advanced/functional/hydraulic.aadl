@@ -1,0 +1,11 @@
+package functional::Hydraulic
+public
+	with functional::GenericFunctions;
+
+	system Hydraulic extends functional::GenericFunctions::Generic
+	end Hydraulic;
+
+	system implementation Hydraulic.basic extends functional::GenericFunctions::Generic.basic
+	end Hydraulic.basic;
+
+end functional::Hydraulic;

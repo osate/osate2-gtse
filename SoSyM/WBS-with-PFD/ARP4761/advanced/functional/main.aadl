@@ -1,0 +1,24 @@
+package functional::main
+public
+	with functional::GenericFunctions;
+	with functional::Electrical, functional::Hydraulic, functional::Decelerate, functional::Alert, functional::Steering, functional::Status;
+
+	system Aircraft
+	end Aircraft;
+
+	system implementation Aircraft.basic
+		subcomponents
+			decelerate: system functional::Decelerate::DecelerateAircraft.basic;
+			electrical: system functional::Electrical::Electrical.basic;
+			hydraulic: system functional::Hydraulic::Hydraulic.basic;
+			alert: system functional::Alert::Alert.basic;
+			steering: system functional::Steering::Steering.basic;
+			status: system functional::Status::Status.basic;
+		connections
+			c1: feature electrical.isFailing -> decelerate.fromElectrical;
+			c2: feature hydraulic.isFailing -> decelerate.fromHydraulic;
+			c3: feature alert.isFailing -> decelerate.fromAlert;
+			c4: feature steering.isFailing -> decelerate.fromSteering;
+			c5: feature status.isFailing -> decelerate.fromStatus;
+	end Aircraft.basic;
+end functional::main;

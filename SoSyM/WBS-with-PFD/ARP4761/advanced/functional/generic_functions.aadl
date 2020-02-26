@@ -1,0 +1,15 @@
+package functional::GenericFunctions
+public
+	with WBSPS;
+
+	system Generic
+		features
+			isFailing: feature;
+		properties
+			WBSPS::IsFunction => true;
+	end Generic;
+
+	system implementation Generic.basic
+	end Generic.basic;
+
+end functional::GenericFunctions;

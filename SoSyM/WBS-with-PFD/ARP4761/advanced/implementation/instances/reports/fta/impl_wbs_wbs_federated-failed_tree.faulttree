@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ASCII"?>
+<FaultTree:FaultTree xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:FaultTree="http://www.aadl.info/FaultTree" name="impl_wbs_wbs_federated-failed_tree" root="//@events.17">
+  <instanceRoot href="../../wbs_wbs_federated_Instance.aaxl2#/"/>
+  <events name="accumulator-fail" assignedProbability="0" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.4"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="green_pump-fail" assignedProbability="0" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.3"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="power.powerbus1-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="3" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.1/@componentInstance.0"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="power.powerbus2-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="3" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.1/@componentInstance.1"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="Intermediate14" subEvents="//@events.2 //@events.3" computedProbability="1.54434786929389700006051159351529352767553022842254872339096127831226112903095781803131103515625E-11" referenceCount="1" type="Intermediate" subEventLogic="And">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.10"/>
+    <relatedEMV2Object href="../../../bscu.aadl#/0/@ownedPublicSection/@ownedClassifier.11/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@transitions.0/@condition/@operands.0"/>
+  </events>
+  <events name="pedals-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.0"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="bscu-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.10"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="shutoff-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.6"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="blue_pump-fail" assignedProbability="0" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.2"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="selector-in-cmd_nor-serviceomission" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" type="Undeveloped" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.5"/>
+    <relatedErrorType href="../../../valves.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@propagations.1/@typeSet/@typeTokens.0"/>
+    <relatedEMV2Object href="../../../valves.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@propagations.1"/>
+  </events>
+  <events name="selector-in-cmd_alt-serviceomission" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" type="Undeveloped" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.5"/>
+    <relatedErrorType href="../../../valves.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@propagations.2/@typeSet/@typeTokens.0"/>
+    <relatedEMV2Object href="../../../valves.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@propagations.2"/>
+  </events>
+  <events name="selector-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.5"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="Intermediate48" subEvents="//@events.2 //@events.3" computedProbability="1.54434786929389700006051159351529352767553022842254872339096127831226112903095781803131103515625E-11" referenceCount="1" type="Intermediate" subEventLogic="And">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.10"/>
+    <relatedEMV2Object href="../../../bscu.aadl#/0/@ownedPublicSection/@ownedClassifier.11/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@transitions.0/@condition/@operands.0"/>
+  </events>
+  <events name="green_skid-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.7"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="Intermediate79" subEvents="//@events.2 //@events.3" computedProbability="1.54434786929389700006051159351529352767553022842254872339096127831226112903095781803131103515625E-11" referenceCount="1" type="Intermediate" subEventLogic="And">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.10"/>
+    <relatedEMV2Object href="../../../bscu.aadl#/0/@ownedPublicSection/@ownedClassifier.11/@ownedAnnexSubclause.0/@parsedAnnexSubclause/@transitions.0/@condition/@operands.0"/>
+  </events>
+  <events name="blue_skid-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.8"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="wheel-fail" assignedProbability="0.00000392981916796930619284466956742107868194580078125" referenceCount="1" scale="1">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#//@componentInstance.9"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@events.0"/>
+  </events>
+  <events name="impl_wbs_wbs_federated-failed" subEvents="//@events.16 //@events.13 //@events.11 //@events.9 //@events.10 //@events.0 //@events.7 //@events.1 //@events.6 //@events.4 //@events.5 //@events.8 //@events.12 //@events.15 //@events.14" assignedProbability="0" computedProbability="0.000035367862880386218220472817064786718235228232441181983166344312732661569038108698976224018778308892593392974678468720601181590087614211029482832110637573170560311131002355477033455925645124385309814898503256150822554081782484262166942616446782232719321383695508943006114504785786335775508092637922136238795015820776083111404577801434807401412736412709160131674129988488379479213458350013112226034239617892894632079966622781952132802508955448258754172620919279019024106932027705027403068116942936630310003268942582462905723449822676544142945532475931039771110031009448846607616068615227358125110518063043917373795652259600438383487193372117497666440563249236548120411798200905528239986164980553485567616450453867372993072362056046124600146008118154643089237065822771910461597144603729248046875000" referenceCount="1" type="Intermediate">
+    <relatedInstanceObject href="../../wbs_wbs_federated_Instance.aaxl2#/"/>
+    <relatedEMV2Object href="../../../../common/PFDLib.aadl#/0/@ownedPublicSection/@ownedAnnexLibrary.0/@parsedAnnexLibrary/@behaviors.0/@states.1"/>
+  </events>
+</FaultTree:FaultTree>

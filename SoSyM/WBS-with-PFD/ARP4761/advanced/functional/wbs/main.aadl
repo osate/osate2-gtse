@@ -1,0 +1,77 @@
+package functional::WheelBrake::Main
+public
+	with WBSPS;
+	with functional::WheelBrake::Generic;
+	with functional::WheelBrake::CommandControl;
+
+	system NormalBrakeSystem extends functional::WheelBrake::Generic::GenericBrakeSystem
+		features
+			fromHydraulic: feature;
+			fromBSCU: feature;
+		properties
+			WBSPS::IsFunction => true;
+	end NormalBrakeSystem;
+
+	system DecelerateOnGround extends functional::WheelBrake::Generic::GenericFunction
+		features
+			fromBSCU: feature;
+		properties
+			WBSPS::IsFunction => true;
+	end DecelerateOnGround;
+
+	system implementation DecelerateOnGround.basic extends functional::WheelBrake::Generic::GenericFunction.basic
+		subcomponents
+			normal: system NormalBrakeSystem;
+			alternate: system functional::WheelBrake::Generic::GenericBrakeSystem;
+			emergency: system functional::WheelBrake::Generic::GenericBrakeSystem;
+		connections
+			c1: feature fromBSCU -> normal.fromBSCU;
+	end DecelerateOnGround.basic;
+
+	system DecelerateWheels
+		features
+			fromElectrical: feature;
+			fromHydraulic: feature;
+			fromAlert: feature;
+			fromSteering: feature;
+			fromStatus: feature;
+		properties
+			WBSPS::IsFunction => true;
+	end DecelerateWheels;
+
+	system implementation DecelerateWheels.basic
+		subcomponents
+			-- List of functions is available in AIR6110 page 30
+			decelerateonground: system DecelerateOnGround.basic;
+			directionalcontrol: system functional::WheelBrake::CommandControl::CommandControl.basic;
+			stopmainlanding: system functional::WheelBrake::Generic::GenericFunction.basic;
+			preventmotion: system functional::WheelBrake::Generic::GenericFunction.basic;
+		connections
+			c11: feature fromElectrical -> decelerateonground.fromElectrical;
+			c12: feature fromHydraulic -> decelerateonground.fromHydraulic;
+			c13: feature fromAlert -> decelerateonground.fromAlert;
+			c14: feature fromSteering -> decelerateonground.fromSteering;
+			c15: feature fromStatus -> decelerateonground.fromStatus;
+
+			c21: feature fromElectrical -> directionalcontrol.fromElectrical;
+			c22: feature fromHydraulic -> directionalcontrol.fromHydraulic;
+			c23: feature fromAlert -> directionalcontrol.fromAlert;
+			c24: feature fromSteering -> directionalcontrol.fromSteering;
+			c25: feature fromStatus -> directionalcontrol.fromStatus;
+
+			c31: feature fromElectrical -> stopmainlanding.fromElectrical;
+			c32: feature fromHydraulic -> stopmainlanding.fromHydraulic;
+			c33: feature fromAlert -> stopmainlanding.fromAlert;
+			c34: feature fromSteering -> stopmainlanding.fromSteering;
+			c35: feature fromStatus -> stopmainlanding.fromStatus;
+
+			c41: feature fromElectrical -> preventmotion.fromElectrical;
+			c42: feature fromHydraulic -> preventmotion.fromHydraulic;
+			c43: feature fromAlert -> preventmotion.fromAlert;
+			c44: feature fromSteering -> preventmotion.fromSteering;
+			c45: feature fromStatus -> preventmotion.fromStatus;
+
+			c50: feature directionalcontrol.fromBSCU -> decelerateonground.fromBSCU;
+	end DecelerateWheels.basic;
+
+end functional::WheelBrake::Main;

@@ -1,0 +1,14 @@
+package PFDLib
+public
+	annex emv2 {**
+		error behavior PFD_Behavior
+			events
+				fail: error event;
+			states
+				operational: initial state;
+				failed: state;
+			transitions
+				operational -[fail]-> failed;
+		end behavior;
+	**};
+end PFDLib;

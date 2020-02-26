@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="ASCII"?>
+<instance:SystemInstance xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aadl2="http://aadl.info/AADL/2.0" xmlns:instance="http://aadl.info/AADL/2.0/instance" name="Aircraft_basic_Instance" category="system">
+  <componentInstance name="decelerate" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+      </ownedValue>
+      <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <featureInstance name="fromElectrical" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedAbstractFeature.1"/>
+    </featureInstance>
+    <featureInstance name="fromAlert" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedAbstractFeature.2"/>
+    </featureInstance>
+    <featureInstance name="fromSteering" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedAbstractFeature.3"/>
+    </featureInstance>
+    <featureInstance name="fromStatus" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedAbstractFeature.4"/>
+    </featureInstance>
+    <componentInstance name="DecelerateWheels" category="system">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <featureInstance name="fromElectrical" category="abstractFeature" direction="in out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.0"/>
+      </featureInstance>
+      <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.1"/>
+      </featureInstance>
+      <featureInstance name="fromAlert" category="abstractFeature" direction="in out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.2"/>
+      </featureInstance>
+      <featureInstance name="fromSteering" category="abstractFeature" direction="in out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.3"/>
+      </featureInstance>
+      <featureInstance name="fromStatus" category="abstractFeature" direction="in out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.4"/>
+      </featureInstance>
+      <componentInstance name="decelerateonground" category="system">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <featureInstance name="fromElectrical" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+        </featureInstance>
+        <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.1"/>
+        </featureInstance>
+        <featureInstance name="fromAlert" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.2"/>
+        </featureInstance>
+        <featureInstance name="fromSteering" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.3"/>
+        </featureInstance>
+        <featureInstance name="fromStatus" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.4"/>
+        </featureInstance>
+        <featureInstance name="fromBSCU" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedAbstractFeature.0"/>
+        </featureInstance>
+        <componentInstance name="normal" category="system">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+              </ownedValue>
+              <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+          </featureInstance>
+          <featureInstance name="fromBSCU" category="abstractFeature" direction="in out">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+              </ownedValue>
+              <propertyAssociation href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:AbstractFeature" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.1"/>
+          </featureInstance>
+          <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedSystemSubcomponent.0"/>
+          <index>0</index>
+          <classifier xsi:type="aadl2:SystemType" href="../wbs/main.aadl#functional.WheelBrake.Main.NormalBrakeSystem"/>
+        </componentInstance>
+        <componentInstance name="alternate" category="system">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedSystemSubcomponent.1"/>
+          <index>0</index>
+          <classifier xsi:type="aadl2:SystemType" href="../wbs/generic.aadl#functional.WheelBrake.Generic.GenericBrakeSystem"/>
+        </componentInstance>
+        <componentInstance name="emergency" category="system">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedSystemSubcomponent.2"/>
+          <index>0</index>
+          <classifier xsi:type="aadl2:SystemType" href="../wbs/generic.aadl#functional.WheelBrake.Generic.GenericBrakeSystem"/>
+        </componentInstance>
+        <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedSystemSubcomponent.0"/>
+        <index>0</index>
+        <classifier xsi:type="aadl2:SystemImplementation" href="../wbs/main.aadl#functional.WheelBrake.Main.DecelerateOnGround.basic"/>
+      </componentInstance>
+      <componentInstance name="directionalcontrol" category="system">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/command-control.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <featureInstance name="fromElectrical" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+        </featureInstance>
+        <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.1"/>
+        </featureInstance>
+        <featureInstance name="fromAlert" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.2"/>
+        </featureInstance>
+        <featureInstance name="fromSteering" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.3"/>
+        </featureInstance>
+        <featureInstance name="fromStatus" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.4"/>
+        </featureInstance>
+        <featureInstance name="fromBSCU" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/command-control.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+        </featureInstance>
+        <componentInstance name="Control_Primary" category="system">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+              </ownedValue>
+              <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+          </featureInstance>
+          <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/command-control.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0"/>
+          <index>0</index>
+          <classifier xsi:type="aadl2:SystemImplementation" href="../generic_functions.aadl#functional.GenericFunctions.Generic.basic"/>
+        </componentInstance>
+        <componentInstance name="Control_Secondary" category="system">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+              </ownedValue>
+              <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+          </featureInstance>
+          <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/command-control.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.1"/>
+          <index>0</index>
+          <classifier xsi:type="aadl2:SystemImplementation" href="../generic_functions.aadl#functional.GenericFunctions.Generic.basic"/>
+        </componentInstance>
+        <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedSystemSubcomponent.1"/>
+        <index>0</index>
+        <classifier xsi:type="aadl2:SystemImplementation" href="../wbs/command-control.aadl#functional.WheelBrake.CommandControl.CommandControl.basic"/>
+      </componentInstance>
+      <componentInstance name="stopmainlanding" category="system">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <featureInstance name="fromElectrical" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+        </featureInstance>
+        <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.1"/>
+        </featureInstance>
+        <featureInstance name="fromAlert" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.2"/>
+        </featureInstance>
+        <featureInstance name="fromSteering" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.3"/>
+        </featureInstance>
+        <featureInstance name="fromStatus" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.4"/>
+        </featureInstance>
+        <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedSystemSubcomponent.2"/>
+        <index>0</index>
+        <classifier xsi:type="aadl2:SystemImplementation" href="../wbs/generic.aadl#functional.WheelBrake.Generic.GenericFunction.basic"/>
+      </componentInstance>
+      <componentInstance name="preventmotion" category="system">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+          </ownedValue>
+          <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <featureInstance name="fromElectrical" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+        </featureInstance>
+        <featureInstance name="fromHydraulic" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.1"/>
+        </featureInstance>
+        <featureInstance name="fromAlert" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.2"/>
+        </featureInstance>
+        <featureInstance name="fromSteering" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.3"/>
+        </featureInstance>
+        <featureInstance name="fromStatus" category="abstractFeature" direction="in out">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+            </ownedValue>
+            <propertyAssociation href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:AbstractFeature" href="../wbs/generic.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.4"/>
+        </featureInstance>
+        <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedSystemSubcomponent.3"/>
+        <index>0</index>
+        <classifier xsi:type="aadl2:SystemImplementation" href="../wbs/generic.aadl#functional.WheelBrake.Generic.GenericFunction.basic"/>
+      </componentInstance>
+      <connectionInstance name="directionalcontrol.fromBSCU -> decelerateonground.normal.fromBSCU" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.1" source="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.5">
+        <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.5" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.5">
+          <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.20"/>
+        </connectionReference>
+        <connectionReference context="//@componentInstance.0/@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.5" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.1">
+          <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedFeatureConnection.0"/>
+        </connectionReference>
+      </connectionInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedSystemSubcomponent.0"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:SystemImplementation" href="../wbs/main.aadl#functional.WheelBrake.Main.DecelerateWheels.basic"/>
+    </componentInstance>
+    <componentInstance name="DecelerateThrottle" category="system">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedSystemSubcomponent.1"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:SystemType" href="../throttle.aadl#functional.Throttle.DecelerateThrottle"/>
+    </componentInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../main.aadl#functional.main.DecelerateAircraft.basic"/>
+  </componentInstance>
+  <componentInstance name="electrical" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+      </ownedValue>
+      <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../../../Plugin_Resources/SEI.aadl#SEI.Price"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:RealLiteral" value="50.0"/>
+      </ownedValue>
+      <propertyAssociation href="../electrical.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.1"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../electrical.aadl#functional.Electrical.Electrical.basic"/>
+  </componentInstance>
+  <componentInstance name="hydraulic" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+      </ownedValue>
+      <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.2"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../hydraulic.aadl#functional.Hydraulic.Hydraulic.basic"/>
+  </componentInstance>
+  <componentInstance name="alert" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+      </ownedValue>
+      <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.3"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../generic_functions.aadl#functional.GenericFunctions.Generic.basic"/>
+  </componentInstance>
+  <componentInstance name="steering" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+      </ownedValue>
+      <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.4"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../generic_functions.aadl#functional.GenericFunctions.Generic.basic"/>
+  </componentInstance>
+  <componentInstance name="status" category="system">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+      </ownedValue>
+      <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <featureInstance name="isFailing" category="abstractFeature" direction="in out">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../common/WBSPS.aadl#WBSPS.IsFunction"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:BooleanLiteral" value="true"/>
+        </ownedValue>
+        <propertyAssociation href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <feature xsi:type="aadl2:AbstractFeature" href="../generic_functions.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.5"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="../generic_functions.aadl#functional.GenericFunctions.Generic.basic"/>
+  </componentInstance>
+  <connectionInstance name="electrical.isFailing -> decelerate.DecelerateWheels.decelerateonground.fromElectrical" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.0" source="//@componentInstance.1/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.0"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="electrical.isFailing -> decelerate.DecelerateWheels.directionalcontrol.fromElectrical" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.0" source="//@componentInstance.1/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.5"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="electrical.isFailing -> decelerate.DecelerateWheels.stopmainlanding.fromElectrical" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.0" source="//@componentInstance.1/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.10"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="electrical.isFailing -> decelerate.DecelerateWheels.preventmotion.fromElectrical" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.0" source="//@componentInstance.1/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.0"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.15"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="hydraulic.isFailing -> decelerate.DecelerateWheels.decelerateonground.fromHydraulic" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.1" source="//@componentInstance.2/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.1"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="hydraulic.isFailing -> decelerate.DecelerateWheels.directionalcontrol.fromHydraulic" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.1" source="//@componentInstance.2/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.6"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="hydraulic.isFailing -> decelerate.DecelerateWheels.stopmainlanding.fromHydraulic" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.1" source="//@componentInstance.2/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.11"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="hydraulic.isFailing -> decelerate.DecelerateWheels.preventmotion.fromHydraulic" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.1" source="//@componentInstance.2/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.1">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.16"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="alert.isFailing -> decelerate.DecelerateWheels.decelerateonground.fromAlert" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.2" source="//@componentInstance.3/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.3/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.2"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="alert.isFailing -> decelerate.DecelerateWheels.directionalcontrol.fromAlert" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.2" source="//@componentInstance.3/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.3/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.7"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="alert.isFailing -> decelerate.DecelerateWheels.stopmainlanding.fromAlert" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.2" source="//@componentInstance.3/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.3/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.12"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="alert.isFailing -> decelerate.DecelerateWheels.preventmotion.fromAlert" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.2" source="//@componentInstance.3/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.3/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.2"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.2" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.2">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.17"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="steering.isFailing -> decelerate.DecelerateWheels.decelerateonground.fromSteering" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.3" source="//@componentInstance.4/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.4/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.3"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="steering.isFailing -> decelerate.DecelerateWheels.directionalcontrol.fromSteering" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.3" source="//@componentInstance.4/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.4/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.8"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="steering.isFailing -> decelerate.DecelerateWheels.stopmainlanding.fromSteering" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.3" source="//@componentInstance.4/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.4/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.13"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="steering.isFailing -> decelerate.DecelerateWheels.preventmotion.fromSteering" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.3" source="//@componentInstance.4/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.4/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.3"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.3" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.3">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.18"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="status.isFailing -> decelerate.DecelerateWheels.decelerateonground.fromStatus" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.4" source="//@componentInstance.5/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.5/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.4"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="status.isFailing -> decelerate.DecelerateWheels.directionalcontrol.fromStatus" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.4" source="//@componentInstance.5/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.5/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.1/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.9"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="status.isFailing -> decelerate.DecelerateWheels.stopmainlanding.fromStatus" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.4" source="//@componentInstance.5/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.5/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.2/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.14"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="status.isFailing -> decelerate.DecelerateWheels.preventmotion.fromStatus" complete="true" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.4" source="//@componentInstance.5/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.5/@featureInstance.0" destination="//@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.1/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../main.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedFeatureConnection.4"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.0/@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.4" destination="//@componentInstance.0/@componentInstance.0/@componentInstance.3/@featureInstance.4">
+      <connection xsi:type="aadl2:FeatureConnection" href="../wbs/main.aadl#/0/@ownedPublicSection/@ownedClassifier.4/@ownedFeatureConnection.19"/>
+    </connectionReference>
+  </connectionInstance>
+  <systemOperationMode name="No Modes"/>
+  <componentImplementation xsi:type="aadl2:SystemImplementation" href="../main.aadl#functional.main.Aircraft.basic"/>
+</instance:SystemInstance>

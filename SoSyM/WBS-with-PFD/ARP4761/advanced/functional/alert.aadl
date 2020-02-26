@@ -1,0 +1,23 @@
+package functional::Alert
+public
+	with functional::GenericFunctions, SEI;
+
+	system Alert extends functional::GenericFunctions::Generic
+
+	end Alert;
+
+	system implementation Alert.basic extends functional::GenericFunctions::Generic.basic
+
+	end alert.basic;
+
+	system implementation Alert.hi_quality extends Alert.basic
+		properties
+			SEI::Price => 3.5;
+	end alert.hi_quality;
+
+	system implementation Alert.lo_quality extends Alert.basic
+		properties
+			SEI::Price => 1.0;
+	end alert.lo_quality;
+
+end functional::Alert;

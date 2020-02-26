@@ -1,0 +1,27 @@
+package functional::WheelBrake::Generic
+public
+	with WBSPS;
+
+	system GenericFunction
+		features
+			fromElectrical: feature;
+			fromHydraulic: feature;
+			fromAlert: feature;
+			fromSteering: feature;
+			fromStatus: feature;
+		properties
+			WBSPS::IsFunction => true;
+	end GenericFunction;
+
+	system implementation GenericFunction.basic
+	end GenericFunction.basic;
+
+	system GenericBrakeSystem
+		properties
+			WBSPS::IsFunction => true;
+	end GenericBrakeSystem;
+
+	system implementation GenericBrakeSystem.basic
+	end GenericBrakeSystem.basic;
+
+end functional::WheelBrake::Generic;
