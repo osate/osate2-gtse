@@ -38,7 +38,7 @@ public class FailureProbability extends AbstractAnalysis {
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
 		String stateFailed = "state Failed";
-		FaultTree ft = CreateFTAModel.createFaultTree(instance, stateFailed);
+		FaultTree ft = CreateFTAModel.createFaultTrace(instance, stateFailed);
 		double pfd = ft.getRoot().getComputedProbability().doubleValue();
 		resp.addVariable("PFD", ATSVVariableType.FLOAT, String.valueOf(pfd));
 	}
