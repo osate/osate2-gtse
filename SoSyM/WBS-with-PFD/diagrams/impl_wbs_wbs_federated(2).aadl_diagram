@@ -198,7 +198,7 @@
           <seg>feature</seg>
           <seg>pressure_output</seg>
         </bo>
-        <position x="292.0" y="10.0"/>
+        <position x="318.0" y="10.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
@@ -227,7 +227,7 @@
           <seg>feature</seg>
           <seg>output</seg>
         </bo>
-        <position x="265.0" y="37.0"/>
+        <position x="275.0" y="37.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
@@ -242,14 +242,14 @@
           <seg>feature</seg>
           <seg>cmd_alt</seg>
         </bo>
-        <position x="305.0" y="222.0"/>
+        <position x="316.0" y="222.0"/>
       </element>
       <element uuid="ab09f26b-a86f-47df-9fc3-90c0d629f095" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>cmd_nor</seg>
         </bo>
-        <position x="297.0" y="10.0"/>
+        <position x="310.0" y="10.0"/>
       </element>
       <element uuid="d91760e2-3903-468f-bada-f496f2b8d18a" manual="true" dockArea="left">
         <bo>
@@ -270,21 +270,21 @@
           <seg>feature</seg>
           <seg>pwr1</seg>
         </bo>
-        <position x="328.0" y="116.0"/>
+        <position x="335.0" y="116.0"/>
       </element>
       <element uuid="9c3945f7-ed6a-4f8c-a866-7053837d445e" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>pwr2</seg>
         </bo>
-        <position x="328.0" y="63.0"/>
+        <position x="335.0" y="63.0"/>
       </element>
       <element uuid="2fbedbe3-f628-4b5d-a8f1-96ad0fb21f46" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>select_alternate</seg>
         </bo>
-        <position x="241.0" y="169.0"/>
+        <position x="263.0" y="169.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
@@ -299,7 +299,7 @@
           <seg>feature</seg>
           <seg>pressure_output</seg>
         </bo>
-        <position x="303.0" y="10.0"/>
+        <position x="329.0" y="10.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
@@ -328,7 +328,7 @@
           <seg>feature</seg>
           <seg>output</seg>
         </bo>
-        <position x="276.0" y="37.0"/>
+        <position x="286.0" y="37.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
@@ -343,14 +343,14 @@
           <seg>feature</seg>
           <seg>signal1</seg>
         </bo>
-        <position x="185.0" y="63.0"/>
+        <position x="195.0" y="63.0"/>
       </element>
       <element uuid="a820e205-9614-4156-85ea-c7347ffafb93" manual="true" dockArea="right">
         <bo>
           <seg>feature</seg>
           <seg>signal2</seg>
         </bo>
-        <position x="185.0" y="10.0"/>
+        <position x="195.0" y="10.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
@@ -387,7 +387,7 @@
           <seg>feature</seg>
           <seg>accumulator_input</seg>
         </bo>
-        <position x="285.0" y="116.0"/>
+        <position x="312.0" y="116.0"/>
       </element>
       <element uuid="181116c9-5bb6-49a6-8447-01fd7828f766" manual="true" dockArea="left">
         <bo>
@@ -401,7 +401,7 @@
           <seg>feature</seg>
           <seg>blue_output</seg>
         </bo>
-        <position x="338.0" y="196.0"/>
+        <position x="356.0" y="196.0"/>
       </element>
       <element uuid="a7fd40f8-a41f-469d-bf98-3641c25443be" manual="true" dockArea="left">
         <bo>
@@ -429,7 +429,7 @@
           <seg>feature</seg>
           <seg>green_output</seg>
         </bo>
-        <position x="327.0" y="37.0"/>
+        <position x="348.0" y="37.0"/>
       </element>
       <element uuid="1df52548-8a95-4809-be4c-ccccc987b227" manual="true" dockArea="left">
         <bo>
@@ -465,7 +465,7 @@
           <seg>feature</seg>
           <seg>output</seg>
         </bo>
-        <position x="303.0" y="37.0"/>
+        <position x="313.0" y="37.0"/>
       </element>
       <bo>
         <seg>subcomponent</seg>
