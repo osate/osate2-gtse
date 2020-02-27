@@ -104,12 +104,47 @@ public
 			
 			component error behavior
 				transitions
-					operational -[1 ormore (green_input, blue_input)]-> failed;
+					operational -[green_input and blue_input]-> failed;
 			end component;
 			
 			properties
 				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
 		**};
 	end wheel_two_inputs.i;
+
+	-- Variant with different error model that 
+	-- makes blue/green redundancy ineffective
+	--
+	system wheel_merged_inputs extends wheel
+		features
+			green_input: requires bus access impl::common::pressure.i;
+			blue_input: requires bus access impl::common::pressure.i;
+	end wheel_merged_inputs;
+
+	system implementation wheel_merged_inputs.i extends wheel.i
+		properties
+			SEI::Price => 350.00;
+			SEI::NetWeight => 2.0kg;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				green_input: in propagation {ServiceOmission};
+				blue_input: in propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[1 ormore (green_input, blue_input)]-> failed;
+			end component;
+			
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+		**};
+	end wheel_merged_inputs.i;
 
 end impl::wheel;
