@@ -23,6 +23,9 @@
  */
 package org.osate.gtse.demo.failureprobability;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.osate.aadl2.errormodel.FaultTree.FaultTree;
 import org.osate.aadl2.instance.SystemInstance;
@@ -37,10 +40,11 @@ public class FailureProbability extends AbstractAnalysis {
 	@Override
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
+		NumberFormat nf = new DecimalFormat("#0.0000000000");
 		String stateFailed = "state Failed";
 		FaultTree ft = CreateFTAModel.createFaultTrace(instance, stateFailed);
 		double pfd = ft.getRoot().getComputedProbability().doubleValue();
-		resp.addVariable("PFD", ATSVVariableType.FLOAT, String.valueOf(pfd));
+		resp.addVariable("PFD", ATSVVariableType.FLOAT, nf.format(pfd));// add double formatting
 	}
 
 }
