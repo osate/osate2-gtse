@@ -1,0 +1,13 @@
+diff --git a/emv2/org.osate.xtext.aadl2.errormodel/src/org/osate/xtext/aadl2/errormodel/util/EMV2TypeSetUtil.java b/emv2/org.osate.xtext.aadl2.errormodel/src/org/osate/xtext/aadl2/errormodel/util/EMV2TypeSetUtil.java
+index 52d3da361e..5acd953d57 100644
+--- a/emv2/org.osate.xtext.aadl2.errormodel/src/org/osate/xtext/aadl2/errormodel/util/EMV2TypeSetUtil.java
++++ b/emv2/org.osate.xtext.aadl2.errormodel/src/org/osate/xtext/aadl2/errormodel/util/EMV2TypeSetUtil.java
+@@ -116,7 +116,7 @@ public class EMV2TypeSetUtil {
+ 		ErrorType resolvedtype = EMV2Util.resolveAlias(type);
+ 		ErrorType resolvedsupertype = EMV2Util.resolveAlias(supertype);
+ 		while (resolvedtype != null) {
+-			if (resolvedtype == resolvedsupertype) {
++			if (resolvedtype == resolvedsupertype || resolvedtype.getName().equals(type.getName())) {
+ 				return true;
+ 			} else {
+ 				resolvedtype = EMV2Util.resolveAlias(resolvedtype.getSuperType());
