@@ -118,9 +118,9 @@ public
 			cmd_nor: out data port impl::common::command.skid;
 			cmd_alt: out data port impl::common::command.skid;
 		properties
-			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Successful_Tests => 20000;
 			PFD_Properties::Estimated_Perfect => 0.1;
-			PFD_Properties::Assessor_Doubt => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.2;
 		annex emv2 {**
 			use types ErrorLibrary;
 			use behavior PFDLib::PFD_Behavior;
@@ -147,7 +147,7 @@ public
 			end component;
 			
 			properties
-				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+				PFD_Properties::Estimated_PFD => 5.0e-7 applies to fail;
 		**};
 	end bscu;
 

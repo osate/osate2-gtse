@@ -90,9 +90,9 @@ public
 		properties
 			SEI::Price => 500.0;
 			SEI::NetWeight => 2.5kg;
-			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Successful_Tests => 2000;
 			PFD_Properties::Estimated_Perfect => 0.1;
-			PFD_Properties::Assessor_Doubt => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.15;
 		annex emv2 {**
 			use types ErrorLibrary;
 			use behavior PFDLib::PFD_Behavior;
@@ -126,8 +126,8 @@ public
 			SEI::Price => 350.00;
 			SEI::NetWeight => 2.0kg;
 			PFD_Properties::Successful_Tests => 10000;
-			PFD_Properties::Estimated_Perfect => 0.1;
-			PFD_Properties::Assessor_Doubt => 0.1;
+			PFD_Properties::Estimated_Perfect => 0.05;
+			PFD_Properties::Assessor_Doubt => 0.2;
 		annex emv2 {**
 			use types ErrorLibrary;
 			use behavior PFDLib::PFD_Behavior;
@@ -143,7 +143,7 @@ public
 			end component;
 			
 			properties
-				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
 		**};
 	end wheel_merged_inputs.i;
 

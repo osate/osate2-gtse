@@ -29,8 +29,8 @@ public
 			SEI::NetWeight => 3.0kg;
 			SEI::PowerCapacity => 50.0w;
 			PFD_Properties::Successful_Tests => 10000;
-			PFD_Properties::Estimated_Perfect => 0.01;
-			PFD_Properties::Assessor_Doubt => 0.1;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.2;
 		annex emv2 {**
 			properties
 				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
@@ -43,11 +43,11 @@ public
 			SEI::NetWeight => 7.5kg;
 			SEI::PowerCapacity => 300.0w;
 			PFD_Properties::Successful_Tests => 10000;
-			PFD_Properties::Estimated_Perfect => 0.01;
-			PFD_Properties::Assessor_Doubt => 0.1;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.95;
 		annex emv2 {**
 			properties
-				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
+				PFD_Properties::Estimated_PFD => 1.5e-5 applies to Fail;
 		**};
 	end powersource.large;
 
@@ -57,11 +57,11 @@ public
 			SEI::NetWeight => 0.5kg;
 			SEI::PowerCapacity => 999.0w;
 			PFD_Properties::Successful_Tests => 10000;
-			PFD_Properties::Estimated_Perfect => 0.01;
-			PFD_Properties::Assessor_Doubt => 0.1;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.95;
 		annex emv2 {**
 			properties
-				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
+				PFD_Properties::Estimated_PFD => 2.0e-5 applies to Fail;
 		**};
 	end powersource.systempower;
 

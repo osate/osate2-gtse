@@ -34,12 +34,12 @@ public
 		properties
 			SEI::Price => 500.00;
 			SEI::NetWeight => 3.7kg;
-			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Successful_Tests => 5000;
 			PFD_Properties::Estimated_Perfect => 0.01;
 			PFD_Properties::Assessor_Doubt => 0.1;
 		annex emv2 {**
 			properties
-				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
 		**};
 	end pump.large;
 
@@ -47,12 +47,12 @@ public
 		properties
 			SEI::Price => 750.00;
 			SEI::NetWeight => 1.32kg;
-			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Successful_Tests => 1000;
 			PFD_Properties::Estimated_Perfect => 0.01;
 			PFD_Properties::Assessor_Doubt => 0.1;
 		annex emv2 {**
 			properties
-				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
 		**};
 	end pump.small;
 
