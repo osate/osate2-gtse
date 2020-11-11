@@ -6,5 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.osate.atsv.integration;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.osate.analysis.architecture,
- org.osate.ui
+ org.osate.ui,
+ org.osate.results
 Automatic-Module-Name: org.osate.atsv.integration.property-totals

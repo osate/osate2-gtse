@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -38,7 +38,8 @@ public class PropertyTotaler extends AbstractAnalysis {
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
 		PropertyTotals pt = new PropertyTotals(progressMonitor, aaa);
-		resp.addVariable("Weight", ATSVVariableType.FLOAT, String.valueOf(pt.getWeight(instance)));
+		resp.addVariable("Weight", ATSVVariableType.FLOAT,
+				String.valueOf(PropertyTotals.invoke(instance).getResults().get(0)));
 		resp.addVariable("Price", ATSVVariableType.FLOAT, String.valueOf(pt.getPrice(instance)));
 	}
 
