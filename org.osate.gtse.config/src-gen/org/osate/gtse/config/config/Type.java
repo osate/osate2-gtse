@@ -68,10 +68,6 @@ public enum Type implements Enumerator
   /**
    * The '<em><b>INT</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>INT</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #INT
    * @model literal="int"
@@ -83,10 +79,6 @@ public enum Type implements Enumerator
   /**
    * The '<em><b>FLOAT</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>FLOAT</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #FLOAT
    * @model literal="float"
@@ -98,10 +90,6 @@ public enum Type implements Enumerator
   /**
    * The '<em><b>STRING</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>STRING</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #STRING
    * @model literal="string"
@@ -232,6 +220,7 @@ public enum Type implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getValue()
   {
     return value;
@@ -242,6 +231,7 @@ public enum Type implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -252,6 +242,7 @@ public enum Type implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getLiteral()
   {
     return literal;

@@ -85,6 +85,7 @@ public class SetValueImpl extends ConditionExpressionImpl implements SetValue
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ConditionValue> getElements()
   {
     if (elements == null)

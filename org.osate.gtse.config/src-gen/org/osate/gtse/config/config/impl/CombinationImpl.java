@@ -122,6 +122,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isUnsafe()
   {
     return unsafe;
@@ -132,6 +133,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setUnsafe(boolean newUnsafe)
   {
     boolean oldUnsafe = unsafe;
@@ -145,6 +147,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Configuration getConfiguration()
   {
     if (configuration != null && configuration.eIsProxy())
@@ -175,6 +178,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setConfiguration(Configuration newConfiguration)
   {
     Configuration oldConfiguration = configuration;
@@ -188,6 +192,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Argument> getArguments()
   {
     if (arguments == null)
@@ -312,7 +317,7 @@ public class CombinationImpl extends MinimalEObjectImpl.Container implements Com
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (unsafe: ");
     result.append(unsafe);
     result.append(')');

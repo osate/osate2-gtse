@@ -50,10 +50,6 @@ public interface ConfigParameter extends EObject, NamedElement
    * Returns the value of the '<em><b>Category</b></em>' attribute.
    * The literals are from the enumeration {@link org.osate.aadl2.ComponentCategory}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Category</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Category</em>' attribute.
    * @see org.osate.aadl2.ComponentCategory
@@ -78,10 +74,6 @@ public interface ConfigParameter extends EObject, NamedElement
   /**
    * Returns the value of the '<em><b>Classifier</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Classifier</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Classifier</em>' reference.
    * @see #setClassifier(ComponentClassifier)
@@ -104,10 +96,6 @@ public interface ConfigParameter extends EObject, NamedElement
   /**
    * Returns the value of the '<em><b>Property Type</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Property Type</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Property Type</em>' reference.
    * @see #setPropertyType(Property)
@@ -130,10 +118,6 @@ public interface ConfigParameter extends EObject, NamedElement
   /**
    * Returns the value of the '<em><b>Choices</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Choices</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Choices</em>' containment reference.
    * @see #setChoices(ConfigValue)

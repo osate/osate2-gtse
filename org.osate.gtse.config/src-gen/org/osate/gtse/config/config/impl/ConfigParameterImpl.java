@@ -131,6 +131,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ComponentCategory getCategory()
   {
     return category;
@@ -141,6 +142,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCategory(ComponentCategory newCategory)
   {
     ComponentCategory oldCategory = category;
@@ -154,6 +156,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ComponentClassifier getClassifier()
   {
     if (classifier != null && ((EObject)classifier).eIsProxy())
@@ -184,6 +187,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setClassifier(ComponentClassifier newClassifier)
   {
     ComponentClassifier oldClassifier = classifier;
@@ -197,6 +201,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Property getPropertyType()
   {
     if (propertyType != null && ((EObject)propertyType).eIsProxy())
@@ -227,6 +232,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPropertyType(Property newPropertyType)
   {
     Property oldPropertyType = propertyType;
@@ -240,6 +246,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigValue getChoices()
   {
     return choices;
@@ -267,6 +274,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setChoices(ConfigValue newChoices)
   {
     if (newChoices != choices)
@@ -407,7 +415,7 @@ public class ConfigParameterImpl extends NamedElementImpl implements ConfigParam
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (category: ");
     result.append(category);
     result.append(')');

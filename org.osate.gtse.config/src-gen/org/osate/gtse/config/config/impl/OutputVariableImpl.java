@@ -105,6 +105,7 @@ public class OutputVariableImpl extends NamedElementImpl implements OutputVariab
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Type getType()
   {
     return type;
@@ -115,6 +116,7 @@ public class OutputVariableImpl extends NamedElementImpl implements OutputVariab
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(Type newType)
   {
     Type oldType = type;
@@ -128,6 +130,7 @@ public class OutputVariableImpl extends NamedElementImpl implements OutputVariab
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Limit getLimit()
   {
     return limit;
@@ -155,6 +158,7 @@ public class OutputVariableImpl extends NamedElementImpl implements OutputVariab
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLimit(Limit newLimit)
   {
     if (newLimit != limit)
@@ -273,7 +277,7 @@ public class OutputVariableImpl extends NamedElementImpl implements OutputVariab
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (type: ");
     result.append(type);
     result.append(')');

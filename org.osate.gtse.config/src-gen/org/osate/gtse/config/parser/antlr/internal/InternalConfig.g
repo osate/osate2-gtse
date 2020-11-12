@@ -31601,7 +31601,7 @@ ruleAbstractFeature returns [EObject current=null]
 							}
 						}
 						{
-							newCompositeNode(grammarAccess.getAbstractFeatureAccess().getAbstractFeatureClassifierFeatureClassifierCrossReference_2_1_1_0());
+							newCompositeNode(grammarAccess.getAbstractFeatureAccess().getAbstractFeatureClassifierAbstractFeatureClassifierCrossReference_2_1_1_0());
 						}
 						ruleQCREF
 						{

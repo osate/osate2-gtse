@@ -47,10 +47,6 @@ public interface NamedElementRef extends ConfigValue, ConditionValue
   /**
    * Returns the value of the '<em><b>Ref</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Ref</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Ref</em>' reference.
    * @see #setRef(NamedElement)
@@ -74,10 +70,6 @@ public interface NamedElementRef extends ConfigValue, ConditionValue
    * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Argument}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Arguments</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Arguments</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef_Arguments()
@@ -90,10 +82,6 @@ public interface NamedElementRef extends ConfigValue, ConditionValue
    * Returns the value of the '<em><b>Combined</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Combination}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Combined</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Combined</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef_Combined()
@@ -106,10 +94,6 @@ public interface NamedElementRef extends ConfigValue, ConditionValue
    * Returns the value of the '<em><b>Assignments</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Assignment}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Assignments</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Assignments</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef_Assignments()
@@ -122,10 +106,6 @@ public interface NamedElementRef extends ConfigValue, ConditionValue
    * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Constraint}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Constraints</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Constraints</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getNamedElementRef_Constraints()

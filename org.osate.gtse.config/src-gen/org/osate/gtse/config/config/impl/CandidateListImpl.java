@@ -85,6 +85,7 @@ public class CandidateListImpl extends ConfigValueImpl implements CandidateList
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ConfigValue> getCandidates()
   {
     if (candidates == null)
