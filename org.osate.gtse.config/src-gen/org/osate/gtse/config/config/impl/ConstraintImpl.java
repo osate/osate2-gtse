@@ -115,6 +115,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Condition getCondition()
   {
     return condition;
@@ -142,6 +143,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCondition(Condition newCondition)
   {
     if (newCondition != condition)
@@ -163,6 +165,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Relation getRelation()
   {
     return relation;
@@ -173,6 +176,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRelation(Relation newRelation)
   {
     Relation oldRelation = relation;
@@ -186,6 +190,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Condition getConsequence()
   {
     return consequence;
@@ -213,6 +218,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setConsequence(Condition newConsequence)
   {
     if (newConsequence != consequence)
@@ -343,7 +349,7 @@ public class ConstraintImpl extends MinimalEObjectImpl.Container implements Cons
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (relation: ");
     result.append(relation);
     result.append(')');

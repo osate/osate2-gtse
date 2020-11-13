@@ -43,10 +43,6 @@ public interface Constraint extends EObject
   /**
    * Returns the value of the '<em><b>Condition</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Condition</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Condition</em>' containment reference.
    * @see #setCondition(Condition)
@@ -70,10 +66,6 @@ public interface Constraint extends EObject
    * Returns the value of the '<em><b>Relation</b></em>' attribute.
    * The literals are from the enumeration {@link org.osate.gtse.config.config.Relation}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Relation</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Relation</em>' attribute.
    * @see org.osate.gtse.config.config.Relation
@@ -98,10 +90,6 @@ public interface Constraint extends EObject
   /**
    * Returns the value of the '<em><b>Consequence</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Consequence</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Consequence</em>' containment reference.
    * @see #setConsequence(Condition)

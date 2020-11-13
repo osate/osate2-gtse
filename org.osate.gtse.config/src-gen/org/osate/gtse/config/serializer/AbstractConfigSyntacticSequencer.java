@@ -143,7 +143,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getAbstractImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "abstractimplementation";
+		return "abstract implementation";
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getAppliesToKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "appliesto";
+		return "applies to";
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getBusAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "busaccess";
+		return "bus access";
 	}
 	
 	/**
@@ -176,7 +176,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getBusImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "busimplementation";
+		return "bus implementation";
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getDataAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "dataaccess";
+		return "data access";
 	}
 	
 	/**
@@ -198,7 +198,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getDataImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "dataimplementation";
+		return "data implementation";
 	}
 	
 	/**
@@ -209,7 +209,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getDataPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "dataport";
+		return "data port";
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getDeviceImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "deviceimplementation";
+		return "device implementation";
 	}
 	
 	/**
@@ -231,7 +231,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getEndToEndFlowKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "endtoendflow";
+		return "end to end flow";
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getEventDataKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "eventdata";
+		return "event data";
 	}
 	
 	/**
@@ -253,7 +253,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getEventDataPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "eventdataport";
+		return "event data port";
 	}
 	
 	/**
@@ -264,7 +264,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getEventPortKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "eventport";
+		return "event port";
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getFeatureGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "featuregroup";
+		return "feature group";
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getInBindingKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "inbinding";
+		return "in binding";
 	}
 	
 	/**
@@ -320,7 +320,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getInModesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "inmodes";
+		return "in modes";
 	}
 	
 	/**
@@ -331,7 +331,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getInternalFeaturesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "internalfeatures";
+		return "internal features";
 	}
 	
 	/**
@@ -342,7 +342,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getInverseOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "inverseof";
+		return "inverse of";
 	}
 	
 	/**
@@ -353,7 +353,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getListOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "listof";
+		return "list of";
 	}
 	
 	/**
@@ -364,7 +364,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getMemoryImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "memoryimplementation";
+		return "memory implementation";
 	}
 	
 	/**
@@ -385,7 +385,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getProcessImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "processimplementation";
+		return "process implementation";
 	}
 	
 	/**
@@ -396,7 +396,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getProcessorFeaturesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "processorfeatures";
+		return "processor features";
 	}
 	
 	/**
@@ -407,7 +407,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getProcessorImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "processorimplementation";
+		return "processor implementation";
 	}
 	
 	/**
@@ -418,7 +418,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getRangeOfKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "rangeof";
+		return "range of";
 	}
 	
 	/**
@@ -429,7 +429,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getRefinedToKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "refinedto";
+		return "refined to";
 	}
 	
 	/**
@@ -440,7 +440,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getRequiresModesKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "requiresmodes";
+		return "requires modes";
 	}
 	
 	/**
@@ -460,7 +460,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getSubprogramAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "subprogramaccess";
+		return "subprogram access";
 	}
 	
 	/**
@@ -471,7 +471,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getSubprogramGroupAccessKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "subprogramgroupaccess";
+		return "subprogram group access";
 	}
 	
 	/**
@@ -482,7 +482,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getSubprogramGroupImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "subprogramgroupimplementation";
+		return "subprogram group implementation";
 	}
 	
 	/**
@@ -493,7 +493,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getSubprogramGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "subprogramgroup";
+		return "subprogram group";
 	}
 	
 	/**
@@ -504,7 +504,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getSubprogramImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "subprogramimplementation";
+		return "subprogram implementation";
 	}
 	
 	/**
@@ -515,7 +515,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getSystemImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "systemimplementation";
+		return "system implementation";
 	}
 	
 	/**
@@ -526,7 +526,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getThreadGroupImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "threadgroupimplementation";
+		return "thread group implementation";
 	}
 	
 	/**
@@ -537,7 +537,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getThreadGroupKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "threadgroup";
+		return "thread group";
 	}
 	
 	/**
@@ -548,7 +548,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getThreadImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "threadimplementation";
+		return "thread implementation";
 	}
 	
 	/**
@@ -559,7 +559,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getVirtualBusImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "virtualbusimplementation";
+		return "virtual bus implementation";
 	}
 	
 	/**
@@ -570,7 +570,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getVirtualBusKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "virtualbus";
+		return "virtual bus";
 	}
 	
 	/**
@@ -581,7 +581,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getVirtualProcessorImplementationKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "virtualprocessorimplementation";
+		return "virtual processor implementation";
 	}
 	
 	/**
@@ -592,7 +592,7 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	protected String getVirtualProcessorKeywordsToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "virtualprocessor";
+		return "virtual processor";
 	}
 	
 	@Override

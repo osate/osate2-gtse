@@ -138,6 +138,7 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NamedElement getRef()
   {
     if (ref != null && ((EObject)ref).eIsProxy())
@@ -168,6 +169,7 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRef(NamedElement newRef)
   {
     NamedElement oldRef = ref;
@@ -181,6 +183,7 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Argument> getArguments()
   {
     if (arguments == null)
@@ -195,6 +198,7 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Combination> getCombined()
   {
     if (combined == null)
@@ -209,6 +213,7 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Assignment> getAssignments()
   {
     if (assignments == null)
@@ -223,6 +228,7 @@ public class NamedElementRefImpl extends ConfigValueImpl implements NamedElement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Constraint> getConstraints()
   {
     if (constraints == null)

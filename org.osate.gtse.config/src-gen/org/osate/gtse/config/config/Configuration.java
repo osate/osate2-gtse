@@ -51,10 +51,6 @@ public interface Configuration extends EObject, NamedElement
    * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.ConfigParameter}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parameters</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Parameters()
@@ -66,10 +62,6 @@ public interface Configuration extends EObject, NamedElement
   /**
    * Returns the value of the '<em><b>Extended</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Extended</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Extended</em>' reference.
    * @see #setExtended(ComponentClassifier)
@@ -93,10 +85,6 @@ public interface Configuration extends EObject, NamedElement
    * Returns the value of the '<em><b>Combined</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Combination}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Combined</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Combined</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Combined()
@@ -109,10 +97,6 @@ public interface Configuration extends EObject, NamedElement
    * Returns the value of the '<em><b>Assignments</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Assignment}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Assignments</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Assignments</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Assignments()
@@ -125,10 +109,6 @@ public interface Configuration extends EObject, NamedElement
    * Returns the value of the '<em><b>Constraints</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Constraint}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Constraints</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Constraints</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfiguration_Constraints()

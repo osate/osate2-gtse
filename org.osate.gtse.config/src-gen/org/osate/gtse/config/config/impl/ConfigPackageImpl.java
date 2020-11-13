@@ -245,7 +245,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link ConfigPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -260,7 +260,8 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     if (isInited) return (ConfigPackage)EPackage.Registry.INSTANCE.getEPackage(ConfigPackage.eNS_URI);
 
     // Obtain or create and register package
-    ConfigPackageImpl theConfigPackage = (ConfigPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ConfigPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ConfigPackageImpl());
+    Object registeredConfigPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    ConfigPackageImpl theConfigPackage = registeredConfigPackage instanceof ConfigPackageImpl ? (ConfigPackageImpl)registeredConfigPackage : new ConfigPackageImpl();
 
     isInited = true;
 
@@ -277,7 +278,6 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
     // Mark meta-data to indicate it can't be changed
     theConfigPackage.freeze();
 
-  
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(ConfigPackage.eNS_URI, theConfigPackage);
     return theConfigPackage;
@@ -288,6 +288,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConfigPkg()
   {
     return configPkgEClass;
@@ -298,6 +299,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigPkg_Root()
   {
     return (EReference)configPkgEClass.getEStructuralFeatures().get(0);
@@ -308,6 +310,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigPkg_Configurations()
   {
     return (EReference)configPkgEClass.getEStructuralFeatures().get(1);
@@ -318,6 +321,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getConfigPkg_Analyses()
   {
     return (EAttribute)configPkgEClass.getEStructuralFeatures().get(2);
@@ -328,6 +332,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigPkg_Outputs()
   {
     return (EReference)configPkgEClass.getEStructuralFeatures().get(3);
@@ -338,6 +343,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getOutputVariable()
   {
     return outputVariableEClass;
@@ -348,6 +354,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getOutputVariable_Type()
   {
     return (EAttribute)outputVariableEClass.getEStructuralFeatures().get(0);
@@ -358,6 +365,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getOutputVariable_Limit()
   {
     return (EReference)outputVariableEClass.getEStructuralFeatures().get(1);
@@ -368,6 +376,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLimit()
   {
     return limitEClass;
@@ -378,6 +387,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLimit_Relation()
   {
     return (EAttribute)limitEClass.getEStructuralFeatures().get(0);
@@ -388,6 +398,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getLimit_Bound()
   {
     return (EReference)limitEClass.getEStructuralFeatures().get(1);
@@ -398,6 +409,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConfiguration()
   {
     return configurationEClass;
@@ -408,6 +420,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfiguration_Parameters()
   {
     return (EReference)configurationEClass.getEStructuralFeatures().get(0);
@@ -418,6 +431,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfiguration_Extended()
   {
     return (EReference)configurationEClass.getEStructuralFeatures().get(1);
@@ -428,6 +442,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfiguration_Combined()
   {
     return (EReference)configurationEClass.getEStructuralFeatures().get(2);
@@ -438,6 +453,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfiguration_Assignments()
   {
     return (EReference)configurationEClass.getEStructuralFeatures().get(3);
@@ -448,6 +464,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfiguration_Constraints()
   {
     return (EReference)configurationEClass.getEStructuralFeatures().get(4);
@@ -458,6 +475,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCombination()
   {
     return combinationEClass;
@@ -468,6 +486,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCombination_Unsafe()
   {
     return (EAttribute)combinationEClass.getEStructuralFeatures().get(0);
@@ -478,6 +497,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCombination_Configuration()
   {
     return (EReference)combinationEClass.getEStructuralFeatures().get(1);
@@ -488,6 +508,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCombination_Arguments()
   {
     return (EReference)combinationEClass.getEStructuralFeatures().get(2);
@@ -498,6 +519,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConfigParameter()
   {
     return configParameterEClass;
@@ -508,6 +530,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getConfigParameter_Category()
   {
     return (EAttribute)configParameterEClass.getEStructuralFeatures().get(0);
@@ -518,6 +541,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigParameter_Classifier()
   {
     return (EReference)configParameterEClass.getEStructuralFeatures().get(1);
@@ -528,6 +552,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigParameter_PropertyType()
   {
     return (EReference)configParameterEClass.getEStructuralFeatures().get(2);
@@ -538,6 +563,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigParameter_Choices()
   {
     return (EReference)configParameterEClass.getEStructuralFeatures().get(3);
@@ -548,6 +574,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConfigValue()
   {
     return configValueEClass;
@@ -558,6 +585,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAssignment()
   {
     return assignmentEClass;
@@ -568,6 +596,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAssignment_Wildcard()
   {
     return (EAttribute)assignmentEClass.getEStructuralFeatures().get(0);
@@ -578,6 +607,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAssignment_Ref()
   {
     return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
@@ -588,6 +618,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAssignment_Property()
   {
     return (EReference)assignmentEClass.getEStructuralFeatures().get(2);
@@ -598,6 +629,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAssignment_Value()
   {
     return (EReference)assignmentEClass.getEStructuralFeatures().get(3);
@@ -608,6 +640,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getArgument()
   {
     return argumentEClass;
@@ -618,6 +651,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getArgument_Parameter()
   {
     return (EReference)argumentEClass.getEStructuralFeatures().get(0);
@@ -628,6 +662,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getArgument_Value()
   {
     return (EReference)argumentEClass.getEStructuralFeatures().get(1);
@@ -638,6 +673,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getElementRef()
   {
     return elementRefEClass;
@@ -648,6 +684,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getElementRef_Element()
   {
     return (EReference)elementRefEClass.getEStructuralFeatures().get(0);
@@ -658,6 +695,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getElementRef_Prev()
   {
     return (EReference)elementRefEClass.getEStructuralFeatures().get(1);
@@ -668,6 +706,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConstraint()
   {
     return constraintEClass;
@@ -678,6 +717,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConstraint_Condition()
   {
     return (EReference)constraintEClass.getEStructuralFeatures().get(0);
@@ -688,6 +728,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getConstraint_Relation()
   {
     return (EAttribute)constraintEClass.getEStructuralFeatures().get(1);
@@ -698,6 +739,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConstraint_Consequence()
   {
     return (EReference)constraintEClass.getEStructuralFeatures().get(2);
@@ -708,6 +750,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCondition()
   {
     return conditionEClass;
@@ -718,6 +761,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCondition_Lhs()
   {
     return (EReference)conditionEClass.getEStructuralFeatures().get(0);
@@ -728,6 +772,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getCondition_Relation()
   {
     return (EAttribute)conditionEClass.getEStructuralFeatures().get(1);
@@ -738,6 +783,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCondition_Rhs()
   {
     return (EReference)conditionEClass.getEStructuralFeatures().get(2);
@@ -748,6 +794,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConditionExpression()
   {
     return conditionExpressionEClass;
@@ -758,6 +805,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSetValue()
   {
     return setValueEClass;
@@ -768,6 +816,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSetValue_Elements()
   {
     return (EReference)setValueEClass.getEStructuralFeatures().get(0);
@@ -778,6 +827,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConditionValue()
   {
     return conditionValueEClass;
@@ -788,6 +838,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getConfigElement()
   {
     return configElementEClass;
@@ -798,6 +849,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigElement_Element()
   {
     return (EReference)configElementEClass.getEStructuralFeatures().get(0);
@@ -808,6 +860,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getConfigElement_Property()
   {
     return (EReference)configElementEClass.getEStructuralFeatures().get(1);
@@ -818,6 +871,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCandidateList()
   {
     return candidateListEClass;
@@ -828,6 +882,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getCandidateList_Candidates()
   {
     return (EReference)candidateListEClass.getEStructuralFeatures().get(0);
@@ -838,6 +893,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNamedElementRef()
   {
     return namedElementRefEClass;
@@ -848,6 +904,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNamedElementRef_Ref()
   {
     return (EReference)namedElementRefEClass.getEStructuralFeatures().get(0);
@@ -858,6 +915,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNamedElementRef_Arguments()
   {
     return (EReference)namedElementRefEClass.getEStructuralFeatures().get(1);
@@ -868,6 +926,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNamedElementRef_Combined()
   {
     return (EReference)namedElementRefEClass.getEStructuralFeatures().get(2);
@@ -878,6 +937,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNamedElementRef_Assignments()
   {
     return (EReference)namedElementRefEClass.getEStructuralFeatures().get(3);
@@ -888,6 +948,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNamedElementRef_Constraints()
   {
     return (EReference)namedElementRefEClass.getEStructuralFeatures().get(4);
@@ -898,6 +959,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPropertyValue()
   {
     return propertyValueEClass;
@@ -908,6 +970,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPropertyValue_Exp()
   {
     return (EReference)propertyValueEClass.getEStructuralFeatures().get(0);
@@ -918,6 +981,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNestedAssignments()
   {
     return nestedAssignmentsEClass;
@@ -928,6 +992,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNestedAssignments_Assignments()
   {
     return (EReference)nestedAssignmentsEClass.getEStructuralFeatures().get(0);
@@ -938,6 +1003,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNestedAssignments_Constraints()
   {
     return (EReference)nestedAssignmentsEClass.getEStructuralFeatures().get(1);
@@ -948,6 +1014,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getType()
   {
     return typeEEnum;
@@ -958,6 +1025,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getRelation()
   {
     return relationEEnum;
@@ -968,6 +1036,7 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigFactory getConfigFactory()
   {
     return (ConfigFactory)getEFactoryInstance();

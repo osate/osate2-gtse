@@ -19,6 +19,7 @@
 package org.osate.gtse.config.ui;
 
 import com.google.inject.Injector;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osate.gtse.config.ui.internal.ConfigActivator;
 import org.osgi.framework.Bundle;
@@ -31,12 +32,13 @@ public class ConfigExecutableExtensionFactory extends AbstractGuiceAwareExecutab
 
 	@Override
 	protected Bundle getBundle() {
-		return ConfigActivator.getInstance().getBundle();
+		return Platform.getBundle(ConfigActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return ConfigActivator.getInstance().getInjector(ConfigActivator.ORG_OSATE_GTSE_CONFIG_CONFIG);
+		ConfigActivator activator = ConfigActivator.getInstance();
+		return activator != null ? activator.getInjector(ConfigActivator.ORG_OSATE_GTSE_CONFIG_CONFIG) : null;
 	}
-	
+
 }

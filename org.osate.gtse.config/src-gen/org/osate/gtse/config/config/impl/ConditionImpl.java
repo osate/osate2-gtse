@@ -115,6 +115,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConditionExpression getLhs()
   {
     return lhs;
@@ -142,6 +143,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setLhs(ConditionExpression newLhs)
   {
     if (newLhs != lhs)
@@ -163,6 +165,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Relation getRelation()
   {
     return relation;
@@ -173,6 +176,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRelation(Relation newRelation)
   {
     Relation oldRelation = relation;
@@ -186,6 +190,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConditionExpression getRhs()
   {
     return rhs;
@@ -213,6 +218,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRhs(ConditionExpression newRhs)
   {
     if (newRhs != rhs)
@@ -343,7 +349,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (relation: ");
     result.append(relation);
     result.append(')');

@@ -140,6 +140,7 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ConfigParameter> getParameters()
   {
     if (parameters == null)
@@ -154,6 +155,7 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ComponentClassifier getExtended()
   {
     if (extended != null && ((EObject)extended).eIsProxy())
@@ -184,6 +186,7 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setExtended(ComponentClassifier newExtended)
   {
     ComponentClassifier oldExtended = extended;
@@ -197,6 +200,7 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Combination> getCombined()
   {
     if (combined == null)
@@ -211,6 +215,7 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Assignment> getAssignments()
   {
     if (assignments == null)
@@ -225,6 +230,7 @@ public class ConfigurationImpl extends NamedElementImpl implements Configuration
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Constraint> getConstraints()
   {
     if (constraints == null)

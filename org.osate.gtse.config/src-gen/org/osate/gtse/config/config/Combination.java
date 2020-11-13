@@ -45,10 +45,6 @@ public interface Combination extends EObject
   /**
    * Returns the value of the '<em><b>Unsafe</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Unsafe</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Unsafe</em>' attribute.
    * @see #setUnsafe(boolean)
@@ -71,10 +67,6 @@ public interface Combination extends EObject
   /**
    * Returns the value of the '<em><b>Configuration</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Configuration</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Configuration</em>' reference.
    * @see #setConfiguration(Configuration)
@@ -98,10 +90,6 @@ public interface Combination extends EObject
    * Returns the value of the '<em><b>Arguments</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Argument}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Arguments</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Arguments</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getCombination_Arguments()

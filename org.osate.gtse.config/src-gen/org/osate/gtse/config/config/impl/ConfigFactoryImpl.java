@@ -149,6 +149,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigPkg createConfigPkg()
   {
     ConfigPkgImpl configPkg = new ConfigPkgImpl();
@@ -160,6 +161,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public OutputVariable createOutputVariable()
   {
     OutputVariableImpl outputVariable = new OutputVariableImpl();
@@ -171,6 +173,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Limit createLimit()
   {
     LimitImpl limit = new LimitImpl();
@@ -182,6 +185,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Configuration createConfiguration()
   {
     ConfigurationImpl configuration = new ConfigurationImpl();
@@ -193,6 +197,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Combination createCombination()
   {
     CombinationImpl combination = new CombinationImpl();
@@ -204,6 +209,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigParameter createConfigParameter()
   {
     ConfigParameterImpl configParameter = new ConfigParameterImpl();
@@ -215,6 +221,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigValue createConfigValue()
   {
     ConfigValueImpl configValue = new ConfigValueImpl();
@@ -226,6 +233,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Assignment createAssignment()
   {
     AssignmentImpl assignment = new AssignmentImpl();
@@ -237,6 +245,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Argument createArgument()
   {
     ArgumentImpl argument = new ArgumentImpl();
@@ -248,6 +257,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ElementRef createElementRef()
   {
     ElementRefImpl elementRef = new ElementRefImpl();
@@ -259,6 +269,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Constraint createConstraint()
   {
     ConstraintImpl constraint = new ConstraintImpl();
@@ -270,6 +281,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Condition createCondition()
   {
     ConditionImpl condition = new ConditionImpl();
@@ -281,6 +293,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConditionExpression createConditionExpression()
   {
     ConditionExpressionImpl conditionExpression = new ConditionExpressionImpl();
@@ -292,6 +305,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SetValue createSetValue()
   {
     SetValueImpl setValue = new SetValueImpl();
@@ -303,6 +317,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConditionValue createConditionValue()
   {
     ConditionValueImpl conditionValue = new ConditionValueImpl();
@@ -314,6 +329,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigElement createConfigElement()
   {
     ConfigElementImpl configElement = new ConfigElementImpl();
@@ -325,6 +341,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public CandidateList createCandidateList()
   {
     CandidateListImpl candidateList = new CandidateListImpl();
@@ -336,6 +353,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NamedElementRef createNamedElementRef()
   {
     NamedElementRefImpl namedElementRef = new NamedElementRefImpl();
@@ -347,6 +365,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PropertyValue createPropertyValue()
   {
     PropertyValueImpl propertyValue = new PropertyValueImpl();
@@ -358,6 +377,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NestedAssignments createNestedAssignments()
   {
     NestedAssignmentsImpl nestedAssignments = new NestedAssignmentsImpl();
@@ -413,6 +433,7 @@ public class ConfigFactoryImpl extends EFactoryImpl implements ConfigFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigPackage getConfigPackage()
   {
     return (ConfigPackage)getEPackage();
