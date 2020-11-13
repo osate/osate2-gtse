@@ -138,10 +138,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>NONE</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>NONE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #NONE
    * @model literal="_"
@@ -153,10 +149,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>GT</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>GT</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #GT
    * @model literal="&gt;"
@@ -168,10 +160,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>GTE</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>GTE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #GTE
    * @model literal="&gt;="
@@ -183,10 +171,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>EQ</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>EQ</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #EQ
    * @model literal="=="
@@ -198,10 +182,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>NEQ</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>NEQ</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #NEQ
    * @model literal="!="
@@ -213,10 +193,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>LT</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>LT</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #LT
    * @model literal="&lt;"
@@ -228,10 +204,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>LTE</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>LTE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #LTE
    * @model literal="&lt;="
@@ -243,10 +215,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>FB</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>FB</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #FB
    * @model literal="forbids"
@@ -258,10 +226,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>RQ</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>RQ</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #RQ
    * @model literal="requires"
@@ -273,10 +237,6 @@ public enum Relation implements Enumerator
   /**
    * The '<em><b>IN</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>IN</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #IN
    * @model literal="in"
@@ -421,6 +381,7 @@ public enum Relation implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getValue()
   {
     return value;
@@ -431,6 +392,7 @@ public enum Relation implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -441,6 +403,7 @@ public enum Relation implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getLiteral()
   {
     return literal;

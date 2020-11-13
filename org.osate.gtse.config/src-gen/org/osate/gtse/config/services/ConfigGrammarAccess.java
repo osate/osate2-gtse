@@ -18,8 +18,9 @@
  */
 package org.osate.gtse.config.services;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.util.List;
-
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
@@ -33,13 +34,11 @@ import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
+import org.eclipse.xtext.service.AbstractElementFinder.AbstractEnumRuleElementFinder;
 import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.osate.xtext.aadl2.properties.services.PropertiesGrammarAccess;
 import org.osate.xtext.aadl2.services.Aadl2GrammarAccess;
-
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 @Singleton
 public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
@@ -492,7 +491,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 		
-		//FClassifierType | FPropertyType
+		//(FClassifierType | FPropertyType)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//FClassifierType
@@ -741,13 +740,13 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//value=ConfigValue
 		public Group getGroup() { return cGroup; }
 		
-		//(wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])? | '#' property=[aadl2::Property|PNAME]
+		//((wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])? | '#' property=[aadl2::Property|PNAME])
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//(wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])?
 		public Group getGroup_0_0() { return cGroup_0_0; }
 		
-		//wildcard?='*' | ref=ElementRef
+		//(wildcard?='*' | ref=ElementRef)
 		public Alternatives getAlternatives_0_0_0() { return cAlternatives_0_0_0; }
 		
 		//wildcard?='*'
@@ -994,7 +993,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//=> ({ElementRef.prev=current} '.' element=[aadl2::NamedElement])*
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{ElementRef.prev=current} '.' element=[aadl2::NamedElement]
+		//({ElementRef.prev=current} '.' element=[aadl2::NamedElement])
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
 		//{ElementRef.prev=current}
@@ -1436,7 +1435,6 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//enum Type:
 		//	INT='int' | FLOAT='float' | STRING='string';
-		@Override
 		public EnumRule getRule() { return rule; }
 		
 		//INT='int' | FLOAT='float' | STRING='string'
@@ -1486,7 +1484,6 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//enum Relation:
 		//	NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in';
-		@Override
 		public EnumRule getRule() { return rule; }
 		
 		//NONE='_' | GT='>' | GTE='>=' | EQ='==' | NEQ='!=' | LT='<' | LTE='<=' | FB='forbids' | RQ='requires' | IN='in'
@@ -3649,7 +3646,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	//AbstractFeature aadl2::AbstractFeature:
 	//	(name=ID ':' | refined=[aadl2::AbstractFeature|REFINEDNAME] ':' RefinedToKeywords) (in?='in' | out?='out')?
 	//	('prototype' featurePrototype=[aadl2::FeaturePrototype|QCREF] | 'feature'
-	//	abstractFeatureClassifier=[aadl2::FeatureClassifier|QCREF] | 'feature') arrayDimension+=ArrayDimension? ('{'
+	//	abstractFeatureClassifier=[aadl2::AbstractFeatureClassifier|QCREF] | 'feature') arrayDimension+=ArrayDimension? ('{'
 	//	ownedPropertyAssociation+=PropertyAssociation+ '}')? ';';
 	public Aadl2GrammarAccess.AbstractFeatureElements getAbstractFeatureAccess() {
 		return gaAadl2.getAbstractFeatureAccess();

@@ -48,10 +48,6 @@ public interface ConfigPkg extends EObject, NamedElement
   /**
    * Returns the value of the '<em><b>Root</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Root</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Root</em>' reference.
    * @see #setRoot(Configuration)
@@ -75,10 +71,6 @@ public interface ConfigPkg extends EObject, NamedElement
    * Returns the value of the '<em><b>Configurations</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.Configuration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Configurations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Configurations</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg_Configurations()
@@ -91,10 +83,6 @@ public interface ConfigPkg extends EObject, NamedElement
    * Returns the value of the '<em><b>Analyses</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Analyses</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Analyses</em>' attribute list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg_Analyses()
@@ -107,10 +95,6 @@ public interface ConfigPkg extends EObject, NamedElement
    * Returns the value of the '<em><b>Outputs</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.OutputVariable}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Outputs</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Outputs</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getConfigPkg_Outputs()

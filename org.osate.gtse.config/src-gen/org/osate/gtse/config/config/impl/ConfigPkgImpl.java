@@ -125,6 +125,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Configuration getRoot()
   {
     if (root != null && root.eIsProxy())
@@ -155,6 +156,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRoot(Configuration newRoot)
   {
     Configuration oldRoot = root;
@@ -168,6 +170,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Configuration> getConfigurations()
   {
     if (configurations == null)
@@ -182,6 +185,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getAnalyses()
   {
     if (analyses == null)
@@ -196,6 +200,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<OutputVariable> getOutputs()
   {
     if (outputs == null)
@@ -334,7 +339,7 @@ public class ConfigPkgImpl extends NamedElementImpl implements ConfigPkg
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (analyses: ");
     result.append(analyses);
     result.append(')');

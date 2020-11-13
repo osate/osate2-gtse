@@ -95,6 +95,7 @@ public class ConfigElementImpl extends ConditionExpressionImpl implements Config
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ElementRef getElement()
   {
     return element;
@@ -122,6 +123,7 @@ public class ConfigElementImpl extends ConditionExpressionImpl implements Config
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setElement(ElementRef newElement)
   {
     if (newElement != element)
@@ -143,6 +145,7 @@ public class ConfigElementImpl extends ConditionExpressionImpl implements Config
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Property getProperty()
   {
     if (property != null && ((EObject)property).eIsProxy())
@@ -173,6 +176,7 @@ public class ConfigElementImpl extends ConditionExpressionImpl implements Config
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setProperty(Property newProperty)
   {
     Property oldProperty = property;

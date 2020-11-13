@@ -129,6 +129,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isWildcard()
   {
     return wildcard;
@@ -139,6 +140,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setWildcard(boolean newWildcard)
   {
     boolean oldWildcard = wildcard;
@@ -152,6 +154,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ElementRef getRef()
   {
     return ref;
@@ -179,6 +182,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setRef(ElementRef newRef)
   {
     if (newRef != ref)
@@ -200,6 +204,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Property getProperty()
   {
     if (property != null && ((EObject)property).eIsProxy())
@@ -230,6 +235,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setProperty(Property newProperty)
   {
     Property oldProperty = property;
@@ -243,6 +249,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ConfigValue getValue()
   {
     return value;
@@ -270,6 +277,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setValue(ConfigValue newValue)
   {
     if (newValue != value)
@@ -411,7 +419,7 @@ public class AssignmentImpl extends MinimalEObjectImpl.Container implements Assi
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (wildcard: ");
     result.append(wildcard);
     result.append(')');

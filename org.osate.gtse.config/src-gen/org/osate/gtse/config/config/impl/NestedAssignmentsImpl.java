@@ -97,6 +97,7 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Assignment> getAssignments()
   {
     if (assignments == null)
@@ -111,6 +112,7 @@ public class NestedAssignmentsImpl extends ConfigValueImpl implements NestedAssi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Constraint> getConstraints()
   {
     if (constraints == null)

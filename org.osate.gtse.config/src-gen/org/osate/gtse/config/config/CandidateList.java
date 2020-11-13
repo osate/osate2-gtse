@@ -42,10 +42,6 @@ public interface CandidateList extends ConfigValue
    * Returns the value of the '<em><b>Candidates</b></em>' containment reference list.
    * The list contents are of type {@link org.osate.gtse.config.config.ConfigValue}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Candidates</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Candidates</em>' containment reference list.
    * @see org.osate.gtse.config.config.ConfigPackage#getCandidateList_Candidates()

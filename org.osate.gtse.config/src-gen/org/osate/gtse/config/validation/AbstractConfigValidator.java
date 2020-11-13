@@ -35,5 +35,4 @@ public abstract class AbstractConfigValidator extends AbstractDeclarativeValidat
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://aadl.info/AADL/2.0"));
 		return result;
 	}
-	
 }
