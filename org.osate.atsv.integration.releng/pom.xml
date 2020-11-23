@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.version>1.5.1</tycho.version>
-		<eclipse-repo.url>http://download.eclipse.org/releases/2019-12/</eclipse-repo.url>
+		<eclipse-repo.url>http://download.eclipse.org/releases/2020-06/</eclipse-repo.url>
 		<osate-repo.url>http://osate-build.sei.cmu.edu/download/osate/testing/updates/</osate-repo.url>
 		<elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.5.0/</elk-stable.url>
 		<xtext.version>2.20.0</xtext.version>
