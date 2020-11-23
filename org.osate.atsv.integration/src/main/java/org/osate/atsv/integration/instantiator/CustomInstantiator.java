@@ -28,7 +28,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.osate.aadl2.Aadl2Package;
 import org.osate.aadl2.Classifier;
 import org.osate.aadl2.ComponentImplementation;
@@ -83,20 +85,18 @@ public class CustomInstantiator extends InstantiateModel {
 		this.originalClassifiers = new HashMap<>();
 	}
 
-	/**
-	 * Copied (!) from org.osate.aadl2.instantiation.InstantiateModel#buildInstanceModelFile(), since you can't
-	 * override static methods in java.
-	 */
 	public static SystemInstance myBuildInstanceModelFile(final ComponentImplementation ci,
 			Map<String, ChoicePointSpecification> choicepoints) throws Exception {
 		URI instanceURI = InstantiateModel.getInstanceModelURI(ci);
-		Resource aadlResource = new ResourceSetImpl().createResource(instanceURI);
+		ResourceSet rs = new ResourceSetImpl();
+		Resource aadlResource = rs.createResource(instanceURI);
 
 		final InstantiateModel instantiateModel = new CustomInstantiator(new NullProgressMonitor(),
 				new AnalysisErrorReporterManager(
 						new MarkerAnalysisErrorReporter.Factory(AadlConstants.INSTANTIATION_OBJECT_MARKER)),
 				choicepoints);
-		SystemInstance root = instantiateModel.createSystemInstance(ci, aadlResource);
+		SystemInstance root = instantiateModel.createSystemInstanceInt(
+				(ComponentImplementation) rs.getEObject(EcoreUtil.getURI(ci), true), aadlResource, false);
 		return root;
 	}
 

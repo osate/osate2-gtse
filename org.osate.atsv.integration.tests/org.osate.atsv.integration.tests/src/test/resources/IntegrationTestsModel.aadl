@@ -1,0 +1,213 @@
+--------------------------------------------------------------------------------
+-- OSATE2-GTSE
+--
+-- Copyright 2017 Carnegie Mellon University. All Rights Reserved.
+--
+-- NO WARRANTY. THIS CARNEGIE MELLON UNIVERSITY AND SOFTWARE ENGINEERING INSTITUTE
+-- MATERIAL IS FURNISHED ON AN "AS-IS" BASIS. CARNEGIE MELLON UNIVERSITY MAKES NO
+-- WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED, AS TO ANY MATTER INCLUDING,
+-- BUT NOT LIMITED TO, WARRANTY OF FITNESS FOR PURPOSE OR MERCHANTABILITY,
+-- EXCLUSIVITY, OR RESULTS OBTAINED FROM USE OF THE MATERIAL. CARNEGIE MELLON
+-- UNIVERSITY DOES NOT MAKE ANY WARRANTY OF ANY KIND WITH RESPECT TO FREEDOM FROM
+-- PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
+--
+-- Released under an Eclipse Public License - v1.0-style license, please see
+-- license.txt or contact permission@sei.cmu.edu for full terms. 
+--
+-- DM17-0002
+---------------------------------------------------------------------------------
+
+package SimpleComponentChoice
+public
+
+	with SEI;
+	system SimpleComponentChoiceSystem
+		features
+			power: in feature Electricity;
+	end SimpleComponentChoiceSystem;
+
+	abstract Electricity
+	end Electricity;
+
+	system ElectrialPowerSupply
+		features
+			Supplier: out feature Electricity;
+		properties
+			SEI::PowerSupply => 40.0 W applies to Supplier;
+		annex EMv2 {**
+			use types ErrorLibrary;
+			error propagations
+				Supplier : out propagation {ValueError};
+			end propagations;
+		**};
+	end ElectrialPowerSupply;
+
+	system ElectricGrid
+		features
+			Supplier: in feature Electricity;
+			Consumer: out feature Electricity;
+		properties
+			SEI::PowerCapacity => 40.0 W;
+		annex EMv2 {**
+			use types ErrorLibrary;
+			error propagations
+				Supplier : in propagation {SequenceValueError};
+			end propagations;
+		**};
+	end ElectricGrid;
+
+	processor cheapCPU
+		properties
+			SEI::Platform => "CyberPower";
+			SEI::NetWeight => 6.04 kg;
+	end cheapCPU;
+
+	processor expensiveCPU
+		properties
+			SEI::Platform => "Falcon Northwest";
+			SEI::NetWeight => 2.37 kg;
+	end expensiveCPU;
+
+	system MySystem
+
+	end MySystem;
+
+	-- use this as system root for electrical power consumption and weight
+	system implementation MySystem.Tier0
+		subcomponents
+			EPSU: system ElectrialPowerSupply;
+			Grid: system ElectricGrid;
+			scs: system SimpleComponentChoiceSystem.refinement;
+		connections
+			psupply: feature EPSU.Supplier -> Grid.Supplier;
+			pconsume: feature Grid.Consumer -> scs.power;
+		properties
+			SEI::WeightLimit => 3.0 kg;
+	end MySystem.Tier0;
+
+	system implementation SimpleComponentChoiceSystem.imp
+		subcomponents
+			sdev: process StartProcess;
+			mdev: process MidProcess2;
+			edev: process EndProcess;
+			processor1 : processor cheapCPU;
+			processor2 : processor expensiveCPU;
+		connections
+			s2m: port sdev.output -> mdev.input;
+			m2e: port mdev.output -> edev.input;
+			powers : feature power -> sdev.power;
+			powerm : feature power -> mdev.power;
+			powere : feature power -> edev.power;
+		flows
+			exampleFlow: end to end flow sdev.flowStart ->
+					s2m ->
+					mdev.variableTimeFlow ->
+					m2e ->
+					edev.flowEnd;
+		properties
+			Deployment_Properties::Actual_Processor_Binding => (reference (processor1)) applies to mdev;
+	end SimpleComponentChoiceSystem.imp;
+
+	system implementation SimpleComponentChoiceSystem.refinement extends SimpleComponentChoiceSystem.imp
+		subcomponents
+			sdev : refined to process StartProcess.imp1;
+	end SimpleComponentChoiceSystem.refinement;
+
+	process StartProcess
+		features
+			output: out event port;
+			power: in feature Electricity;
+		flows
+			flowStart: flow source output {
+						Latency => 5 Ms .. 5 Ms;
+					};
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::Price => 500.00;
+			Thread_Properties::Time_Slot => (1);
+	end StartProcess;
+
+	process implementation StartProcess.imp1
+		properties
+			SEI::PowerBudget => 4.0 w applies to power;
+	end StartProcess.imp1;
+
+	process implementation StartProcess.imp2
+		properties
+			SEI::PowerBudget => 6.0 w applies to power;
+	end StartProcess.imp2;
+
+	process EndProcess
+		features
+			input: in event port {
+				Communication_Properties::Input_Rate => [
+					Value_Range => 1.0 .. 5.0;
+					Rate_Unit => PerSecond;
+					Rate_Distribution => Fixed;
+				];
+			};
+			power: in feature Electricity;
+		flows
+			flowEnd: flow sink input {
+						Latency => 5 Ms .. 5 Ms;
+					};
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::SecurityLevel => 5;
+			SEI::Price => 500.00;
+	end EndProcess;
+
+	process implementation EndProcess.imp
+	end EndProcess.imp;
+
+	process MidProcess
+		features
+			power: in feature Electricity;
+			input: in event port;
+			output: out event port;
+	end MidProcess;
+
+	process MidProcess1 extends MidProcess
+		flows
+			variableTimeFlow: flow path input -> output {
+						Latency => 5 ms .. 50 ms;
+					};
+		properties
+			SEI::PowerBudget => 5.0 w applies to power;
+			SEI::RAMActual => 25.0 bytes;
+			SEI::Price => 500.00;
+	end MidProcess1;
+
+	process MidProcess2 extends MidProcess
+		features
+			output: refined to out event port{
+				Communication_Properties::Output_Rate => [
+					Value_Range => 10.0 .. 50.0;
+					Rate_Unit => PerSecond;
+					Rate_Distribution => Fixed;
+				];
+			};
+		flows
+			variableTimeFlow: flow path input -> output {
+						Latency => 15 ms .. 150 ms;
+					};
+		properties
+			SEI::PowerBudget => 10.0 w applies to power;
+			SEI::RAMActual => 500.0 bytes;
+			SEI::Price => 750.63;
+	end MidProcess2;
+
+	process MidProcess3 extends MidProcess
+		flows
+			variableTimeFlow: flow path input -> output {
+						Latency => 25 ms .. 250 ms;
+					};
+		properties
+			SEI::PowerBudget => 15.0 w applies to power;
+			SEI::RAMActual => 1000.0 bytes;
+			SEI::Price => 1337.42;
+	end MidProcess3;
+
+
+
+end SimpleComponentChoice;
