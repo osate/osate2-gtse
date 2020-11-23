@@ -27,6 +27,7 @@ import org.osate.analysis.architecture.PropertyTotals;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
+import org.osate.result.RealValue;
 import org.osate.ui.handlers.AaxlReadOnlyHandlerAsJob;
 import org.osate.ui.handlers.AbstractAaxlHandler;
 
@@ -39,7 +40,8 @@ public class PropertyTotaler extends AbstractAnalysis {
 			IProgressMonitor progressMonitor, Response resp) {
 		PropertyTotals pt = new PropertyTotals(progressMonitor, aaa);
 		resp.addVariable("Weight", ATSVVariableType.FLOAT,
-				String.valueOf(PropertyTotals.invoke(instance).getResults().get(0)));
+				String.valueOf(((RealValue) PropertyTotals.invoke(instance).getResults().get(0).getValues().get(0))
+						.getValue()));
 		resp.addVariable("Price", ATSVVariableType.FLOAT, String.valueOf(pt.getPrice(instance)));
 	}
 
