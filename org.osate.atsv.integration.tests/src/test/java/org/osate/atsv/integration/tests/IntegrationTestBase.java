@@ -42,7 +42,6 @@ import org.osate.atsv.integration.Activator;
 import org.osate.atsv.integration.ChoicePointModel.ChoicePointSpecification;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
-import org.osate.testsupport.OsateTest;
 
 public class IntegrationTestBase extends OsateTest {
 

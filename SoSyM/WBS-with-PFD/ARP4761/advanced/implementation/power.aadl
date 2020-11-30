@@ -1,0 +1,86 @@
+package impl::power
+
+public
+	with impl::common;
+	with SEI;
+	with PFD_Properties;
+
+	device powersource
+		features
+			socket: provides bus access impl::common::power.heavygauge;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				socket: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				propagations
+					Failed -[]-> socket {ServiceOmission};
+			end component;
+		**};
+	end powersource;
+
+	device implementation powersource.small
+		properties
+			SEI::Price => 750.00;
+			SEI::NetWeight => 3.0kg;
+			SEI::PowerCapacity => 50.0w;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.2;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
+		**};
+	end powersource.small;
+
+	device implementation powersource.large
+		properties
+			SEI::Price => 1000.00;
+			SEI::NetWeight => 7.5kg;
+			SEI::PowerCapacity => 300.0w;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.95;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 1.5e-5 applies to Fail;
+		**};
+	end powersource.large;
+
+	device implementation powersource.systempower
+		properties
+			SEI::Price => 50.00;
+			SEI::NetWeight => 0.5kg;
+			SEI::PowerCapacity => 999.0w;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.95;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 2.0e-5 applies to Fail;
+		**};
+	end powersource.systempower;
+
+	system power
+		features
+			line1: provides bus access impl::common::power.heavygauge;
+			line2: provides bus access impl::common::power.heavygauge;
+	end power;
+
+	system implementation power.generic
+		subcomponents
+			--  Power buses
+			powerbus1: device powersource.large;
+			powerbus2: device powersource.large;
+		connections
+			pwr1: bus access powerbus1.socket <-> line1;
+			pwr2: bus access powerbus2.socket <-> line2;
+		properties
+			SEI::WeightLimit => 50.0kg;
+	end power.generic;
+
+end impl::power;

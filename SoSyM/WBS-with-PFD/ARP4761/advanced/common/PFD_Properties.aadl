@@ -1,0 +1,15 @@
+property set PFD_Properties is
+
+	--- The number of successful tests of a component
+	Successful_Tests: aadlinteger applies to (component classifier, subcomponent);
+
+	--- Assessor's estimated pfd for a component, must be associated to the Fail event of the component!
+	Estimated_PFD: aadlreal applies to ({EMV2}**error event);
+
+	--- Assessor's doubt about the estimated pfd of a component
+	Assessor_Doubt: aadlreal applies to (component classifier, subcomponent);
+
+	--- Assessor's estimated probability that the component is perfect
+	Estimated_Perfect: aadlreal applies to (component classifier, subcomponent);
+
+end PFD_Properties;

@@ -1,0 +1,135 @@
+package impl::valves
+
+public
+
+	with base_types;
+	with impl::common;
+	with PFD_Properties;
+
+	system generic
+		features
+			input: requires bus access impl::common::pressure.i;
+			output: provides bus access impl::common::pressure.i;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				input: in propagation {ServiceOmission};
+				output: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				propagations
+					failed -[]-> output {ServiceOmission};
+			end component;
+		**};
+	end generic;
+
+	-- shut-off valve
+	system boolean_shutoff extends generic
+		features
+			boolean_input: in data port Base_Types::Boolean;
+		properties
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.01;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex EMV2 {**
+			error propagations
+				boolean_input: in propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[1 ormore (input, boolean_input)]-> failed;
+				propagations
+					failed -[]-> output {ServiceOmission};
+			end component;
+
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
+		**};
+	end boolean_shutoff;
+
+	-- skid valve
+	system cmd_shutoff extends generic
+		features
+			cmd_input: in data port impl::common::command.skid;
+		properties
+			PFD_Properties::Successful_Tests => 5000;
+			PFD_Properties::Estimated_Perfect => 0.05;
+			PFD_Properties::Assessor_Doubt => 0.2;
+		annex EMV2 {**
+			error propagations
+				cmd_input: in propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[1 ormore (input, cmd_input)]-> failed;
+				propagations
+					failed -[]-> output {ServiceOmission};
+			end component;
+
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+		**};
+	end cmd_shutoff;
+
+	system selector
+		features
+			accumulator_input: requires bus access impl::common::pressure.i;
+			green_input: requires bus access impl::common::pressure.i;
+			blue_input: requires bus access impl::common::pressure.i;
+			select_alternate: in data port Base_Types::Boolean;
+			cmd_nor: in data port impl::common::command.skid;
+			cmd_alt: in data port impl::common::command.skid;
+		annex EMV2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				select_alternate: in propagation {ServiceOmission};
+				cmd_nor: in propagation {ServiceOmission};
+				cmd_alt: in propagation {ServiceOmission};
+				accumulator_input: in propagation {ServiceOmission};
+				green_input: in propagation {ServiceOmission};
+				blue_input: in propagation {ServiceOmission};
+			end propagations;
+		**};
+	end selector;
+
+	system selector_basic extends selector
+		features
+			output: provides bus access impl::common::pressure.i;
+	end selector_basic;
+
+	system selector_detailed extends selector
+		features
+			green_output: provides bus access impl::common::pressure.i;
+			blue_output: provides bus access impl::common::pressure.i;
+		properties
+			PFD_Properties::Successful_Tests => 5000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.3;
+		annex EMV2 {**
+			error propagations
+				green_output: out propagation {ServiceOmission};
+				blue_output: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[1 ormore (accumulator_input, green_input, blue_input, select_alternate, cmd_nor,
+						cmd_alt)]-> failed;
+				propagations
+					failed -[]-> green_output {ServiceOmission};
+					failed -[]-> blue_output {ServiceOmission};
+			end component;
+
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
+		**};
+	end selector_detailed;
+
+end impl::valves;

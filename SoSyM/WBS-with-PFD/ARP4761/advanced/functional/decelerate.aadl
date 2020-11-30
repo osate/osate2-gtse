@@ -1,0 +1,40 @@
+package functional::Decelerate
+public
+	with WBSPS, functional::WheelBrake::Main, DemoProperties, functional::Throttle, SEI;
+
+	system DecelerateAircraft
+		features
+			fromElectrical: feature;
+			fromHydraulic: feature;
+			fromAlert: feature;
+			fromSteering: feature;
+			fromStatus: feature;
+		properties
+			WBSPS::IsFunction => true;
+	end DecelerateAircraft;
+
+	system implementation DecelerateAircraft.basic
+		subcomponents
+			DecelerateWheels: system functional::WheelBrake::Main::DecelerateWheels.basic;
+			DecelerateThrottle: system functional::Throttle::DecelerateThrottle;
+		connections
+			c1: feature fromElectrical -> DecelerateWheels.fromElectrical;
+			c2: feature fromHydraulic -> DecelerateWheels.fromHydraulic;
+			c3: feature fromAlert -> DecelerateWheels.fromAlert;
+			c4: feature fromSteering -> DecelerateWheels.fromSteering;
+			c5: feature fromStatus -> DecelerateWheels.fromStatus;
+	end DecelerateAircraft.basic;
+
+	system implementation DecelerateAircraft.i1 extends DecelerateAircraft.basic
+		properties
+			SEI::Price => 10.0;
+			DemoProperties::BrakingPower => 7.5;
+	end DecelerateAircraft.i1;
+
+	system implementation DecelerateAircraft.i2 extends DecelerateAircraft.basic
+		properties
+			SEI::Price => 17.5;
+			DemoProperties::BrakingPower => 12.8;
+	end DecelerateAircraft.i2;
+
+end functional::Decelerate;

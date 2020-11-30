@@ -1,0 +1,59 @@
+package impl::pump
+public
+	with impl::common;
+	with SEI;
+	with PFD_Properties;
+
+	system pump
+		features
+			pressure_output: provides bus access impl::common::pressure.i;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				pressure_output: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				propagations
+					failed -[]-> pressure_output {ServiceOmission};
+			end component;
+		**};
+	end pump;
+
+-- XXX
+-- TODO FIXME TODO
+-- Move to ../functional/hydraulic.aadl
+-- FIXME TODO FIXME
+-- XXX
+	system implementation pump.generic
+	end pump.generic;
+
+	system implementation pump.large extends pump.generic
+		properties
+			SEI::Price => 500.00;
+			SEI::NetWeight => 3.7kg;
+			PFD_Properties::Successful_Tests => 5000;
+			PFD_Properties::Estimated_Perfect => 0.01;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
+		**};
+	end pump.large;
+
+	system implementation pump.small extends pump.generic
+		properties
+			SEI::Price => 750.00;
+			SEI::NetWeight => 1.32kg;
+			PFD_Properties::Successful_Tests => 1000;
+			PFD_Properties::Estimated_Perfect => 0.01;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
+		**};
+	end pump.small;
+
+end impl::pump;

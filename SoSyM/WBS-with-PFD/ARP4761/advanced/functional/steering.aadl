@@ -1,0 +1,28 @@
+package functional::Steering
+public
+	with functional::GenericFunctions, SEI;
+
+	system Steering extends functional::GenericFunctions::Generic
+
+	end Steering;
+
+	system implementation Steering.basic extends functional::GenericFunctions::Generic.basic
+
+	end steering.basic;
+
+	system implementation Steering.i1 extends Steering.basic
+		properties
+			SEI::Price => 20.5;
+	end steering.i1;
+
+	system implementation Steering.i2 extends Steering.basic
+		properties
+			SEI::Price => 13.5;
+	end steering.i2;
+
+	system implementation Steering.i3 extends Steering.basic
+		properties
+			SEI::Price => 21.2;
+	end steering.i3;
+
+end functional::Steering;

@@ -1,0 +1,136 @@
+package impl::platform
+public
+	with ARINC653, EMV2, ARP4761, SEI, impl::common;
+	with PFD_Properties;
+
+	virtual processor partition
+		annex EMV2 {**
+			use types WBSImplementationErrorLib;
+			use behavior WBSImplementationErrorLib::Twostate;
+			
+			error propagations
+				bindings: out propagation {SoftwareFailure, HardwareFailure};
+				processor: in propagation {HardwareFailure};
+				flows
+					fsoft: error source bindings {SoftwareFailure};
+					fhard: error path processor {HardwareFailure} -> bindings;
+			end propagations;
+			
+			component error behavior
+				events
+					SoftwareFailure: error event;
+				transitions
+					Operational -[SoftwareFailure]-> Failed;
+				propagations
+					normal: Operational -[]-> bindings {NoError};
+					p2: Failed -[]-> bindings {SoftwareFailure};
+			end component;
+			
+			properties
+				EMV2::Severity => ARP4761::Major applies to SoftwareFailure;
+				EMV2::Likelihood => ARP4761::Probable applies to SoftwareFailure;
+				EMV2::Hazards => ([crossreference => "TBD";
+						failure => "";
+						phases => ("all");
+						description => "Software failure from the platform (OS exception, etc.)";
+						comment => "Impact all components that are controlled by this software";
+					]) applies to SoftwareFailure;
+				EMV2::OccurrenceDistribution => [ProbabilityValue => 1.35e-5; Distribution => Poisson;] applies to SoftwareFailure; --		EMV2::OccurrenceDistribution => [ ProbabilityValue => 6.75e-5 ; Distribution => Fixed;] applies to SoftwareFailure;
+		**};
+	end partition;
+
+	virtual processor implementation partition.generic
+	end partition.generic;
+
+--
+--  This is the generic CPU. In this model, this is used to capture the
+--  physical part of the processor. Then, for each implementation (federated and IMA)
+--  we defined the appropriate software failures.
+-- 
+	processor cpu
+		features
+			power: requires bus access impl::common::power.heavygauge {
+				SEI::PowerBudget => 15.0w;
+			};
+		properties
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.01;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				bindings: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				propagations
+					Failed -[]-> bindings {ServiceOmission};
+			end component;
+
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
+		**};
+	end cpu;
+
+--
+--  We do not add a software failure to the IMA processor. Instead, we
+--  capture this error within the partition itself.
+--
+	processor implementation cpu.ima
+		subcomponents
+			partition1: virtual processor partition.generic;
+			partition2: virtual processor partition.generic;
+			partition3: virtual processor partition.generic;
+			partition4: virtual processor partition.generic;
+	end cpu.ima;
+
+--
+--  The single processor is used for the federated architecture.
+--
+	processor implementation cpu.single
+	end cpu.single;
+
+	processor implementation cpu.x86
+		properties
+			SEI::Price => 100.00;
+	end cpu.x86;
+
+	processor implementation cpu.x64
+		properties
+			SEI::Price => 150.00;
+	end cpu.x64;
+
+	processor implementation cpu.arm
+		properties
+			SEI::Price => 30.00;
+	end cpu.arm;
+
+	system platform
+		features
+			power: requires bus access impl::common::power.heavygauge;
+	end platform;
+
+--
+--  The IMA platform architecture
+--
+	system implementation platform.ima
+		subcomponents
+			cpu: processor cpu.ima;
+		connections
+			cpu_pwr: bus access power <-> cpu.power;
+	end platform.ima;
+
+--
+--  The federated platform architecture
+--
+	system implementation platform.federated
+		subcomponents
+			cpu1: processor cpu.single;
+			cpu2: processor cpu.single;
+		connections
+			cpu1_pwr: bus access power <-> cpu1.power;
+			cpu2_pwr: bus access power <-> cpu2.power;
+	end platform.federated;
+end impl::platform;

@@ -1,0 +1,20 @@
+package functional::WheelBrake::CommandControl
+public
+	with functional::GenericFunctions;
+	with WBSPS;
+	with functional::WheelBrake::Generic;
+
+	system CommandControl extends functional::WheelBrake::Generic::GenericFunction
+		features
+			fromBSCU: feature;
+	end CommandControl;
+
+	system implementation CommandControl.basic extends functional::WheelBrake::Generic::GenericFunction.basic
+		subcomponents
+			Control_Primary: system functional::GenericFunctions::Generic.basic;
+			Control_Secondary: system functional::GenericFunctions::Generic.basic;
+		properties
+			WBSPS::IsFunction => true;
+	end CommandControl.basic;
+
+end functional::WheelBrake::CommandControl;

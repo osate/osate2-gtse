@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<atsv-io>
+    <vars>
+        <var name="Test" type="FLOAT">42.0</var>
+    </vars>
+</atsv-io>

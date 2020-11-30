@@ -1,0 +1,83 @@
+package impl::common
+
+public
+	with SEI;
+	with PFD_Properties;
+
+	bus power
+	end power;
+
+	bus implementation power.generic
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				bindings: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				propagations
+					Failed -[]-> bindings {ServiceOmission};
+			end component;
+		**};
+	end power.generic;
+
+	bus implementation power.heavygauge extends power.generic
+		properties
+			SEI::Price => 25.0;
+			SEI::NetWeight => 0.3kg;
+			SEI::PowerCapacity => 500.0w;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.01;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
+		**};
+	end power.heavygauge;
+
+	bus implementation power.lightgauge extends power.generic
+		properties
+			SEI::Price => 7.5;
+			SEI::NetWeight => 0.05kg;
+			SEI::PowerCapacity => 50.0w;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.01;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to Fail;
+		**};
+	end power.lightgauge;
+
+	bus pwm
+	end pwm;
+
+	bus implementation pwm.generic
+	end pwm.generic;
+
+	data command
+	end command;
+
+	data implementation command.brake
+	end command.brake;
+
+	data implementation command.skid
+	end command.skid;
+
+	data implementation command.pedal
+	end command.pedal;
+
+	data implementation command.announce
+	end command.announce;
+
+-- The pressure bus represents the pressure sent/received by
+-- other devices/pumps
+	bus pressure
+	end pressure;
+
+	bus implementation pressure.i
+	end pressure.i;
+
+end impl::common;

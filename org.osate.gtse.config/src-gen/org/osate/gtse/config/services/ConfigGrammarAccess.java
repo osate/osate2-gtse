@@ -513,7 +513,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 		
-		//FClassifierType | FPropertyType
+		//(FClassifierType | FPropertyType)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//FClassifierType
@@ -809,13 +809,13 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//value=ConfigValue
 		public Group getGroup() { return cGroup; }
 		
-		//(wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])? | '#' property=[aadl2::Property|PNAME]
+		//((wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])? | '#' property=[aadl2::Property|PNAME])
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//(wildcard?='*' | ref=ElementRef) ('#' property=[aadl2::Property|PNAME])?
 		public Group getGroup_0_0() { return cGroup_0_0; }
 		
-		//wildcard?='*' | ref=ElementRef
+		//(wildcard?='*' | ref=ElementRef)
 		public Alternatives getAlternatives_0_0_0() { return cAlternatives_0_0_0; }
 		
 		//wildcard?='*'
@@ -1123,7 +1123,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 		//=> ({ElementRef.prev=current} '.' element=[aadl2::NamedElement])*
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{ElementRef.prev=current} '.' element=[aadl2::NamedElement]
+		//({ElementRef.prev=current} '.' element=[aadl2::NamedElement])
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
 		//{ElementRef.prev=current}
@@ -3817,7 +3817,7 @@ public class ConfigGrammarAccess extends AbstractGrammarElementFinder {
 	//AbstractFeature aadl2::AbstractFeature:
 	//	(name=ID ':' | refined=[aadl2::AbstractFeature|REFINEDNAME] ':' RefinedToKeywords) (in?='in' | out?='out')?
 	//	('prototype' featurePrototype=[aadl2::FeaturePrototype|QCREF] | 'feature'
-	//	abstractFeatureClassifier=[aadl2::FeatureClassifier|QCREF] | 'feature') arrayDimension+=ArrayDimension? ('{'
+	//	abstractFeatureClassifier=[aadl2::AbstractFeatureClassifier|QCREF] | 'feature') arrayDimension+=ArrayDimension? ('{'
 	//	ownedPropertyAssociation+=PropertyAssociation+ '}')? ';';
 	public Aadl2GrammarAccess.AbstractFeatureElements getAbstractFeatureAccess() {
 		return gaAadl2.getAbstractFeatureAccess();

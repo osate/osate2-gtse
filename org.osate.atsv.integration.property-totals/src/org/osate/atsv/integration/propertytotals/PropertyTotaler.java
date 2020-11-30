@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -27,6 +27,7 @@ import org.osate.analysis.architecture.PropertyTotals;
 import org.osate.atsv.integration.AbstractAnalysis;
 import org.osate.atsv.integration.ChoicePointModel.ATSVVariableType;
 import org.osate.atsv.integration.network.Response;
+import org.osate.result.RealValue;
 import org.osate.ui.handlers.AaxlReadOnlyHandlerAsJob;
 import org.osate.ui.handlers.AbstractAaxlHandler;
 
@@ -38,7 +39,9 @@ public class PropertyTotaler extends AbstractAnalysis {
 	public void runAnalysis(SystemInstance instance, SystemOperationMode som, AnalysisErrorReporterManager errMgr,
 			IProgressMonitor progressMonitor, Response resp) {
 		PropertyTotals pt = new PropertyTotals(progressMonitor, aaa);
-		resp.addVariable("Weight", ATSVVariableType.FLOAT, String.valueOf(pt.getWeight(instance)));
+		resp.addVariable("Weight", ATSVVariableType.FLOAT,
+				String.valueOf(((RealValue) PropertyTotals.invoke(instance).getResults().get(0).getValues().get(0))
+						.getValue()));
 		resp.addVariable("Price", ATSVVariableType.FLOAT, String.valueOf(pt.getPrice(instance)));
 	}
 

@@ -1,0 +1,7 @@
+package functional::Throttle
+public
+
+	system DecelerateThrottle
+	end DecelerateThrottle;
+
+end functional::Throttle;

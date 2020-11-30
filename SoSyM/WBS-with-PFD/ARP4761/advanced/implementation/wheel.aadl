@@ -1,0 +1,150 @@
+package impl::wheel
+
+public
+
+	with impl::common, SEI, DemoProperties;
+	with PFD_Properties;
+
+	system wheel
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+		**};
+	end wheel;
+
+	system implementation wheel.i
+		subcomponents
+			tire: device tire;
+			brake: device brake;
+	end wheel.i;
+
+	device tire
+
+	end tire;
+
+	device implementation tire.hi_quality
+		properties
+			-- Built-in properties supporting cost and weight analyses
+			SEI::Price => 1000.0;
+			SEI::NetWeight => 3.5kg;
+			-- Custom property supporting domain-specific analysis,
+			--   potentially derived from other analysis / modeling tools
+			DemoProperties::BrakingPower => 10.0;
+	end tire.hi_quality;
+
+	device implementation tire.lo_quality
+		properties
+			SEI::Price => 300.0;
+			SEI::NetWeight => 2.5kg;
+			DemoProperties::BrakingPower => 5.0;
+	end tire.lo_quality;
+
+	device brake
+
+	end brake;
+
+	device implementation brake.hi_quality
+		properties
+			SEI::Price => 750.0;
+			SEI::NetWeight => 2.5kg;
+			DemoProperties::BrakingPower => 10.0;
+	end brake.hi_quality;
+
+	device implementation brake.lo_quality
+		properties
+			SEI::Price => 350.0;
+			SEI::NetWeight => 3.5kg;
+			DemoProperties::BrakingPower => 5.0;
+	end brake.lo_quality;
+
+	--
+	--  This is an example of one wheel with one
+	--  input. We do not represent the two channels,
+	--  we rather abstract the two channels into a
+	--  single one.
+	--
+	system wheel_one_input extends wheel
+		features
+			input: requires bus access impl::common::pressure.i;
+	end wheel_one_input;
+
+	system implementation wheel_one_input.i extends wheel.i
+		properties
+			SEI::Price => 350.00;
+			SEI::NetWeight => 2.0kg;
+	end wheel_one_input.i;
+
+	--
+	--  This is an example of a wheel with two
+	--  input, one from each pump. The other model
+	--  abstracts the two pumps in a single bus.
+	--  This model explicitly represents the two channels.
+	--
+	system wheel_two_inputs extends wheel
+		features
+			green_input: requires bus access impl::common::pressure.i;
+			blue_input: requires bus access impl::common::pressure.i;
+	end wheel_two_inputs;
+
+	system implementation wheel_two_inputs.i extends wheel.i
+		properties
+			SEI::Price => 500.0;
+			SEI::NetWeight => 2.5kg;
+			PFD_Properties::Successful_Tests => 2000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.15;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				green_input: in propagation {ServiceOmission};
+				blue_input: in propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[green_input and blue_input]-> failed;
+			end component;
+			
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
+		**};
+	end wheel_two_inputs.i;
+
+	-- Variant with different error model that 
+	-- makes blue/green redundancy ineffective
+	--
+	system wheel_merged_inputs extends wheel
+		features
+			green_input: requires bus access impl::common::pressure.i;
+			blue_input: requires bus access impl::common::pressure.i;
+	end wheel_merged_inputs;
+
+	system implementation wheel_merged_inputs.i extends wheel.i
+		properties
+			SEI::Price => 350.00;
+			SEI::NetWeight => 2.0kg;
+			PFD_Properties::Successful_Tests => 10000;
+			PFD_Properties::Estimated_Perfect => 0.05;
+			PFD_Properties::Assessor_Doubt => 0.2;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				green_input: in propagation {ServiceOmission};
+				blue_input: in propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[1 ormore (green_input, blue_input)]-> failed;
+			end component;
+			
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
+		**};
+	end wheel_merged_inputs.i;
+
+end impl::wheel;

@@ -1,0 +1,40 @@
+package impl::pedals
+public
+	with impl::common;
+	with PFD_Properties;
+
+	--
+	--  This is a stub component for the pedal
+	-- 
+	system pedals
+		features
+			signal1: out data port impl::common::command.pedal;
+			signal2: out data port impl::common::command.pedal;
+		properties
+			PFD_Properties::Successful_Tests => 2500;
+			PFD_Properties::Estimated_Perfect => 0.05;
+			PFD_Properties::Assessor_Doubt => 0.1;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				signal1: out propagation {ServiceOmission};
+				signal2: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				propagations
+					failed -[]-> signal1 {ServiceOmission};
+					failed -[]-> signal2 {ServiceOmission};
+			end component;
+			
+			properties
+				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
+		**};
+	end pedals;
+
+	system implementation pedals.generic
+	end pedals.generic;
+
+end impl::pedals;

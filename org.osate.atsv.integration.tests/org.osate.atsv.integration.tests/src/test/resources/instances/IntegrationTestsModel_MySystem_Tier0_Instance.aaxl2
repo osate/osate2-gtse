@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="ASCII"?>
+<instance:SystemInstance xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aadl2="http://aadl.info/AADL/2.0" xmlns:instance="http://aadl.info/AADL/2.0/instance" name="MySystem_Tier0_Instance" category="system">
+  <componentInstance name="EPSU" category="system">
+    <featureInstance name="Supplier" category="abstractFeature" direction="out">
+      <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.2/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedSystemSubcomponent.0"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemType" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.ElectrialPowerSupply"/>
+  </componentInstance>
+  <componentInstance name="Grid" category="system">
+    <featureInstance name="Supplier" category="abstractFeature">
+      <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <featureInstance name="Consumer" category="abstractFeature" direction="out">
+      <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.3/@ownedAbstractFeature.1"/>
+    </featureInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedSystemSubcomponent.1"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemType" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.ElectricGrid"/>
+  </componentInstance>
+  <componentInstance name="scs" category="system">
+    <featureInstance name="power" category="abstractFeature">
+      <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.0/@ownedAbstractFeature.0"/>
+    </featureInstance>
+    <componentInstance name="mdev" category="process">
+      <featureInstance name="power" category="abstractFeature">
+        <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.15/@ownedAbstractFeature.0"/>
+      </featureInstance>
+      <featureInstance name="input" category="eventPort">
+        <feature xsi:type="aadl2:EventPort" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.15/@ownedEventPort.0"/>
+      </featureInstance>
+      <featureInstance name="output" category="eventPort" direction="out">
+        <feature xsi:type="aadl2:EventPort" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.17/@ownedEventPort.0"/>
+      </featureInstance>
+      <flowSpecification name="variableTimeFlow" source="//@componentInstance.2/@componentInstance.0/@featureInstance.1" destination="//@componentInstance.2/@componentInstance.0/@featureInstance.2">
+        <flowSpecification href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.17/@ownedFlowSpecification.0"/>
+      </flowSpecification>
+      <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedProcessSubcomponent.1"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:ProcessType" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.MidProcess2"/>
+    </componentInstance>
+    <componentInstance name="edev" category="process">
+      <featureInstance name="power" category="abstractFeature">
+        <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.13/@ownedAbstractFeature.0"/>
+      </featureInstance>
+      <featureInstance name="input" category="eventPort">
+        <feature xsi:type="aadl2:EventPort" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.13/@ownedEventPort.0"/>
+      </featureInstance>
+      <flowSpecification name="flowEnd" source="//@componentInstance.2/@componentInstance.1/@featureInstance.1">
+        <flowSpecification href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.13/@ownedFlowSpecification.0"/>
+      </flowSpecification>
+      <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedProcessSubcomponent.2"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:ProcessType" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.EndProcess"/>
+    </componentInstance>
+    <componentInstance name="processor1" category="processor">
+      <subcomponent xsi:type="aadl2:ProcessorSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedProcessorSubcomponent.0"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:ProcessorType" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.cheapCPU"/>
+    </componentInstance>
+    <componentInstance name="processor2" category="processor">
+      <subcomponent xsi:type="aadl2:ProcessorSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedProcessorSubcomponent.1"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:ProcessorType" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.expensiveCPU"/>
+    </componentInstance>
+    <componentInstance name="sdev" category="process">
+      <featureInstance name="power" category="abstractFeature">
+        <feature xsi:type="aadl2:AbstractFeature" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedAbstractFeature.0"/>
+      </featureInstance>
+      <featureInstance name="output" category="eventPort" direction="out">
+        <feature xsi:type="aadl2:EventPort" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedEventPort.0"/>
+      </featureInstance>
+      <flowSpecification name="flowStart" destination="//@componentInstance.2/@componentInstance.4/@featureInstance.1">
+        <flowSpecification href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.10/@ownedFlowSpecification.0"/>
+      </flowSpecification>
+      <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.9/@ownedProcessSubcomponent.0"/>
+      <index>0</index>
+      <classifier xsi:type="aadl2:ProcessImplementation" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.StartProcess.imp1"/>
+    </componentInstance>
+    <endToEndFlow name="exampleFlow" flowElement="//@componentInstance.2/@componentInstance.4/@flowSpecification.0 //@componentInstance.2/@connectionInstance.1 //@componentInstance.2/@componentInstance.0/@flowSpecification.0 //@componentInstance.2/@connectionInstance.0 //@componentInstance.2/@componentInstance.1/@flowSpecification.0">
+      <endToEndFlow href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedEndToEndFlow.0"/>
+    </endToEndFlow>
+    <connectionInstance name="mdev.output -> edev.input" complete="true" kind="portConnection" destination="//@componentInstance.2/@componentInstance.1/@featureInstance.1" source="//@componentInstance.2/@componentInstance.0/@featureInstance.2">
+      <connectionReference context="//@componentInstance.2" source="//@componentInstance.2/@componentInstance.0/@featureInstance.2" destination="//@componentInstance.2/@componentInstance.1/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPortConnection.1"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="sdev.output -> mdev.input" complete="true" kind="portConnection" destination="//@componentInstance.2/@componentInstance.0/@featureInstance.1" source="//@componentInstance.2/@componentInstance.4/@featureInstance.1">
+      <connectionReference context="//@componentInstance.2" source="//@componentInstance.2/@componentInstance.4/@featureInstance.1" destination="//@componentInstance.2/@componentInstance.0/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedPortConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedSystemSubcomponent.2"/>
+    <index>0</index>
+    <classifier xsi:type="aadl2:SystemImplementation" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.SimpleComponentChoiceSystem.refinement"/>
+  </componentInstance>
+  <connectionInstance name="EPSU.Supplier -> Grid.Supplier" complete="true" destination="//@componentInstance.1/@featureInstance.0" source="//@componentInstance.0/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.0/@featureInstance.0" destination="//@componentInstance.1/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedFeatureConnection.0"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="Grid.Consumer -> scs.sdev.power" complete="true" destination="//@componentInstance.2/@componentInstance.4/@featureInstance.0" source="//@componentInstance.1/@featureInstance.1">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.1" destination="//@componentInstance.2/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.2" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.2/@componentInstance.4/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedFeatureConnection.0"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="Grid.Consumer -> scs.mdev.power" complete="true" destination="//@componentInstance.2/@componentInstance.0/@featureInstance.0" source="//@componentInstance.1/@featureInstance.1">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.1" destination="//@componentInstance.2/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.2" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.2/@componentInstance.0/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedFeatureConnection.1"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="Grid.Consumer -> scs.edev.power" complete="true" destination="//@componentInstance.2/@componentInstance.1/@featureInstance.0" source="//@componentInstance.1/@featureInstance.1">
+    <connectionReference context="/" source="//@componentInstance.1/@featureInstance.1" destination="//@componentInstance.2/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.7/@ownedFeatureConnection.1"/>
+    </connectionReference>
+    <connectionReference context="//@componentInstance.2" source="//@componentInstance.2/@featureInstance.0" destination="//@componentInstance.2/@componentInstance.1/@featureInstance.0">
+      <connection xsi:type="aadl2:FeatureConnection" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#/0/@ownedPublicSection/@ownedClassifier.8/@ownedFeatureConnection.2"/>
+    </connectionReference>
+  </connectionInstance>
+  <systemOperationMode name="No Modes"/>
+  <componentImplementation xsi:type="aadl2:SystemImplementation" href="org.osate.atsv.integration.tests/src/test/resources/IntegrationTestsModel.aadl#SimpleComponentChoice.MySystem.Tier0"/>
+</instance:SystemInstance>

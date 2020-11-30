@@ -1,0 +1,196 @@
+package impl::bscu
+
+public
+
+	with impl::common;
+	with impl::platform;
+	with Base_Types;
+	with SEI;
+	with DemoProperties;
+	with PFD_Properties;
+
+	-- This is the implementation of the BSCU of the system
+	-- The BSCU contains two subsystems.
+	-- Each BSCU subsystem has the following interfaces:
+	--    1. Power
+	--    2. Pedal
+	-- Then, each BSCU subsystem has the following subcomponents:
+	--    1. A Command function that produces data from the pedal values.
+	--    2. A monitor function that indicates if the values are valid
+	--       or not.
+	-- The main BSCU receives data and power and forwards it
+	-- to each subsystem.
+	-- Also, the BSCU contains a Select_Alternate output data
+	-- that indicates wheter we should use the first subsystem
+	-- (Select_Alternate == false) or if the second (backup)
+	-- subsystem would be used (Select_Alternate == true).
+	-- The command system if part of each bscu subsystem.
+	-- It produces data from the brake pedal value.
+	-- This component is an error sink for the error side
+	-- and may fail from power-related error
+	-- and service-related error (no pedal).
+	process command
+		features
+			brake: out data port impl::common::command.brake;
+			skid: out data port impl::common::command.skid;
+			pedalvalue: in data port impl::common::command.pedal;
+	end command;
+
+	process implementation command.i
+	end command.i;
+
+	process implementation command.i1 extends command.i
+		properties
+			DemoProperties::BrakingPower => 1.5;
+			SEI::Price => 500.00;
+	end command.i1;
+
+	process implementation command.i2 extends command.i
+		properties
+			DemoProperties::BrakingPower => 3.0;
+			SEI::Price => 1000.00;
+	end command.i2;
+
+--  The monitor component receive the values
+--  (brake and skid values) from the command system
+--  and check if the system is valid or not. We have
+--  one monitor for each BSCU.
+--  The monitor may fail if he has no power.
+	process monitor
+		features
+			brake: in data port impl::common::command.brake;
+			skid: in data port impl::common::command.skid;
+			valid: out data port Base_Types::Boolean;
+	end monitor;
+
+	process implementation monitor.i
+	end monitor.i;
+
+	process implementation monitor.i1 extends monitor.i
+		properties
+			SEI::Price => 500.00;
+	end monitor.i1;
+
+	process implementation monitor.i2 extends monitor.i
+		properties
+			SEI::Price => 1000.00;
+	end monitor.i2;
+
+	system bscu_subsystem
+		features
+			pwr: requires bus access impl::common::power.heavygauge;
+			pedal: in data port impl::common::command.pedal;
+			cmd_skid: out data port impl::common::command.skid;
+			cmd_brk: out data port impl::common::command.brake;
+			valid: out data port Base_Types::Boolean;
+	end bscu_subsystem;
+
+	system implementation bscu_subsystem.generic
+		subcomponents
+			mon: process monitor.i;
+			cmd: process command.i;
+		connections
+			pedaltocmd: port pedal -> cmd.pedalvalue;
+			brakecmd: port cmd.brake -> mon.brake;
+			brakecmd_ext: port cmd.brake -> cmd_brk;
+			skidcmd_ext: port cmd.skid -> cmd_skid;
+			skidcmd: port cmd.skid -> mon.skid;
+			isvalid: port mon.valid -> valid;
+	end bscu_subsystem.generic;
+
+--  The select alternate is a binary operator that produces
+--  an output from two input. If the first input is true
+--  the result is false. Otherwise, the result is true. 
+	system select_alternate
+		features
+			input1: in data port Base_Types::Boolean;
+			input2: in data port Base_Types::Boolean;
+			result: out data port Base_Types::Boolean;
+	end select_alternate;
+
+	system bscu
+		features
+			pwr1: requires bus access impl::common::power.heavygauge;
+			pwr2: requires bus access impl::common::power.heavygauge;
+			pedal1: in data port impl::common::command.pedal;
+			pedal2: in data port impl::common::command.pedal;
+			Select_Alternate: out data port Base_Types::Boolean;
+			cmd_nor: out data port impl::common::command.skid;
+			cmd_alt: out data port impl::common::command.skid;
+		properties
+			PFD_Properties::Successful_Tests => 20000;
+			PFD_Properties::Estimated_Perfect => 0.1;
+			PFD_Properties::Assessor_Doubt => 0.2;
+		annex emv2 {**
+			use types ErrorLibrary;
+			use behavior PFDLib::PFD_Behavior;
+			
+			error propagations
+				pwr1: in propagation {ServiceOmission};
+				pwr2: in propagation {ServiceOmission};
+				pedal1: in propagation {ServiceOmission};
+				pedal2: in propagation {ServiceOmission};
+			
+				select_alternate: out propagation {ServiceOmission};
+				cmd_nor: out propagation {ServiceOmission};
+				cmd_alt: out propagation {ServiceOmission};
+			end propagations;
+			
+			component error behavior
+				transitions
+					operational -[1 ormore (pwr1 {ServiceOmission} and pwr2 {ServiceOmission}, --
+						pedal1 {ServiceOmission} and pedal2 {ServiceOmission})]-> failed;
+				propagations
+					failed -[]-> select_alternate {ServiceOmission};
+					failed -[]-> cmd_nor {ServiceOmission};
+					failed -[]-> cmd_alt {ServiceOmission};
+			end component;
+			
+			properties
+				PFD_Properties::Estimated_PFD => 5.0e-7 applies to fail;
+		**};
+	end bscu;
+
+	system implementation bscu.basic
+	end bscu.basic;
+
+	system implementation bscu.generic
+		subcomponents
+			sub1: system bscu_subsystem.generic;
+			sub2: system bscu_subsystem.generic;
+			select: system select_alternate;
+			platform: system impl::platform::platform;
+		connections
+			sub1pwr: bus access pwr1 <-> sub1.pwr;
+			sub2pwr: bus access pwr2 <-> sub2.pwr;
+			powertoplatform: bus access pwr1 <-> platform.power;
+			sub1pedal: port pedal1 <-> sub1.pedal;
+			sub2pedal: port pedal2 <-> sub2.pedal;
+			selectvalid1: port sub1.valid -> select.input1;
+			selectvalid2: port sub2.valid -> select.input2;
+			selectvalidout: port select.result -> Select_Alternate;
+			sub1skid: port sub1.cmd_skid -> cmd_nor;
+			sub2skid: port sub2.cmd_skid -> cmd_alt;
+	end bscu.generic;
+
+	system implementation bscu.federated extends bscu.generic
+		subcomponents
+			platform: refined to system impl::platform::platform.federated;
+		properties
+			Actual_Processor_Binding => (reference (platform.cpu1)) applies to sub1.cmd;
+			Actual_Processor_Binding => (reference (platform.cpu1)) applies to sub1.mon;
+			Actual_Processor_Binding => (reference (platform.cpu2)) applies to sub2.cmd;
+			Actual_Processor_Binding => (reference (platform.cpu2)) applies to sub2.mon;
+	end bscu.federated;
+
+	system implementation bscu.ima extends bscu.generic
+		subcomponents
+			platform: refined to system impl::platform::platform.ima;
+		properties
+			Actual_Processor_Binding => (reference (platform.cpu.partition1)) applies to sub1.cmd;
+			Actual_Processor_Binding => (reference (platform.cpu.partition2)) applies to sub1.mon;
+			Actual_Processor_Binding => (reference (platform.cpu.partition3)) applies to sub2.cmd;
+			Actual_Processor_Binding => (reference (platform.cpu.partition4)) applies to sub2.mon;
+	end bscu.ima;
+
+end impl::bscu;

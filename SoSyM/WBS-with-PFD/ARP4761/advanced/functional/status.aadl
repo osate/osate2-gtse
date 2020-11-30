@@ -1,0 +1,25 @@
+package functional::Status
+public
+	with functional::GenericFunctions, SEI, DemoProperties;
+
+	system Status extends functional::GenericFunctions::Generic
+
+	end Status;
+
+	system implementation Status.basic extends functional::GenericFunctions::Generic.basic
+
+	end status.basic;
+
+	system implementation Status.hi_quality extends Status.basic
+		properties
+			SEI::Price => 5.0;
+			DemoProperties::BrakingPower => 1.3;
+	end Status.hi_quality;
+
+	system implementation Status.lo_quality extends Status.basic
+		properties
+			SEI::Price => 3.0;
+			DemoProperties::BrakingPower => 0.7;
+	end Status.lo_quality;
+
+end functional::Status;
