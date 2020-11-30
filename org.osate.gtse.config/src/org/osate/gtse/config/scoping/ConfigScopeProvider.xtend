@@ -131,7 +131,11 @@ class ConfigScopeProvider extends AbstractConfigScopeProvider {
 
 	def IScope scope_ElementRef_element(ElementRef context, EReference reference) {
 		val cls = if (context.prev === null) {
-				switch container: context.eContainer.eContainer {
+				var topElementRef = context
+				while (topElementRef.eContainer instanceof ElementRef) {
+					topElementRef = topElementRef.eContainer as ElementRef
+				}
+				switch container: topElementRef.eContainer.eContainer {
 					NamedElementRef: {
 						switch c : container.ref {
 							ComponentClassifier: c

@@ -1,0 +1,3 @@
+property set PS is
+	p: aadlstring applies to (system);
+end PS;
