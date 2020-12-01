@@ -92,17 +92,17 @@ public
 	processor implementation cpu.single
 	end cpu.single;
 
-	processor implementation cpu.x86
+	processor implementation cpu.x86 extends cpu.single
 		properties
 			SEI::Price => 100.00;
 	end cpu.x86;
 
-	processor implementation cpu.x64
+	processor implementation cpu.x64 extends cpu.single
 		properties
 			SEI::Price => 150.00;
 	end cpu.x64;
 
-	processor implementation cpu.arm
+	processor implementation cpu.arm extends cpu.single
 		properties
 			SEI::Price => 30.00;
 	end cpu.arm;
