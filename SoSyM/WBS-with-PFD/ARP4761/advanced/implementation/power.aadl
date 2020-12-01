@@ -74,8 +74,8 @@ public
 	system implementation power.generic
 		subcomponents
 			--  Power buses
-			powerbus1: device powersource.large;
-			powerbus2: device powersource.large;
+			powerbus1: device powersource;
+			powerbus2: device powersource;
 		connections
 			pwr1: bus access powerbus1.socket <-> line1;
 			pwr2: bus access powerbus2.socket <-> line2;
