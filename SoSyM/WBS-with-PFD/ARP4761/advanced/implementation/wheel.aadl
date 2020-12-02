@@ -87,6 +87,9 @@ public
 	end wheel_two_inputs;
 
 	system implementation wheel_two_inputs.i extends wheel.i
+	end wheel_two_inputs.i;
+
+	system implementation wheel_two_inputs.separate extends wheel_two_inputs.i
 		properties
 			SEI::Price => 500.0;
 			SEI::NetWeight => 2.5kg;
@@ -110,18 +113,12 @@ public
 			properties
 				PFD_Properties::Estimated_PFD => 1.0e-5 applies to fail;
 		**};
-	end wheel_two_inputs.i;
+	end wheel_two_inputs.separate;
 
 	-- Variant with different error model that 
 	-- makes blue/green redundancy ineffective
 	--
-	system wheel_merged_inputs extends wheel
-		features
-			green_input: requires bus access impl::common::pressure.i;
-			blue_input: requires bus access impl::common::pressure.i;
-	end wheel_merged_inputs;
-
-	system implementation wheel_merged_inputs.i extends wheel.i
+	system implementation wheel_two_inputs.merged extends wheel_two_inputs.i
 		properties
 			SEI::Price => 350.00;
 			SEI::NetWeight => 2.0kg;
@@ -145,6 +142,6 @@ public
 			properties
 				PFD_Properties::Estimated_PFD => 1.0e-4 applies to fail;
 		**};
-	end wheel_merged_inputs.i;
+	end wheel_two_inputs.merged;
 
 end impl::wheel;
