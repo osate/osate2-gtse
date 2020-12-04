@@ -20,6 +20,7 @@ package org.osate.atsv.integration;
 
 import static java.util.function.Function.identity;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,6 +56,7 @@ import org.osate.atsv.integration.instantiator.CustomInstantiator;
 import org.osate.atsv.integration.network.Limit;
 import org.osate.atsv.integration.network.Request;
 import org.osate.atsv.integration.network.Response;
+import org.osate.atsv.integration.network.Timestamp;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -65,6 +67,8 @@ public class AnalysisDelegator {
 	private ResourceDescriptionsProvider rdp;
 
 	private final String EXTENSION_POINT_ID = "org.osate.atsv.integration";
+
+	private Timestamp timestamp = null;
 
 	public Response invoke(Request req) {
 		AnalysisRunner runnable = null;
@@ -79,10 +83,12 @@ public class AnalysisDelegator {
 		return runnable.getResponse();
 	}
 
-	public AnalysisDelegator() {
+	public AnalysisDelegator(Timestamp timestamp) {
+		this.timestamp = timestamp;
 		Injector injector = IResourceServiceProvider.Registry.INSTANCE
 				.getResourceServiceProvider(URI.createFileURI("dummy.aadl")).get(Injector.class);
 		injector.injectMembers(this);
+		timestamp.setOsateInitialized(Instant.now());
 	}
 
 	private class AnalysisRunner implements ISafeRunnable {
@@ -97,6 +103,7 @@ public class AnalysisDelegator {
 
 		public AnalysisRunner(Request req) throws AnalysisPluginException {
 			this.exts = resolveExtensions(req.getPluginIds());
+			timestamp.setPluginsLoaded(Instant.now());
 			this.packageName = req.getPackageName();
 			this.implName = req.getComponentImplementationName();
 			this.modeName = req.getOperationModeName();
@@ -156,6 +163,7 @@ public class AnalysisDelegator {
 		public void run() throws Exception {
 			Map<String, ChoicePointSpecification> choicepointMap = mappifyChoicePoints();
 			instance = instantiateClassifier(packageName, implName, choicepointMap);
+			timestamp.setModelInstantiated(Instant.now());
 			response = new Response();
 			AbstractAnalysis analyzer = null; // TODO: Provide default implementation that gives a useful error if the analyzer can't be found
 			for (IExtension ext : exts) {
@@ -166,6 +174,7 @@ public class AnalysisDelegator {
 					}
 				}
 			}
+			timestamp.setAnalysesRun(Instant.now());
 			for (String limitVar : limits.keySet()) {
 				if (response.getVariables().getVars().containsKey(limitVar)) {
 					String reason = limits.get(limitVar).checkLimit(limitVar,

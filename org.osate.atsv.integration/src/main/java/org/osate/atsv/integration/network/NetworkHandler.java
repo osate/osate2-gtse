@@ -12,7 +12,7 @@
  * PATENT, TRADEMARK, OR COPYRIGHT INFRINGEMENT.
  *
  * Released under an Eclipse Public License - v1.0-style license, please see
- * license.txt or contact permission@sei.cmu.edu for full terms. 
+ * license.txt or contact permission@sei.cmu.edu for full terms.
  *
  * DM17-0002
  *******************************************************************************/
@@ -24,20 +24,25 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Duration;
+import java.time.Instant;
 
 import org.osate.atsv.integration.AnalysisDelegator;
 
 /**
- * 
+ *
  * A network adapter to enable OSATE to talk to an external jvm over a user-specified port. Much of the
- * socket code is adapted from http://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html 
- * 
+ * socket code is adapted from http://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
+ *
  * @author Sam Procter
  *
  */
 public class NetworkHandler implements Runnable {
 
 	private int portNum;
+	private StringBuilder stringbuilder;
+	private int runCount = 1;
+	private Instant previousResponseTime = Instant.EPOCH;
 
 	public NetworkHandler(int portNum) {
 		this.portNum = portNum;
@@ -55,15 +60,76 @@ public class NetworkHandler implements Runnable {
 				if (!((InetSocketAddress) clientSocket.getRemoteSocketAddress()).getAddress().isLoopbackAddress()) {
 					throw new Exception("Remote connections are not allowed.");
 				}
-				AnalysisDelegator delegator = new AnalysisDelegator();
+				Timestamp timestamp = new Timestamp(previousResponseTime);
+				timestamp.setRequestReceived(Instant.now());
+				AnalysisDelegator delegator = new AnalysisDelegator(timestamp);
 				req = (Request) input.readObject();
+				timestamp.setUnmarshallingComplete(Instant.now());
 				res = delegator.invoke(req);
 				output.writeObject(res);
+				timestamp.setMarshallingComplete(Instant.now());
 				output.flush();
+				previousResponseTime = Instant.now();
+				timestamp.setResponseSent(previousResponseTime);
+				printTimestampCSV(timestamp);
 			} catch (Exception e) {
 				e.printStackTrace();
 				break;
 			}
 		}
+	}
+
+	private void printTimestampCSV(Timestamp timestamp) {
+		// Run #, ATSV Time, OSATE init time, unmarshalling time, plugin load time, instantiation time, analysis time, marshalling time, transmit time, osate
+		// time
+		stringbuilder = new StringBuilder();
+		stringbuilder.append(runCount++).append(",");
+		stringbuilder.append(Duration.between(timestamp.getPrevResponseSent(), timestamp.getRequestReceived()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getRequestReceived(), timestamp.getOsateInitialized()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getOsateInitialized(), timestamp.getUnmarshallingComplete()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getUnmarshallingComplete(), timestamp.getPluginsLoaded()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getPluginsLoaded(), timestamp.getModelInstantiated()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getModelInstantiated(), timestamp.getAnalysesRun()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getAnalysesRun(), timestamp.getMarshallingComplete()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getMarshallingComplete(), timestamp.getResponseSent()))
+				.append(",");
+		stringbuilder.append(Duration.between(timestamp.getRequestReceived(), timestamp.getResponseSent())).append(",")
+				.append("\n");
+		System.out.print(stringbuilder);
+	}
+
+	private void printTimestampHuman(Timestamp timestamp) {
+		stringbuilder = new StringBuilder();
+		stringbuilder.append("Run #").append(runCount++).append(":\n");
+		stringbuilder.append("\tATSV time: ")
+				.append(Duration.between(timestamp.getPrevResponseSent(), timestamp.getRequestReceived())).append("\n");
+		stringbuilder.append("\tOSATE Init time: ")
+				.append(Duration.between(timestamp.getRequestReceived(), timestamp.getOsateInitialized())).append("\n");
+		stringbuilder.append("\tUnmarshalling time: ")
+				.append(Duration.between(timestamp.getOsateInitialized(), timestamp.getUnmarshallingComplete()))
+				.append("\n");
+		stringbuilder.append("\tPlugin Load time: ")
+				.append(Duration.between(timestamp.getUnmarshallingComplete(), timestamp.getPluginsLoaded()))
+				.append("\n");
+		stringbuilder.append("\tInstantiation time: ")
+				.append(Duration.between(timestamp.getPluginsLoaded(), timestamp.getModelInstantiated())).append("\n");
+		stringbuilder.append("\tAnalysis time: ")
+				.append(Duration.between(timestamp.getModelInstantiated(), timestamp.getAnalysesRun())).append("\n");
+		stringbuilder.append("\tMarshalling time: ")
+				.append(Duration.between(timestamp.getAnalysesRun(), timestamp.getMarshallingComplete())).append("\n");
+		stringbuilder.append("\tTransmit time: ")
+				.append(Duration.between(timestamp.getMarshallingComplete(), timestamp.getResponseSent()))
+				.append("\n");
+		stringbuilder.append("Total OSATE time: ")
+				.append(Duration.between(timestamp.getRequestReceived(), timestamp.getResponseSent())).append("\n")
+				.append("=============================").append("\n");
+		System.out.print(stringbuilder);
 	}
 }
