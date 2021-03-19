@@ -21,7 +21,7 @@ class PropertyMapping extends ComponentMapping {
 	}
 
 	def propertyName() {
-		property.name
+		property.qualifiedName()
 	}
 
 }

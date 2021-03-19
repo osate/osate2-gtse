@@ -689,7 +689,7 @@ class ConfigGenerator extends AbstractGenerator {
 	}
 
 	dispatch def String print(PropertyValue pv) {
-		serializer.serialize(pv)
+		serializer.serialize(pv).trim
 	}
 
 	/**

@@ -1,8 +1,14 @@
 package org.osate.gtse.config.ui.tests
 
+import com.google.inject.Inject
 import com.itemis.xtext.testing.XtextTest
+import java.io.BufferedReader
 import java.io.ByteArrayInputStream
+import java.io.IOException
+import java.io.InputStreamReader
+import java.net.URL
 import java.util.List
+import org.apache.log4j.Logger
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor
@@ -24,13 +30,9 @@ import org.osate.gtse.config.config.ConfigPkg
 import org.osate.gtse.config.generator.AbstractMapping
 import org.osate.gtse.config.generator.ComponentMapping
 import org.osate.gtse.config.generator.ConfigGenerator
+import org.osate.gtse.config.generator.PropertyMapping
 
 import static org.hamcrest.Matchers.*
-import org.apache.log4j.Logger
-import java.io.IOException
-import java.net.URL
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @RunWith(XtextRunner)
 @InjectWith(ConfigUiInjectorProvider)
@@ -41,11 +43,12 @@ class MappingTest extends XtextTest {
 	 * Test 2, 3, ... are 1000 times as fast with this optimization. First test method still takes a couple of seconds.
 	 */
 	static ConfigPkg pkg
-	
-	static ConfigGenerator cg = new ConfigGenerator
+
+	@Inject
+	ConfigGenerator cg
 
 	static boolean once = true
-	
+
 	@Rule
 	public ErrorCollector collector = new ErrorCollector
 
@@ -56,7 +59,8 @@ class MappingTest extends XtextTest {
 	def void initWorkspace() {
 		val configFile = 'T.config'
 		val aadlFile = 'T.aadl'
-		val modelRoot = 'org.osate.gtse.config.ui.tests/models/'
+		val psFile = 'ps.aadl'
+		val modelRoot = 'org.osate.gtse.config.ui.tests/models/test01/'
 		val projectName = "test"
 
 		if (once) {
@@ -67,11 +71,20 @@ class MappingTest extends XtextTest {
 			Assert.assertTrue('Could not read file ' + configFile, configText.length > 1)
 			val aadlText = readFile(modelRoot + aadlFile)
 			Assert.assertTrue('Could not read file ' + aadlFile, aadlText.length > 1)
-			createFiles(configFile -> configText, aadlFile -> aadlText)
+			val psText = readFile(modelRoot + psFile)
+			Assert.assertTrue('Could not read file ' + psFile, psText.length > 1)
+			createFiles(configFile -> configText, aadlFile -> aadlText, psFile -> psText)
 			suppressSerialization
-			val result = testFile(configFile, aadlFile)
+			val result = testFile(configFile, aadlFile, psFile)
 			pkg = result.resource.contents.head as ConfigPkg
 		}
+	}
+
+	@Test
+	def test00a() {
+		testHelper('CWBS00a', #[
+			'w#PS::p' -> '"s"'
+		])
 	}
 
 	@Test
@@ -147,15 +160,37 @@ class MappingTest extends XtextTest {
 	def testHelper(String cfgName, List<Pair<String, String>> expected) {
 		val root = pkg.configurations.findFirst[name == cfgName]
 		val ms = cg.makeMappings(pkg, root).tail.toList
-		assertMappings(ms, expected)
+		printMappings(cfgName, ms)
+		if (!expected.isNullOrEmpty)
+			assertMappings(ms, expected)
 	}
 
 	def void assertMappings(List<AbstractMapping> ms, List<Pair<String, String>> ex) {
-		val strings = ms.filter(ComponentMapping).map[pathName -> (new ConfigGenerator).print(value)]
-		//ex.forEach[assertTrue('Missing mapping: ' + key + ' -> ' + value, strings.contains(it))]
+		val strings = mkStrings(ms)
+		// ex.forEach[assertTrue('Missing mapping: ' + key + ' -> ' + value, strings.contains(it))]
 		ex.forEach[collector.checkThat('Missing mapping: ' + key + ' -> ' + value, strings, hasItem(it))]
-		//strings.forEach[assertTrue('Unexpected mapping: \'' + key + '\' -> \'' + value + '\'', ex.contains(it))]
-		strings.forEach[collector.checkThat('Unexpected mapping: \'' + key + '\' -> \'' + value + '\'', ex, hasItem(it))]
+		// strings.forEach[assertTrue('Unexpected mapping: \'' + key + '\' -> \'' + value + '\'', ex.contains(it))]
+		strings.forEach [
+			collector.checkThat('Unexpected mapping: \'' + key + '\' -> \'' + value + '\'', ex, hasItem(it))
+		]
+	}
+
+	def void printMappings(String cfgName, List<AbstractMapping> ms) {
+		val strings = mkStrings(ms)
+		println(cfgName)
+		strings.forEach[println("    " + it)]
+		println()
+	}
+
+	def mkStrings(List<AbstractMapping> ms) {
+		ms.filter(ComponentMapping).map [
+			switch it {
+				PropertyMapping:
+					pathName + '#' + propertyName -> cg.print(value)
+				default:
+					pathName -> cg.print(value)
+			}
+		]
 	}
 
 	static val Logger LOGGER = Logger.getLogger(MappingTest);
@@ -248,7 +283,7 @@ class MappingTest extends XtextTest {
 			while ((inputLine = in.readLine()) !== null) {
 				result += inputLine + '\n'
 			}
-			
+
 			in.close()
 		} catch (IOException e) {
 			result = ''
