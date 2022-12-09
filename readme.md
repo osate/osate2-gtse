@@ -9,7 +9,8 @@ This plugin enables users to automatically explore the trade space of a system b
 * For a **short, high-level description**, see either [this short video](https://www.youtube.com/watch?v=M8hcVB6tmaw) or this [slightly longer video](https://www.youtube.com/watch?v=adClevsQUm4)
 * For a slightly-longer, **general-audience description**, you can view [this video](https://www.youtube.com/watch?v=_Kkkj8P31OM)
 * For a **diagrammatic explanation** of how GTSE and ATSV work together, see the [Workflow documentation](docs/Workflow.md).
-* For a more complete **academic publication** on GTSE, see the [MODELS19 paper](https://dx.doi.org/10.1109/MODELS.2019.000-9) (a [preprint](https://samprocter.com/wp-content/uploads/2019/07/models19-gatse.pdf) is also available)
+* For a more complete **academic publication** on GTSE, see [our paper](https://dx.doi.org/10.1007/s10270-021-00889-8) in _Software and Systems Modeling_ (a [preprint](https://samprocter.com/wp-content/uploads/2022/05/sosym21-tradespace.pdf) is also available)
+    * The original conference publication, from [MODELS19](https://dx.doi.org/10.1109/MODELS.2019.000-9), is also available (as is a [preprint](https://samprocter.com/wp-content/uploads/2019/07/models19-gatse.pdf))
 
 ## Installation
 
