@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="3435bfcb-5e85-48ce-8c16-112071e7fc92" manual="true">
+    <element uuid="51443443-9d50-41a5-94da-431c0aab9eaa" manual="true">
+      <element uuid="5eb9df34-0b6a-4c62-acca-32722214e4e9" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pressure_output</seg>
+        </bo>
+        <position x="250.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>accumulator</seg>
+      </bo>
+      <position x="601.0" y="428.0"/>
+      <size width="371.0" height="60.0"/>
+    </element>
+    <element uuid="4dedfe78-6263-4671-84f0-58b3949be5b6" manual="true">
+      <element uuid="606ea40f-5a60-429d-9118-85f39fa7554d" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pressure_output</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>blue_pump</seg>
+      </bo>
+      <position x="1400.0" y="235.0"/>
+      <size width="361.0" height="60.0"/>
+    </element>
+    <element uuid="77170919-a710-4b79-8604-643004e2cda3" manual="true">
+      <element uuid="f11e4e1b-7a44-488d-9762-8f02b0e40c3b" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>cmd_input</seg>
+        </bo>
+        <position y="35.0"/>
+      </element>
+      <element uuid="a7eed9f3-fcef-449e-a209-076a4bfb0d2c" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>input</seg>
+        </bo>
+        <position x="225.0" y="60.0"/>
+      </element>
+      <element uuid="3eb2f67c-bae2-496c-a7c3-3389d715a9e1" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>output</seg>
+        </bo>
+        <position x="215.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>blue_skid</seg>
+      </bo>
+      <position x="672.0" y="38.0"/>
+      <size width="265.0" height="110.0"/>
+    </element>
+    <element uuid="dfa5e4ea-79f8-46aa-8e22-6d44d80fde96" manual="true">
+      <element uuid="1bc7c84c-3e09-45fe-a87a-0a8bb6b984ae" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>cmd_alt</seg>
+        </bo>
+        <position x="261.0" y="10.0"/>
+      </element>
+      <element uuid="3e8a059e-2718-4163-b9b3-d9a337f3322b" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>cmd_nor</seg>
+        </bo>
+        <position x="256.0" y="60.0"/>
+      </element>
+      <element uuid="669531b0-88be-48a9-a9d0-de6f749ecaf7" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pedal1</seg>
+        </bo>
+        <position y="160.0"/>
+      </element>
+      <element uuid="a5767988-fe5d-4ac8-9106-2feec995807a" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pedal2</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <element uuid="3d766dbe-46dd-435a-b899-dc6a2ec1de86" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pwr1</seg>
+        </bo>
+        <position x="283.0" y="160.0"/>
+      </element>
+      <element uuid="2044485f-4710-4e64-9e9d-4b00b9a554bc" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pwr2</seg>
+        </bo>
+        <position x="283.0" y="110.0"/>
+      </element>
+      <element uuid="32ca0a6b-9d24-4758-9061-b536479767f4" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>Select_Alternate</seg>
+        </bo>
+        <position x="201.0" y="210.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>bscu</seg>
+      </bo>
+      <position x="230.0" y="63.0"/>
+      <size width="321.0" height="260.0"/>
+    </element>
+    <element uuid="6e4b9a19-118d-4956-b210-2019694189e2" manual="true">
+      <element uuid="dcc4c38d-7261-4bfb-8908-d2411640e2f7" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>pressure_output</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>green_pump</seg>
+      </bo>
+      <position x="1781.0" y="431.0"/>
+      <size width="371.0" height="60.0"/>
+    </element>
+    <element uuid="ade70036-37ee-47f0-ac8f-e7b97bae61a7" manual="true">
+      <element uuid="57731bc4-819c-4b19-87ea-ccd7e975631f" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>cmd_input</seg>
+        </bo>
+        <position y="35.0"/>
+      </element>
+      <element uuid="5ab0d50e-81cd-49a6-a346-9f048c514960" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>input</seg>
+        </bo>
+        <position x="235.0" y="60.0"/>
+      </element>
+      <element uuid="5c4a3228-40c9-41d1-8bc4-c5aec6e32739" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>output</seg>
+        </bo>
+        <position x="225.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>green_skid</seg>
+      </bo>
+      <position x="665.0" y="168.0"/>
+      <size width="275.0" height="110.0"/>
+    </element>
+    <element uuid="b542951a-9480-47b6-9a8c-9a9a1c164b4d" manual="true">
+      <element uuid="2e931001-b2d8-4ac8-98b8-7cea2c7423f4" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>signal1</seg>
+        </bo>
+        <position x="143.0" y="60.0"/>
+      </element>
+      <element uuid="9452cfe1-cf6c-4229-8840-78260ea0623b" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>signal2</seg>
+        </bo>
+        <position x="143.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>pedals</seg>
+      </bo>
+      <position x="12.0" y="113.0"/>
+      <size width="198.0" height="110.0"/>
+    </element>
+    <element uuid="2510777e-d745-4ffb-ac98-af3c97dc61d5" manual="true">
+      <element uuid="f9c09578-8dcd-4bd9-b4d6-35399dc34b05" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>line1</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <element uuid="01d0bc12-f076-4a73-80c9-e7749813655c" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>line2</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>power</seg>
+      </bo>
+      <position x="601.0" y="298.0"/>
+      <size width="166.0" height="110.0"/>
+    </element>
+    <element uuid="f0c25174-4b5f-40b0-961c-7173e459ee8d" manual="true">
+      <element uuid="f4dd1fd6-ae3c-40f5-84a4-04eaafc71330" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>accumulator_input</seg>
+        </bo>
+        <position y="110.0"/>
+      </element>
+      <element uuid="91c889b3-9096-413d-a11f-0df13dbd7b80" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>blue_input</seg>
+        </bo>
+        <position x="289.0" y="77.0"/>
+      </element>
+      <element uuid="c013d03e-388c-4b30-a36a-30ea48be457e" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>blue_output</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="b9a48c66-916d-4105-bbd5-cb6512e380eb" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>cmd_alt</seg>
+        </bo>
+        <position y="210.0"/>
+      </element>
+      <element uuid="76dfcfc0-2da5-45d0-8f53-af6d6d447cfb" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>cmd_nor</seg>
+        </bo>
+        <position y="260.0"/>
+      </element>
+      <element uuid="e5d51c6a-740d-4dd6-be25-aed9a541fc0f" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>green_input</seg>
+        </bo>
+        <position x="279.0" y="193.0"/>
+      </element>
+      <element uuid="1d85b8ac-9959-41f2-9558-078d37b3fe65" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>green_output</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <element uuid="abfc65ea-c472-4976-8fc0-97c8399110c2" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>select_alternate</seg>
+        </bo>
+        <position y="160.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>selector</seg>
+      </bo>
+      <position x="1012.0" y="168.0"/>
+      <size width="368.0" height="310.0"/>
+    </element>
+    <element uuid="c6b93db3-7f01-4159-aeb1-ed955bad8070" manual="true">
+      <element uuid="dc34a2a5-f2ce-4b5f-b247-c256b4de9aef" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>boolean_input</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <element uuid="4ff6b85d-fd84-4de9-92b2-10509eb5ec18" manual="true" dockArea="right">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>input</seg>
+        </bo>
+        <position x="262.0" y="35.0"/>
+      </element>
+      <element uuid="27c646ce-13a3-4335-971a-754d28743bc9" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>output</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>shutoff</seg>
+      </bo>
+      <position x="1420.0" y="406.0"/>
+      <size width="302.0" height="110.0"/>
+    </element>
+    <element uuid="461688ff-bca9-44b3-8e0f-b52a6445583c" manual="true">
+      <element uuid="08b91595-a9e6-4194-bf00-4c1bdbe7620f" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>blue_input</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="0c35b851-a240-4725-8ec5-c5b394dc2169" manual="true" dockArea="left">
+        <bo>
+          <seg>org.osate.ge.diagrams.instance</seg>
+          <seg>feature_instance</seg>
+          <seg>green_input</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>wheel</seg>
+      </bo>
+      <position x="1012.0" y="38.0"/>
+      <size width="266.0" height="110.0"/>
+    </element>
+    <element uuid="d040077c-de21-4fea-904a-e69697cd0e34" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>accu_to_sel : wbs_federated_Instance.accumulator.pressure_output -> wbs_federated_Instance.selector.accumulator_input</seg>
+      </bo>
+      <bendpoints>
+        <point x="994.0" y="482.0"/>
+        <point x="994.0" y="347.0"/>
+        <point x="1014.0" y="347.0"/>
+        <point x="1014.0" y="322.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="24259980-83ba-486f-8a9c-aa8721d09d7b" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>accu_to_sel : wbs_federated_Instance.selector.accumulator_input -> wbs_federated_Instance.accumulator.pressure_output</seg>
+      </bo>
+      <bendpoints>
+        <point x="1014.0" y="322.0"/>
+        <point x="1014.0" y="347.0"/>
+        <point x="994.0" y="347.0"/>
+        <point x="994.0" y="482.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="a0af1588-6c73-4290-87a2-c38115bd4db4" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>blue_to_selector : wbs_federated_Instance.blue_pump.pressure_output -> wbs_federated_Instance.selector.blue_input</seg>
+      </bo>
+    </element>
+    <element uuid="f5f7da20-d553-48d6-8e7a-ee3a11c93f13" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>blue_to_selector : wbs_federated_Instance.selector.blue_input -> wbs_federated_Instance.blue_pump.pressure_output</seg>
+      </bo>
+    </element>
+    <element uuid="0f378497-6c99-4420-afc6-29afdd8444a2" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>bscu_to_bskid : wbs_federated_Instance.bscu.cmd_alt -> wbs_federated_Instance.blue_skid.cmd_input</seg>
+      </bo>
+    </element>
+    <element uuid="62e1520e-0d3e-4d6b-8f6a-42624f87407f" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>bscu_to_gskid : wbs_federated_Instance.bscu.cmd_nor -> wbs_federated_Instance.green_skid.cmd_input</seg>
+      </bo>
+      <bendpoints>
+        <point x="603.0" y="167.0"/>
+        <point x="603.0" y="247.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="6193aa3a-ebc3-4b59-91e1-341c52a1b5bc" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>bscu_to_selector : wbs_federated_Instance.bscu.Select_Alternate -> wbs_federated_Instance.selector.select_alternate</seg>
+      </bo>
+      <bendpoints>
+        <point x="573.0" y="317.0"/>
+        <point x="573.0" y="510.0"/>
+        <point x="1004.0" y="510.0"/>
+        <point x="1004.0" y="372.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="8f9c9d27-85b8-4bdf-aa29-a69b11740cb7" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>bscu_to_shutoff : wbs_federated_Instance.bscu.Select_Alternate -> wbs_federated_Instance.shutoff.boolean_input</seg>
+      </bo>
+      <bendpoints>
+        <point x="573.0" y="317.0"/>
+        <point x="573.0" y="510.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="e6c445e2-3db0-41cd-888f-6a1d7a618758" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>bskid_to_wheel : wbs_federated_Instance.blue_skid.output -> wbs_federated_Instance.wheel.blue_input</seg>
+      </bo>
+    </element>
+    <element uuid="6cc8ce54-efd4-4c4c-810d-16b0d4af1d36" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>bskid_to_wheel : wbs_federated_Instance.wheel.blue_input -> wbs_federated_Instance.blue_skid.output</seg>
+      </bo>
+    </element>
+    <element uuid="862fd18f-2f30-4cb3-81f8-36245ee0778a" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>green_to_shutoff : wbs_federated_Instance.green_pump.pressure_output -> wbs_federated_Instance.shutoff.input</seg>
+      </bo>
+    </element>
+    <element uuid="08491a72-cc2b-478c-a077-38cd62296b73" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>green_to_shutoff : wbs_federated_Instance.shutoff.input -> wbs_federated_Instance.green_pump.pressure_output</seg>
+      </bo>
+    </element>
+    <element uuid="0626927e-1194-4041-b14d-59fbb28908bf" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>gskid_to_wheel : wbs_federated_Instance.green_skid.output -> wbs_federated_Instance.wheel.green_input</seg>
+      </bo>
+      <bendpoints>
+        <point x="1004.0" y="222.0"/>
+        <point x="1004.0" y="142.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="1aac9f6d-a0ef-4fbb-a847-cb768bff44e6" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>gskid_to_wheel : wbs_federated_Instance.wheel.green_input -> wbs_federated_Instance.green_skid.output</seg>
+      </bo>
+      <bendpoints>
+        <point x="1004.0" y="142.0"/>
+        <point x="1004.0" y="222.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="cb2cdfc2-29ca-495b-859b-e2bea2021857" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>pedal1 : wbs_federated_Instance.pedals.signal1 -> wbs_federated_Instance.bscu.pedal1</seg>
+      </bo>
+      <bendpoints>
+        <point x="232.0" y="217.0"/>
+        <point x="232.0" y="267.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="eac23d4c-7280-40c2-b259-caa838a9d72b" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>pedal2 : wbs_federated_Instance.pedals.signal2 -> wbs_federated_Instance.bscu.pedal2</seg>
+      </bo>
+    </element>
+    <element uuid="40ab85e1-159a-4de1-b1b4-f03db272154a" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>power1 : wbs_federated_Instance.bscu.pwr1 -> wbs_federated_Instance.power.line1</seg>
+      </bo>
+      <bendpoints>
+        <point x="583.0" y="267.0"/>
+        <point x="583.0" y="402.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="d4ec3441-5534-4182-b8bd-c1c6140f017a" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>power1 : wbs_federated_Instance.power.line1 -> wbs_federated_Instance.bscu.pwr1</seg>
+      </bo>
+      <bendpoints>
+        <point x="583.0" y="402.0"/>
+        <point x="583.0" y="267.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="f99846f5-86ff-494b-9fad-8903affd5822" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>power2 : wbs_federated_Instance.bscu.pwr2 -> wbs_federated_Instance.power.line2</seg>
+      </bo>
+      <bendpoints>
+        <point x="593.0" y="217.0"/>
+        <point x="593.0" y="352.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="526f2c2a-5724-4a17-b251-86f010997f19" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>power2 : wbs_federated_Instance.power.line2 -> wbs_federated_Instance.bscu.pwr2</seg>
+      </bo>
+      <bendpoints>
+        <point x="593.0" y="352.0"/>
+        <point x="593.0" y="217.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="8c329e88-feba-41cc-bb15-51f594af5fc3" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>selector_to_bskid : wbs_federated_Instance.blue_skid.input -> wbs_federated_Instance.selector.blue_output</seg>
+      </bo>
+      <bendpoints>
+        <point x="994.0" y="142.0"/>
+        <point x="994.0" y="182.0"/>
+        <point x="1014.0" y="182.0"/>
+        <point x="1014.0" y="222.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="1aef25e3-7aba-4ac8-9015-b3447a5dffad" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>selector_to_bskid : wbs_federated_Instance.selector.blue_output -> wbs_federated_Instance.blue_skid.input</seg>
+      </bo>
+      <bendpoints>
+        <point x="1014.0" y="222.0"/>
+        <point x="1014.0" y="182.0"/>
+        <point x="994.0" y="182.0"/>
+        <point x="994.0" y="142.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="db1ff676-bc10-484c-bea1-bf091fe7b5ba" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>selector_to_gskid : wbs_federated_Instance.green_skid.input -> wbs_federated_Instance.selector.green_output</seg>
+      </bo>
+    </element>
+    <element uuid="6e8bf52a-eb77-4c0f-bf4d-06e0e5ae9a0d" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>selector_to_gskid : wbs_federated_Instance.selector.green_output -> wbs_federated_Instance.green_skid.input</seg>
+      </bo>
+    </element>
+    <element uuid="f1ead343-ac37-43f8-befd-e33377bb2807" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>shutoff_to_selector : wbs_federated_Instance.selector.green_input -> wbs_federated_Instance.shutoff.output</seg>
+      </bo>
+      <bendpoints>
+        <point x="1402.0" y="405.33333333333337"/>
+        <point x="1402.0" y="460.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="46482a54-49de-41e5-95d9-7d4b596780b0" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>connection_reference</seg>
+        <seg>shutoff_to_selector : wbs_federated_Instance.shutoff.output -> wbs_federated_Instance.selector.green_input</seg>
+      </bo>
+      <bendpoints>
+        <point x="1402.0" y="460.0"/>
+        <point x="1402.0" y="405.33333333333337"/>
+      </bendpoints>
+    </element>
+    <bo>
+      <seg>org.osate.ge.diagrams.instance</seg>
+      <seg>system_instance</seg>
+      <seg>/wbs-with-pfd/arp4761/advanced/implementation/instances/wbs_wbs_federated_instance.aaxl2</seg>
+    </bo>
+    <position x="12.0" y="12.0"/>
+    <size width="2164.0" height="528.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>org.osate.ge.diagrams.instance</seg>
+      <seg>system_instance</seg>
+      <seg>/wbs-with-pfd/arp4761/advanced/implementation/instances/wbs_wbs_federated_instance.aaxl2</seg>
+    </context>
+  </config>
+</diagram:Diagram>

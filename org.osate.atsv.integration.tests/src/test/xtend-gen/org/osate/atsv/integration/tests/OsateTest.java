@@ -25,18 +25,13 @@ package org.osate.atsv.integration.tests;
 
 import com.google.common.base.Objects;
 import com.google.inject.Inject;
-import com.itemis.xtext.testing.FluentIssueCollection;
-import com.itemis.xtext.testing.XtextTest;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -48,13 +43,11 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.IJobManager;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -68,7 +61,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.ComparisonFailure;
 import org.osate.aadl2.modelsupport.util.AadlUtil;
 import org.osate.core.AadlNature;
 import org.osate.pluginsupport.PluginSupportUtil;
@@ -80,7 +72,7 @@ import org.osate.pluginsupport.PluginSupportUtil;
  */
 @Deprecated
 @SuppressWarnings("all")
-public abstract class OsateTest extends XtextTest {
+public abstract class OsateTest /* implements XtextTest  */{
   @Inject
   private IScopeProvider scopeProvider;
   
@@ -93,11 +85,9 @@ public abstract class OsateTest extends XtextTest {
   protected final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
   
   @Before
-  public void setUp() {
-    this.createProject(this.getProjectName());
-    String _projectName = this.getProjectName();
-    String _plus = ("platform:/resource/" + _projectName);
-    this.setResourceRoot(_plus);
+  public Object setUp() {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method setResourceRoot(String) is undefined");
   }
   
   @After
@@ -106,7 +96,9 @@ public abstract class OsateTest extends XtextTest {
   }
   
   public String getProjectName() {
-    return this.getClass().getSimpleName();
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field class is undefined"
+      + "\nsimpleName cannot be resolved");
   }
   
   /**
@@ -228,61 +220,16 @@ public abstract class OsateTest extends XtextTest {
    * Create a set of files in the workspace given as filename -> text pairs
    */
   protected void createFiles(final Pair<String, String>... models) {
-    try {
-      final WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
-        @Override
-        public void execute(final IProgressMonitor monitor) {
-          for (final Pair<String, String> model : models) {
-            {
-              String _key = model.getKey();
-              String _plus = ((OsateTest.this.resourceRoot + "/") + _key);
-              final URI uri = URI.createURI(_plus);
-              OsateTest.this.createFile(uri, model.getValue());
-            }
-          }
-        }
-      };
-      operation.run(null);
-      this.waitForBuild();
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field resourceRoot is undefined"
+      + "\n+ cannot be resolved"
+      + "\n+ cannot be resolved");
   }
   
   public IFile createFile(final URI uri, final String content) {
-    IFile _xblockexpression = null;
-    {
-      String _platformString = uri.toPlatformString(true);
-      Path _path = new Path(_platformString);
-      final IFile file = this.workspaceRoot.getFile(_path);
-      Assert.isTrue(file.getParent().exists());
-      String _simpleName = this.getClass().getSimpleName();
-      String _plus = ((("creating " + uri) + " in test method ") + _simpleName);
-      String _plus_1 = (_plus + ".");
-      String _methodName = (new Throwable().fillInStackTrace().getStackTrace()[1]).getMethodName();
-      String _plus_2 = (_plus_1 + _methodName);
-      OsateTest.LOGGER.info(_plus_2);
-      try {
-        byte[] _bytes = content.getBytes(file.getCharset());
-        final ByteArrayInputStream stream = new ByteArrayInputStream(_bytes);
-        boolean _exists = file.exists();
-        if (_exists) {
-          file.setContents(stream, true, true, null);
-        } else {
-          file.create(stream, true, null);
-        }
-        stream.close();
-      } catch (final Throwable _t) {
-        if (_t instanceof Exception) {
-          final Exception e = (Exception)_t;
-          OsateTest.LOGGER.error(e);
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
-      }
-      _xblockexpression = file;
-    }
-    return _xblockexpression;
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field class is undefined for the type OsateTest"
+      + "\nsimpleName cannot be resolved");
   }
   
   public void waitForBuild() {
@@ -303,43 +250,27 @@ public abstract class OsateTest extends XtextTest {
    * @deprecated Use {@link AssertHelper#assertError()}
    */
   @Deprecated
-  protected static void assertError(final EObject eObject, final List<Issue> allIssues, final FluentIssueCollection issueCollection, final String... expectedMessages) {
-    OsateTest.assertIssue(eObject, allIssues, issueCollection, Severity.ERROR, expectedMessages);
+  protected static void assertError(final EObject eObject, final List<Issue> allIssues, final /* FluentIssueCollection */Object issueCollection, final String... expectedMessages) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method assertIssue(EObject, List<Issue>, FluentIssueCollection, Severity, String...) from the type OsateTest refers to the missing type FluentIssueCollection");
   }
   
   /**
    * @deprecated Use {@link AssertHelper#assertWarning()}
    */
   @Deprecated
-  protected static void assertWarning(final EObject eObject, final List<Issue> allIssues, final FluentIssueCollection issueCollection, final String... expectedMessages) {
-    OsateTest.assertIssue(eObject, allIssues, issueCollection, Severity.WARNING, expectedMessages);
+  protected static void assertWarning(final EObject eObject, final List<Issue> allIssues, final /* FluentIssueCollection */Object issueCollection, final String... expectedMessages) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method assertIssue(EObject, List<Issue>, FluentIssueCollection, Severity, String...) from the type OsateTest refers to the missing type FluentIssueCollection");
   }
   
   /**
    * @deprecated Use {@link AssertHelper#assertIssue()}
    */
   @Deprecated
-  protected static void assertIssue(final EObject eObject, final List<Issue> allIssues, final FluentIssueCollection issueCollection, final Severity severity, final String... expectedMessages) {
-    final Function1<Issue, Boolean> _function = (Issue it) -> {
-      return Boolean.valueOf((Objects.equal(it.getSeverity(), severity) && Objects.equal(it.getUriToProblem(), EcoreUtil.getURI(eObject))));
-    };
-    final Iterable<Issue> issuesForEObject = IterableExtensions.<Issue>filter(allIssues, _function);
-    final Function1<Issue, String> _function_1 = (Issue it) -> {
-      return it.getMessage();
-    };
-    final Iterable<String> messagesForEObject = IterableExtensions.<Issue, String>map(issuesForEObject, _function_1);
-    Set<String> _set = IterableExtensions.<String>toSet(messagesForEObject);
-    Set<String> _set_1 = IterableExtensions.<String>toSet(((Iterable<String>)Conversions.doWrapArray(expectedMessages)));
-    boolean _notEquals = (!Objects.equal(_set, _set_1));
-    if (_notEquals) {
-      String _join = IterableExtensions.join(((Iterable<?>)Conversions.doWrapArray(expectedMessages)), "\n");
-      String _join_1 = IterableExtensions.join(messagesForEObject, "\n");
-      throw new ComparisonFailure("", _join, _join_1);
-    }
-    final Consumer<Issue> _function_2 = (Issue it) -> {
-      issueCollection.addIssue(it);
-    };
-    issuesForEObject.forEach(_function_2);
+  protected static void assertIssue(final EObject eObject, final List<Issue> allIssues, final /* FluentIssueCollection */Object issueCollection, final Severity severity, final String... expectedMessages) {
+    throw new Error("Unresolved compilation problems:"
+      + "\naddIssue cannot be resolved");
   }
   
   /**

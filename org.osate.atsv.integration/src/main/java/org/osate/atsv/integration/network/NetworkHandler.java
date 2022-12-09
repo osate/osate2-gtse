@@ -80,15 +80,13 @@ public class NetworkHandler implements Runnable {
 	}
 
 	private void printTimestampCSV(Timestamp timestamp) {
-		// Run #, ATSV Time, OSATE init time, unmarshalling time, plugin load time, instantiation time, analysis time, marshalling time, transmit time, osate
+		// Run #, ATSV Time, unmarshalling time, plugin load time, instantiation time, analysis time, marshalling time, transmit time, osate
 		// time
 		stringbuilder = new StringBuilder();
 		stringbuilder.append(runCount++).append(",");
 		stringbuilder.append(Duration.between(timestamp.getPrevResponseSent(), timestamp.getRequestReceived()))
 				.append(",");
-		stringbuilder.append(Duration.between(timestamp.getRequestReceived(), timestamp.getOsateInitialized()))
-				.append(",");
-		stringbuilder.append(Duration.between(timestamp.getOsateInitialized(), timestamp.getUnmarshallingComplete()))
+		stringbuilder.append(Duration.between(timestamp.getRequestReceived(), timestamp.getUnmarshallingComplete()))
 				.append(",");
 		stringbuilder.append(Duration.between(timestamp.getUnmarshallingComplete(), timestamp.getPluginsLoaded()))
 				.append(",");
@@ -111,9 +109,7 @@ public class NetworkHandler implements Runnable {
 		stringbuilder.append("\tATSV time: ")
 				.append(Duration.between(timestamp.getPrevResponseSent(), timestamp.getRequestReceived())).append("\n");
 		stringbuilder.append("\tOSATE Init time: ")
-				.append(Duration.between(timestamp.getRequestReceived(), timestamp.getOsateInitialized())).append("\n");
-		stringbuilder.append("\tUnmarshalling time: ")
-				.append(Duration.between(timestamp.getOsateInitialized(), timestamp.getUnmarshallingComplete()))
+				.append(Duration.between(timestamp.getRequestReceived(), timestamp.getUnmarshallingComplete()))
 				.append("\n");
 		stringbuilder.append("\tPlugin Load time: ")
 				.append(Duration.between(timestamp.getUnmarshallingComplete(), timestamp.getPluginsLoaded()))

@@ -10,11 +10,6 @@ public class Timestamp {
 	private Instant requestReceived = null;
 
 	/**
-	 * When OSATE has created the necessary resource set and code injection is complete
-	 */
-	private Instant osateInitialized = null;
-
-	/**
 	 * When the request is done being deserialized (and read) into a request object
 	 */
 	private Instant unmarshallingComplete = null;
@@ -59,14 +54,6 @@ public class Timestamp {
 
 	public void setRequestReceived(Instant requestReceived) {
 		this.requestReceived = requestReceived;
-	}
-
-	public Instant getOsateInitialized() {
-		return osateInitialized;
-	}
-
-	public void setOsateInitialized(Instant osateInitialized) {
-		this.osateInitialized = osateInitialized;
 	}
 
 	public Instant getUnmarshallingComplete() {

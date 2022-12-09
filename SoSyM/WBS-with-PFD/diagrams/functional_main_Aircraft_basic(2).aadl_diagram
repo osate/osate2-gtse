@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="79fb6348-44ee-48a0-871d-76e4795cbd88" manual="true">
+    <element uuid="640c99e1-9b3c-4108-9d8c-033a921c3d7b" manual="true">
+      <element uuid="51f8d46a-d6ee-4923-94b9-6d73311ef0c2" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c1</seg>
+      </bo>
+      <bendpoints>
+        <point x="277.0" y="332.0"/>
+        <point x="277.0" y="302.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="547cd58b-a13a-481f-ae04-2fd705bb5cda" manual="true">
+      <element uuid="b91e03bf-1473-46de-ab0f-7a4d44e5a841" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c2</seg>
+      </bo>
+      <bendpoints>
+        <point x="277.0" y="92.0"/>
+        <point x="277.0" y="152.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="85c6d5dc-366a-44f7-b581-1d3f26586c6d" manual="true">
+      <element uuid="a0e9dddf-e628-4eac-be64-702cbb59f542" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c3</seg>
+      </bo>
+    </element>
+    <element uuid="7beded3e-8a02-463c-8510-605192beaac1" manual="true">
+      <element uuid="729db38c-27cb-4b1c-a7d8-f1e44ffe4934" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c4</seg>
+      </bo>
+      <bendpoints>
+        <point x="277.0" y="412.0"/>
+        <point x="277.0" y="352.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="3d1adecf-9053-4ec0-ae67-5744272db768" manual="true">
+      <element uuid="f2f9fbab-ef63-485d-8c89-1180f24b92f8" manual="true">
+        <bo>
+          <seg>tag</seg>
+          <seg>unidirectional</seg>
+        </bo>
+      </element>
+      <bo>
+        <seg>connection</seg>
+        <seg>c5</seg>
+      </bo>
+      <bendpoints>
+        <point x="277.0" y="172.0"/>
+        <point x="277.0" y="202.0"/>
+      </bendpoints>
+    </element>
+    <element uuid="2aea6ce2-593d-4d17-99d8-a5423f1f3fd9" manual="true">
+      <element uuid="0b67323c-2e0f-42c2-b3b1-8b003fe78831" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>isFailing</seg>
+        </bo>
+        <position x="144.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>alert</seg>
+      </bo>
+      <position x="46.0" y="198.0"/>
+      <size width="209.0" height="60.0"/>
+    </element>
+    <element uuid="205afb9a-2492-4855-8f5a-aa00fc5b0180" manual="true">
+      <element uuid="9a1eab3e-e672-40aa-8bff-f97e32da0dae" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>fromAlert</seg>
+        </bo>
+        <position y="110.0"/>
+      </element>
+      <element uuid="e4db399c-30ac-42b1-9d3e-2c4c6d0970a5" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>fromElectrical</seg>
+        </bo>
+        <position y="160.0"/>
+      </element>
+      <element uuid="4a8c0932-a248-4472-82e7-cd1a988bddda" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>fromHydraulic</seg>
+        </bo>
+        <position y="10.0"/>
+      </element>
+      <element uuid="7b8a5983-c515-4396-a5e5-cd56c6d7f291" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>fromStatus</seg>
+        </bo>
+        <position y="60.0"/>
+      </element>
+      <element uuid="bce443cf-555f-47f3-952e-f04c85a489f6" manual="true" dockArea="left">
+        <bo>
+          <seg>feature</seg>
+          <seg>fromSteering</seg>
+        </bo>
+        <position y="210.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>decelerate</seg>
+      </bo>
+      <position x="275.0" y="98.0"/>
+      <size width="331.0" height="260.0"/>
+    </element>
+    <element uuid="22654e7f-9c43-4058-8043-be75294d1f9d" manual="true">
+      <element uuid="12f6546c-35c0-4d3c-b21e-cec09f69ff54" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>isFailing</seg>
+        </bo>
+        <position x="178.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>electrical</seg>
+      </bo>
+      <position x="12.0" y="278.0"/>
+      <size width="243.0" height="60.0"/>
+    </element>
+    <element uuid="b4217997-6536-42d6-9ec4-a12f6274ed73" manual="true">
+      <element uuid="1056e72e-5a45-44f6-becc-922b885526b9" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>isFailing</seg>
+        </bo>
+        <position x="178.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>hydraulic</seg>
+      </bo>
+      <position x="12.0" y="38.0"/>
+      <size width="243.0" height="60.0"/>
+    </element>
+    <element uuid="2307a724-7b63-4c2f-95c5-e0b639e11345" manual="true">
+      <element uuid="22f4f06d-2ae6-4b08-9ab0-516989b2ac7f" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>isFailing</seg>
+        </bo>
+        <position x="156.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>status</seg>
+      </bo>
+      <position x="34.0" y="118.0"/>
+      <size width="221.0" height="60.0"/>
+    </element>
+    <element uuid="dabbe8e1-1e50-4c5a-90c8-ec0171f167a4" manual="true">
+      <element uuid="3483a896-aedf-4475-a939-cfcb883cfbd0" manual="true" dockArea="right">
+        <bo>
+          <seg>feature</seg>
+          <seg>isFailing</seg>
+        </bo>
+        <position x="170.0" y="10.0"/>
+      </element>
+      <bo>
+        <seg>subcomponent</seg>
+        <seg>steering</seg>
+      </bo>
+      <position x="20.0" y="358.0"/>
+      <size width="235.0" height="60.0"/>
+    </element>
+    <bo>
+      <seg>classifier</seg>
+      <seg>Aircraft.basic</seg>
+    </bo>
+    <position x="12.0" y="12.0"/>
+    <size width="618.0" height="430.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>classifier</seg>
+      <seg>functional::main::Aircraft.basic</seg>
+    </context>
+  </config>
+</diagram:Diagram>

@@ -88,7 +88,6 @@ public class AnalysisDelegator {
 		Injector injector = IResourceServiceProvider.Registry.INSTANCE
 				.getResourceServiceProvider(URI.createFileURI("dummy.aadl")).get(Injector.class);
 		injector.injectMembers(this);
-		timestamp.setOsateInitialized(Instant.now());
 	}
 
 	private class AnalysisRunner implements ISafeRunnable {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<diagram:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:diagram="http://osate.org/diagram" formatVersion="7">
+  <element uuid="72af63ef-8942-423d-bb1a-f97ffb21f936" manual="true">
+    <element uuid="ede2cec2-0b6e-412b-9325-fe2dade4c258" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>functional</seg>
+      </bo>
+      <position x="12.0" y="93.0"/>
+      <size width="119.0" height="35.0"/>
+    </element>
+    <element uuid="624d341d-d438-435f-9837-d09ed95cfa80" manual="true">
+      <bo>
+        <seg>org.osate.ge.diagrams.instance</seg>
+        <seg>component_instance</seg>
+        <seg>wbs_impl</seg>
+      </bo>
+      <position x="12.0" y="38.0"/>
+      <size width="114.0" height="35.0"/>
+    </element>
+    <bo>
+      <seg>org.osate.ge.diagrams.instance</seg>
+      <seg>system_instance</seg>
+      <seg>/wbs-with-pfd/arp4761/advanced/integration/instances/main_main_impl_instance.aaxl2</seg>
+    </bo>
+    <position x="12.0" y="12.0"/>
+    <size width="200.0" height="140.0"/>
+  </element>
+  <config type="structure" connectionPrimaryLabelsVisible="false">
+    <enabledAadlProperties/>
+    <context>
+      <seg>org.osate.ge.diagrams.instance</seg>
+      <seg>system_instance</seg>
+      <seg>/wbs-with-pfd/arp4761/advanced/integration/instances/main_main_impl_instance.aaxl2</seg>
+    </context>
+  </config>
+</diagram:Diagram>
