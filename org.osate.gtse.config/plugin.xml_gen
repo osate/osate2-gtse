@@ -2,9 +2,9 @@
 <?eclipse version="3.0"?>
 <plugin>
 	<extension point="org.eclipse.emf.ecore.generated_package">
-		<package 
+		<package
 			uri = "http://www.osate.org/gtse/config/Config"
-			class = "org.osate.gtse.config.choice.ChoicePackage"
+			class = "org.osate.gtse.config.config.ConfigPackage"
 			genModel = "model/generated/Config.genmodel" />
 	</extension>
 </plugin>

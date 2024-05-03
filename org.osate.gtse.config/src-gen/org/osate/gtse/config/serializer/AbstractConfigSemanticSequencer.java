@@ -1041,6 +1041,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConfigPkg returns ConfigPkg
 	 *     NamedElement returns ConfigPkg
@@ -1052,6 +1053,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *         (analyses+=STRING analyses+=STRING*)? 
 	 *         (outputs+=OutputVariable outputs+=OutputVariable*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Analyses_ConfigPkg_Outputs_Root(ISerializationContext context, ConfigPkg semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1059,6 +1061,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ArgumentValue returns NamedElementRef
 	 *
@@ -1070,6 +1073,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *         (assignments+=Assignment assignments+=Assignment*)? 
 	 *         (constraints+=Constraint constraints+=Constraint*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ArgumentValue_Arguments_Assignments_With(ISerializationContext context, NamedElementRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1077,11 +1081,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ArgumentValue returns PropertyValue
 	 *
 	 * Constraint:
 	 *     exp=CPropertyExpression
+	 * </pre>
 	 */
 	protected void sequence_ArgumentValue(ISerializationContext context, PropertyValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -1095,11 +1101,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Argument returns Argument
 	 *
 	 * Constraint:
 	 *     (parameter=[ConfigParameter|ID] value=ArgumentValue)
+	 * </pre>
 	 */
 	protected void sequence_Argument(ISerializationContext context, Argument semanticObject) {
 		if (errorAcceptor != null) {
@@ -1116,6 +1124,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConfigValue returns NamedElementRef
 	 *
@@ -1127,6 +1136,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *         (assignments+=Assignment assignments+=Assignment*)? 
 	 *         (constraints+=Constraint constraints+=Constraint*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Arguments_Assignments_ConfigValue_With(ISerializationContext context, NamedElementRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1134,11 +1144,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Combination returns Combination
 	 *
 	 * Constraint:
 	 *     (unsafe?='unsafe'? configuration=[Configuration|ID] (arguments+=Argument arguments+=Argument*)?)
+	 * </pre>
 	 */
 	protected void sequence_Arguments_Combination(ISerializationContext context, Combination semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1146,11 +1158,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
 	 *     ((((wildcard?='*' | ref=ElementRef) property=[Property|PNAME]?) | property=[Property|PNAME]) value=ConfigValue)
+	 * </pre>
 	 */
 	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1158,11 +1172,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConfigValue returns NestedAssignments
 	 *
 	 * Constraint:
 	 *     ((assignments+=Assignment assignments+=Assignment*)? (constraints+=Constraint constraints+=Constraint*)?)
+	 * </pre>
 	 */
 	protected void sequence_Assignments_ConfigValue(ISerializationContext context, NestedAssignments semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1170,6 +1186,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Configuration returns Configuration
 	 *     NamedElement returns Configuration
@@ -1182,6 +1199,7 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	 *         (assignments+=Assignment assignments+=Assignment*)? 
 	 *         (constraints+=Constraint constraints+=Constraint*)?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_Assignments_Configuration_Parameters_With(ISerializationContext context, Configuration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1189,11 +1207,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CandidateValue returns NamedElementRef
 	 *
 	 * Constraint:
 	 *     ref=[NamedElement|CNAME]
+	 * </pre>
 	 */
 	protected void sequence_CandidateValue(ISerializationContext context, NamedElementRef semanticObject) {
 		if (errorAcceptor != null) {
@@ -1207,11 +1227,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CandidateValue returns PropertyValue
 	 *
 	 * Constraint:
 	 *     exp=CPropertyExpression
+	 * </pre>
 	 */
 	protected void sequence_CandidateValue(ISerializationContext context, PropertyValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -1225,11 +1247,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Candidates returns CandidateList
 	 *
 	 * Constraint:
 	 *     (candidates+=CandidateValue candidates+=CandidateValue*)?
+	 * </pre>
 	 */
 	protected void sequence_Candidates(ISerializationContext context, CandidateList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1237,12 +1261,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConditionExpression returns NamedElementRef
 	 *     ConditionValue returns NamedElementRef
 	 *
 	 * Constraint:
 	 *     ref=[NamedElement|CNAME]
+	 * </pre>
 	 */
 	protected void sequence_ConditionValue(ISerializationContext context, NamedElementRef semanticObject) {
 		if (errorAcceptor != null) {
@@ -1256,12 +1282,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConditionExpression returns PropertyValue
 	 *     ConditionValue returns PropertyValue
 	 *
 	 * Constraint:
 	 *     exp=CPropertyExpression
+	 * </pre>
 	 */
 	protected void sequence_ConditionValue(ISerializationContext context, PropertyValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -1275,11 +1303,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Condition returns Condition
 	 *
 	 * Constraint:
 	 *     (lhs=ConditionExpression relation=Relation rhs=ConditionExpression)
+	 * </pre>
 	 */
 	protected void sequence_Condition(ISerializationContext context, Condition semanticObject) {
 		if (errorAcceptor != null) {
@@ -1299,12 +1329,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConditionExpression returns ConfigElement
 	 *     ConfigElement returns ConfigElement
 	 *
 	 * Constraint:
 	 *     ((element=ElementRef property=[Property|PNAME]?) | property=[Property|PNAME])
+	 * </pre>
 	 */
 	protected void sequence_ConfigElement(ISerializationContext context, ConfigElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1312,12 +1344,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConfigParameter returns ConfigParameter
 	 *     NamedElement returns ConfigParameter
 	 *
 	 * Constraint:
 	 *     (name=ID ((category=ComponentCategory classifier=[ComponentClassifier|CNAME]) | propertyType=[Property|PNAME]) choices=Candidates?)
+	 * </pre>
 	 */
 	protected void sequence_ConfigParameter_FClassifierType_FPropertyType(ISerializationContext context, ConfigParameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1325,11 +1359,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConfigValue returns PropertyValue
 	 *
 	 * Constraint:
 	 *     exp=CPropertyExpression
+	 * </pre>
 	 */
 	protected void sequence_ConfigValue(ISerializationContext context, PropertyValue semanticObject) {
 		if (errorAcceptor != null) {
@@ -1343,11 +1379,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Constraint returns Constraint
 	 *
 	 * Constraint:
 	 *     (condition=Condition (relation=Relation consequence=Condition)?)
+	 * </pre>
 	 */
 	protected void sequence_Constraint(ISerializationContext context, Constraint semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1355,12 +1393,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElementRef returns ElementRef
 	 *     ElementRef.ElementRef_1_0_0 returns ElementRef
 	 *
 	 * Constraint:
 	 *     (element=[NamedElement|ID] | (prev=ElementRef_ElementRef_1_0_0 element=[NamedElement|ID]))
+	 * </pre>
 	 */
 	protected void sequence_ElementRef(ISerializationContext context, ElementRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1368,11 +1408,13 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Limit returns Limit
 	 *
 	 * Constraint:
 	 *     (relation=Relation bound=Literal)
+	 * </pre>
 	 */
 	protected void sequence_Limit(ISerializationContext context, Limit semanticObject) {
 		if (errorAcceptor != null) {
@@ -1389,12 +1431,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     OutputVariable returns OutputVariable
 	 *     NamedElement returns OutputVariable
 	 *
 	 * Constraint:
 	 *     (name=ID type=Type? limit=Limit?)
+	 * </pre>
 	 */
 	protected void sequence_OutputVariable(ISerializationContext context, OutputVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1402,12 +1446,14 @@ public abstract class AbstractConfigSemanticSequencer extends Aadl2SemanticSeque
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ConditionExpression returns SetValue
 	 *     SetValue returns SetValue
 	 *
 	 * Constraint:
 	 *     (elements+=ConditionValue elements+=ConditionValue*)
+	 * </pre>
 	 */
 	protected void sequence_SetValue(ISerializationContext context, SetValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

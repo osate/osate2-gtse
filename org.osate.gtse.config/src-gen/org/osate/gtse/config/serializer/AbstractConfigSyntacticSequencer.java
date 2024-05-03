@@ -610,24 +610,30 @@ public abstract class AbstractConfigSyntacticSequencer extends AbstractSyntactic
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('properties' 'none' ';')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedPrivateSection=PrivatePackageSection (ambiguity) 'end' PNAME ';' (rule end)
 	 *     ownedPublicSection=PublicPackageSection (ambiguity) 'end' PNAME ';' (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_AadlPackage___PropertiesKeyword_3_0_NoneKeyword_3_1_1_0_SemicolonKeyword_3_1_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('constraints' '{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) '{' '}' (ambiguity) (rule start)
 	 *     assignments+=Assignment '}' (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_Assignments___ConstraintsKeyword_3_0_LeftCurlyBracketKeyword_3_1_RightCurlyBracketKeyword_3_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

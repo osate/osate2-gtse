@@ -699,7 +699,7 @@ ruleCombination returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getCombinationRule());
 					}
-					setWithLastConsumed($current, "unsafe", true, "unsafe");
+					setWithLastConsumed($current, "unsafe", lv_unsafe_0_0 != null, "unsafe");
 				}
 			)
 		)?
@@ -1272,7 +1272,7 @@ ruleAssignment returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAssignmentRule());
 								}
-								setWithLastConsumed($current, "wildcard", true, "*");
+								setWithLastConsumed($current, "wildcard", lv_wildcard_0_0 != null, "*");
 							}
 						)
 					)
@@ -3024,7 +3024,7 @@ rulePackageRename returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getPackageRenameRule());
 						}
-						setWithLastConsumed($current, "renameAll", true, "all");
+						setWithLastConsumed($current, "renameAll", lv_renameAll_5_0 != null, "all");
 					}
 				)
 			)
@@ -3086,7 +3086,7 @@ ruleRenameAll returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getRenameAllRule());
 					}
-					setWithLastConsumed($current, "renameAll", true, "all");
+					setWithLastConsumed($current, "renameAll", lv_renameAll_3_0 != null, "all");
 				}
 			)
 		)
@@ -3811,7 +3811,7 @@ ruleAbstractType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -3859,7 +3859,7 @@ ruleAbstractType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -4089,7 +4089,7 @@ ruleAbstractType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_26_0 != null, "none");
 							}
 						)
 					)
@@ -4115,7 +4115,7 @@ ruleAbstractType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_28_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -4201,7 +4201,7 @@ ruleAbstractType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getAbstractTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_33_0 != null, "none");
 								}
 							)
 						)
@@ -4250,7 +4250,7 @@ ruleAbstractType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_37_0 != null, "none");
 							}
 						)
 					)
@@ -4445,7 +4445,7 @@ ruleSystemType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_10_0 != null, "none");
 							}
 						)
 					)
@@ -4655,7 +4655,7 @@ ruleSystemType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_22_0 != null, "none");
 							}
 						)
 					)
@@ -4703,7 +4703,7 @@ ruleSystemType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_26_0 != null, "none");
 							}
 						)
 					)
@@ -4729,7 +4729,7 @@ ruleSystemType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_28_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -4815,7 +4815,7 @@ ruleSystemType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getSystemTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_33_0 != null, "none");
 								}
 							)
 						)
@@ -4864,7 +4864,7 @@ ruleSystemType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_37_0 != null, "none");
 							}
 						)
 					)
@@ -5039,7 +5039,7 @@ ruleProcessType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -5087,7 +5087,7 @@ ruleProcessType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -5297,7 +5297,7 @@ ruleProcessType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -5323,7 +5323,7 @@ ruleProcessType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -5409,7 +5409,7 @@ ruleProcessType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getProcessTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -5458,7 +5458,7 @@ ruleProcessType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -5636,7 +5636,7 @@ ruleThreadGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -5684,7 +5684,7 @@ ruleThreadGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -5894,7 +5894,7 @@ ruleThreadGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -5920,7 +5920,7 @@ ruleThreadGroupType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -6006,7 +6006,7 @@ ruleThreadGroupType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getThreadGroupTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -6055,7 +6055,7 @@ ruleThreadGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -6230,7 +6230,7 @@ ruleThreadType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -6278,7 +6278,7 @@ ruleThreadType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -6488,7 +6488,7 @@ ruleThreadType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -6514,7 +6514,7 @@ ruleThreadType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -6600,7 +6600,7 @@ ruleThreadType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getThreadTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -6649,7 +6649,7 @@ ruleThreadType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -6824,7 +6824,7 @@ ruleSubprogramType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -6872,7 +6872,7 @@ ruleSubprogramType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -7082,7 +7082,7 @@ ruleSubprogramType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -7108,7 +7108,7 @@ ruleSubprogramType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -7194,7 +7194,7 @@ ruleSubprogramType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getSubprogramTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -7243,7 +7243,7 @@ ruleSubprogramType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -7421,7 +7421,7 @@ ruleSubprogramGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -7469,7 +7469,7 @@ ruleSubprogramGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -7599,7 +7599,7 @@ ruleSubprogramGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_21_0 != null, "none");
 							}
 						)
 					)
@@ -7647,7 +7647,7 @@ ruleSubprogramGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_25_0 != null, "none");
 							}
 						)
 					)
@@ -7822,7 +7822,7 @@ ruleProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -7870,7 +7870,7 @@ ruleProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -8080,7 +8080,7 @@ ruleProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -8106,7 +8106,7 @@ ruleProcessorType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -8192,7 +8192,7 @@ ruleProcessorType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getProcessorTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -8241,7 +8241,7 @@ ruleProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -8416,7 +8416,7 @@ ruleDeviceType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -8464,7 +8464,7 @@ ruleDeviceType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -8674,7 +8674,7 @@ ruleDeviceType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -8700,7 +8700,7 @@ ruleDeviceType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -8786,7 +8786,7 @@ ruleDeviceType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getDeviceTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -8835,7 +8835,7 @@ ruleDeviceType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -9010,7 +9010,7 @@ ruleMemoryType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -9058,7 +9058,7 @@ ruleMemoryType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -9206,7 +9206,7 @@ ruleMemoryType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_21_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -9292,7 +9292,7 @@ ruleMemoryType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getMemoryTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_26_0 != null, "none");
 								}
 							)
 						)
@@ -9341,7 +9341,7 @@ ruleMemoryType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_30_0 != null, "none");
 							}
 						)
 					)
@@ -9516,7 +9516,7 @@ ruleBusType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -9564,7 +9564,7 @@ ruleBusType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -9712,7 +9712,7 @@ ruleBusType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_21_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -9798,7 +9798,7 @@ ruleBusType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getBusTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_26_0 != null, "none");
 								}
 							)
 						)
@@ -9847,7 +9847,7 @@ ruleBusType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_30_0 != null, "none");
 							}
 						)
 					)
@@ -10025,7 +10025,7 @@ ruleVirtualBusType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -10073,7 +10073,7 @@ ruleVirtualBusType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -10221,7 +10221,7 @@ ruleVirtualBusType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_21_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -10307,7 +10307,7 @@ ruleVirtualBusType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getVirtualBusTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_26_0 != null, "none");
 								}
 							)
 						)
@@ -10356,7 +10356,7 @@ ruleVirtualBusType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_30_0 != null, "none");
 							}
 						)
 					)
@@ -10534,7 +10534,7 @@ ruleVirtualProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -10582,7 +10582,7 @@ ruleVirtualProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -10792,7 +10792,7 @@ ruleVirtualProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_25_0 != null, "none");
 							}
 						)
 					)
@@ -10818,7 +10818,7 @@ ruleVirtualProcessorType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_27_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -10904,7 +10904,7 @@ ruleVirtualProcessorType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getVirtualProcessorTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 								}
 							)
 						)
@@ -10953,7 +10953,7 @@ ruleVirtualProcessorType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
@@ -11128,7 +11128,7 @@ ruleDataType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -11176,7 +11176,7 @@ ruleDataType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataTypeRule());
 								}
-								setWithLastConsumed($current, "noFeatures", true, "none");
+								setWithLastConsumed($current, "noFeatures", lv_noFeatures_13_0 != null, "none");
 							}
 						)
 					)
@@ -11326,7 +11326,7 @@ ruleDataType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataTypeRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_22_0 != null, "none");
 							}
 						)
 					)
@@ -11352,7 +11352,7 @@ ruleDataType returns [EObject current=null]
 							set(
 								$current,
 								"derivedModes",
-								true,
+								lv_derivedModes_24_0 != null,
 								"org.osate.xtext.aadl2.Aadl2.RequiresModesKeywords");
 							afterParserOrEnumRuleCall();
 						}
@@ -11438,7 +11438,7 @@ ruleDataType returns [EObject current=null]
 									if ($current==null) {
 										$current = createModelElement(grammarAccess.getDataTypeRule());
 									}
-									setWithLastConsumed($current, "noModes", true, "none");
+									setWithLastConsumed($current, "noModes", lv_noModes_29_0 != null, "none");
 								}
 							)
 						)
@@ -11487,7 +11487,7 @@ ruleDataType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_33_0 != null, "none");
 							}
 						)
 					)
@@ -11881,7 +11881,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -12191,7 +12191,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_29_0 != null, "none");
 							}
 						)
 					)
@@ -12339,7 +12339,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noCalls", true, "none");
+								setWithLastConsumed($current, "noCalls", lv_noCalls_39_0 != null, "none");
 							}
 						)
 					)
@@ -12469,7 +12469,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_47_0 != null, "none");
 							}
 						)
 					)
@@ -12539,7 +12539,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_52_0 != null, "none");
 							}
 						)
 					)
@@ -12609,7 +12609,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_57_0 != null, "none");
 							}
 						)
 					)
@@ -12657,7 +12657,7 @@ ruleAbstractImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAbstractImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_61_0 != null, "none");
 							}
 						)
 					)
@@ -12880,7 +12880,7 @@ ruleSystemImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -13150,7 +13150,7 @@ ruleSystemImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_27_0 != null, "none");
 							}
 						)
 					)
@@ -13360,7 +13360,7 @@ ruleSystemImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_40_0 != null, "none");
 							}
 						)
 					)
@@ -13430,7 +13430,7 @@ ruleSystemImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_45_0 != null, "none");
 							}
 						)
 					)
@@ -13500,7 +13500,7 @@ ruleSystemImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_50_0 != null, "none");
 							}
 						)
 					)
@@ -13548,7 +13548,7 @@ ruleSystemImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSystemImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_54_0 != null, "none");
 							}
 						)
 					)
@@ -13771,7 +13771,7 @@ ruleProcessImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -13921,7 +13921,7 @@ ruleProcessImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_21_0 != null, "none");
 							}
 						)
 					)
@@ -14131,7 +14131,7 @@ ruleProcessImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_34_0 != null, "none");
 							}
 						)
 					)
@@ -14201,7 +14201,7 @@ ruleProcessImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_39_0 != null, "none");
 							}
 						)
 					)
@@ -14271,7 +14271,7 @@ ruleProcessImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_44_0 != null, "none");
 							}
 						)
 					)
@@ -14319,7 +14319,7 @@ ruleProcessImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_48_0 != null, "none");
 							}
 						)
 					)
@@ -14542,7 +14542,7 @@ ruleThreadGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -14692,7 +14692,7 @@ ruleThreadGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_21_0 != null, "none");
 							}
 						)
 					)
@@ -14902,7 +14902,7 @@ ruleThreadGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_34_0 != null, "none");
 							}
 						)
 					)
@@ -14972,7 +14972,7 @@ ruleThreadGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_39_0 != null, "none");
 							}
 						)
 					)
@@ -15042,7 +15042,7 @@ ruleThreadGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_44_0 != null, "none");
 							}
 						)
 					)
@@ -15090,7 +15090,7 @@ ruleThreadGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_48_0 != null, "none");
 							}
 						)
 					)
@@ -15313,7 +15313,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -15423,7 +15423,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_19_0 != null, "none");
 							}
 						)
 					)
@@ -15571,7 +15571,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noCalls", true, "none");
+								setWithLastConsumed($current, "noCalls", lv_noCalls_29_0 != null, "none");
 							}
 						)
 					)
@@ -15701,7 +15701,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_37_0 != null, "none");
 							}
 						)
 					)
@@ -15771,7 +15771,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_42_0 != null, "none");
 							}
 						)
 					)
@@ -15841,7 +15841,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_47_0 != null, "none");
 							}
 						)
 					)
@@ -15889,7 +15889,7 @@ ruleThreadImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getThreadImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_51_0 != null, "none");
 							}
 						)
 					)
@@ -16112,7 +16112,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -16202,7 +16202,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_18_0 != null, "none");
 							}
 						)
 					)
@@ -16350,7 +16350,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noCalls", true, "none");
+								setWithLastConsumed($current, "noCalls", lv_noCalls_28_0 != null, "none");
 							}
 						)
 					)
@@ -16480,7 +16480,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_36_0 != null, "none");
 							}
 						)
 					)
@@ -16550,7 +16550,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_41_0 != null, "none");
 							}
 						)
 					)
@@ -16620,7 +16620,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_46_0 != null, "none");
 							}
 						)
 					)
@@ -16668,7 +16668,7 @@ ruleSubprogramImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_50_0 != null, "none");
 							}
 						)
 					)
@@ -16891,7 +16891,7 @@ ruleSubprogramGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -17001,7 +17001,7 @@ ruleSubprogramGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_19_0 != null, "none");
 							}
 						)
 					)
@@ -17191,7 +17191,7 @@ ruleSubprogramGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_31_0 != null, "none");
 							}
 						)
 					)
@@ -17261,7 +17261,7 @@ ruleSubprogramGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_36_0 != null, "none");
 							}
 						)
 					)
@@ -17309,7 +17309,7 @@ ruleSubprogramGroupImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getSubprogramGroupImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_40_0 != null, "none");
 							}
 						)
 					)
@@ -17532,7 +17532,7 @@ ruleProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -17662,7 +17662,7 @@ ruleProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_20_0 != null, "none");
 							}
 						)
 					)
@@ -17822,7 +17822,7 @@ ruleProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_30_0 != null, "none");
 							}
 						)
 					)
@@ -17892,7 +17892,7 @@ ruleProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_35_0 != null, "none");
 							}
 						)
 					)
@@ -17962,7 +17962,7 @@ ruleProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_40_0 != null, "none");
 							}
 						)
 					)
@@ -18010,7 +18010,7 @@ ruleProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_44_0 != null, "none");
 							}
 						)
 					)
@@ -18233,7 +18233,7 @@ ruleVirtualProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -18323,7 +18323,7 @@ ruleVirtualProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_18_0 != null, "none");
 							}
 						)
 					)
@@ -18533,7 +18533,7 @@ ruleVirtualProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_31_0 != null, "none");
 							}
 						)
 					)
@@ -18603,7 +18603,7 @@ ruleVirtualProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_36_0 != null, "none");
 							}
 						)
 					)
@@ -18673,7 +18673,7 @@ ruleVirtualProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_41_0 != null, "none");
 							}
 						)
 					)
@@ -18721,7 +18721,7 @@ ruleVirtualProcessorImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualProcessorImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_45_0 != null, "none");
 							}
 						)
 					)
@@ -18944,7 +18944,7 @@ ruleDeviceImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -19054,7 +19054,7 @@ ruleDeviceImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_19_0 != null, "none");
 							}
 						)
 					)
@@ -19264,7 +19264,7 @@ ruleDeviceImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_32_0 != null, "none");
 							}
 						)
 					)
@@ -19334,7 +19334,7 @@ ruleDeviceImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_37_0 != null, "none");
 							}
 						)
 					)
@@ -19404,7 +19404,7 @@ ruleDeviceImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_42_0 != null, "none");
 							}
 						)
 					)
@@ -19452,7 +19452,7 @@ ruleDeviceImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDeviceImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_46_0 != null, "none");
 							}
 						)
 					)
@@ -19675,7 +19675,7 @@ ruleMemoryImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -19752,26 +19752,46 @@ ruleMemoryImplementation returns [EObject current=null]
 							}
 						)
 					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedVirtualBusSubcomponentVirtualBusSubcomponentParserRuleCall_7_1_0_3_0());
+							}
+							lv_ownedVirtualBusSubcomponent_18_0=ruleVirtualBusSubcomponent
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
+								}
+								add(
+									$current,
+									"ownedVirtualBusSubcomponent",
+									lv_ownedVirtualBusSubcomponent_18_0,
+									"org.osate.xtext.aadl2.Aadl2.VirtualBusSubcomponent");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
 				)+
 				    |
 				(
 					(
 						(
-							lv_noSubcomponents_18_0='none'
+							lv_noSubcomponents_19_0='none'
 							{
-								newLeafNode(lv_noSubcomponents_18_0, grammarAccess.getMemoryImplementationAccess().getNoSubcomponentsNoneKeyword_7_1_1_0_0());
+								newLeafNode(lv_noSubcomponents_19_0, grammarAccess.getMemoryImplementationAccess().getNoSubcomponentsNoneKeyword_7_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_19_0 != null, "none");
 							}
 						)
 					)
-					otherlv_19=';'
+					otherlv_20=';'
 					{
-						newLeafNode(otherlv_19, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_7_1_1_1());
+						newLeafNode(otherlv_20, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_7_1_1_1());
 					}
 				)
 			)
@@ -19790,7 +19810,7 @@ ruleMemoryImplementation returns [EObject current=null]
 						{
 							newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedEventSourceEventSourceParserRuleCall_8_1_0_0());
 						}
-						lv_ownedEventSource_21_0=ruleEventSource
+						lv_ownedEventSource_22_0=ruleEventSource
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19798,7 +19818,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							add(
 								$current,
 								"ownedEventSource",
-								lv_ownedEventSource_21_0,
+								lv_ownedEventSource_22_0,
 								"org.osate.xtext.aadl2.Aadl2.EventSource");
 							afterParserOrEnumRuleCall();
 						}
@@ -19810,7 +19830,7 @@ ruleMemoryImplementation returns [EObject current=null]
 						{
 							newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedEventDataSourceEventDataSourceParserRuleCall_8_1_1_0());
 						}
-						lv_ownedEventDataSource_22_0=ruleEventDataSource
+						lv_ownedEventDataSource_23_0=ruleEventDataSource
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19818,7 +19838,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							add(
 								$current,
 								"ownedEventDataSource",
-								lv_ownedEventDataSource_22_0,
+								lv_ownedEventDataSource_23_0,
 								"org.osate.xtext.aadl2.Aadl2.EventDataSource");
 							afterParserOrEnumRuleCall();
 						}
@@ -19827,9 +19847,9 @@ ruleMemoryImplementation returns [EObject current=null]
 			)+
 		)?
 		(
-			otherlv_23='connections'
+			otherlv_24='connections'
 			{
-				newLeafNode(otherlv_23, grammarAccess.getMemoryImplementationAccess().getConnectionsKeyword_9_0());
+				newLeafNode(otherlv_24, grammarAccess.getMemoryImplementationAccess().getConnectionsKeyword_9_0());
 			}
 			(
 				(
@@ -19838,7 +19858,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedAccessConnectionAccessConnectionParserRuleCall_9_1_0_0_0());
 							}
-							lv_ownedAccessConnection_24_0=ruleAccessConnection
+							lv_ownedAccessConnection_25_0=ruleAccessConnection
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19846,7 +19866,7 @@ ruleMemoryImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedAccessConnection",
-									lv_ownedAccessConnection_24_0,
+									lv_ownedAccessConnection_25_0,
 									"org.osate.xtext.aadl2.Aadl2.AccessConnection");
 								afterParserOrEnumRuleCall();
 							}
@@ -19858,7 +19878,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedFeatureGroupConnectionFeatureGroupConnectionParserRuleCall_9_1_0_1_0());
 							}
-							lv_ownedFeatureGroupConnection_25_0=ruleFeatureGroupConnection
+							lv_ownedFeatureGroupConnection_26_0=ruleFeatureGroupConnection
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19866,7 +19886,7 @@ ruleMemoryImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedFeatureGroupConnection",
-									lv_ownedFeatureGroupConnection_25_0,
+									lv_ownedFeatureGroupConnection_26_0,
 									"org.osate.xtext.aadl2.Aadl2.FeatureGroupConnection");
 								afterParserOrEnumRuleCall();
 							}
@@ -19878,7 +19898,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedFeatureConnectionFeatureConnectionParserRuleCall_9_1_0_2_0());
 							}
-							lv_ownedFeatureConnection_26_0=ruleFeatureConnection
+							lv_ownedFeatureConnection_27_0=ruleFeatureConnection
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19886,7 +19906,7 @@ ruleMemoryImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedFeatureConnection",
-									lv_ownedFeatureConnection_26_0,
+									lv_ownedFeatureConnection_27_0,
 									"org.osate.xtext.aadl2.Aadl2.FeatureConnection");
 								afterParserOrEnumRuleCall();
 							}
@@ -19897,29 +19917,29 @@ ruleMemoryImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noConnections_27_0='none'
+							lv_noConnections_28_0='none'
 							{
-								newLeafNode(lv_noConnections_27_0, grammarAccess.getMemoryImplementationAccess().getNoConnectionsNoneKeyword_9_1_1_0_0());
+								newLeafNode(lv_noConnections_28_0, grammarAccess.getMemoryImplementationAccess().getNoConnectionsNoneKeyword_9_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_28_0 != null, "none");
 							}
 						)
 					)
-					otherlv_28=';'
+					otherlv_29=';'
 					{
-						newLeafNode(otherlv_28, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_9_1_1_1());
+						newLeafNode(otherlv_29, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_9_1_1_1());
 					}
 				)
 			)
 		)?
 		(
-			otherlv_29='modes'
+			otherlv_30='modes'
 			{
-				newLeafNode(otherlv_29, grammarAccess.getMemoryImplementationAccess().getModesKeyword_10_0());
+				newLeafNode(otherlv_30, grammarAccess.getMemoryImplementationAccess().getModesKeyword_10_0());
 			}
 			(
 				(
@@ -19928,7 +19948,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedModeModeParserRuleCall_10_1_0_0_0());
 							}
-							lv_ownedMode_30_0=ruleMode
+							lv_ownedMode_31_0=ruleMode
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19936,7 +19956,7 @@ ruleMemoryImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedMode",
-									lv_ownedMode_30_0,
+									lv_ownedMode_31_0,
 									"org.osate.xtext.aadl2.Aadl2.Mode");
 								afterParserOrEnumRuleCall();
 							}
@@ -19948,7 +19968,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							{
 								newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedModeTransitionModeTransitionParserRuleCall_10_1_0_1_0());
 							}
-							lv_ownedModeTransition_31_0=ruleModeTransition
+							lv_ownedModeTransition_32_0=ruleModeTransition
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -19956,7 +19976,7 @@ ruleMemoryImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedModeTransition",
-									lv_ownedModeTransition_31_0,
+									lv_ownedModeTransition_32_0,
 									"org.osate.xtext.aadl2.Aadl2.ModeTransition");
 								afterParserOrEnumRuleCall();
 							}
@@ -19967,29 +19987,29 @@ ruleMemoryImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noModes_32_0='none'
+							lv_noModes_33_0='none'
 							{
-								newLeafNode(lv_noModes_32_0, grammarAccess.getMemoryImplementationAccess().getNoModesNoneKeyword_10_1_1_0_0());
+								newLeafNode(lv_noModes_33_0, grammarAccess.getMemoryImplementationAccess().getNoModesNoneKeyword_10_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_33_0 != null, "none");
 							}
 						)
 					)
-					otherlv_33=';'
+					otherlv_34=';'
 					{
-						newLeafNode(otherlv_33, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_10_1_1_1());
+						newLeafNode(otherlv_34, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_10_1_1_1());
 					}
 				)
 			)
 		)?
 		(
-			otherlv_34='properties'
+			otherlv_35='properties'
 			{
-				newLeafNode(otherlv_34, grammarAccess.getMemoryImplementationAccess().getPropertiesKeyword_11_0());
+				newLeafNode(otherlv_35, grammarAccess.getMemoryImplementationAccess().getPropertiesKeyword_11_0());
 			}
 			(
 				(
@@ -19997,7 +20017,7 @@ ruleMemoryImplementation returns [EObject current=null]
 						{
 							newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedPropertyAssociationContainedPropertyAssociationParserRuleCall_11_1_0_0());
 						}
-						lv_ownedPropertyAssociation_35_0=ruleContainedPropertyAssociation
+						lv_ownedPropertyAssociation_36_0=ruleContainedPropertyAssociation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -20005,7 +20025,7 @@ ruleMemoryImplementation returns [EObject current=null]
 							add(
 								$current,
 								"ownedPropertyAssociation",
-								lv_ownedPropertyAssociation_35_0,
+								lv_ownedPropertyAssociation_36_0,
 								"org.osate.xtext.aadl2.properties.Properties.ContainedPropertyAssociation");
 							afterParserOrEnumRuleCall();
 						}
@@ -20015,21 +20035,21 @@ ruleMemoryImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noProperties_36_0='none'
+							lv_noProperties_37_0='none'
 							{
-								newLeafNode(lv_noProperties_36_0, grammarAccess.getMemoryImplementationAccess().getNoPropertiesNoneKeyword_11_1_1_0_0());
+								newLeafNode(lv_noProperties_37_0, grammarAccess.getMemoryImplementationAccess().getNoPropertiesNoneKeyword_11_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getMemoryImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_37_0 != null, "none");
 							}
 						)
 					)
-					otherlv_37=';'
+					otherlv_38=';'
 					{
-						newLeafNode(otherlv_37, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_11_1_1_1());
+						newLeafNode(otherlv_38, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_11_1_1_1());
 					}
 				)
 			)
@@ -20039,7 +20059,7 @@ ruleMemoryImplementation returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getMemoryImplementationAccess().getOwnedAnnexSubclauseAnnexSubclauseParserRuleCall_12_0());
 				}
-				lv_ownedAnnexSubclause_38_0=ruleAnnexSubclause
+				lv_ownedAnnexSubclause_39_0=ruleAnnexSubclause
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getMemoryImplementationRule());
@@ -20047,15 +20067,15 @@ ruleMemoryImplementation returns [EObject current=null]
 					add(
 						$current,
 						"ownedAnnexSubclause",
-						lv_ownedAnnexSubclause_38_0,
+						lv_ownedAnnexSubclause_39_0,
 						"org.osate.xtext.aadl2.Aadl2.AnnexSubclause");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_39='end'
+		otherlv_40='end'
 		{
-			newLeafNode(otherlv_39, grammarAccess.getMemoryImplementationAccess().getEndKeyword_13());
+			newLeafNode(otherlv_40, grammarAccess.getMemoryImplementationAccess().getEndKeyword_13());
 		}
 		{
 			newCompositeNode(grammarAccess.getMemoryImplementationAccess().getFULLINAMEParserRuleCall_14());
@@ -20064,9 +20084,9 @@ ruleMemoryImplementation returns [EObject current=null]
 		{
 			afterParserOrEnumRuleCall();
 		}
-		otherlv_41=';'
+		otherlv_42=';'
 		{
-			newLeafNode(otherlv_41, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_15());
+			newLeafNode(otherlv_42, grammarAccess.getMemoryImplementationAccess().getSemicolonKeyword_15());
 		}
 	)
 ;
@@ -20246,7 +20266,7 @@ ruleBusImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -20316,7 +20336,7 @@ ruleBusImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_17_0 != null, "none");
 							}
 						)
 					)
@@ -20378,18 +20398,128 @@ ruleBusImplementation returns [EObject current=null]
 			)+
 		)?
 		(
-			otherlv_22='modes'
+			otherlv_22='connections'
 			{
-				newLeafNode(otherlv_22, grammarAccess.getBusImplementationAccess().getModesKeyword_9_0());
+				newLeafNode(otherlv_22, grammarAccess.getBusImplementationAccess().getConnectionsKeyword_9_0());
 			}
 			(
 				(
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedModeModeParserRuleCall_9_1_0_0_0());
+								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedPortConnectionPortConnectionParserRuleCall_9_1_0_0_0());
 							}
-							lv_ownedMode_23_0=ruleMode
+							lv_ownedPortConnection_23_0=rulePortConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedPortConnection",
+									lv_ownedPortConnection_23_0,
+									"org.osate.xtext.aadl2.Aadl2.PortConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedAccessConnectionAccessConnectionParserRuleCall_9_1_0_1_0());
+							}
+							lv_ownedAccessConnection_24_0=ruleAccessConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedAccessConnection",
+									lv_ownedAccessConnection_24_0,
+									"org.osate.xtext.aadl2.Aadl2.AccessConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedFeatureGroupConnectionFeatureGroupConnectionParserRuleCall_9_1_0_2_0());
+							}
+							lv_ownedFeatureGroupConnection_25_0=ruleFeatureGroupConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedFeatureGroupConnection",
+									lv_ownedFeatureGroupConnection_25_0,
+									"org.osate.xtext.aadl2.Aadl2.FeatureGroupConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedFeatureConnectionFeatureConnectionParserRuleCall_9_1_0_3_0());
+							}
+							lv_ownedFeatureConnection_26_0=ruleFeatureConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedFeatureConnection",
+									lv_ownedFeatureConnection_26_0,
+									"org.osate.xtext.aadl2.Aadl2.FeatureConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+				)+
+				    |
+				(
+					(
+						(
+							lv_noConnections_27_0='none'
+							{
+								newLeafNode(lv_noConnections_27_0, grammarAccess.getBusImplementationAccess().getNoConnectionsNoneKeyword_9_1_1_0_0());
+							}
+							{
+								if ($current==null) {
+									$current = createModelElement(grammarAccess.getBusImplementationRule());
+								}
+								setWithLastConsumed($current, "noConnections", lv_noConnections_27_0 != null, "none");
+							}
+						)
+					)
+					otherlv_28=';'
+					{
+						newLeafNode(otherlv_28, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_9_1_1_1());
+					}
+				)
+			)
+		)?
+		(
+			otherlv_29='modes'
+			{
+				newLeafNode(otherlv_29, grammarAccess.getBusImplementationAccess().getModesKeyword_10_0());
+			}
+			(
+				(
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedModeModeParserRuleCall_10_1_0_0_0());
+							}
+							lv_ownedMode_30_0=ruleMode
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
@@ -20397,7 +20527,7 @@ ruleBusImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedMode",
-									lv_ownedMode_23_0,
+									lv_ownedMode_30_0,
 									"org.osate.xtext.aadl2.Aadl2.Mode");
 								afterParserOrEnumRuleCall();
 							}
@@ -20407,9 +20537,9 @@ ruleBusImplementation returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedModeTransitionModeTransitionParserRuleCall_9_1_0_1_0());
+								newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedModeTransitionModeTransitionParserRuleCall_10_1_0_1_0());
 							}
-							lv_ownedModeTransition_24_0=ruleModeTransition
+							lv_ownedModeTransition_31_0=ruleModeTransition
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
@@ -20417,7 +20547,7 @@ ruleBusImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedModeTransition",
-									lv_ownedModeTransition_24_0,
+									lv_ownedModeTransition_31_0,
 									"org.osate.xtext.aadl2.Aadl2.ModeTransition");
 								afterParserOrEnumRuleCall();
 							}
@@ -20428,37 +20558,37 @@ ruleBusImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noModes_25_0='none'
+							lv_noModes_32_0='none'
 							{
-								newLeafNode(lv_noModes_25_0, grammarAccess.getBusImplementationAccess().getNoModesNoneKeyword_9_1_1_0_0());
+								newLeafNode(lv_noModes_32_0, grammarAccess.getBusImplementationAccess().getNoModesNoneKeyword_10_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 							}
 						)
 					)
-					otherlv_26=';'
+					otherlv_33=';'
 					{
-						newLeafNode(otherlv_26, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_9_1_1_1());
+						newLeafNode(otherlv_33, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_10_1_1_1());
 					}
 				)
 			)
 		)?
 		(
-			otherlv_27='properties'
+			otherlv_34='properties'
 			{
-				newLeafNode(otherlv_27, grammarAccess.getBusImplementationAccess().getPropertiesKeyword_10_0());
+				newLeafNode(otherlv_34, grammarAccess.getBusImplementationAccess().getPropertiesKeyword_11_0());
 			}
 			(
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedPropertyAssociationContainedPropertyAssociationParserRuleCall_10_1_0_0());
+							newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedPropertyAssociationContainedPropertyAssociationParserRuleCall_11_1_0_0());
 						}
-						lv_ownedPropertyAssociation_28_0=ruleContainedPropertyAssociation
+						lv_ownedPropertyAssociation_35_0=ruleContainedPropertyAssociation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
@@ -20466,7 +20596,7 @@ ruleBusImplementation returns [EObject current=null]
 							add(
 								$current,
 								"ownedPropertyAssociation",
-								lv_ownedPropertyAssociation_28_0,
+								lv_ownedPropertyAssociation_35_0,
 								"org.osate.xtext.aadl2.properties.Properties.ContainedPropertyAssociation");
 							afterParserOrEnumRuleCall();
 						}
@@ -20476,21 +20606,21 @@ ruleBusImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noProperties_29_0='none'
+							lv_noProperties_36_0='none'
 							{
-								newLeafNode(lv_noProperties_29_0, grammarAccess.getBusImplementationAccess().getNoPropertiesNoneKeyword_10_1_1_0_0());
+								newLeafNode(lv_noProperties_36_0, grammarAccess.getBusImplementationAccess().getNoPropertiesNoneKeyword_11_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
-					otherlv_30=';'
+					otherlv_37=';'
 					{
-						newLeafNode(otherlv_30, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_10_1_1_1());
+						newLeafNode(otherlv_37, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_11_1_1_1());
 					}
 				)
 			)
@@ -20498,9 +20628,9 @@ ruleBusImplementation returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedAnnexSubclauseAnnexSubclauseParserRuleCall_11_0());
+					newCompositeNode(grammarAccess.getBusImplementationAccess().getOwnedAnnexSubclauseAnnexSubclauseParserRuleCall_12_0());
 				}
-				lv_ownedAnnexSubclause_31_0=ruleAnnexSubclause
+				lv_ownedAnnexSubclause_38_0=ruleAnnexSubclause
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getBusImplementationRule());
@@ -20508,26 +20638,26 @@ ruleBusImplementation returns [EObject current=null]
 					add(
 						$current,
 						"ownedAnnexSubclause",
-						lv_ownedAnnexSubclause_31_0,
+						lv_ownedAnnexSubclause_38_0,
 						"org.osate.xtext.aadl2.Aadl2.AnnexSubclause");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_32='end'
+		otherlv_39='end'
 		{
-			newLeafNode(otherlv_32, grammarAccess.getBusImplementationAccess().getEndKeyword_12());
+			newLeafNode(otherlv_39, grammarAccess.getBusImplementationAccess().getEndKeyword_13());
 		}
 		{
-			newCompositeNode(grammarAccess.getBusImplementationAccess().getFULLINAMEParserRuleCall_13());
+			newCompositeNode(grammarAccess.getBusImplementationAccess().getFULLINAMEParserRuleCall_14());
 		}
 		ruleFULLINAME
 		{
 			afterParserOrEnumRuleCall();
 		}
-		otherlv_34=';'
+		otherlv_41=';'
 		{
-			newLeafNode(otherlv_34, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_14());
+			newLeafNode(otherlv_41, grammarAccess.getBusImplementationAccess().getSemicolonKeyword_15());
 		}
 	)
 ;
@@ -20707,7 +20837,7 @@ ruleVirtualBusImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_12_0 != null, "none");
 							}
 						)
 					)
@@ -20777,7 +20907,7 @@ ruleVirtualBusImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_17_0 != null, "none");
 							}
 						)
 					)
@@ -20839,18 +20969,128 @@ ruleVirtualBusImplementation returns [EObject current=null]
 			)+
 		)?
 		(
-			otherlv_22='modes'
+			otherlv_22='connections'
 			{
-				newLeafNode(otherlv_22, grammarAccess.getVirtualBusImplementationAccess().getModesKeyword_9_0());
+				newLeafNode(otherlv_22, grammarAccess.getVirtualBusImplementationAccess().getConnectionsKeyword_9_0());
 			}
 			(
 				(
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedModeModeParserRuleCall_9_1_0_0_0());
+								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedPortConnectionPortConnectionParserRuleCall_9_1_0_0_0());
 							}
-							lv_ownedMode_23_0=ruleMode
+							lv_ownedPortConnection_23_0=rulePortConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedPortConnection",
+									lv_ownedPortConnection_23_0,
+									"org.osate.xtext.aadl2.Aadl2.PortConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedAccessConnectionAccessConnectionParserRuleCall_9_1_0_1_0());
+							}
+							lv_ownedAccessConnection_24_0=ruleAccessConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedAccessConnection",
+									lv_ownedAccessConnection_24_0,
+									"org.osate.xtext.aadl2.Aadl2.AccessConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedFeatureGroupConnectionFeatureGroupConnectionParserRuleCall_9_1_0_2_0());
+							}
+							lv_ownedFeatureGroupConnection_25_0=ruleFeatureGroupConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedFeatureGroupConnection",
+									lv_ownedFeatureGroupConnection_25_0,
+									"org.osate.xtext.aadl2.Aadl2.FeatureGroupConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+					    |
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedFeatureConnectionFeatureConnectionParserRuleCall_9_1_0_3_0());
+							}
+							lv_ownedFeatureConnection_26_0=ruleFeatureConnection
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
+								}
+								add(
+									$current,
+									"ownedFeatureConnection",
+									lv_ownedFeatureConnection_26_0,
+									"org.osate.xtext.aadl2.Aadl2.FeatureConnection");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+				)+
+				    |
+				(
+					(
+						(
+							lv_noConnections_27_0='none'
+							{
+								newLeafNode(lv_noConnections_27_0, grammarAccess.getVirtualBusImplementationAccess().getNoConnectionsNoneKeyword_9_1_1_0_0());
+							}
+							{
+								if ($current==null) {
+									$current = createModelElement(grammarAccess.getVirtualBusImplementationRule());
+								}
+								setWithLastConsumed($current, "noConnections", lv_noConnections_27_0 != null, "none");
+							}
+						)
+					)
+					otherlv_28=';'
+					{
+						newLeafNode(otherlv_28, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_9_1_1_1());
+					}
+				)
+			)
+		)?
+		(
+			otherlv_29='modes'
+			{
+				newLeafNode(otherlv_29, grammarAccess.getVirtualBusImplementationAccess().getModesKeyword_10_0());
+			}
+			(
+				(
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedModeModeParserRuleCall_10_1_0_0_0());
+							}
+							lv_ownedMode_30_0=ruleMode
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
@@ -20858,7 +21098,7 @@ ruleVirtualBusImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedMode",
-									lv_ownedMode_23_0,
+									lv_ownedMode_30_0,
 									"org.osate.xtext.aadl2.Aadl2.Mode");
 								afterParserOrEnumRuleCall();
 							}
@@ -20868,9 +21108,9 @@ ruleVirtualBusImplementation returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedModeTransitionModeTransitionParserRuleCall_9_1_0_1_0());
+								newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedModeTransitionModeTransitionParserRuleCall_10_1_0_1_0());
 							}
-							lv_ownedModeTransition_24_0=ruleModeTransition
+							lv_ownedModeTransition_31_0=ruleModeTransition
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
@@ -20878,7 +21118,7 @@ ruleVirtualBusImplementation returns [EObject current=null]
 								add(
 									$current,
 									"ownedModeTransition",
-									lv_ownedModeTransition_24_0,
+									lv_ownedModeTransition_31_0,
 									"org.osate.xtext.aadl2.Aadl2.ModeTransition");
 								afterParserOrEnumRuleCall();
 							}
@@ -20889,37 +21129,37 @@ ruleVirtualBusImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noModes_25_0='none'
+							lv_noModes_32_0='none'
 							{
-								newLeafNode(lv_noModes_25_0, grammarAccess.getVirtualBusImplementationAccess().getNoModesNoneKeyword_9_1_1_0_0());
+								newLeafNode(lv_noModes_32_0, grammarAccess.getVirtualBusImplementationAccess().getNoModesNoneKeyword_10_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_32_0 != null, "none");
 							}
 						)
 					)
-					otherlv_26=';'
+					otherlv_33=';'
 					{
-						newLeafNode(otherlv_26, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_9_1_1_1());
+						newLeafNode(otherlv_33, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_10_1_1_1());
 					}
 				)
 			)
 		)?
 		(
-			otherlv_27='properties'
+			otherlv_34='properties'
 			{
-				newLeafNode(otherlv_27, grammarAccess.getVirtualBusImplementationAccess().getPropertiesKeyword_10_0());
+				newLeafNode(otherlv_34, grammarAccess.getVirtualBusImplementationAccess().getPropertiesKeyword_11_0());
 			}
 			(
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedPropertyAssociationContainedPropertyAssociationParserRuleCall_10_1_0_0());
+							newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedPropertyAssociationContainedPropertyAssociationParserRuleCall_11_1_0_0());
 						}
-						lv_ownedPropertyAssociation_28_0=ruleContainedPropertyAssociation
+						lv_ownedPropertyAssociation_35_0=ruleContainedPropertyAssociation
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
@@ -20927,7 +21167,7 @@ ruleVirtualBusImplementation returns [EObject current=null]
 							add(
 								$current,
 								"ownedPropertyAssociation",
-								lv_ownedPropertyAssociation_28_0,
+								lv_ownedPropertyAssociation_35_0,
 								"org.osate.xtext.aadl2.properties.Properties.ContainedPropertyAssociation");
 							afterParserOrEnumRuleCall();
 						}
@@ -20937,21 +21177,21 @@ ruleVirtualBusImplementation returns [EObject current=null]
 				(
 					(
 						(
-							lv_noProperties_29_0='none'
+							lv_noProperties_36_0='none'
 							{
-								newLeafNode(lv_noProperties_29_0, grammarAccess.getVirtualBusImplementationAccess().getNoPropertiesNoneKeyword_10_1_1_0_0());
+								newLeafNode(lv_noProperties_36_0, grammarAccess.getVirtualBusImplementationAccess().getNoPropertiesNoneKeyword_11_1_1_0_0());
 							}
 							{
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getVirtualBusImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_36_0 != null, "none");
 							}
 						)
 					)
-					otherlv_30=';'
+					otherlv_37=';'
 					{
-						newLeafNode(otherlv_30, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_10_1_1_1());
+						newLeafNode(otherlv_37, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_11_1_1_1());
 					}
 				)
 			)
@@ -20959,9 +21199,9 @@ ruleVirtualBusImplementation returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedAnnexSubclauseAnnexSubclauseParserRuleCall_11_0());
+					newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getOwnedAnnexSubclauseAnnexSubclauseParserRuleCall_12_0());
 				}
-				lv_ownedAnnexSubclause_31_0=ruleAnnexSubclause
+				lv_ownedAnnexSubclause_38_0=ruleAnnexSubclause
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getVirtualBusImplementationRule());
@@ -20969,26 +21209,26 @@ ruleVirtualBusImplementation returns [EObject current=null]
 					add(
 						$current,
 						"ownedAnnexSubclause",
-						lv_ownedAnnexSubclause_31_0,
+						lv_ownedAnnexSubclause_38_0,
 						"org.osate.xtext.aadl2.Aadl2.AnnexSubclause");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_32='end'
+		otherlv_39='end'
 		{
-			newLeafNode(otherlv_32, grammarAccess.getVirtualBusImplementationAccess().getEndKeyword_12());
+			newLeafNode(otherlv_39, grammarAccess.getVirtualBusImplementationAccess().getEndKeyword_13());
 		}
 		{
-			newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getFULLINAMEParserRuleCall_13());
+			newCompositeNode(grammarAccess.getVirtualBusImplementationAccess().getFULLINAMEParserRuleCall_14());
 		}
 		ruleFULLINAME
 		{
 			afterParserOrEnumRuleCall();
 		}
-		otherlv_34=';'
+		otherlv_41=';'
 		{
-			newLeafNode(otherlv_34, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_14());
+			newLeafNode(otherlv_41, grammarAccess.getVirtualBusImplementationAccess().getSemicolonKeyword_15());
 		}
 	)
 ;
@@ -21175,7 +21415,7 @@ ruleDataImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataImplementationRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_13_0 != null, "none");
 							}
 						)
 					)
@@ -21265,7 +21505,7 @@ ruleDataImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataImplementationRule());
 								}
-								setWithLastConsumed($current, "noSubcomponents", true, "none");
+								setWithLastConsumed($current, "noSubcomponents", lv_noSubcomponents_19_0 != null, "none");
 							}
 						)
 					)
@@ -21405,7 +21645,7 @@ ruleDataImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataImplementationRule());
 								}
-								setWithLastConsumed($current, "noConnections", true, "none");
+								setWithLastConsumed($current, "noConnections", lv_noConnections_28_0 != null, "none");
 							}
 						)
 					)
@@ -21475,7 +21715,7 @@ ruleDataImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataImplementationRule());
 								}
-								setWithLastConsumed($current, "noFlows", true, "none");
+								setWithLastConsumed($current, "noFlows", lv_noFlows_33_0 != null, "none");
 							}
 						)
 					)
@@ -21545,7 +21785,7 @@ ruleDataImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataImplementationRule());
 								}
-								setWithLastConsumed($current, "noModes", true, "none");
+								setWithLastConsumed($current, "noModes", lv_noModes_38_0 != null, "none");
 							}
 						)
 					)
@@ -21593,7 +21833,7 @@ ruleDataImplementation returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getDataImplementationRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_42_0 != null, "none");
 							}
 						)
 					)
@@ -22248,7 +22488,7 @@ ruleAbstractPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getAbstractPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -22396,7 +22636,7 @@ ruleBusPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getBusPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -22544,7 +22784,7 @@ ruleDataPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getDataPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -22692,7 +22932,7 @@ ruleDevicePrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getDevicePrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -22840,7 +23080,7 @@ ruleMemoryPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getMemoryPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -22988,7 +23228,7 @@ ruleProcessPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getProcessPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -23136,7 +23376,7 @@ ruleProcessorPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getProcessorPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -23284,7 +23524,7 @@ ruleSubprogramPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getSubprogramPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -23435,7 +23675,7 @@ ruleSubprogramGroupPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getSubprogramGroupPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -23583,7 +23823,7 @@ ruleSystemPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getSystemPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -23731,7 +23971,7 @@ ruleThreadPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getThreadPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -23882,7 +24122,7 @@ ruleThreadGroupPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getThreadGroupPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -24033,7 +24273,7 @@ ruleVirtualBusPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getVirtualBusPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -24184,7 +24424,7 @@ ruleVirtualProcessorPrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getVirtualProcessorPrototypeRule());
 						}
-						setWithLastConsumed($current, "array", true, "[");
+						setWithLastConsumed($current, "array", lv_array_7_0 != null, "[");
 					}
 				)
 			)
@@ -24443,7 +24683,7 @@ ruleFeaturePrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFeaturePrototypeRule());
 						}
-						setWithLastConsumed($current, "in", true, "in");
+						setWithLastConsumed($current, "in", lv_in_5_0 != null, "in");
 					}
 				)
 			)
@@ -24458,7 +24698,7 @@ ruleFeaturePrototype returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFeaturePrototypeRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_6_0 != null, "out");
 					}
 				)
 			)
@@ -24832,7 +25072,7 @@ rulePortSpecification returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getPortSpecificationRule());
 							}
-							setWithLastConsumed($current, "in", true, "in");
+							setWithLastConsumed($current, "in", lv_in_0_0 != null, "in");
 						}
 					)
 				)
@@ -24846,7 +25086,7 @@ rulePortSpecification returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getPortSpecificationRule());
 							}
-							setWithLastConsumed($current, "out", true, "out");
+							setWithLastConsumed($current, "out", lv_out_1_0 != null, "out");
 						}
 					)
 				)?
@@ -24862,7 +25102,7 @@ rulePortSpecification returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getPortSpecificationRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_2_0 != null, "out");
 					}
 				)
 			)
@@ -25013,7 +25253,7 @@ ruleFeaturePrototypeReference returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFeaturePrototypeReferenceRule());
 						}
-						setWithLastConsumed($current, "in", true, "in");
+						setWithLastConsumed($current, "in", lv_in_0_0 != null, "in");
 					}
 				)
 			)
@@ -25028,7 +25268,7 @@ ruleFeaturePrototypeReference returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFeaturePrototypeReferenceRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_1_0 != null, "out");
 					}
 				)
 			)
@@ -30088,7 +30328,7 @@ ruleDataPort returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getDataPortRule());
 							}
-							setWithLastConsumed($current, "in", true, "in");
+							setWithLastConsumed($current, "in", lv_in_6_0 != null, "in");
 						}
 					)
 				)
@@ -30102,7 +30342,7 @@ ruleDataPort returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getDataPortRule());
 							}
-							setWithLastConsumed($current, "out", true, "out");
+							setWithLastConsumed($current, "out", lv_out_7_0 != null, "out");
 						}
 					)
 				)?
@@ -30118,7 +30358,7 @@ ruleDataPort returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getDataPortRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_8_0 != null, "out");
 					}
 				)
 			)
@@ -30292,7 +30532,7 @@ ruleEventDataPort returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getEventDataPortRule());
 							}
-							setWithLastConsumed($current, "in", true, "in");
+							setWithLastConsumed($current, "in", lv_in_6_0 != null, "in");
 						}
 					)
 				)
@@ -30306,7 +30546,7 @@ ruleEventDataPort returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getEventDataPortRule());
 							}
-							setWithLastConsumed($current, "out", true, "out");
+							setWithLastConsumed($current, "out", lv_out_7_0 != null, "out");
 						}
 					)
 				)?
@@ -30322,7 +30562,7 @@ ruleEventDataPort returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getEventDataPortRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_8_0 != null, "out");
 					}
 				)
 			)
@@ -30496,7 +30736,7 @@ ruleEventPort returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getEventPortRule());
 							}
-							setWithLastConsumed($current, "in", true, "in");
+							setWithLastConsumed($current, "in", lv_in_6_0 != null, "in");
 						}
 					)
 				)
@@ -30510,7 +30750,7 @@ ruleEventPort returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getEventPortRule());
 							}
-							setWithLastConsumed($current, "out", true, "out");
+							setWithLastConsumed($current, "out", lv_out_7_0 != null, "out");
 						}
 					)
 				)?
@@ -30526,7 +30766,7 @@ ruleEventPort returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getEventPortRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_8_0 != null, "out");
 					}
 				)
 			)
@@ -30676,7 +30916,7 @@ ruleFeatureGroup returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFeatureGroupRule());
 						}
-						setWithLastConsumed($current, "in", true, "in");
+						setWithLastConsumed($current, "in", lv_in_5_0 != null, "in");
 					}
 				)
 			)
@@ -30691,7 +30931,7 @@ ruleFeatureGroup returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFeatureGroupRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_6_0 != null, "out");
 					}
 				)
 			)
@@ -30717,7 +30957,7 @@ ruleFeatureGroup returns [EObject current=null]
 						set(
 							$current,
 							"inverse",
-							true,
+							lv_inverse_8_0 != null,
 							"org.osate.xtext.aadl2.Aadl2.InverseOfKeywords");
 						afterParserOrEnumRuleCall();
 					}
@@ -30879,7 +31119,7 @@ ruleParameter returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getParameterRule());
 							}
-							setWithLastConsumed($current, "in", true, "in");
+							setWithLastConsumed($current, "in", lv_in_5_0 != null, "in");
 						}
 					)
 				)
@@ -30893,7 +31133,7 @@ ruleParameter returns [EObject current=null]
 							if ($current==null) {
 								$current = createModelElement(grammarAccess.getParameterRule());
 							}
-							setWithLastConsumed($current, "out", true, "out");
+							setWithLastConsumed($current, "out", lv_out_6_0 != null, "out");
 						}
 					)
 				)?
@@ -30909,7 +31149,7 @@ ruleParameter returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getParameterRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_7_0 != null, "out");
 					}
 				)
 			)
@@ -31428,7 +31668,7 @@ ruleBusAccess returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getBusAccessRule());
 					}
-					setWithLastConsumed($current, "virtual", true, "virtual");
+					setWithLastConsumed($current, "virtual", lv_virtual_6_0 != null, "virtual");
 				}
 			)
 		)?
@@ -31762,7 +32002,7 @@ ruleAbstractFeature returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getAbstractFeatureRule());
 						}
-						setWithLastConsumed($current, "in", true, "in");
+						setWithLastConsumed($current, "in", lv_in_5_0 != null, "in");
 					}
 				)
 			)
@@ -31777,7 +32017,7 @@ ruleAbstractFeature returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getAbstractFeatureRule());
 						}
-						setWithLastConsumed($current, "out", true, "out");
+						setWithLastConsumed($current, "out", lv_out_6_0 != null, "out");
 					}
 				)
 			)
@@ -32095,7 +32335,7 @@ ruleFeatureGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getFeatureGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noPrototypes", true, "none");
+								setWithLastConsumed($current, "noPrototypes", lv_noPrototypes_9_0 != null, "none");
 							}
 						)
 					)
@@ -32395,7 +32635,7 @@ ruleFeatureGroupType returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getFeatureGroupTypeRule());
 								}
-								setWithLastConsumed($current, "noProperties", true, "none");
+								setWithLastConsumed($current, "noProperties", lv_noProperties_27_0 != null, "none");
 							}
 						)
 					)
@@ -33274,7 +33514,7 @@ rulePortConnection returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getPortConnectionRule());
 								}
-								setWithLastConsumed($current, "bidirectional", true, "<->");
+								setWithLastConsumed($current, "bidirectional", lv_bidirectional_5_0 != null, "<->");
 							}
 						)
 					)
@@ -33519,7 +33759,7 @@ ruleAccessConnection returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getAccessConnectionRule());
 								}
-								setWithLastConsumed($current, "bidirectional", true, "<->");
+								setWithLastConsumed($current, "bidirectional", lv_bidirectional_6_0 != null, "<->");
 							}
 						)
 					)
@@ -33767,7 +34007,7 @@ ruleFeatureGroupConnection returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getFeatureGroupConnectionRule());
 								}
-								setWithLastConsumed($current, "bidirectional", true, "<->");
+								setWithLastConsumed($current, "bidirectional", lv_bidirectional_5_0 != null, "<->");
 							}
 						)
 					)
@@ -33996,7 +34236,7 @@ ruleFeatureConnection returns [EObject current=null]
 								if ($current==null) {
 									$current = createModelElement(grammarAccess.getFeatureConnectionRule());
 								}
-								setWithLastConsumed($current, "bidirectional", true, "<->");
+								setWithLastConsumed($current, "bidirectional", lv_bidirectional_5_0 != null, "<->");
 							}
 						)
 					)
@@ -35070,36 +35310,43 @@ ruleFlowEnd returns [EObject current=null]
 	(
 		(
 			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFlowEndRule());
+					}
+				}
+				otherlv_0=RULE_ID
+				{
+					newLeafNode(otherlv_0, grammarAccess.getFlowEndAccess().getFeatureFeatureCrossReference_0_0());
+				}
+			)
+		)
+		(
+			(
+				{
+					$current = forceCreateModelElementAndSet(
+						grammarAccess.getFlowEndAccess().getFlowEndContextAction_1_0(),
+						$current);
+				}
+			)
+			otherlv_2='.'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getFlowEndAccess().getFullStopKeyword_1_1());
+			}
+			(
 				(
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getFlowEndRule());
 						}
 					}
-					otherlv_0=RULE_ID
+					otherlv_3=RULE_ID
 					{
-						newLeafNode(otherlv_0, grammarAccess.getFlowEndAccess().getContextContextCrossReference_0_0_0());
+						newLeafNode(otherlv_3, grammarAccess.getFlowEndAccess().getFeatureFeatureCrossReference_1_2_0());
 					}
 				)
 			)
-			otherlv_1='.'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getFlowEndAccess().getFullStopKeyword_0_1());
-			}
-		)?
-		(
-			(
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFlowEndRule());
-					}
-				}
-				otherlv_2=RULE_ID
-				{
-					newLeafNode(otherlv_2, grammarAccess.getFlowEndAccess().getFeatureFeatureCrossReference_1_0());
-				}
-			)
-		)
+		)*
 	)
 ;
 
@@ -36419,7 +36666,7 @@ ruleMode returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getModeRule());
 					}
-					setWithLastConsumed($current, "initial", true, "initial");
+					setWithLastConsumed($current, "initial", lv_initial_2_0 != null, "initial");
 				}
 			)
 		)?
@@ -39438,7 +39685,7 @@ rulePropertyDefinition returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getPropertyDefinitionRule());
 					}
-					setWithLastConsumed($current, "inherit", true, "inherit");
+					setWithLastConsumed($current, "inherit", lv_inherit_2_0 != null, "inherit");
 				}
 			)
 		)?
@@ -41977,7 +42224,7 @@ ruleContainedPropertyAssociation returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getContainedPropertyAssociationRule());
 						}
-						setWithLastConsumed($current, "append", true, "+=>");
+						setWithLastConsumed($current, "append", lv_append_2_0 != null, "+=>");
 					}
 				)
 			)
@@ -41992,7 +42239,7 @@ ruleContainedPropertyAssociation returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getContainedPropertyAssociationRule());
 					}
-					setWithLastConsumed($current, "constant", true, "constant");
+					setWithLastConsumed($current, "constant", lv_constant_3_0 != null, "constant");
 				}
 			)
 		)?
@@ -42183,7 +42430,7 @@ rulePropertyAssociation returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getPropertyAssociationRule());
 						}
-						setWithLastConsumed($current, "append", true, "+=>");
+						setWithLastConsumed($current, "append", lv_append_2_0 != null, "+=>");
 					}
 				)
 			)
@@ -42198,7 +42445,7 @@ rulePropertyAssociation returns [EObject current=null]
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getPropertyAssociationRule());
 					}
-					setWithLastConsumed($current, "constant", true, "constant");
+					setWithLastConsumed($current, "constant", lv_constant_3_0 != null, "constant");
 				}
 			)
 		)?
@@ -42693,7 +42940,7 @@ ruleBooleanLiteral returns [EObject current=null]
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getBooleanLiteralRule());
 						}
-						setWithLastConsumed($current, "value", true, "true");
+						setWithLastConsumed($current, "value", lv_value_1_0 != null, "true");
 					}
 				)
 			)

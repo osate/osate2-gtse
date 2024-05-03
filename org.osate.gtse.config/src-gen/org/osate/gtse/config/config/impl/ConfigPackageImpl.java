@@ -235,7 +235,6 @@ public class ConfigPackageImpl extends EPackageImpl implements ConfigPackage
   {
     super(eNS_URI, ConfigFactory.eINSTANCE);
   }
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
