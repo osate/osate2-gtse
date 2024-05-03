@@ -101,7 +101,7 @@ public class CustomInstantiator extends InstantiateModel {
 	}
 
 	@Override
-	protected void getUsedPropertyDefinitions(SystemInstance root) throws InterruptedException {
+	protected void cacheProperties(ComponentInstance root) throws InterruptedException {
 		// Copied from org.osate.aadl2.instantiation.InstantiateModel, see explanation in there...
 		EList<Property> propertyDefinitionList = getAllUsedPropertyDefinitions(root);
 		CustomCacheContainedPropertyAssociationsSwitch ccpas = new CustomCacheContainedPropertyAssociationsSwitch(
