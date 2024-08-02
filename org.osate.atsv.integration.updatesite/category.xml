@@ -12,6 +12,7 @@
    <feature id="org.osate.gtse.demo.feature.demo_analyses">
       <category name="org.osate.atsv.integration.updatesite"/>
    </feature>
+   <bundle id="org.apache.commons.math3"/>
    <category-def name="org.osate.atsv.integration.updatesite" label="Guided Tradespace Exploration">
       <description>
          Eclipse and ATSV Integration
