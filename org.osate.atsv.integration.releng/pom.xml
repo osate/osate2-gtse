@@ -12,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.version>1.5.1</tycho.version>
 		<eclipse-repo.url>http://download.eclipse.org/releases/2020-06/</eclipse-repo.url>
-		<osate-repo.url>http://osate-build.sei.cmu.edu/download/osate/testing/updates/</osate-repo.url>
+		<osate-repo.url>http://osate-build.sei.cmu.edu/download/osate/stable/2.9.0/updates</osate-repo.url>
 		<elk-stable.url>http://download.eclipse.org/elk/updates/releases/0.5.0/</elk-stable.url>
 		<xtext.version>2.20.0</xtext.version>
 		<osate.version>[0.0.0,3.0.0)</osate.version>
@@ -81,11 +81,11 @@
 			<url>${osate-repo.url}</url>
 			<layout>p2</layout>
 		</repository>
-		<repository>
+		<!--repository>
 			<id>xtext-utils</id>
 			<url>http://dl.bintray.com/itemis/generic/xtext-testing/updates/</url>
 			<layout>p2</layout>
-		</repository>
+		</repository-->
 		<repository>
 			<id>xtext-tmf</id>
 			<url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.20.0/</url>
@@ -94,6 +94,11 @@
 		<repository>
 			<id>xtext-emft</id>
 			<url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.11.1/</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>ease</id>
+			<url>https://download.eclipse.org/ease/release/0.6.0/</url>
 			<layout>p2</layout>
 		</repository>
 		<repository>
