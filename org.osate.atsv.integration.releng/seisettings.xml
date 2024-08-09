@@ -7,16 +7,16 @@
             <id>sei-http-proxy</id>
             <active>true</active>
             <protocol>http</protocol>
-            <host>proxy.sei.cmu.edu</host>
-            <port>8080</port>
+            <host>cloudproxy.sei.cmu.edu</host>
+            <port>80</port>
             <nonProxyHosts>*.sei.cmu.edu|*.aadl.info|localhost|127.0.0.1</nonProxyHosts>
         </proxy>
         <proxy>
             <id>sei-https-proxy</id>
             <active>true</active>
             <protocol>https</protocol>
-            <host>proxy.sei.cmu.edu</host>
-            <port>8080</port>
+            <host>cloudproxy.sei.cmu.edu</host>
+            <port>80</port>
             <nonProxyHosts>*.sei.cmu.edu|*.aadl.info|localhost|127.0.0.1</nonProxyHosts>
         </proxy>
     </proxies>
